@@ -271,6 +271,13 @@
       <select id="filtro-marca">
         <option value="">Todas las marcas</option>
       </select>
+      <select id="filtro-categoria">
+        <option value="">Todas las categorías</option>
+        <option value="Adulto">Adulto</option>
+        <option value="Infantil">Infantil</option>
+        <option value="Ojotas">Ojotas</option>
+        <option value="Nike Mind">Nike Mind</option>
+      </select>
       <select id="filtro-stock">
         <option value="">Todos</option>
         <option value="con-stock">Con stock</option>
@@ -392,11 +399,13 @@ function render(lista){
 function aplicarFiltros(){
   const q = document.getElementById('buscador').value.trim().toLowerCase();
   const marca = document.getElementById('filtro-marca').value;
+  const categoria = document.getElementById('filtro-categoria').value;
   const soloConStock = document.getElementById('filtro-stock').value === 'con-stock';
 
   const filtrado = productos.filter(p => {
     if(q && !p.nombre.toLowerCase().includes(q) && !(p.marca||'').toLowerCase().includes(q)) return false;
     if(marca && p.marca !== marca) return false;
+    if(categoria && p.categoria !== categoria) return false;
     if(soloConStock && p.stockTotal === 0) return false;
     return true;
   });
@@ -589,6 +598,7 @@ async function init(){
 
   document.getElementById('buscador').addEventListener('input', aplicarFiltros);
   document.getElementById('filtro-marca').addEventListener('change', aplicarFiltros);
+  document.getElementById('filtro-categoria').addEventListener('change', aplicarFiltros);
   document.getElementById('filtro-stock').addEventListener('change', aplicarFiltros);
 
   render(productos);
