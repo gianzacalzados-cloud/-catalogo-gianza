@@ -10,13 +10,15 @@
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
 <style>
   :root{
-    --bg: #15171b;
-    --bg-soft: #1c1f24;
-    --card: #1c1f24;
+    --bg: #0c0d10;
+    --bg-soft: #16171b;
+    --card: #191b20;
     --card-border: #2c2f37;
-    --label: #1f2228;
+    --soft-border: rgba(255,255,255,0.08);
+    --soft-border-hover: rgba(255,255,255,0.16);
+    --label: #1c1e23;
     --label-text: #f5f3ee;
-    --label-chip: #2a2d34;
+    --label-chip: #272a31;
     --label-dim: #9a9ea8;
     --label-border: #343842;
     --accent: #ff6a1a;
@@ -26,14 +28,14 @@
     --text-dim: #9a9ea8;
     --ok: #3fbf6f;
     --off: #ef4a5c;
-    --img-bg: #23262c;
+    --img-bg: #212329;
     --radius: 14px;
     --grad-accent: linear-gradient(135deg, #ff8a45, var(--accent) 50%, var(--accent-dim));
     --grad-lime: linear-gradient(135deg, #d9ff6e, var(--accent-2) 60%, #a8d930);
     --grad-ok: linear-gradient(135deg, #58d884, var(--ok) 65%, #2e9c58);
     --shadow-accent: 0 6px 16px rgba(255,106,26,0.38);
     --shadow-ok: 0 6px 16px rgba(63,191,111,0.3);
-    --shadow-soft: 0 4px 14px rgba(0,0,0,0.28);
+    --shadow-soft: 0 4px 20px rgba(0,0,0,0.4);
     --glass: rgba(37,40,46,0.55);
   }
   *{ box-sizing:border-box; }
@@ -54,7 +56,7 @@
   header{
     position: sticky; top:0; z-index: 20;
     padding: 16px 16px calc(14px + env(safe-area-inset-top,0px));
-    background: rgba(27,29,34,0.92);
+    background: rgba(12,13,16,0.85);
     backdrop-filter: blur(10px);
     border-bottom: 1px solid var(--card-border);
   }
@@ -64,6 +66,7 @@
     font-family:'Archivo Black', sans-serif;
     font-size: clamp(20px, 5vw, 26px);
     margin:0; letter-spacing: -0.5px;
+    color: var(--text);
   }
   .brand-row .tag{ color: var(--accent); }
   .brand-row small{ color: var(--text-dim); font-size: 12.5px; font-weight: 500; }
@@ -182,7 +185,7 @@
 
   /* ---- ticket de descuentos ---- */
   .banner-promo{
-    background: var(--label);
+    background: var(--bg);
     border: 2px solid var(--accent);
     border-radius: 10px;
     margin-bottom: 20px;
@@ -190,53 +193,49 @@
     position: relative;
     box-shadow: var(--shadow-soft);
   }
-  .promo-top{ padding: 16px 18px 16px; }
+  .promo-top{ padding: 16px 16px; }
   .promo-top .promo-tag{
-    font-size: 13px; font-weight: 800; letter-spacing:0.03em;
-    text-transform: uppercase;
-    color: var(--accent-dim); margin-bottom: 14px;
+    font-family:'Archivo Black', sans-serif;
+    font-size: 16px; letter-spacing:0.01em; text-transform: uppercase;
+    color: var(--accent); margin-bottom: 12px;
   }
   .promo-grid{ display:grid; grid-template-columns: repeat(3, 1fr); gap:8px; position:relative; }
-  .promo-item{ text-align:center; padding: 14px 5px 12px; border-radius: 8px; display:flex; flex-direction:column; align-items:center; }
+  .promo-item{
+    text-align:center; padding: 12px 4px; border-radius: 8px;
+    display:flex; flex-direction:column; align-items:center; justify-content:center;
+    background: var(--card);
+    border: 1px solid var(--soft-border);
+  }
   .promo-item .promo-eyebrow{
-    font-size: 9.5px; font-weight:700; letter-spacing:0.09em;
-    text-transform: uppercase; color: var(--label-dim); opacity:0.85;
+    font-size: 9px; font-weight:700; letter-spacing:0.08em;
+    text-transform: uppercase; color: var(--text-dim);
   }
   .promo-item .promo-figure{
-    font-family:'Archivo Black', sans-serif; font-size: 36px; line-height:1;
-    color: var(--label-text); margin: 6px 0 3px;
+    font-family:'Archivo Black', sans-serif; font-size: 30px; line-height:1.1;
+    color: var(--text); margin-top: 4px;
   }
   .promo-item .promo-caption{
-    font-size: 10.5px; font-weight:700; letter-spacing:0.05em;
-    text-transform: uppercase; color: var(--label-dim); opacity:0.85;
+    font-family:'Archivo Black', sans-serif;
+    font-size: 10.5px; letter-spacing:0.03em; color: var(--text); margin-top: 3px;
+    text-transform: uppercase;
   }
   .promo-item .promo-price{
     margin-top: 9px;
-    font-family:'JetBrains Mono', monospace; font-weight:700; font-size: 11.5px;
-    letter-spacing:0.01em;
-    background: rgba(0,0,0,0.18);
-    color: var(--label-text);
-    padding: 4px 10px;
-    border-radius: 999px;
+    font-family:'Archivo Black', sans-serif; font-size: 12px;
+    letter-spacing:0.02em;
+    text-transform: uppercase;
   }
-  .promo-item.destacado{ background: var(--grad-accent); box-shadow: var(--shadow-accent), inset 0 1px 0 rgba(255,255,255,0.3); }
-  .promo-item.destacado .promo-eyebrow,
-  .promo-item.destacado .promo-figure,
-  .promo-item.destacado .promo-caption{ color: #fff; }
-  .promo-item.destacado .promo-eyebrow,
-  .promo-item.destacado .promo-caption{ opacity:0.9; }
-  .promo-item.destacado .promo-price{ background: rgba(0,0,0,0.22); color:#fff; }
+  .promo-item .promo-price .monto{ color: var(--accent); }
+  .promo-item .promo-price .unidad{ color: var(--text-dim); }
 
-  .promo-item.destacado-max{ background: var(--grad-lime); box-shadow: 0 6px 16px rgba(198,255,61,0.3), inset 0 1px 0 rgba(255,255,255,0.4); }
-  .promo-item.destacado-max .promo-eyebrow,
-  .promo-item.destacado-max .promo-figure,
-  .promo-item.destacado-max .promo-caption{ color: #16210a; }
-  .promo-item.destacado-max .promo-eyebrow,
-  .promo-item.destacado-max .promo-caption{ opacity:0.8; }
-  .promo-item.destacado-max .promo-price{ background: rgba(0,0,0,0.12); color:#16210a; }
+  .promo-item.destacado,
+  .promo-item.destacado-max{ border: 1.5px solid var(--accent); }
+  .promo-item.destacado .promo-figure,
+  .promo-item.destacado-max .promo-figure{ color: var(--accent); }
+  .promo-item.destacado-max .promo-price .monto{ color: var(--accent); }
 
   .promo-nota{
-    font-size: 11.5px; color: var(--label-dim); line-height:1.4; margin-top: 14px;
+    font-size: 11.5px; color: var(--text-dim); line-height:1.4; margin-top: 14px;
   }
 
   .seccion-label{
@@ -256,14 +255,15 @@
 
   .tile{
     background: var(--label);
-    border: 1px solid var(--card-border);
+    border: 1px solid var(--soft-border);
     border-radius: 8px;
     overflow: hidden;
     cursor: pointer;
     text-align:center;
     box-shadow: var(--shadow-soft);
-    transition: transform .12s ease;
+    transition: transform .15s ease, border-color .15s ease, box-shadow .15s ease;
   }
+  .tile:hover{ transform: translateY(-2px); border-color: var(--soft-border-hover); }
   .tile:active{ transform: scale(0.97); }
   .tile .tile-photo{
     aspect-ratio: 1/1;
@@ -289,7 +289,7 @@
     color: var(--text);
     border-radius: 999px; padding: 12px 16px; min-height: 44px; font-size: 14.5px; cursor:pointer; flex-shrink:0;
   }
-  .listado-titulo{ font-family:'Archivo Black', sans-serif; font-size: 21px; flex:1; min-width:120px; }
+  .listado-titulo{ font-family:'Archivo Black', sans-serif; font-size: 21px; flex:1; min-width:120px; color: var(--text); }
   .listado-count{ color: var(--text-dim); font-size: 14px; width:100%; }
 
   .grid{
@@ -303,13 +303,15 @@
 
   .card{
     background: var(--label);
-    border: 1px solid var(--card-border);
+    border: 1px solid var(--soft-border);
     border-radius: 8px;
     overflow: hidden;
     display:flex; flex-direction:column;
     cursor: pointer;
     box-shadow: var(--shadow-soft);
+    transition: transform .15s ease, border-color .15s ease;
   }
+  .card:hover{ transform: translateY(-2px); border-color: var(--soft-border-hover); }
   .card .photo-wrap{
     aspect-ratio: 1/1;
     background: var(--img-bg);
@@ -516,7 +518,7 @@
     padding: 20px 18px 16px; border-bottom: 1px solid var(--card-border);
     display:flex; align-items:center; justify-content:space-between;
   }
-  .drawer-header h2{ font-size: 21px; margin:0; font-family:'Archivo Black', sans-serif; }
+  .drawer-header h2{ font-size: 21px; margin:0; font-family:'Archivo Black', sans-serif; color: var(--text); }
   .drawer-close{
     background:none; border:none; color: var(--text); font-size: 28px; cursor:pointer; line-height:1;
     padding: 4px 8px;
@@ -630,21 +632,21 @@
         <div class="promo-tag">Descuentos por cantidad</div>
         <div class="promo-grid">
           <div class="promo-item">
-            <div class="promo-eyebrow">Pedido mínimo</div>
             <div class="promo-figure">3</div>
-            <div class="promo-caption">pares</div>
+            <div class="promo-caption">Pares</div>
+            <div class="promo-eyebrow">Compra mínima</div>
           </div>
           <div class="promo-item destacado">
             <div class="promo-eyebrow">Llevando</div>
             <div class="promo-figure">6</div>
-            <div class="promo-caption">pares adulto</div>
-            <div class="promo-price">-$2.000 por par</div>
+            <div class="promo-caption">Pares adulto</div>
+            <div class="promo-price"><span class="monto">-$2.000</span> <span class="unidad">por par</span></div>
           </div>
           <div class="promo-item destacado-max">
             <div class="promo-eyebrow">Llevando</div>
             <div class="promo-figure">12</div>
-            <div class="promo-caption">pares adulto</div>
-            <div class="promo-price">-$4.000 por par</div>
+            <div class="promo-caption">Pares adulto</div>
+            <div class="promo-price"><span class="monto">-$4.000</span> <span class="unidad">por par</span></div>
           </div>
         </div>
         <div class="promo-nota">VÁLIDO SÓLO EN ZAPATILLAS DE ADULTO. El descuento se aplica automáticamente al final del pedido, según la CANTIDAD TOTAL DE PARES DE ADULTO que lleves.</div>
