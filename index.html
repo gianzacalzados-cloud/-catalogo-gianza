@@ -25,6 +25,13 @@
     --off: #ef4a5c;
     --img-bg: #23262c;
     --radius: 14px;
+    --grad-accent: linear-gradient(135deg, #ff8a45, var(--accent) 50%, var(--accent-dim));
+    --grad-lime: linear-gradient(135deg, #d9ff6e, var(--accent-2) 60%, #a8d930);
+    --grad-ok: linear-gradient(135deg, #58d884, var(--ok) 65%, #2e9c58);
+    --shadow-accent: 0 6px 16px rgba(255,106,26,0.38);
+    --shadow-ok: 0 6px 16px rgba(63,191,111,0.3);
+    --shadow-soft: 0 4px 14px rgba(0,0,0,0.28);
+    --glass: rgba(37,40,46,0.55);
   }
   *{ box-sizing:border-box; }
   html,body{ margin:0; padding:0; }
@@ -77,8 +84,10 @@
   .pill-filters-row{ display:flex; gap:9px; margin-top:10px; }
   .btn-pill-filtro{
     flex:1;
-    background: var(--bg-soft);
-    border: 1px solid var(--card-border);
+    background: rgba(255,255,255,0.05);
+    backdrop-filter: blur(6px);
+    border: 1px solid rgba(255,255,255,0.1);
+    box-shadow: inset 0 1px 0 rgba(255,255,255,0.06), 0 2px 6px rgba(0,0,0,0.18);
     color: var(--text);
     border-radius: 999px;
     padding: 13px 14px;
@@ -89,17 +98,20 @@
     cursor: pointer;
     white-space: nowrap;
     display:flex; align-items:center; justify-content:center; gap:6px;
+    transition: background .15s ease, border-color .15s ease;
   }
   .btn-pill-filtro.activo{
-    background: var(--accent); border-color: var(--accent); color:#1a0e06;
+    background: var(--grad-accent); border-color: var(--accent); color:#1a0e06;
+    box-shadow: var(--shadow-accent), inset 0 1px 0 rgba(255,255,255,0.35);
   }
   .btn-pill-filtro .chev{ font-size:10px; transition: transform .15s ease; }
   .btn-pill-filtro.abierto .chev{ transform: rotate(180deg); }
 
   .panel-pildoras{
     display:none;
-    background: var(--bg-soft);
-    border: 1px solid var(--card-border);
+    background: rgba(255,255,255,0.04);
+    backdrop-filter: blur(8px);
+    border: 1px solid rgba(255,255,255,0.1);
     border-radius: 14px;
     padding: 14px;
     margin-top: 10px;
@@ -107,8 +119,9 @@
   .panel-pildoras.open{ display:block; }
   .pildoras-grupo{ display:flex; flex-wrap:wrap; gap:9px; }
   .pildora{
-    background: var(--bg);
-    border: 1px solid var(--card-border);
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(255,255,255,0.12);
+    box-shadow: inset 0 1px 0 rgba(255,255,255,0.06);
     color: var(--text);
     border-radius: 999px;
     padding: 12px 17px;
@@ -116,10 +129,12 @@
     font-size: 14.5px;
     font-weight: 600;
     cursor: pointer;
+    transition: background .15s ease, border-color .15s ease;
   }
   .pildora:hover{ border-color: var(--accent); }
   .pildora.selected{
-    background: var(--accent); border-color: var(--accent); color:#1a0e06;
+    background: var(--grad-accent); border-color: var(--accent); color:#1a0e06;
+    box-shadow: var(--shadow-accent), inset 0 1px 0 rgba(255,255,255,0.35);
   }
 
   /* ================= MAIN ================= */
@@ -128,64 +143,74 @@
   /* ---- HOME: banner + tiles ---- */
   .banner-ver-todos{
     display:block; width:100%; text-align:center;
-    background: linear-gradient(135deg, var(--accent), var(--accent-dim));
+    background: var(--grad-accent);
+    box-shadow: var(--shadow-accent), inset 0 1px 0 rgba(255,255,255,0.35);
     color: #1a0e06;
     border: none; border-radius: 14px;
     padding: 19px 20px;
     cursor: pointer;
     margin-bottom: 24px;
+    transition: filter .15s ease;
   }
+  .banner-ver-todos:hover{ filter: brightness(1.05); }
   .banner-ver-todos .titulo{ font-family:'Archivo Black', sans-serif; font-size: 17px; letter-spacing:0.03em; }
   .banner-ver-todos .sub{ font-size: 13px; font-weight:600; opacity:0.85; margin-top:3px; }
 
+  /* ---- franja de envíos, separada arriba ---- */
+  .info-strip{
+    display:flex;
+    background: var(--card);
+    border: 1px solid var(--card-border);
+    border-radius: 8px;
+    overflow: hidden;
+    margin-bottom: 14px;
+  }
+  .info-strip span{
+    flex:1; min-width:0;
+    padding: 10px 6px;
+    text-align:center;
+    font-size: 11px;
+    font-weight: 700;
+    color: var(--text-dim);
+    line-height:1.3;
+    border-right: 1px solid var(--card-border);
+  }
+  .info-strip span:last-child{ border-right:none; }
+
+  /* ---- ticket de descuentos ---- */
   .banner-promo{
     background: var(--label);
+    border: 2px solid var(--accent);
     border-radius: 10px;
     margin-bottom: 20px;
     overflow: hidden;
     position: relative;
+    box-shadow: var(--shadow-soft);
   }
-  .promo-top{ padding: 16px 18px 14px; }
+  .promo-top{ padding: 16px 18px 16px; }
   .promo-top .promo-tag{
-    font-size: 12px; font-weight: 800;
-    color: var(--accent-dim); margin-bottom: 12px;
+    font-size: 13px; font-weight: 800; letter-spacing:0.03em;
+    text-transform: uppercase;
+    color: var(--accent-dim); margin-bottom: 14px;
   }
-  .promo-grid{ display:grid; grid-template-columns: repeat(3, 1fr); position:relative; }
-  .promo-item{ text-align:center; padding: 4px 4px 0; position:relative; }
-  .promo-item + .promo-item::before{
-    content:""; position:absolute; left:0; top:4px; bottom:4px; width:1px;
-    background-image: linear-gradient(to bottom, #cfccc0 0 5px, transparent 5px 10px);
-    background-size: 1px 10px; background-repeat: repeat-y;
-  }
+  .promo-grid{ display:grid; grid-template-columns: repeat(3, 1fr); gap:8px; position:relative; }
+  .promo-item{ text-align:center; padding: 10px 4px; border-radius: 8px; }
   .promo-item .promo-num{
-    font-family:'JetBrains Mono', monospace; font-weight:700; font-size: 26px; color: var(--label-text); line-height:1;
+    font-family:'JetBrains Mono', monospace; font-weight:800; font-size: 26px; color: var(--label-text); line-height:1;
   }
   .promo-item .promo-txt{
-    font-size: 11.5px; color: #6b6b64; margin-top: 6px; line-height:1.3; font-weight:600;
+    font-size: 11.5px; color: #6b6b64; margin-top: 6px; line-height:1.3; font-weight:700;
+    text-transform: uppercase;
   }
-  .promo-item.destacado .promo-num{ color: var(--accent-dim); }
-  .promo-item.destacado-max .promo-num{ color: #1a1a1a; }
-  .promo-item.destacado-max{ position:relative; }
-  .promo-item.destacado-max::after{
-    content:""; position:absolute; inset: -4px -2px -2px;
-    background: var(--accent-2); border-radius: 8px; z-index:-1;
-  }
+  .promo-item.destacado{ background: var(--grad-accent); box-shadow: var(--shadow-accent), inset 0 1px 0 rgba(255,255,255,0.3); }
+  .promo-item.destacado .promo-num,
+  .promo-item.destacado .promo-txt{ color: #1a0e06; }
+  .promo-item.destacado-max{ background: var(--grad-lime); box-shadow: 0 6px 16px rgba(198,255,61,0.3), inset 0 1px 0 rgba(255,255,255,0.4); }
+  .promo-item.destacado-max .promo-num,
+  .promo-item.destacado-max .promo-txt{ color: #16210a; }
 
-  .ticket-perf{ position:relative; height:1px; margin: 0 16px; }
-  .ticket-perf::before{
-    content:""; position:absolute; inset:0;
-    background-image: linear-gradient(to right, #cfccc0 0 6px, transparent 6px 13px);
-    background-size: 13px 1px; background-repeat: repeat-x;
-  }
-  .ticket-perf i{
-    position:absolute; top:50%; width:18px; height:18px; border-radius:50%;
-    background: var(--bg); transform:translateY(-50%); display:block;
-  }
-  .ticket-perf i.l{ left:-27px; }
-  .ticket-perf i.r{ right:-27px; }
-
-  .promo-bottom{
-    padding: 12px 18px 14px; font-size: 11.5px; color: #6b6b64; line-height:1.5;
+  .promo-nota{
+    font-size: 11.5px; color: #6b6b64; line-height:1.4; margin-top: 14px;
   }
 
   .seccion-label{
@@ -210,6 +235,7 @@
     overflow: hidden;
     cursor: pointer;
     text-align:center;
+    box-shadow: var(--shadow-soft);
     transition: transform .12s ease;
   }
   .tile:active{ transform: scale(0.97); }
@@ -232,7 +258,9 @@
   #vista-listado{ display:none; }
   .listado-header{ display:flex; align-items:center; gap:10px; margin-bottom:16px; flex-wrap:wrap; }
   .btn-volver{
-    background: var(--bg-soft); border:1px solid var(--card-border); color: var(--text);
+    background: rgba(255,255,255,0.05); backdrop-filter: blur(6px);
+    border:1px solid rgba(255,255,255,0.1); box-shadow: inset 0 1px 0 rgba(255,255,255,0.06);
+    color: var(--text);
     border-radius: 999px; padding: 12px 16px; min-height: 44px; font-size: 14.5px; cursor:pointer; flex-shrink:0;
   }
   .listado-titulo{ font-family:'Archivo Black', sans-serif; font-size: 21px; flex:1; min-width:120px; }
@@ -254,6 +282,7 @@
     overflow: hidden;
     display:flex; flex-direction:column;
     cursor: pointer;
+    box-shadow: var(--shadow-soft);
   }
   .card .photo-wrap{
     aspect-ratio: 1/1;
@@ -272,11 +301,15 @@
   .card .precio{ font-family:'JetBrains Mono', monospace; font-weight:700; font-size: 18px; color: var(--label-text); }
   .card .precio.sin-precio{ font-family: 'Inter', sans-serif; font-size: 12.5px; color: #6b6b64; font-weight:600; }
 
-  .talles-label{ font-size: 10.5px; color: #8a897f; margin-bottom: -2px; }
-  .talles{ display:flex; flex-wrap:wrap; gap: 5px; padding-top: 6px; border-top: 1px dashed #d6d3c7; }
+  .talles-label{ font-size: 9.5px; color: #8a897f; margin-bottom: 1px; font-weight:700; }
+  .talles{
+    display:grid; grid-template-columns: repeat(auto-fill, minmax(26px, 1fr));
+    gap: 3px; padding-top: 5px; border-top: 1px dashed #d6d3c7;
+  }
   .talle-chip{
     font-family: 'JetBrains Mono', monospace;
-    font-size: 11.5px; padding: 4px 7px; border-radius: 4px;
+    font-size: 10px; padding: 3px 2px; border-radius: 3px;
+    text-align:center;
     border: 1px solid #d6d3c7;
     background: #e4e1d6;
     color: var(--label-text);
@@ -284,13 +317,14 @@
   .talle-chip.agotado{
     color: #a6a398;
     text-decoration: line-through;
-    opacity: 0.6;
+    opacity: 0.55;
   }
 
   .btn-agregar{
     margin-top: 2px;
     display:flex; align-items:center; justify-content:center; gap:6px;
-    background: var(--accent);
+    background: var(--grad-accent);
+    box-shadow: var(--shadow-accent), inset 0 1px 0 rgba(255,255,255,0.35);
     color: #1a0e06;
     font-weight: 700;
     font-size: 14.5px;
@@ -299,15 +333,17 @@
     border: none;
     border-radius: 999px;
     cursor: pointer;
-    transition: background .15s ease;
+    transition: filter .15s ease, transform .1s ease;
   }
-  .btn-agregar:hover{ background: var(--accent-dim); color: #fff; }
+  .btn-agregar:hover{ filter: brightness(1.08); }
+  .btn-agregar:active{ transform: scale(0.98); }
   .btn-agregar:disabled{
     background: #ddd9cd;
+    box-shadow:none;
     color: #8a897f;
     cursor: not-allowed;
   }
-  .btn-agregar.agregado{ background: var(--ok); color: #06210f; }
+  .btn-agregar.agregado{ background: var(--grad-ok); box-shadow: var(--shadow-ok), inset 0 1px 0 rgba(255,255,255,0.35); color: #06210f; }
 
   .badge-agotado-total{
     position:absolute; margin:8px; background: var(--off);
@@ -373,11 +409,13 @@
   .stepper{ display:flex; align-items:center; gap:14px; }
   .stepper button{
     width:42px; height:42px; border-radius:9px; border:none;
-    background: var(--accent); color:#1a0e06; font-weight:800; font-size:20px;
+    background: var(--grad-accent); box-shadow: var(--shadow-accent), inset 0 1px 0 rgba(255,255,255,0.35);
+    color:#1a0e06; font-weight:800; font-size:20px;
     cursor:pointer; display:flex; align-items:center; justify-content:center;
-    transition: opacity .12s ease;
+    transition: filter .12s ease, transform .1s ease;
   }
-  .stepper button:disabled{ background: var(--card-border); color: var(--text-dim); cursor:not-allowed; }
+  .stepper button:active{ transform: scale(0.94); }
+  .stepper button:disabled{ background: var(--card-border); box-shadow:none; color: var(--text-dim); cursor:not-allowed; }
   .stepper .cant{ min-width:26px; text-align:center; font-weight:700; font-size:16.5px; }
 
   .modal-detalle-footer{
@@ -385,10 +423,13 @@
     border-top: 1px solid var(--card-border);
   }
   .btn-agregar-detalle{
-    width:100%; background: var(--accent); color:#1a0e06; font-weight:800; font-size:16.5px;
+    width:100%; background: var(--grad-accent); color:#1a0e06; font-weight:800; font-size:16.5px;
+    box-shadow: var(--shadow-accent), inset 0 1px 0 rgba(255,255,255,0.35);
     border:none; border-radius:10px; padding:16px 10px; min-height:54px; cursor:pointer;
+    transition: filter .15s ease;
   }
-  .btn-agregar-detalle:disabled{ background: var(--card-border); color: var(--text-dim); cursor:not-allowed; }
+  .btn-agregar-detalle:hover{ filter: brightness(1.06); }
+  .btn-agregar-detalle:disabled{ background: var(--card-border); box-shadow:none; color: var(--text-dim); cursor:not-allowed; }
   .modal-detalle-footer .nota{ text-align:center; font-size: 11px; color: var(--text-dim); margin-top:8px; }
 
   .empty-state{
@@ -405,16 +446,16 @@
     right: calc(16px + env(safe-area-inset-right,0px));
     bottom: calc(16px + env(safe-area-inset-bottom,0px));
     z-index: 30;
-    background: var(--accent);
+    background: var(--grad-accent);
     color: #1a0e06;
     border: none;
+    box-shadow: var(--shadow-accent), inset 0 1px 0 rgba(255,255,255,0.35);
     border-radius: 999px;
     padding: 16px 22px;
     min-height: 54px;
     font-weight: 700;
     font-size: 14.5px;
     display:flex; align-items:center; gap:9px;
-    box-shadow: 0 6px 20px rgba(20,20,30,0.25);
     cursor: pointer;
   }
   .cart-fab .badge{
@@ -484,8 +525,9 @@
 
   .qty-control{ display:flex; align-items:center; gap:12px; margin-top:10px; }
   .qty-control button{
-    width:38px; height:38px; border-radius:8px; border:1px solid var(--card-border);
-    background: var(--bg-soft); color: var(--text); cursor:pointer; font-size:17px;
+    width:38px; height:38px; border-radius:8px; border:1px solid rgba(255,255,255,0.12);
+    background: rgba(255,255,255,0.05); box-shadow: inset 0 1px 0 rgba(255,255,255,0.06);
+    color: var(--text); cursor:pointer; font-size:17px;
   }
   .qty-control span{ font-size: 15.5px; min-width: 22px; text-align:center; font-weight:600; }
   .btn-quitar{
@@ -505,14 +547,17 @@
   .total-nota{ font-size: 12.5px; color: var(--text-dim); margin-bottom: 14px; line-height:1.4; }
 
   .btn-pedido{
-    width:100%; background: var(--ok); color:#06210f; border:none; border-radius:10px;
+    width:100%; background: var(--grad-ok); color:#06210f; border:none; border-radius:10px;
+    box-shadow: var(--shadow-ok), inset 0 1px 0 rgba(255,255,255,0.35);
     padding: 16px; min-height:54px; font-weight:700; font-size: 16.5px; cursor:pointer;
     display:flex; align-items:center; justify-content:center; gap:8px;
+    transition: filter .15s ease;
   }
   .btn-pedido:hover{ filter: brightness(1.08); }
+  .btn-pedido:disabled{ background: var(--card-border); box-shadow:none; color: var(--text-dim); cursor:not-allowed; }
 
   .btn-vaciar{
-    width:100%; background:none; border:1px solid var(--card-border); color: var(--text-dim);
+    width:100%; background: rgba(255,255,255,0.04); border:1px solid rgba(255,255,255,0.1); color: var(--text-dim);
     border-radius:10px; padding: 13px; min-height:46px; font-size: 13.5px; cursor:pointer; margin-top:10px;
   }
 </style>
@@ -548,6 +593,12 @@
 
   <!-- ============ VISTA HOME ============ -->
   <div id="vista-home">
+    <div class="info-strip">
+      <span>DESPACHOS LUN / MIÉ / VIE</span>
+      <span>ENVÍO CABA Y GBA EN EL DÍA</span>
+      <span>ENVÍOS A TODO EL PAÍS</span>
+    </div>
+
     <div class="banner-promo">
       <div class="promo-top">
         <div class="promo-tag">Descuentos por cantidad</div>
@@ -557,18 +608,15 @@
             <div class="promo-txt">pares<br>mínimo</div>
           </div>
           <div class="promo-item destacado">
-            <div class="promo-num">6</div>
+            <div class="promo-num">X6</div>
             <div class="promo-txt">-$2.000<br>por par</div>
           </div>
           <div class="promo-item destacado-max">
-            <div class="promo-num">12</div>
+            <div class="promo-num">X12</div>
             <div class="promo-txt">-$4.000<br>por par</div>
           </div>
         </div>
-      </div>
-      <div class="ticket-perf"><i class="l"></i><i class="r"></i></div>
-      <div class="promo-bottom">
-        Pares de zapatillas adulto, combinando modelos y talles a elección. Despachos lunes, miércoles y viernes, con envío express en el día para CABA y GBA, y envíos a todo el país por Cargo y Correo Argentino.
+        <div class="promo-nota">Pares de zapatillas adulto, combinando modelos y talles a elección</div>
       </div>
     </div>
 
