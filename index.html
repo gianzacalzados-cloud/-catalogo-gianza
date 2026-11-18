@@ -53,9 +53,14 @@
   .mono{ font-family: 'JetBrains Mono', monospace; }
 
   /* ================= HEADER ================= */
-  header{
+  header{ position: relative; z-index: 20; }
+  .header-top{
+    padding: calc(16px + env(safe-area-inset-top,0px)) 16px 0;
+    background: var(--bg);
+  }
+  .header-sticky{
     position: sticky; top:0; z-index: 20;
-    padding: 16px 16px calc(14px + env(safe-area-inset-top,0px));
+    padding: 12px 16px 14px;
     background: rgba(12,13,16,0.85);
     backdrop-filter: blur(10px);
     border-bottom: 1px solid var(--card-border);
@@ -596,58 +601,64 @@
 <body>
 
 <header>
-  <div class="header-inner">
-    <div class="brand-row">
-      <h1>GIANZA <span class="tag">Mayorista</span></h1>
-      <small id="total-info">cargando…</small>
-    </div>
+  <div class="header-top">
+    <div class="header-inner">
+      <div class="brand-row">
+        <h1>GIANZA <span class="tag">Mayorista</span></h1>
+        <small id="total-info">cargando…</small>
+      </div>
 
-    <div class="info-strip">
-      <span>DESPACHOS LUN / MIÉ / VIE</span>
-      <span>ENVÍO CABA Y GBA EN EL DÍA</span>
-      <span>ENVÍOS A TODO EL PAÍS</span>
-    </div>
+      <div class="info-strip">
+        <span>DESPACHOS LUN / MIÉ / VIE</span>
+        <span>ENVÍO CABA Y GBA EN EL DÍA</span>
+        <span>ENVÍOS A TODO EL PAÍS</span>
+      </div>
 
-    <div class="banner-promo">
-      <div class="promo-top">
-        <div class="promo-tag">Descuentos por cantidad</div>
-        <div class="promo-grid">
-          <div class="promo-item">
-            <div class="promo-figure">3</div>
-            <div class="promo-caption">Pares</div>
-            <div class="promo-eyebrow">Compra mínima</div>
+      <div class="banner-promo">
+        <div class="promo-top">
+          <div class="promo-tag">Descuentos por cantidad</div>
+          <div class="promo-grid">
+            <div class="promo-item">
+              <div class="promo-figure">3</div>
+              <div class="promo-caption">Pares</div>
+              <div class="promo-eyebrow">Compra mínima</div>
+            </div>
+            <div class="promo-item destacado">
+              <div class="promo-eyebrow">Llevando</div>
+              <div class="promo-figure">6</div>
+              <div class="promo-caption">Pares adulto</div>
+              <div class="promo-price"><span class="monto">-$2.000</span> <span class="unidad">por par</span></div>
+            </div>
+            <div class="promo-item destacado-max">
+              <div class="promo-eyebrow">Llevando</div>
+              <div class="promo-figure">12</div>
+              <div class="promo-caption">Pares adulto</div>
+              <div class="promo-price"><span class="monto">-$4.000</span> <span class="unidad">por par</span></div>
+            </div>
           </div>
-          <div class="promo-item destacado">
-            <div class="promo-eyebrow">Llevando</div>
-            <div class="promo-figure">6</div>
-            <div class="promo-caption">Pares adulto</div>
-            <div class="promo-price"><span class="monto">-$2.000</span> <span class="unidad">por par</span></div>
-          </div>
-          <div class="promo-item destacado-max">
-            <div class="promo-eyebrow">Llevando</div>
-            <div class="promo-figure">12</div>
-            <div class="promo-caption">Pares adulto</div>
-            <div class="promo-price"><span class="monto">-$4.000</span> <span class="unidad">por par</span></div>
-          </div>
+          <!-- <div class="promo-nota">VÁLIDO SÓLO EN ZAPATILLAS DE ADULTO. El descuento se aplica automáticamente al final del pedido, según la CANTIDAD TOTAL DE PARES DE ADULTO que lleves.</div> -->
         </div>
-        <!-- <div class="promo-nota">VÁLIDO SÓLO EN ZAPATILLAS DE ADULTO. El descuento se aplica automáticamente al final del pedido, según la CANTIDAD TOTAL DE PARES DE ADULTO que lleves.</div> -->
       </div>
     </div>
+  </div>
 
-    <div class="search-row">
-      <input id="buscador" type="text" placeholder="Buscar modelo (ej: dunk, 530, air force)…" autocomplete="off" />
-    </div>
+  <div class="header-sticky">
+    <div class="header-inner">
+      <div class="search-row">
+        <input id="buscador" type="text" placeholder="Buscar modelo (ej: dunk, 530, air force)…" autocomplete="off" />
+      </div>
 
-    <div class="pill-filters-row">
-      <button class="btn-pill-filtro" id="btn-toggle-marca">Filtrar por marca <span class="chev">▾</span></button>
-      <button class="btn-pill-filtro" id="btn-toggle-talle">Filtrar por talle <span class="chev">▾</span></button>
-    </div>
+      <div class="pill-filters-row">
+        <button class="btn-pill-filtro" id="btn-toggle-marca">Filtrar por marca <span class="chev">▾</span></button>
+        <button class="btn-pill-filtro" id="btn-toggle-talle">Filtrar por talle <span class="chev">▾</span></button>
+      </div>
 
-    <div class="panel-pildoras" id="panel-marca">
-      <div class="pildoras-grupo" id="pildoras-marca"></div>
-    </div>
-    <div class="panel-pildoras" id="panel-talle">
-      <div class="pildoras-grupo" id="pildoras-talle"></div>
+      <div class="panel-pildoras" id="panel-marca">
+        <div class="pildoras-grupo" id="pildoras-marca"></div>
+      </div>
+      <div class="panel-pildoras" id="panel-talle">
+        <div class="pildoras-grupo" id="pildoras-talle"></div>
+      </div>
     </div>
   </div>
 </header>
