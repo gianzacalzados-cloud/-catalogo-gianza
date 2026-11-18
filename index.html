@@ -154,11 +154,22 @@
   .tile:hover{ border-color: var(--accent); }
   .tile .tile-photo{
     aspect-ratio: 1/1;
-    background: #0d0f14;
+    background-color: #0d0f14;
+    background-size: cover;
+    background-position: center;
     display:flex; align-items:center; justify-content:center;
     overflow:hidden;
+    position: relative;
   }
-  .tile .tile-photo img{ width:100%; height:100%; object-fit:contain; }
+  .tile .tile-photo::before{
+    content:"";
+    position:absolute; inset: -10%;
+    background: inherit;
+    filter: blur(16px) brightness(0.55);
+    transform: scale(1.15);
+    z-index: 0;
+  }
+  .tile .tile-photo img{ position:relative; z-index:1; width:100%; height:100%; object-fit:contain; }
   .tile .tile-photo .sin{ color: var(--text-dim); font-size: 10px; }
   .tile .tile-info{ padding: 8px 6px 10px; }
   .tile .tile-nombre{
@@ -195,12 +206,22 @@
   }
   .card .photo-wrap{
     aspect-ratio: 1/1;
-    background: #0d0f14;
+    background-color: #0d0f14;
+    background-size: cover;
+    background-position: center;
     display:flex; align-items:center; justify-content:center;
     overflow:hidden;
     position: relative;
   }
-  .card img{ width:100%; height:100%; object-fit: contain; }
+  .card .photo-wrap::before{
+    content:"";
+    position:absolute; inset: -10%;
+    background: inherit;
+    filter: blur(16px) brightness(0.55);
+    transform: scale(1.15);
+    z-index: 0;
+  }
+  .card img{ position:relative; z-index:1; width:100%; height:100%; object-fit: contain; }
   .card .noimg{ color: var(--text-dim); font-size: 12px; }
 
   .card .body{ padding: 10px; display:flex; flex-direction:column; gap: 8px; flex:1; }
@@ -259,6 +280,91 @@
     color:white; font-size:10px; font-weight:700; padding:3px 7px; border-radius:6px;
     z-index: 2;
   }
+
+  .card{ cursor: pointer; }
+
+  /* --- Modal detalle de producto (selector de talle + cantidad) --- */
+  .overlay-detalle{
+    position: fixed; inset:0; background: rgba(0,0,0,0.6);
+    z-index: 60; display:none;
+  }
+  .overlay-detalle.open{ display:block; }
+  .modal-detalle{
+    position: fixed; left:50%; top:50%;
+    transform: translate(-50%,-50%);
+    width: min(440px, calc(100% - 24px));
+    max-height: min(88vh, 720px);
+    background: var(--bg-soft);
+    border: 1px solid var(--card-border);
+    border-radius: var(--radius);
+    z-index: 65;
+    display:none;
+    flex-direction: column;
+    overflow: hidden;
+  }
+  .modal-detalle.open{ display:flex; }
+  .modal-detalle-header{
+    padding: 16px 16px 10px;
+    display:flex; align-items:flex-start; justify-content:space-between; gap:10px;
+    border-bottom: 1px solid var(--card-border);
+  }
+  .modal-detalle-header .titulo{
+    color: var(--accent); font-weight:800; font-size: 13px; letter-spacing:0.03em;
+  }
+  .modal-detalle-close{
+    background:none; border:none; color: var(--text); font-size: 22px; cursor:pointer; line-height:1;
+  }
+  .modal-detalle-body{ padding: 16px; overflow-y:auto; flex:1; }
+  .modal-detalle-foto{
+    width:100%; aspect-ratio: 4/3; max-height: 220px;
+    background-color:#0d0f14; background-size:cover; background-position:center;
+    border-radius:10px; overflow:hidden; position: relative;
+    display:flex; align-items:center; justify-content:center; margin-bottom: 14px;
+  }
+  .modal-detalle-foto::before{
+    content:"";
+    position:absolute; inset: -10%;
+    background: inherit;
+    filter: blur(18px) brightness(0.5);
+    transform: scale(1.15);
+    z-index: 0;
+  }
+  .modal-detalle-foto img{ position:relative; z-index:1; width:100%; height:100%; object-fit: contain; }
+  .modal-detalle-nombre{ font-size: 16px; font-weight:800; margin: 0 0 4px; }
+  .modal-detalle-precio{ font-family:'Archivo Black', sans-serif; font-size: 20px; color: var(--ok); margin-bottom: 14px; }
+  .modal-detalle-precio.sin-precio{ font-family:'Inter',sans-serif; font-size:13px; color:var(--text-dim); font-weight:600; }
+  .modal-detalle-label{ font-size: 13px; color: var(--text-dim); margin-bottom: 10px; }
+
+  .fila-talle{
+    display:flex; align-items:center; justify-content:space-between;
+    background: var(--card); border: 1px solid var(--card-border); border-radius: 10px;
+    padding: 10px 12px; margin-bottom: 8px;
+  }
+  .fila-talle.agotado{ opacity:0.45; }
+  .fila-talle .talle-info{ font-size: 13px; }
+  .fila-talle .talle-info b{ font-weight:800; }
+  .fila-talle .talle-disp{ color: var(--text-dim); font-weight:500; margin-left:6px; }
+  .fila-talle.agotado .talle-disp{ color: var(--off); }
+  .stepper{ display:flex; align-items:center; gap:10px; }
+  .stepper button{
+    width:28px; height:28px; border-radius:7px; border:none;
+    background: var(--accent); color:#1a0e06; font-weight:800; font-size:16px;
+    cursor:pointer; display:flex; align-items:center; justify-content:center;
+    transition: opacity .12s ease;
+  }
+  .stepper button:disabled{ background: var(--card-border); color: var(--text-dim); cursor:not-allowed; }
+  .stepper .cant{ min-width:16px; text-align:center; font-weight:700; font-size:14px; }
+
+  .modal-detalle-footer{
+    padding: 14px 16px calc(14px + env(safe-area-inset-bottom,0px));
+    border-top: 1px solid var(--card-border);
+  }
+  .btn-agregar-detalle{
+    width:100%; background: var(--accent); color:#1a0e06; font-weight:800; font-size:14px;
+    border:none; border-radius:10px; padding:13px 10px; cursor:pointer;
+  }
+  .btn-agregar-detalle:disabled{ background: var(--card-border); color: var(--text-dim); cursor:not-allowed; }
+  .modal-detalle-footer .nota{ text-align:center; font-size: 11px; color: var(--text-dim); margin-top:8px; }
 
   .empty-state{
     text-align:center; color: var(--text-dim); padding: 60px 20px; font-size: 15px;
@@ -445,6 +551,19 @@
   </div>
 </div>
 
+<div class="overlay-detalle" id="overlay-detalle"></div>
+<div class="modal-detalle" id="modal-detalle">
+  <div class="modal-detalle-header">
+    <div class="titulo">DETALLE DEL PRODUCTO</div>
+    <button class="modal-detalle-close" id="modal-detalle-close">&times;</button>
+  </div>
+  <div class="modal-detalle-body" id="modal-detalle-body"></div>
+  <div class="modal-detalle-footer">
+    <button class="btn-agregar-detalle" id="btn-agregar-detalle" disabled>Agregar</button>
+    <div class="nota">Podés elegir varios talles y confirmar juntos.</div>
+  </div>
+</div>
+
 <script>
 const WHATSAPP_NUMERO = "5491128375698";
 
@@ -567,10 +686,11 @@ function renderTiles(){
     const fotoHtml = fotoPortada
       ? `<img src="${fotoPortada}" alt="${tile.label}" loading="lazy" />`
       : `<span class="sin">Sin foto</span>`;
+    const bgStyle = fotoPortada ? ` style="background-image:url('${fotoPortada}')"` : '';
 
     return `
       <div class="tile" data-tipo="${tile.tipo}" data-valor="${tile.valor}" data-label="${tile.label}">
-        <div class="tile-photo">${fotoHtml}</div>
+        <div class="tile-photo"${bgStyle}>${fotoHtml}</div>
         <div class="tile-info">
           <div class="tile-nombre">${tile.label}</div>
           <div class="tile-count">${matches.length} modelo${matches.length===1?'':'s'}</div>
@@ -691,22 +811,20 @@ function render(lista){
 
   grid.innerHTML = lista.map(p => {
     const agotadoTotal = p.stockTotal === 0;
-    const primerConStock = p.talles.find(t => t.stock > 0);
 
     const tallesHtml = p.talles.map(t => {
       const sinStock = t.stock === 0;
-      const esSeleccionado = primerConStock && t.talle === primerConStock.talle;
-      return `<span class="talle-chip ${sinStock ? 'agotado' : ''} ${esSeleccionado ? 'selected' : ''}"
-                    data-pid="${p.id}" data-talle="${t.talle}" data-stock="${t.stock}">${t.talle}</span>`;
+      return `<span class="talle-chip ${sinStock ? 'agotado' : ''}">${t.talle}</span>`;
     }).join('');
 
     const fotoHtml = p.foto
       ? `<img src="${p.foto}" alt="${p.nombre}" loading="lazy" />`
       : `<span class="noimg">Sin foto</span>`;
+    const bgStyle = p.foto ? ` style="background-image:url('${p.foto}')"` : '';
 
     return `
       <div class="card" data-card-id="${p.id}">
-        <div class="photo-wrap">
+        <div class="photo-wrap"${bgStyle}>
           ${agotadoTotal ? '<span class="badge-agotado-total">AGOTADO</span>' : ''}
           ${fotoHtml}
         </div>
@@ -717,7 +835,7 @@ function render(lista){
           <div class="talles-label">Talles</div>
           <div class="talles">${tallesHtml}</div>
           <button class="btn-agregar" data-pid="${p.id}" ${agotadoTotal ? 'disabled' : ''}>
-            ${agotadoTotal ? 'Sin stock' : '+ Agregar'}
+            ${agotadoTotal ? 'Sin stock' : 'Elegir talles'}
           </button>
         </div>
       </div>
@@ -750,48 +868,131 @@ document.getElementById('buscador').addEventListener('input', () => {
   if(vista === "listado") aplicarFiltros();
 });
 
-// click en chips de talle (selecciona talle dentro de esa tarjeta) y en botón agregar
+// click en cualquier parte de la tarjeta abre el detalle con selector de talle + cantidad
 document.getElementById('grid').addEventListener('click', (e) => {
-  const chip = e.target.closest('.talle-chip');
-  if(chip && !chip.classList.contains('agotado')){
-    const card = chip.closest('.card');
-    card.querySelectorAll('.talle-chip').forEach(c => c.classList.remove('selected'));
-    chip.classList.add('selected');
-    return;
-  }
-
-  const btn = e.target.closest('.btn-agregar');
-  if(btn && !btn.disabled){
-    const pid = parseInt(btn.dataset.pid, 10);
-    const card = btn.closest('.card');
-    const chipSel = card.querySelector('.talle-chip.selected');
-    if(!chipSel){ return; }
-    const talle = chipSel.dataset.talle;
-    agregarAlCarrito(pid, talle);
-
-    const original = btn.textContent;
-    btn.textContent = '✓';
-    btn.classList.add('agregado');
-    setTimeout(() => { btn.textContent = original; btn.classList.remove('agregado'); }, 900);
-  }
+  const card = e.target.closest('.card');
+  if(!card) return;
+  const pid = parseInt(card.dataset.cardId, 10);
+  abrirDetalle(pid);
 });
 
 // ---------- carrito ----------
-function agregarAlCarrito(pid, talle){
+function agregarAlCarrito(pid, talle, cantidad){
+  cantidad = cantidad || 1;
   const p = productos.find(x => x.id === pid);
   if(!p) return;
   const existente = cart.find(i => i.id === pid && i.talle === talle);
   if(existente){
-    existente.cantidad += 1;
+    existente.cantidad += cantidad;
   }else{
     cart.push({
       id: p.id, nombre: p.nombre, marca: p.marca, precio: p.precio,
-      foto: p.foto, talle: talle, cantidad: 1
+      foto: p.foto, talle: talle, cantidad: cantidad
     });
   }
   guardarCarrito();
   actualizarBadge();
 }
+
+// ---------- modal de detalle (elegir talle + cantidad) ----------
+let detalleProductoId = null;
+let detalleCantidades = {}; // { talle: cantidad }
+
+function abrirDetalle(pid){
+  const p = productos.find(x => x.id === pid);
+  if(!p) return;
+  detalleProductoId = pid;
+  detalleCantidades = {};
+  renderModalDetalle(p);
+  document.getElementById('modal-detalle').classList.add('open');
+  document.getElementById('overlay-detalle').classList.add('open');
+}
+
+function cerrarDetalle(){
+  document.getElementById('modal-detalle').classList.remove('open');
+  document.getElementById('overlay-detalle').classList.remove('open');
+  detalleProductoId = null;
+}
+
+function renderModalDetalle(p){
+  const body = document.getElementById('modal-detalle-body');
+  const fotoHtml = p.foto
+    ? `<img src="${p.foto}" alt="${p.nombre}">`
+    : `<span class="noimg">Sin foto</span>`;
+  const bgStyle = p.foto ? ` style="background-image:url('${p.foto}')"` : '';
+  const precioHtml = p.precio
+    ? `<div class="modal-detalle-precio">$${p.precio.toLocaleString('es-AR')}</div>`
+    : `<div class="modal-detalle-precio sin-precio">Consultar precio</div>`;
+
+  const filasHtml = p.talles.map(t => {
+    const sinStock = t.stock === 0;
+    const cant = detalleCantidades[t.talle] || 0;
+    return `
+      <div class="fila-talle ${sinStock ? 'agotado' : ''}" data-talle="${t.talle}" data-stock="${t.stock}">
+        <div class="talle-info"><b>TALLE ${t.talle}</b><span class="talle-disp">${sinStock ? 'AGOTADO' : `${t.stock} disponibles`}</span></div>
+        ${sinStock ? '' : `
+        <div class="stepper">
+          <button class="btn-rest" data-talle="${t.talle}" ${cant <= 0 ? 'disabled' : ''}>−</button>
+          <span class="cant">${cant}</span>
+          <button class="btn-sum" data-talle="${t.talle}" ${cant >= t.stock ? 'disabled' : ''}>+</button>
+        </div>`}
+      </div>
+    `;
+  }).join('');
+
+  body.innerHTML = `
+    <div class="modal-detalle-foto"${bgStyle}>${fotoHtml}</div>
+    <div class="modal-detalle-nombre">${p.nombre}</div>
+    ${precioHtml}
+    <div class="modal-detalle-label">Seleccioná la cantidad por talle:</div>
+    ${filasHtml}
+  `;
+
+  actualizarBotonAgregarDetalle();
+}
+
+function actualizarBotonAgregarDetalle(){
+  const totalPares = Object.values(detalleCantidades).reduce((a,b) => a+b, 0);
+  const btn = document.getElementById('btn-agregar-detalle');
+  btn.disabled = totalPares === 0;
+  btn.textContent = totalPares > 0
+    ? `AGREGAR (${totalPares} par${totalPares===1?'':'es'})`
+    : 'AGREGAR';
+}
+
+document.getElementById('modal-detalle-body').addEventListener('click', (e) => {
+  const p = productos.find(x => x.id === detalleProductoId);
+  if(!p) return;
+
+  const btnSum = e.target.closest('.btn-sum');
+  const btnRest = e.target.closest('.btn-rest');
+  if(!btnSum && !btnRest) return;
+
+  const talle = (btnSum || btnRest).dataset.talle;
+  const talleObj = p.talles.find(t => t.talle === talle);
+  if(!talleObj) return;
+
+  const actual = detalleCantidades[talle] || 0;
+  if(btnSum && actual < talleObj.stock){
+    detalleCantidades[talle] = actual + 1;
+  }else if(btnRest && actual > 0){
+    detalleCantidades[talle] = actual - 1;
+    if(detalleCantidades[talle] === 0) delete detalleCantidades[talle];
+  }
+  renderModalDetalle(p);
+});
+
+document.getElementById('btn-agregar-detalle').addEventListener('click', () => {
+  if(!detalleProductoId) return;
+  const entradas = Object.entries(detalleCantidades).filter(([_, c]) => c > 0);
+  if(entradas.length === 0) return;
+  entradas.forEach(([talle, cantidad]) => agregarAlCarrito(detalleProductoId, talle, cantidad));
+  cerrarDetalle();
+  abrirDrawer();
+});
+
+document.getElementById('modal-detalle-close').addEventListener('click', cerrarDetalle);
+document.getElementById('overlay-detalle').addEventListener('click', cerrarDetalle);
 
 function quitarDelCarrito(idx){
   cart.splice(idx, 1);
