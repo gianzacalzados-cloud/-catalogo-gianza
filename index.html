@@ -34,47 +34,157 @@
   a{ color: inherit; }
   button{ font-family: inherit; }
 
+  /* ================= HEADER ================= */
   header{
     position: sticky; top:0; z-index: 20;
-    padding: 18px 20px calc(16px + env(safe-area-inset-top,0px));
-    background: rgba(17,19,24,0.92);
+    padding: 14px 16px calc(12px + env(safe-area-inset-top,0px));
+    background: rgba(17,19,24,0.95);
     backdrop-filter: blur(10px);
     border-bottom: 1px solid var(--card-border);
   }
   .header-inner{ max-width: 1200px; margin: 0 auto; }
-  .brand{ display:flex; align-items:baseline; gap:10px; margin-bottom:14px; flex-wrap: wrap; }
-  .brand h1{
+  .brand-row{ display:flex; align-items:baseline; justify-content:space-between; gap:10px; margin-bottom:12px; }
+  .brand-row h1{
     font-family:'Archivo Black', sans-serif;
-    font-size: clamp(22px, 4vw, 30px);
+    font-size: clamp(19px, 4vw, 26px);
     margin:0; letter-spacing: -0.5px;
   }
-  .brand .tag{ color: var(--accent); }
-  .brand small{ color: var(--text-dim); font-size: 13px; font-weight: 500; }
+  .brand-row .tag{ color: var(--accent); }
+  .brand-row small{ color: var(--text-dim); font-size: 12px; font-weight: 500; }
 
-  .controls{ display:flex; gap:10px; flex-wrap: wrap; }
-  .controls input, .controls select{
+  .search-row{ display:flex; gap:8px; }
+  .search-row input{
+    flex:1; min-width:0;
     background: var(--bg-soft);
     border: 1px solid var(--card-border);
     color: var(--text);
-    border-radius: 10px;
-    padding: 11px 14px;
+    border-radius: 999px;
+    padding: 11px 16px;
     font-family: inherit;
     font-size: 14px;
   }
-  .controls input{ flex: 1 1 220px; min-width: 180px; }
-  .controls input::placeholder{ color: var(--text-dim); }
-  .controls select{ flex: 0 1 160px; }
-  .controls input:focus, .controls select:focus{ outline: 2px solid var(--accent); outline-offset: 1px; }
+  .search-row input::placeholder{ color: var(--text-dim); }
+  .search-row input:focus{ outline: 2px solid var(--accent); outline-offset: 1px; }
 
-  main{ max-width: 1200px; margin: 0 auto; padding: 22px 20px 100px; }
+  .pill-filters-row{ display:flex; gap:8px; margin-top:8px; }
+  .btn-pill-filtro{
+    flex:1;
+    background: var(--bg-soft);
+    border: 1px solid var(--card-border);
+    color: var(--text);
+    border-radius: 999px;
+    padding: 10px 14px;
+    font-size: 12.5px;
+    font-weight: 700;
+    letter-spacing: 0.02em;
+    cursor: pointer;
+    white-space: nowrap;
+    display:flex; align-items:center; justify-content:center; gap:6px;
+  }
+  .btn-pill-filtro.activo{
+    background: var(--accent); border-color: var(--accent); color:#1a0e06;
+  }
+  .btn-pill-filtro .chev{ font-size:10px; transition: transform .15s ease; }
+  .btn-pill-filtro.abierto .chev{ transform: rotate(180deg); }
 
-  .count-row{ color: var(--text-dim); font-size: 13px; margin-bottom: 14px; }
+  .panel-pildoras{
+    display:none;
+    background: var(--bg-soft);
+    border: 1px solid var(--card-border);
+    border-radius: 14px;
+    padding: 14px;
+    margin-top: 10px;
+  }
+  .panel-pildoras.open{ display:block; }
+  .pildoras-grupo{ display:flex; flex-wrap:wrap; gap:8px; }
+  .pildora{
+    background: var(--bg);
+    border: 1px solid var(--card-border);
+    color: var(--text);
+    border-radius: 999px;
+    padding: 8px 14px;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+  }
+  .pildora:hover{ border-color: var(--accent); }
+  .pildora.selected{
+    background: var(--accent); border-color: var(--accent); color:#1a0e06;
+  }
+
+  /* ================= MAIN ================= */
+  main{ max-width: 1200px; margin: 0 auto; padding: 18px 16px 100px; }
+
+  /* ---- HOME: banner + tiles ---- */
+  .banner-ver-todos{
+    display:block; width:100%; text-align:center;
+    background: linear-gradient(135deg, var(--accent), var(--accent-dim));
+    color: #1a0e06;
+    border: none; border-radius: 14px;
+    padding: 16px 20px;
+    cursor: pointer;
+    margin-bottom: 22px;
+  }
+  .banner-ver-todos .titulo{ font-family:'Archivo Black', sans-serif; font-size: 16px; letter-spacing:0.03em; }
+  .banner-ver-todos .sub{ font-size: 12.5px; font-weight:600; opacity:0.85; margin-top:2px; }
+
+  .seccion-label{
+    font-size: 11.5px; letter-spacing: 0.08em; color: var(--text-dim); font-weight:700;
+    margin: 0 0 10px 2px;
+  }
+
+  .tiles-grid{
+    display:grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+  }
+  @media (min-width: 560px){ .tiles-grid{ grid-template-columns: repeat(4, 1fr); } }
+  @media (min-width: 820px){ .tiles-grid{ grid-template-columns: repeat(5, 1fr); } }
+  @media (min-width: 1040px){ .tiles-grid{ grid-template-columns: repeat(6, 1fr); } }
+
+  .tile{
+    background: var(--card);
+    border: 1px solid var(--card-border);
+    border-radius: 12px;
+    overflow: hidden;
+    cursor: pointer;
+    text-align:center;
+    transition: border-color .12s ease;
+  }
+  .tile:hover{ border-color: var(--accent); }
+  .tile .tile-photo{
+    aspect-ratio: 1/1;
+    background: #0d0f14;
+    display:flex; align-items:center; justify-content:center;
+    overflow:hidden;
+  }
+  .tile .tile-photo img{ width:100%; height:100%; object-fit:cover; }
+  .tile .tile-photo .sin{ color: var(--text-dim); font-size: 10px; }
+  .tile .tile-info{ padding: 8px 6px 10px; }
+  .tile .tile-nombre{
+    font-size: 11.5px; font-weight: 800; letter-spacing:0.02em;
+    white-space:nowrap; overflow:hidden; text-overflow:ellipsis;
+  }
+  .tile .tile-count{ font-size: 10.5px; color: var(--text-dim); margin-top: 2px; }
+
+  /* ---- LISTADO ---- */
+  #vista-listado{ display:none; }
+  .listado-header{ display:flex; align-items:center; gap:10px; margin-bottom:14px; flex-wrap:wrap; }
+  .btn-volver{
+    background: var(--bg-soft); border:1px solid var(--card-border); color: var(--text);
+    border-radius: 999px; padding: 8px 14px; font-size: 13px; cursor:pointer; flex-shrink:0;
+  }
+  .listado-titulo{ font-family:'Archivo Black', sans-serif; font-size: 18px; flex:1; min-width:120px; }
+  .listado-count{ color: var(--text-dim); font-size: 12.5px; width:100%; }
 
   .grid{
     display:grid;
-    grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
-    gap: 16px;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
   }
+  @media (min-width: 560px){ .grid{ grid-template-columns: repeat(3, 1fr); gap:14px; } }
+  @media (min-width: 820px){ .grid{ grid-template-columns: repeat(4, 1fr); } }
+  @media (min-width: 1100px){ .grid{ grid-template-columns: repeat(5, 1fr); } }
 
   .card{
     background: var(--card);
@@ -91,18 +201,18 @@
     position: relative;
   }
   .card img{ width:100%; height:100%; object-fit: cover; }
-  .card .noimg{ color: var(--text-dim); font-size: 13px; }
+  .card .noimg{ color: var(--text-dim); font-size: 12px; }
 
-  .card .body{ padding: 14px; display:flex; flex-direction:column; gap: 10px; flex:1; }
-  .card .marca{ font-size: 11px; letter-spacing: 0.04em; color: var(--accent); font-weight: 700; }
-  .card h3{ font-size: 15px; margin: 0; line-height: 1.3; min-height: 2.6em; }
-  .card .precio{ font-family:'Archivo Black', sans-serif; font-size: 19px; }
-  .card .precio.sin-precio{ font-family: 'Inter', sans-serif; font-size: 13px; color: var(--text-dim); font-weight:600; }
+  .card .body{ padding: 10px; display:flex; flex-direction:column; gap: 8px; flex:1; }
+  .card .marca{ font-size: 10px; letter-spacing: 0.04em; color: var(--accent); font-weight: 700; }
+  .card h3{ font-size: 13px; margin: 0; line-height: 1.3; min-height: 2.4em; }
+  .card .precio{ font-family:'Archivo Black', sans-serif; font-size: 16px; }
+  .card .precio.sin-precio{ font-family: 'Inter', sans-serif; font-size: 11.5px; color: var(--text-dim); font-weight:600; }
 
-  .talles-label{ font-size: 11px; color: var(--text-dim); margin-bottom: -4px; }
-  .talles{ display:flex; flex-wrap:wrap; gap: 6px; }
+  .talles-label{ font-size: 10px; color: var(--text-dim); margin-bottom: -4px; }
+  .talles{ display:flex; flex-wrap:wrap; gap: 5px; }
   .talle-chip{
-    font-size: 12px; padding: 6px 10px; border-radius: 7px;
+    font-size: 11px; padding: 5px 8px; border-radius: 6px;
     border: 1px solid var(--card-border);
     background: var(--bg-soft);
     color: var(--text);
@@ -125,14 +235,14 @@
 
   .btn-agregar{
     margin-top: auto;
-    display:flex; align-items:center; justify-content:center; gap:8px;
+    display:flex; align-items:center; justify-content:center; gap:6px;
     background: var(--accent);
     color: #1a0e06;
     font-weight: 700;
-    font-size: 13.5px;
-    padding: 10px 12px;
+    font-size: 12px;
+    padding: 9px 10px;
     border: none;
-    border-radius: 9px;
+    border-radius: 8px;
     cursor: pointer;
     transition: background .15s ease;
   }
@@ -145,8 +255,8 @@
   .btn-agregar.agregado{ background: var(--ok); color: #06210f; }
 
   .badge-agotado-total{
-    position:absolute; margin:10px; background: var(--off);
-    color:white; font-size:11px; font-weight:700; padding:4px 9px; border-radius:7px;
+    position:absolute; margin:8px; background: var(--off);
+    color:white; font-size:10px; font-weight:700; padding:3px 7px; border-radius:6px;
     z-index: 2;
   }
 
@@ -262,34 +372,53 @@
 
 <header>
   <div class="header-inner">
-    <div class="brand">
+    <div class="brand-row">
       <h1>GIANZA <span class="tag">Mayorista</span></h1>
-      <small id="total-info">cargando catálogo…</small>
+      <small id="total-info">cargando…</small>
     </div>
-    <div class="controls">
+
+    <div class="search-row">
       <input id="buscador" type="text" placeholder="Buscar modelo (ej: dunk, 530, air force)…" autocomplete="off" />
-      <select id="filtro-marca">
-        <option value="">Todas las marcas</option>
-      </select>
-      <select id="filtro-categoria">
-        <option value="">Todas las categorías</option>
-        <option value="Adulto">Adulto</option>
-        <option value="Infantil">Infantil</option>
-        <option value="Ojotas">Ojotas</option>
-        <option value="Nike Mind">Nike Mind</option>
-      </select>
-      <select id="filtro-stock">
-        <option value="">Todos</option>
-        <option value="con-stock">Con stock</option>
-      </select>
+    </div>
+
+    <div class="pill-filters-row">
+      <button class="btn-pill-filtro" id="btn-toggle-marca">Filtrar por marca <span class="chev">▾</span></button>
+      <button class="btn-pill-filtro" id="btn-toggle-talle">Filtrar por talle <span class="chev">▾</span></button>
+    </div>
+
+    <div class="panel-pildoras" id="panel-marca">
+      <div class="pildoras-grupo" id="pildoras-marca"></div>
+    </div>
+    <div class="panel-pildoras" id="panel-talle">
+      <div class="pildoras-grupo" id="pildoras-talle"></div>
     </div>
   </div>
 </header>
 
 <main>
-  <div class="count-row" id="count-row"></div>
-  <div class="grid" id="grid"></div>
-  <div class="empty-state" id="empty-state" style="display:none;">No encontramos zapatillas con esa búsqueda.</div>
+
+  <!-- ============ VISTA HOME ============ -->
+  <div id="vista-home">
+    <button class="banner-ver-todos" id="btn-ver-todos">
+      <div class="titulo">VER TODOS LOS MODELOS</div>
+      <div class="sub" id="banner-sub">cargando catálogo…</div>
+    </button>
+
+    <div class="seccion-label">O ELEGÍ UNA MARCA</div>
+    <div class="tiles-grid" id="tiles-grid"></div>
+  </div>
+
+  <!-- ============ VISTA LISTADO ============ -->
+  <div id="vista-listado">
+    <div class="listado-header">
+      <button class="btn-volver" id="btn-volver">← Volver</button>
+      <div class="listado-titulo" id="listado-titulo">Todos los modelos</div>
+      <div class="listado-count" id="listado-count"></div>
+    </div>
+    <div class="grid" id="grid"></div>
+    <div class="empty-state" id="empty-state" style="display:none;">No encontramos zapatillas con esa búsqueda.</div>
+  </div>
+
 </main>
 
 <footer>GIANZA Mayorista · Catálogo actualizado desde inventario</footer>
@@ -319,14 +448,36 @@
 <script>
 const WHATSAPP_NUMERO = "5491128375698";
 
-// ⚠️ Reemplazá estos dos valores por los de TU proyecto de Supabase
-// (son los mismos que pusiste en admin.html — Project Settings → API)
 const SUPABASE_URL = "https://koevucbehoqfktkjjwme.supabase.co";
 const SUPABASE_ANON_KEY = "sb_publishable_kn4THufXr7EI9S2uA1SJyg_RUby7TQw";
 const sb = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
+// Tarjetas de la pantalla de inicio: marcas propias + categorías especiales.
+// tipo "marca" filtra por el campo marca; tipo "categoria" filtra por el campo categoria.
+const TILES = [
+  { label: "ADIDAS",      tipo: "marca",     valor: "ADIDAS" },
+  { label: "NIKE",        tipo: "marca",     valor: "NIKE" },
+  { label: "JORDAN",      tipo: "marca",     valor: "JORDAN" },
+  { label: "NEW BALANCE", tipo: "marca",     valor: "NEW BALANCE" },
+  { label: "VANS",        tipo: "marca",     valor: "VANS" },
+  { label: "PUMA",        tipo: "marca",     valor: "PUMA" },
+  { label: "CONVERSE",    tipo: "marca",     valor: "CONVERSE" },
+  { label: "DC",          tipo: "marca",     valor: "DC" },
+  { label: "ON CLOUD",    tipo: "marca",     valor: "ON CLOUD" },
+  { label: "NIKE MIND",   tipo: "categoria", valor: "Nike Mind" },
+  { label: "INFANTILES",  tipo: "categoria", valor: "Infantil" },
+  { label: "OJOTAS",      tipo: "categoria", valor: "Ojotas" },
+];
+
 let productos = [];
 let cart = [];
+
+// estado de navegación / filtros
+let vista = "home"; // "home" | "listado"
+let filtroMarca = "";
+let filtroCategoria = "";
+let filtroTalle = "";
+let tituloListado = "Todos los modelos";
 
 // ---------- utilidades ----------
 function formatoPrecio(p){
@@ -345,11 +496,160 @@ function guardarCarrito(){
   try{ localStorage.setItem('gianza_cart', JSON.stringify(cart)); }catch(e){}
 }
 
-// ---------- render del catálogo ----------
+// ---------- navegación entre vistas ----------
+function mostrarHome(){
+  vista = "home";
+  filtroMarca = "";
+  filtroCategoria = "";
+  filtroTalle = "";
+  document.getElementById('buscador').value = "";
+  cerrarPaneles();
+  actualizarPildorasSeleccionadas();
+  document.getElementById('vista-home').style.display = "block";
+  document.getElementById('vista-listado').style.display = "none";
+  window.scrollTo({ top: 0, behavior: "instant" in window ? "instant" : "auto" });
+}
+
+function mostrarListado(titulo){
+  vista = "listado";
+  tituloListado = titulo;
+  document.getElementById('vista-home').style.display = "none";
+  document.getElementById('vista-listado').style.display = "block";
+  document.getElementById('listado-titulo').textContent = titulo;
+  window.scrollTo({ top: 0, behavior: "instant" in window ? "instant" : "auto" });
+  aplicarFiltros();
+}
+
+document.getElementById('btn-volver').addEventListener('click', mostrarHome);
+document.getElementById('btn-ver-todos').addEventListener('click', () => {
+  filtroMarca = ""; filtroCategoria = "";
+  mostrarListado("Todos los modelos");
+});
+
+// ---------- tiles de la home ----------
+function renderTiles(){
+  const cont = document.getElementById('tiles-grid');
+  cont.innerHTML = TILES.map(tile => {
+    const matches = productos.filter(p =>
+      tile.tipo === "marca" ? p.marca === tile.valor : p.categoria === tile.valor
+    );
+    const conFoto = matches.filter(m => m.foto);
+    const representativo = conFoto.find(m => m.stockTotal > 0) || conFoto[0];
+    const fotoHtml = representativo
+      ? `<img src="${representativo.foto}" alt="${tile.label}" loading="lazy" />`
+      : `<span class="sin">Sin foto</span>`;
+
+    return `
+      <div class="tile" data-tipo="${tile.tipo}" data-valor="${tile.valor}" data-label="${tile.label}">
+        <div class="tile-photo">${fotoHtml}</div>
+        <div class="tile-info">
+          <div class="tile-nombre">${tile.label}</div>
+          <div class="tile-count">${matches.length} modelo${matches.length===1?'':'s'}</div>
+        </div>
+      </div>
+    `;
+  }).join('');
+}
+
+document.getElementById('tiles-grid').addEventListener('click', (e) => {
+  const tile = e.target.closest('.tile');
+  if(!tile) return;
+  const tipo = tile.dataset.tipo;
+  const valor = tile.dataset.valor;
+  const label = tile.dataset.label;
+  filtroMarca = tipo === "marca" ? valor : "";
+  filtroCategoria = tipo === "categoria" ? valor : "";
+  mostrarListado(label);
+});
+
+// ---------- paneles de filtro tipo píldora ----------
+function cerrarPaneles(){
+  document.getElementById('panel-marca').classList.remove('open');
+  document.getElementById('panel-talle').classList.remove('open');
+  document.getElementById('btn-toggle-marca').classList.remove('abierto', 'activo');
+  document.getElementById('btn-toggle-talle').classList.remove('abierto', 'activo');
+}
+
+document.getElementById('btn-toggle-marca').addEventListener('click', () => {
+  const panel = document.getElementById('panel-marca');
+  const estabaAbierto = panel.classList.contains('open');
+  cerrarPaneles();
+  if(!estabaAbierto){
+    panel.classList.add('open');
+    document.getElementById('btn-toggle-marca').classList.add('abierto');
+  }
+});
+document.getElementById('btn-toggle-talle').addEventListener('click', () => {
+  const panel = document.getElementById('panel-talle');
+  const estabaAbierto = panel.classList.contains('open');
+  cerrarPaneles();
+  if(!estabaAbierto){
+    panel.classList.add('open');
+    document.getElementById('btn-toggle-talle').classList.add('abierto');
+  }
+});
+
+function poblarPildorasMarca(){
+  const marcas = [...new Set(productos.map(p => p.marca).filter(Boolean))].sort();
+  const cont = document.getElementById('pildoras-marca');
+  cont.innerHTML = ['Todas', ...marcas].map(m => {
+    const valor = m === 'Todas' ? '' : m;
+    return `<button type="button" class="pildora" data-valor="${valor}">${m}</button>`;
+  }).join('');
+}
+function poblarPildorasTalle(){
+  const talles = new Set();
+  productos.forEach(p => p.talles.forEach(t => {
+    if(t.talle && t.talle.trim().toUpperCase() !== "" && !t.talle.includes("/") && !isNaN(parseInt(t.talle,10))){
+      talles.add(parseInt(t.talle, 10));
+    }
+  }));
+  const ordenados = [...talles].sort((a,b) => a-b);
+  const cont = document.getElementById('pildoras-talle');
+  cont.innerHTML = ['Todos', ...ordenados].map(t => {
+    const valor = t === 'Todos' ? '' : String(t);
+    return `<button type="button" class="pildora" data-valor="${valor}">${t}</button>`;
+  }).join('');
+}
+
+function actualizarPildorasSeleccionadas(){
+  document.querySelectorAll('#pildoras-marca .pildora').forEach(b => {
+    b.classList.toggle('selected', b.dataset.valor === filtroMarca);
+  });
+  document.querySelectorAll('#pildoras-talle .pildora').forEach(b => {
+    b.classList.toggle('selected', b.dataset.valor === filtroTalle);
+  });
+  document.getElementById('btn-toggle-marca').classList.toggle('activo', !!filtroMarca);
+  document.getElementById('btn-toggle-talle').classList.toggle('activo', !!filtroTalle);
+}
+
+document.getElementById('pildoras-marca').addEventListener('click', (e) => {
+  const btn = e.target.closest('.pildora');
+  if(!btn) return;
+  filtroMarca = btn.dataset.valor;
+  filtroCategoria = ""; // una marca puntual reemplaza un filtro de categoria previo
+  cerrarPaneles();
+  actualizarPildorasSeleccionadas();
+  mostrarListado(filtroMarca || "Todos los modelos");
+});
+document.getElementById('pildoras-talle').addEventListener('click', (e) => {
+  const btn = e.target.closest('.pildora');
+  if(!btn) return;
+  filtroTalle = btn.dataset.valor;
+  cerrarPaneles();
+  actualizarPildorasSeleccionadas();
+  if(vista === "home"){
+    mostrarListado("Todos los modelos");
+  }else{
+    aplicarFiltros();
+  }
+});
+
+// ---------- render del catálogo (listado) ----------
 function render(lista){
   const grid = document.getElementById('grid');
   const empty = document.getElementById('empty-state');
-  const countRow = document.getElementById('count-row');
+  const countRow = document.getElementById('listado-count');
 
   if(lista.length === 0){
     grid.innerHTML = '';
@@ -388,7 +688,7 @@ function render(lista){
           <div class="talles-label">Talles</div>
           <div class="talles">${tallesHtml}</div>
           <button class="btn-agregar" data-pid="${p.id}" ${agotadoTotal ? 'disabled' : ''}>
-            ${agotadoTotal ? 'Sin stock' : '+ Agregar al carrito'}
+            ${agotadoTotal ? 'Sin stock' : '+ Agregar'}
           </button>
         </div>
       </div>
@@ -398,20 +698,26 @@ function render(lista){
 
 function aplicarFiltros(){
   const q = document.getElementById('buscador').value.trim().toLowerCase();
-  const marca = document.getElementById('filtro-marca').value;
-  const categoria = document.getElementById('filtro-categoria').value;
-  const soloConStock = document.getElementById('filtro-stock').value === 'con-stock';
 
   const filtrado = productos.filter(p => {
     if(q && !p.nombre.toLowerCase().includes(q) && !(p.marca||'').toLowerCase().includes(q)) return false;
-    if(marca && p.marca !== marca) return false;
-    if(categoria && p.categoria !== categoria) return false;
-    if(soloConStock && p.stockTotal === 0) return false;
+    if(filtroMarca && p.marca !== filtroMarca) return false;
+    if(filtroCategoria && p.categoria !== filtroCategoria) return false;
+    if(filtroTalle && !p.talles.some(t => t.talle === filtroTalle)) return false;
     return true;
   });
 
   render(filtrado);
 }
+
+document.getElementById('buscador').addEventListener('input', () => {
+  const q = document.getElementById('buscador').value.trim();
+  if(q && vista === "home"){
+    mostrarListado("Resultados de búsqueda");
+    return;
+  }
+  if(vista === "listado") aplicarFiltros();
+});
 
 // click en chips de talle (selecciona talle dentro de esa tarjeta) y en botón agregar
 document.getElementById('grid').addEventListener('click', (e) => {
@@ -433,7 +739,7 @@ document.getElementById('grid').addEventListener('click', (e) => {
     agregarAlCarrito(pid, talle);
 
     const original = btn.textContent;
-    btn.textContent = '✓ Agregado';
+    btn.textContent = '✓';
     btn.classList.add('agregado');
     setTimeout(() => { btn.textContent = original; btn.classList.remove('agregado'); }, 900);
   }
@@ -586,22 +892,13 @@ async function init(){
     return;
   }
 
-  document.getElementById('total-info').textContent = `${productos.length} modelos en catálogo`;
+  document.getElementById('total-info').textContent = `${productos.length} modelos`;
+  document.getElementById('banner-sub').textContent = `${productos.length} modelos con stock, de todas las marcas`;
 
-  const marcas = [...new Set(productos.map(p => p.marca).filter(Boolean))].sort();
-  const sel = document.getElementById('filtro-marca');
-  marcas.forEach(m => {
-    const opt = document.createElement('option');
-    opt.value = m; opt.textContent = m;
-    sel.appendChild(opt);
-  });
-
-  document.getElementById('buscador').addEventListener('input', aplicarFiltros);
-  document.getElementById('filtro-marca').addEventListener('change', aplicarFiltros);
-  document.getElementById('filtro-categoria').addEventListener('change', aplicarFiltros);
-  document.getElementById('filtro-stock').addEventListener('change', aplicarFiltros);
-
-  render(productos);
+  renderTiles();
+  poblarPildorasMarca();
+  poblarPildorasTalle();
+  mostrarHome();
 }
 
 init();
