@@ -167,21 +167,21 @@
   /* ---- franja de envíos, separada arriba ---- */
   .info-strip{
     display:flex;
-    background: var(--card);
-    border: 1px solid var(--card-border);
+    background: rgba(63,191,111,0.08);
+    border: 1px solid rgba(63,191,111,0.28);
     border-radius: 8px;
     overflow: hidden;
     margin-bottom: 14px;
   }
   .info-strip span{
     flex:1; min-width:0;
-    padding: 10px 6px;
+    padding: 6px 5px;
     text-align:center;
-    font-size: 11px;
+    font-size: 9.5px;
     font-weight: 700;
-    color: var(--text-dim);
-    line-height:1.3;
-    border-right: 1px solid var(--card-border);
+    color: var(--ok);
+    line-height:1.25;
+    border-right: 1px solid rgba(63,191,111,0.2);
   }
   .info-strip span:last-child{ border-right:none; }
 
@@ -602,28 +602,6 @@
       <small id="total-info">cargando…</small>
     </div>
 
-    <div class="search-row">
-      <input id="buscador" type="text" placeholder="Buscar modelo (ej: dunk, 530, air force)…" autocomplete="off" />
-    </div>
-
-    <div class="pill-filters-row">
-      <button class="btn-pill-filtro" id="btn-toggle-marca">Filtrar por marca <span class="chev">▾</span></button>
-      <button class="btn-pill-filtro" id="btn-toggle-talle">Filtrar por talle <span class="chev">▾</span></button>
-    </div>
-
-    <div class="panel-pildoras" id="panel-marca">
-      <div class="pildoras-grupo" id="pildoras-marca"></div>
-    </div>
-    <div class="panel-pildoras" id="panel-talle">
-      <div class="pildoras-grupo" id="pildoras-talle"></div>
-    </div>
-  </div>
-</header>
-
-<main>
-
-  <!-- ============ VISTA HOME ============ -->
-  <div id="vista-home">
     <div class="info-strip">
       <span>DESPACHOS LUN / MIÉ / VIE</span>
       <span>ENVÍO CABA Y GBA EN EL DÍA</span>
@@ -656,6 +634,28 @@
       </div>
     </div>
 
+    <div class="search-row">
+      <input id="buscador" type="text" placeholder="Buscar modelo (ej: dunk, 530, air force)…" autocomplete="off" />
+    </div>
+
+    <div class="pill-filters-row">
+      <button class="btn-pill-filtro" id="btn-toggle-marca">Filtrar por marca <span class="chev">▾</span></button>
+      <button class="btn-pill-filtro" id="btn-toggle-talle">Filtrar por talle <span class="chev">▾</span></button>
+    </div>
+
+    <div class="panel-pildoras" id="panel-marca">
+      <div class="pildoras-grupo" id="pildoras-marca"></div>
+    </div>
+    <div class="panel-pildoras" id="panel-talle">
+      <div class="pildoras-grupo" id="pildoras-talle"></div>
+    </div>
+  </div>
+</header>
+
+<main>
+
+  <!-- ============ VISTA HOME ============ -->
+  <div id="vista-home">
     <button class="banner-ver-todos" id="btn-ver-todos">
       <div>
         <div class="titulo">Ver todos los modelos</div>
