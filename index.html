@@ -52,6 +52,16 @@
   .brand-row .tag{ color: var(--accent); }
   .brand-row small{ color: var(--text-dim); font-size: 12px; font-weight: 500; }
 
+  .info-envios{
+    display:flex; flex-wrap:wrap; gap: 6px 14px;
+    margin-bottom: 10px;
+    font-size: 11.5px;
+    color: var(--text-dim);
+  }
+  .info-envios span{ display:flex; align-items:center; gap:5px; white-space:nowrap; }
+  .info-envios b{ color: var(--text); font-weight: 700; }
+  .info-envios .express{ color: var(--ok); font-weight: 700; }
+
   .search-row{ display:flex; gap:8px; }
   .search-row input{
     flex:1; min-width:0;
@@ -452,6 +462,12 @@
     <div class="brand-row">
       <h1>GIANZA <span class="tag">Mayorista</span></h1>
       <small id="total-info">cargando…</small>
+    </div>
+
+    <div class="info-envios">
+      <span>🚚 Despachos: <b>Lunes, Miércoles y Viernes</b></span>
+      <span class="express">⚡ Envío express en el día para CABA/GBA</span>
+      <span>📦 Envíos a todo el país por Cargo / Correo Argentino</span>
     </div>
 
     <div class="search-row">
