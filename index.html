@@ -199,31 +199,32 @@
     font-size: 16px; letter-spacing:0.01em; text-transform: uppercase;
     color: var(--accent); margin-bottom: 12px;
   }
-  .promo-grid{ display:grid; grid-template-columns: repeat(3, 1fr); gap:8px; position:relative; }
+  .promo-grid{ display:grid; grid-template-columns: 0.78fr 1.11fr 1.11fr; gap:7px; position:relative; }
   .promo-item{
-    text-align:center; padding: 12px 4px; border-radius: 8px;
+    text-align:center; padding: 10px 3px; border-radius: 8px; min-width:0;
     display:flex; flex-direction:column; align-items:center; justify-content:center;
     background: var(--card);
     border: 1px solid var(--soft-border);
   }
   .promo-item .promo-eyebrow{
-    font-size: 9px; font-weight:700; letter-spacing:0.08em;
+    font-size: 8.5px; font-weight:700; letter-spacing:0.07em;
     text-transform: uppercase; color: var(--text-dim);
   }
   .promo-item .promo-figure{
-    font-family:'Archivo Black', sans-serif; font-size: 30px; line-height:1.1;
-    color: var(--text); margin-top: 4px;
+    font-family:'Archivo Black', sans-serif; font-size: 26px; line-height:1.1;
+    color: var(--text); margin-top: 3px;
   }
   .promo-item .promo-caption{
     font-family:'Archivo Black', sans-serif;
-    font-size: 10.5px; letter-spacing:0.03em; color: var(--text); margin-top: 3px;
+    font-size: 9.5px; letter-spacing:0.02em; color: var(--text); margin-top: 2px;
     text-transform: uppercase;
   }
   .promo-item .promo-price{
-    margin-top: 9px;
-    font-family:'Archivo Black', sans-serif; font-size: 12px;
-    letter-spacing:0.02em;
+    margin-top: 7px;
+    font-family:'Archivo Black', sans-serif; font-size: 10.5px;
+    letter-spacing:0.01em;
     text-transform: uppercase;
+    white-space: nowrap;
   }
   .promo-item .promo-price .monto{ color: var(--accent); }
   .promo-item .promo-price .unidad{ color: var(--text-dim); }
@@ -649,7 +650,7 @@
             <div class="promo-price"><span class="monto">-$4.000</span> <span class="unidad">por par</span></div>
           </div>
         </div>
-        <div class="promo-nota">VÁLIDO SÓLO EN ZAPATILLAS DE ADULTO. El descuento se aplica automáticamente al final del pedido, según la CANTIDAD TOTAL DE PARES DE ADULTO que lleves.</div>
+        <!-- <div class="promo-nota">VÁLIDO SÓLO EN ZAPATILLAS DE ADULTO. El descuento se aplica automáticamente al final del pedido, según la CANTIDAD TOTAL DE PARES DE ADULTO que lleves.</div> -->
       </div>
     </div>
 
