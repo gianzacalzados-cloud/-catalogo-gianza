@@ -80,6 +80,14 @@
     border-radius:7px; padding:8px 10px; font-size:13.5px;
   }
   .campo-foto{ grid-column: 1 / -1; }
+  .campo-foto-row{ display:flex; gap:8px; }
+  .campo-foto-row .campo-foto-input{ flex:1; }
+  .btn-subir-foto{
+    flex-shrink:0; background: var(--bg-soft); border:1px solid var(--card-border); color:var(--text);
+    border-radius:7px; padding:0 14px; font-size:13px; cursor:pointer; white-space:nowrap;
+  }
+  .btn-subir-foto:hover{ border-color: var(--accent); }
+  .btn-subir-foto:disabled{ opacity:0.6; cursor:wait; }
 
   .talles-editor{ grid-column: 1 / -1; }
   .talles-editor label{ margin-bottom:6px; }
@@ -279,7 +287,11 @@ function filaProducto(p){
         </div>
         <div class="campo-foto">
           <label>URL de la foto</label>
-          <input class="campo-foto-input" value="${(p.foto||'').replace(/"/g,'&quot;')}" placeholder="https://..." />
+          <div class="campo-foto-row">
+            <input class="campo-foto-input" value="${(p.foto||'').replace(/"/g,'&quot;')}" placeholder="https://..." />
+            <button type="button" class="btn-subir-foto">📷 Subir desde PC</button>
+            <input type="file" class="input-file-foto" accept="image/*" style="display:none;" />
+          </div>
         </div>
         <div class="talles-editor">
           <label>Talles y stock</label>
@@ -317,6 +329,12 @@ document.getElementById('lista-productos').addEventListener('click', async (e) =
   if(!fila) return;
   const refId = fila.dataset.ref;
   const esNuevo = fila.dataset.nuevo === '1';
+
+  // abrir el explorador de archivos
+  if(e.target.closest('.btn-subir-foto')){
+    fila.querySelector('.input-file-foto').click();
+    return;
+  }
 
   // agregar talle
   if(e.target.closest('.btn-add-talle')){
@@ -380,6 +398,49 @@ document.getElementById('lista-productos').addEventListener('click', async (e) =
     return;
   }
 });
+
+// cuando el usuario elige un archivo desde su PC, subirlo automáticamente
+document.getElementById('lista-productos').addEventListener('change', async (e) => {
+  const fileInput = e.target.closest('.input-file-foto');
+  if(!fileInput || !fileInput.files || !fileInput.files[0]) return;
+
+  const fila = fileInput.closest('.producto-row');
+  const file = fileInput.files[0];
+  await subirFoto(file, fila);
+  fileInput.value = ''; // permite volver a elegir el mismo archivo si hace falta
+});
+
+async function subirFoto(file, fila){
+  const btn = fila.querySelector('.btn-subir-foto');
+  const textoOriginal = btn.textContent;
+  btn.disabled = true;
+  btn.textContent = 'Subiendo…';
+
+  try{
+    const extension = file.name.split('.').pop().toLowerCase().replace(/[^a-z0-9]/g, '') || 'jpg';
+    const nombreArchivo = `${Date.now()}-${Math.random().toString(36).slice(2,8)}.${extension}`;
+
+    const { error: errorSubida } = await sb.storage.from('productos').upload(nombreArchivo, file, {
+      cacheControl: '3600',
+      upsert: false
+    });
+    if(errorSubida) throw errorSubida;
+
+    const { data } = sb.storage.from('productos').getPublicUrl(nombreArchivo);
+    const urlPublica = data.publicUrl;
+
+    fila.querySelector('.campo-foto-input').value = urlPublica;
+    const img = fila.querySelector('img');
+    if(img){ img.src = urlPublica; img.style.visibility = 'visible'; }
+
+    mostrarStatus('ok', 'Imagen subida. No te olvides de tocar "Guardar" para confirmar el producto.');
+  }catch(err){
+    mostrarStatus('error', 'Error subiendo la imagen: ' + err.message);
+  }finally{
+    btn.disabled = false;
+    btn.textContent = textoOriginal;
+  }
+}
 
 function leerFormulario(fila){
   const nombre = fila.querySelector('.campo-nombre').value.trim();
