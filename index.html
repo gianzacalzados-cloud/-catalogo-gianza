@@ -6,21 +6,24 @@
 <title>GIANZA Mayorista — Catálogo</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;700;800&display=swap" rel="stylesheet">
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
 <style>
   :root{
-    --bg: #1b1d22;
-    --bg-soft: #24262c;
-    --card: #24262c;
-    --card-border: #35373e;
+    --bg: #15171b;
+    --bg-soft: #1c1f24;
+    --card: #1c1f24;
+    --card-border: #2c2f37;
+    --label: #efece4;
+    --label-text: #17181b;
     --accent: #ff6a1a;
     --accent-dim: #c65315;
-    --text: #f1f1ef;
+    --accent-2: #c6ff3d;
+    --text: #f5f3ee;
     --text-dim: #9a9ea8;
     --ok: #3fbf6f;
-    --off: #e6484f;
-    --img-bg: #2c2e35;
+    --off: #ef4a5c;
+    --img-bg: #23262c;
     --radius: 14px;
   }
   *{ box-sizing:border-box; }
@@ -29,11 +32,13 @@
     background: var(--bg);
     color: var(--text);
     font-family: 'Inter', sans-serif;
+    font-size: 15px;
     padding-top: env(safe-area-inset-top, 0px);
     padding-bottom: env(safe-area-inset-bottom, 0px);
   }
   a{ color: inherit; }
   button{ font-family: inherit; }
+  .mono{ font-family: 'JetBrains Mono', monospace; }
 
   /* ================= HEADER ================= */
   header{
@@ -53,16 +58,6 @@
   .brand-row .tag{ color: var(--accent); }
   .brand-row small{ color: var(--text-dim); font-size: 12.5px; font-weight: 500; }
 
-  .info-envios{
-    display:flex; flex-wrap:wrap; gap: 7px 14px;
-    margin-bottom: 12px;
-    font-size: 12.5px;
-    line-height: 1.5;
-    color: var(--text-dim);
-  }
-  .info-envios span{ display:flex; align-items:center; gap:5px; white-space:nowrap; }
-  .info-envios b{ color: var(--text); font-weight: 700; }
-  .info-envios .express{ color: var(--ok); font-weight: 700; }
 
   .search-row{ display:flex; gap:8px; }
   .search-row input{
@@ -86,9 +81,9 @@
     border: 1px solid var(--card-border);
     color: var(--text);
     border-radius: 999px;
-    padding: 12px 14px;
-    min-height: 46px;
-    font-size: 13px;
+    padding: 13px 14px;
+    min-height: 48px;
+    font-size: 14px;
     font-weight: 700;
     letter-spacing: 0.02em;
     cursor: pointer;
@@ -116,9 +111,9 @@
     border: 1px solid var(--card-border);
     color: var(--text);
     border-radius: 999px;
-    padding: 11px 16px;
-    min-height: 42px;
-    font-size: 13.5px;
+    padding: 12px 17px;
+    min-height: 44px;
+    font-size: 14.5px;
     font-weight: 600;
     cursor: pointer;
   }
@@ -144,20 +139,54 @@
   .banner-ver-todos .sub{ font-size: 13px; font-weight:600; opacity:0.85; margin-top:3px; }
 
   .banner-promo{
-    background: var(--card);
-    border: 1px solid var(--card-border);
-    border-left: 3px solid var(--accent);
+    background: var(--label);
     border-radius: 10px;
-    padding: 13px 16px;
-    margin-bottom: 18px;
+    margin-bottom: 20px;
+    overflow: hidden;
+    position: relative;
   }
-  .banner-promo .promo-linea{
-    font-size: 13px; font-weight: 700; letter-spacing: 0.02em;
-    color: var(--text-dim); padding: 4px 0;
-    line-height: 1.5;
+  .promo-top{ padding: 16px 18px 14px; }
+  .promo-top .promo-tag{
+    font-size: 12px; font-weight: 800;
+    color: var(--accent-dim); margin-bottom: 12px;
   }
-  .banner-promo .promo-linea.minimo{ color: var(--text); }
-  .banner-promo .promo-linea b{ color: var(--accent); font-weight: 800; }
+  .promo-grid{ display:grid; grid-template-columns: repeat(3, 1fr); position:relative; }
+  .promo-item{ text-align:center; padding: 4px 4px 0; position:relative; }
+  .promo-item + .promo-item::before{
+    content:""; position:absolute; left:0; top:4px; bottom:4px; width:1px;
+    background-image: linear-gradient(to bottom, #cfccc0 0 5px, transparent 5px 10px);
+    background-size: 1px 10px; background-repeat: repeat-y;
+  }
+  .promo-item .promo-num{
+    font-family:'JetBrains Mono', monospace; font-weight:700; font-size: 26px; color: var(--label-text); line-height:1;
+  }
+  .promo-item .promo-txt{
+    font-size: 11.5px; color: #6b6b64; margin-top: 6px; line-height:1.3; font-weight:600;
+  }
+  .promo-item.destacado .promo-num{ color: var(--accent-dim); }
+  .promo-item.destacado-max .promo-num{ color: #1a1a1a; }
+  .promo-item.destacado-max{ position:relative; }
+  .promo-item.destacado-max::after{
+    content:""; position:absolute; inset: -4px -2px -2px;
+    background: var(--accent-2); border-radius: 8px; z-index:-1;
+  }
+
+  .ticket-perf{ position:relative; height:1px; margin: 0 16px; }
+  .ticket-perf::before{
+    content:""; position:absolute; inset:0;
+    background-image: linear-gradient(to right, #cfccc0 0 6px, transparent 6px 13px);
+    background-size: 13px 1px; background-repeat: repeat-x;
+  }
+  .ticket-perf i{
+    position:absolute; top:50%; width:18px; height:18px; border-radius:50%;
+    background: var(--bg); transform:translateY(-50%); display:block;
+  }
+  .ticket-perf i.l{ left:-27px; }
+  .ticket-perf i.r{ right:-27px; }
+
+  .promo-bottom{
+    padding: 12px 18px 14px; font-size: 11.5px; color: #6b6b64; line-height:1.5;
+  }
 
   .seccion-label{
     font-size: 12px; letter-spacing: 0.08em; color: var(--text-dim); font-weight:700;
@@ -166,24 +195,24 @@
 
   .tiles-grid{
     display:grid;
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(2, 1fr);
     gap: 12px;
   }
+  @media (min-width: 420px){ .tiles-grid{ grid-template-columns: repeat(3, 1fr); } }
   @media (min-width: 560px){ .tiles-grid{ grid-template-columns: repeat(4, 1fr); } }
   @media (min-width: 820px){ .tiles-grid{ grid-template-columns: repeat(5, 1fr); } }
   @media (min-width: 1040px){ .tiles-grid{ grid-template-columns: repeat(6, 1fr); } }
 
   .tile{
-    background: var(--card);
+    background: var(--label);
     border: 1px solid var(--card-border);
-    border-radius: 12px;
+    border-radius: 8px;
     overflow: hidden;
     cursor: pointer;
     text-align:center;
-    transition: border-color .12s ease;
-    box-shadow: 0 1px 3px rgba(20,20,30,0.06);
+    transition: transform .12s ease;
   }
-  .tile:hover{ border-color: var(--accent); }
+  .tile:active{ transform: scale(0.97); }
   .tile .tile-photo{
     aspect-ratio: 1/1;
     background: var(--img-bg);
@@ -192,22 +221,22 @@
   }
   .tile .tile-photo img{ width:100%; height:100%; object-fit:cover; }
   .tile .tile-photo .sin{ color: var(--text-dim); font-size: 10px; }
-  .tile .tile-info{ padding: 9px 7px 12px; }
+  .tile .tile-info{ padding: 11px 8px 13px; border-top: 1px dashed #d6d3c7; }
   .tile .tile-nombre{
-    font-size: 12.5px; font-weight: 800; letter-spacing:0.02em;
+    font-size: 14.5px; font-weight: 800; color: var(--label-text);
     white-space:nowrap; overflow:hidden; text-overflow:ellipsis;
   }
-  .tile .tile-count{ font-size: 11px; color: var(--text-dim); margin-top: 3px; }
+  .tile .tile-count{ font-family:'JetBrains Mono', monospace; font-size: 12px; color: #8a897f; margin-top: 4px; }
 
   /* ---- LISTADO ---- */
   #vista-listado{ display:none; }
   .listado-header{ display:flex; align-items:center; gap:10px; margin-bottom:16px; flex-wrap:wrap; }
   .btn-volver{
     background: var(--bg-soft); border:1px solid var(--card-border); color: var(--text);
-    border-radius: 999px; padding: 11px 16px; min-height: 42px; font-size: 13.5px; cursor:pointer; flex-shrink:0;
+    border-radius: 999px; padding: 12px 16px; min-height: 44px; font-size: 14.5px; cursor:pointer; flex-shrink:0;
   }
-  .listado-titulo{ font-family:'Archivo Black', sans-serif; font-size: 19px; flex:1; min-width:120px; }
-  .listado-count{ color: var(--text-dim); font-size: 13px; width:100%; }
+  .listado-titulo{ font-family:'Archivo Black', sans-serif; font-size: 21px; flex:1; min-width:120px; }
+  .listado-count{ color: var(--text-dim); font-size: 14px; width:100%; }
 
   .grid{
     display:grid;
@@ -219,12 +248,12 @@
   @media (min-width: 1100px){ .grid{ grid-template-columns: repeat(5, 1fr); } }
 
   .card{
-    background: var(--card);
+    background: var(--label);
     border: 1px solid var(--card-border);
-    border-radius: var(--radius);
+    border-radius: 8px;
     overflow: hidden;
     display:flex; flex-direction:column;
-    box-shadow: 0 1px 3px rgba(20,20,30,0.06);
+    cursor: pointer;
   }
   .card .photo-wrap{
     aspect-ratio: 1/1;
@@ -236,65 +265,55 @@
   .card img{ width:100%; height:100%; object-fit: cover; }
   .card .noimg{ color: var(--text-dim); font-size: 12px; }
 
-  .card .body{ padding: 12px; display:flex; flex-direction:column; gap: 9px; flex:1; }
-  .card .marca{ font-size: 10.5px; letter-spacing: 0.04em; color: var(--accent); font-weight: 700; }
-  .card h3{ font-size: 14.5px; margin: 0; line-height: 1.35; min-height: 2.6em; }
-  .card .precio{ font-family:'Archivo Black', sans-serif; font-size: 18px; }
-  .card .precio.sin-precio{ font-family: 'Inter', sans-serif; font-size: 12.5px; color: var(--text-dim); font-weight:600; }
+  /* la parte de abajo imita la etiqueta de papel pegada en una caja de zapatillas */
+  .card .body{ background: var(--label); color: var(--label-text); padding: 12px 13px 13px; display:flex; flex-direction:column; gap: 8px; flex:1; }
+  .card .marca{ font-size: 11px; color: var(--accent-dim); font-weight: 800; }
+  .card h3{ font-size: 15px; margin: 0; line-height: 1.3; min-height: 2.5em; font-weight:700; color: var(--label-text); }
+  .card .precio{ font-family:'JetBrains Mono', monospace; font-weight:700; font-size: 18px; color: var(--label-text); }
+  .card .precio.sin-precio{ font-family: 'Inter', sans-serif; font-size: 12.5px; color: #6b6b64; font-weight:600; }
 
-  .talles-label{ font-size: 10.5px; color: var(--text-dim); margin-bottom: -2px; }
-  .talles{ display:flex; flex-wrap:wrap; gap: 6px; }
+  .talles-label{ font-size: 10.5px; color: #8a897f; margin-bottom: -2px; }
+  .talles{ display:flex; flex-wrap:wrap; gap: 5px; padding-top: 6px; border-top: 1px dashed #d6d3c7; }
   .talle-chip{
-    font-size: 11.5px; padding: 6px 9px; border-radius: 6px;
-    border: 1px solid var(--card-border);
-    background: var(--bg-soft);
-    color: var(--text);
-    cursor: pointer;
-    transition: all .12s ease;
-  }
-  .talle-chip:hover:not(.agotado){ border-color: var(--accent); }
-  .talle-chip.selected{
-    background: var(--accent);
-    border-color: var(--accent);
-    color: #1a0e06;
-    font-weight: 700;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11.5px; padding: 4px 7px; border-radius: 4px;
+    border: 1px solid #d6d3c7;
+    background: #e4e1d6;
+    color: var(--label-text);
   }
   .talle-chip.agotado{
-    color: var(--text-dim);
+    color: #a6a398;
     text-decoration: line-through;
-    opacity: 0.45;
-    cursor: not-allowed;
+    opacity: 0.6;
   }
 
   .btn-agregar{
-    margin-top: auto;
+    margin-top: 2px;
     display:flex; align-items:center; justify-content:center; gap:6px;
     background: var(--accent);
     color: #1a0e06;
     font-weight: 700;
-    font-size: 13.5px;
+    font-size: 14.5px;
     padding: 13px 10px;
-    min-height: 46px;
+    min-height: 48px;
     border: none;
-    border-radius: 9px;
+    border-radius: 999px;
     cursor: pointer;
     transition: background .15s ease;
   }
   .btn-agregar:hover{ background: var(--accent-dim); color: #fff; }
   .btn-agregar:disabled{
-    background: var(--bg-soft);
-    color: var(--text-dim);
+    background: #ddd9cd;
+    color: #8a897f;
     cursor: not-allowed;
   }
   .btn-agregar.agregado{ background: var(--ok); color: #06210f; }
 
   .badge-agotado-total{
     position:absolute; margin:8px; background: var(--off);
-    color:white; font-size:10px; font-weight:700; padding:3px 7px; border-radius:6px;
+    color:white; font-size:10px; font-weight:700; padding:3px 7px; border-radius:4px;
     z-index: 2;
   }
-
-  .card{ cursor: pointer; }
 
   /* --- Modal detalle de producto (selector de talle + cantidad) --- */
   .overlay-detalle{
@@ -336,38 +355,38 @@
     display:flex; align-items:center; justify-content:center; margin-bottom: 16px;
   }
   .modal-detalle-foto img{ width:100%; height:100%; object-fit: contain; }
-  .modal-detalle-nombre{ font-size: 18px; font-weight:800; margin: 0 0 5px; line-height:1.3; }
-  .modal-detalle-precio{ font-family:'Archivo Black', sans-serif; font-size: 22px; color: var(--ok); margin-bottom: 16px; }
-  .modal-detalle-precio.sin-precio{ font-family:'Inter',sans-serif; font-size:13.5px; color:var(--text-dim); font-weight:600; }
-  .modal-detalle-label{ font-size: 13.5px; color: var(--text-dim); margin-bottom: 12px; }
+  .modal-detalle-nombre{ font-size: 20px; font-weight:800; margin: 0 0 6px; line-height:1.3; }
+  .modal-detalle-precio{ font-family:'JetBrains Mono', monospace; font-weight:700; font-size: 24px; color: var(--accent); margin-bottom: 16px; }
+  .modal-detalle-precio.sin-precio{ font-family:'Inter',sans-serif; font-size:14px; color:var(--text-dim); font-weight:600; }
+  .modal-detalle-label{ font-size: 14px; color: var(--text-dim); margin-bottom: 12px; }
 
   .fila-talle{
     display:flex; align-items:center; justify-content:space-between;
     background: var(--bg-soft); border: 1px solid var(--card-border); border-radius: 10px;
-    padding: 13px 14px; margin-bottom: 9px;
+    padding: 14px 15px; margin-bottom: 10px;
   }
   .fila-talle.agotado{ opacity:0.5; }
-  .fila-talle .talle-info{ font-size: 14.5px; }
+  .fila-talle .talle-info{ font-size: 15.5px; }
   .fila-talle .talle-info b{ font-weight:800; }
-  .fila-talle .talle-disp{ color: var(--text-dim); font-weight:500; margin-left:7px; font-size:13px; }
+  .fila-talle .talle-disp{ color: var(--text-dim); font-weight:500; margin-left:7px; font-size:13.5px; }
   .fila-talle.agotado .talle-disp{ color: var(--off); }
-  .stepper{ display:flex; align-items:center; gap:13px; }
+  .stepper{ display:flex; align-items:center; gap:14px; }
   .stepper button{
-    width:38px; height:38px; border-radius:9px; border:none;
-    background: var(--accent); color:#1a0e06; font-weight:800; font-size:19px;
+    width:42px; height:42px; border-radius:9px; border:none;
+    background: var(--accent); color:#1a0e06; font-weight:800; font-size:20px;
     cursor:pointer; display:flex; align-items:center; justify-content:center;
     transition: opacity .12s ease;
   }
   .stepper button:disabled{ background: var(--card-border); color: var(--text-dim); cursor:not-allowed; }
-  .stepper .cant{ min-width:22px; text-align:center; font-weight:700; font-size:15.5px; }
+  .stepper .cant{ min-width:26px; text-align:center; font-weight:700; font-size:16.5px; }
 
   .modal-detalle-footer{
     padding: 16px 18px calc(16px + env(safe-area-inset-bottom,0px));
     border-top: 1px solid var(--card-border);
   }
   .btn-agregar-detalle{
-    width:100%; background: var(--accent); color:#1a0e06; font-weight:800; font-size:15.5px;
-    border:none; border-radius:10px; padding:16px 10px; min-height:52px; cursor:pointer;
+    width:100%; background: var(--accent); color:#1a0e06; font-weight:800; font-size:16.5px;
+    border:none; border-radius:10px; padding:16px 10px; min-height:54px; cursor:pointer;
   }
   .btn-agregar-detalle:disabled{ background: var(--card-border); color: var(--text-dim); cursor:not-allowed; }
   .modal-detalle-footer .nota{ text-align:center; font-size: 11px; color: var(--text-dim); margin-top:8px; }
@@ -430,17 +449,17 @@
     padding: 20px 18px 16px; border-bottom: 1px solid var(--card-border);
     display:flex; align-items:center; justify-content:space-between;
   }
-  .drawer-header h2{ font-size: 19px; margin:0; font-family:'Archivo Black', sans-serif; }
+  .drawer-header h2{ font-size: 21px; margin:0; font-family:'Archivo Black', sans-serif; }
   .drawer-close{
-    background:none; border:none; color: var(--text); font-size: 26px; cursor:pointer; line-height:1;
+    background:none; border:none; color: var(--text); font-size: 28px; cursor:pointer; line-height:1;
     padding: 4px 8px;
   }
 
   .drawer-body{ flex:1; overflow-y:auto; padding: 16px 18px; }
-  .drawer-empty{ color: var(--text-dim); font-size: 14.5px; text-align:center; padding: 40px 10px; line-height:1.5; }
+  .drawer-empty{ color: var(--text-dim); font-size: 15px; text-align:center; padding: 40px 10px; line-height:1.5; }
 
   .descuento-info{
-    margin: 16px 18px 0; padding: 13px 14px; border-radius: 10px; font-size: 13px; line-height:1.5;
+    margin: 16px 18px 0; padding: 14px 15px; border-radius: 10px; font-size: 13.5px; line-height:1.5;
     background: rgba(255,106,26,0.1); border: 1px solid rgba(255,106,26,0.3); color: var(--text);
   }
   .descuento-info.activo{ background: rgba(63,191,111,0.12); border-color: rgba(63,191,111,0.35); }
@@ -448,29 +467,29 @@
   .descuento-info.activo b{ color: var(--ok); }
 
   .minimo-aviso{
-    font-size: 13px; color: var(--off); background: rgba(230,72,79,0.12);
-    border-radius: 8px; padding: 11px 13px; margin-bottom: 14px; line-height:1.4;
+    font-size: 13.5px; color: var(--off); background: rgba(230,72,79,0.12);
+    border-radius: 8px; padding: 12px 14px; margin-bottom: 14px; line-height:1.4;
   }
 
   .cart-item{
     display:flex; gap:14px; padding: 16px 0; border-bottom: 1px solid var(--card-border);
   }
-  .cart-item img{ width:68px; height:68px; object-fit:cover; border-radius:9px; background:var(--img-bg); flex-shrink:0; }
+  .cart-item img{ width:72px; height:72px; object-fit:cover; border-radius:9px; background:var(--img-bg); flex-shrink:0; }
   .cart-item-info{ flex:1; min-width:0; }
-  .cart-item-info .nombre{ font-size: 14.5px; font-weight:600; line-height:1.3; }
-  .cart-item-info .detalle{ font-size: 12.5px; color: var(--text-dim); margin-top:3px; }
-  .cart-item-info .precio-linea{ font-size: 14px; margin-top: 8px; font-weight:700; }
-  .cart-item-info .precio-linea .precio-tachado{ color: var(--text-dim); text-decoration: line-through; font-weight:500; margin-right:6px; font-size:12.5px; }
+  .cart-item-info .nombre{ font-size: 15.5px; font-weight:600; line-height:1.3; }
+  .cart-item-info .detalle{ font-size: 13px; color: var(--text-dim); margin-top:3px; }
+  .cart-item-info .precio-linea{ font-size: 15px; margin-top: 8px; font-weight:700; }
+  .cart-item-info .precio-linea .precio-tachado{ color: var(--text-dim); text-decoration: line-through; font-weight:500; margin-right:6px; font-size:13px; }
   .cart-item-info .precio-linea .precio-con-desc{ color: var(--ok); }
 
   .qty-control{ display:flex; align-items:center; gap:12px; margin-top:10px; }
   .qty-control button{
-    width:34px; height:34px; border-radius:8px; border:1px solid var(--card-border);
-    background: var(--bg-soft); color: var(--text); cursor:pointer; font-size:16px;
+    width:38px; height:38px; border-radius:8px; border:1px solid var(--card-border);
+    background: var(--bg-soft); color: var(--text); cursor:pointer; font-size:17px;
   }
-  .qty-control span{ font-size: 14.5px; min-width: 20px; text-align:center; font-weight:600; }
+  .qty-control span{ font-size: 15.5px; min-width: 22px; text-align:center; font-weight:600; }
   .btn-quitar{
-    background:none; border:none; color: var(--off); font-size:13px; cursor:pointer;
+    background:none; border:none; color: var(--off); font-size:13.5px; cursor:pointer;
     text-decoration: underline; margin-top: 9px; padding: 4px 0;
   }
 
@@ -480,14 +499,14 @@
   }
   .total-row{
     display:flex; justify-content:space-between; align-items:baseline;
-    margin-bottom: 14px; font-size: 15.5px;
+    margin-bottom: 14px; font-size: 16.5px;
   }
-  .total-row strong{ font-family:'Archivo Black', sans-serif; font-size: 22px; }
-  .total-nota{ font-size: 12px; color: var(--text-dim); margin-bottom: 14px; line-height:1.4; }
+  .total-row strong{ font-family:'JetBrains Mono', monospace; font-weight:700; font-size: 24px; }
+  .total-nota{ font-size: 12.5px; color: var(--text-dim); margin-bottom: 14px; line-height:1.4; }
 
   .btn-pedido{
     width:100%; background: var(--ok); color:#06210f; border:none; border-radius:10px;
-    padding: 16px; min-height:54px; font-weight:700; font-size: 15.5px; cursor:pointer;
+    padding: 16px; min-height:54px; font-weight:700; font-size: 16.5px; cursor:pointer;
     display:flex; align-items:center; justify-content:center; gap:8px;
   }
   .btn-pedido:hover{ filter: brightness(1.08); }
@@ -505,12 +524,6 @@
     <div class="brand-row">
       <h1>GIANZA <span class="tag">Mayorista</span></h1>
       <small id="total-info">cargando…</small>
-    </div>
-
-    <div class="info-envios">
-      <span>Despachos: <b>Lunes, Miércoles y Viernes</b></span>
-      <span class="express">Envío express en el día para CABA/GBA</span>
-      <span>Envíos a todo el país por Cargo / Correo Argentino</span>
     </div>
 
     <div class="search-row">
@@ -536,9 +549,27 @@
   <!-- ============ VISTA HOME ============ -->
   <div id="vista-home">
     <div class="banner-promo">
-      <div class="promo-linea minimo">MÍNIMO 3 PARES SURTIDOS</div>
-      <div class="promo-linea">LLEVANDO 6 DE ADULTO <b>-$2.000</b> X PAR</div>
-      <div class="promo-linea">LLEVANDO 12 DE ADULTO <b>-$4.000</b> X PAR</div>
+      <div class="promo-top">
+        <div class="promo-tag">Descuentos por cantidad</div>
+        <div class="promo-grid">
+          <div class="promo-item">
+            <div class="promo-num">3</div>
+            <div class="promo-txt">pares<br>mínimo</div>
+          </div>
+          <div class="promo-item destacado">
+            <div class="promo-num">6</div>
+            <div class="promo-txt">-$2.000<br>por par</div>
+          </div>
+          <div class="promo-item destacado-max">
+            <div class="promo-num">12</div>
+            <div class="promo-txt">-$4.000<br>por par</div>
+          </div>
+        </div>
+      </div>
+      <div class="ticket-perf"><i class="l"></i><i class="r"></i></div>
+      <div class="promo-bottom">
+        Pares de zapatillas adulto, combinando modelos y talles a elección. Despachos lunes, miércoles y viernes, con envío express en el día para CABA y GBA, y envíos a todo el país por Cargo y Correo Argentino.
+      </div>
     </div>
 
     <button class="banner-ver-todos" id="btn-ver-todos">
