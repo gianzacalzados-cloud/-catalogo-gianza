@@ -197,21 +197,43 @@
     color: var(--accent-dim); margin-bottom: 14px;
   }
   .promo-grid{ display:grid; grid-template-columns: repeat(3, 1fr); gap:8px; position:relative; }
-  .promo-item{ text-align:center; padding: 10px 4px; border-radius: 8px; }
-  .promo-item .promo-num{
-    font-family:'JetBrains Mono', monospace; font-weight:800; font-size: 26px; color: var(--label-text); line-height:1;
+  .promo-item{ text-align:center; padding: 14px 5px 12px; border-radius: 8px; display:flex; flex-direction:column; align-items:center; }
+  .promo-item .promo-eyebrow{
+    font-size: 9.5px; font-weight:700; letter-spacing:0.09em;
+    text-transform: uppercase; color: var(--label-dim); opacity:0.85;
   }
-  .promo-item .promo-txt{
-    font-size: 11px; color: var(--label-dim); margin-top: 7px; line-height:1.35; font-weight:700;
-    letter-spacing: 0.01em;
-    text-transform: uppercase;
+  .promo-item .promo-figure{
+    font-family:'Archivo Black', sans-serif; font-size: 36px; line-height:1;
+    color: var(--label-text); margin: 6px 0 3px;
+  }
+  .promo-item .promo-caption{
+    font-size: 10.5px; font-weight:700; letter-spacing:0.05em;
+    text-transform: uppercase; color: var(--label-dim); opacity:0.85;
+  }
+  .promo-item .promo-price{
+    margin-top: 9px;
+    font-family:'JetBrains Mono', monospace; font-weight:700; font-size: 11.5px;
+    letter-spacing:0.01em;
+    background: rgba(0,0,0,0.18);
+    color: var(--label-text);
+    padding: 4px 10px;
+    border-radius: 999px;
   }
   .promo-item.destacado{ background: var(--grad-accent); box-shadow: var(--shadow-accent), inset 0 1px 0 rgba(255,255,255,0.3); }
-  .promo-item.destacado .promo-num,
-  .promo-item.destacado .promo-txt{ color: #1a0e06; }
+  .promo-item.destacado .promo-eyebrow,
+  .promo-item.destacado .promo-figure,
+  .promo-item.destacado .promo-caption{ color: #fff; }
+  .promo-item.destacado .promo-eyebrow,
+  .promo-item.destacado .promo-caption{ opacity:0.9; }
+  .promo-item.destacado .promo-price{ background: rgba(0,0,0,0.22); color:#fff; }
+
   .promo-item.destacado-max{ background: var(--grad-lime); box-shadow: 0 6px 16px rgba(198,255,61,0.3), inset 0 1px 0 rgba(255,255,255,0.4); }
-  .promo-item.destacado-max .promo-num,
-  .promo-item.destacado-max .promo-txt{ color: #16210a; }
+  .promo-item.destacado-max .promo-eyebrow,
+  .promo-item.destacado-max .promo-figure,
+  .promo-item.destacado-max .promo-caption{ color: #16210a; }
+  .promo-item.destacado-max .promo-eyebrow,
+  .promo-item.destacado-max .promo-caption{ opacity:0.8; }
+  .promo-item.destacado-max .promo-price{ background: rgba(0,0,0,0.12); color:#16210a; }
 
   .promo-nota{
     font-size: 11.5px; color: var(--label-dim); line-height:1.4; margin-top: 14px;
@@ -605,22 +627,27 @@
 
     <div class="banner-promo">
       <div class="promo-top">
-        <div class="promo-tag">Descuento por volumen</div>
+        <div class="promo-tag">Descuentos por cantidad</div>
         <div class="promo-grid">
           <div class="promo-item">
-            <div class="promo-num">3</div>
-            <div class="promo-txt">Mínimo<br>de pedido</div>
+            <div class="promo-eyebrow">Pedido mínimo</div>
+            <div class="promo-figure">3</div>
+            <div class="promo-caption">pares</div>
           </div>
           <div class="promo-item destacado">
-            <div class="promo-num">X6</div>
-            <div class="promo-txt">Ahorrás $2.000<br>en cada par</div>
+            <div class="promo-eyebrow">Llevando</div>
+            <div class="promo-figure">6</div>
+            <div class="promo-caption">pares adulto</div>
+            <div class="promo-price">-$2.000 por par</div>
           </div>
           <div class="promo-item destacado-max">
-            <div class="promo-num">X12</div>
-            <div class="promo-txt">Ahorrás $4.000<br>en cada par</div>
+            <div class="promo-eyebrow">Llevando</div>
+            <div class="promo-figure">12</div>
+            <div class="promo-caption">pares adulto</div>
+            <div class="promo-price">-$4.000 por par</div>
           </div>
         </div>
-        <div class="promo-nota">Combinando los modelos y talles que quieras, siempre que sean pares de adulto</div>
+        <div class="promo-nota">VÁLIDO SÓLO EN ZAPATILLAS DE ADULTO. El descuento se aplica automáticamente al final del pedido, según la CANTIDAD TOTAL DE PARES DE ADULTO que lleves.</div>
       </div>
     </div>
 
