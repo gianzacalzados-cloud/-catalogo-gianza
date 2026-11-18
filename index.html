@@ -10,16 +10,17 @@
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
 <style>
   :root{
-    --bg: #111318;
-    --bg-soft: #181b22;
-    --card: #1d2029;
-    --card-border: #2a2e3a;
+    --bg: #f2f3f5;
+    --bg-soft: #f0f1f3;
+    --card: #ffffff;
+    --card-border: #e2e4e9;
     --accent: #ff6a1a;
     --accent-dim: #c65315;
-    --text: #f3f3f1;
-    --text-dim: #9a9ea8;
-    --ok: #3fbf6f;
-    --off: #e6484f;
+    --text: #181a1f;
+    --text-dim: #6b7280;
+    --ok: #1f9d55;
+    --off: #d93a3f;
+    --img-bg: #eef0f3;
     --radius: 14px;
   }
   *{ box-sizing:border-box; }
@@ -37,25 +38,26 @@
   /* ================= HEADER ================= */
   header{
     position: sticky; top:0; z-index: 20;
-    padding: 14px 16px calc(12px + env(safe-area-inset-top,0px));
-    background: rgba(17,19,24,0.95);
+    padding: 16px 16px calc(14px + env(safe-area-inset-top,0px));
+    background: rgba(255,255,255,0.92);
     backdrop-filter: blur(10px);
     border-bottom: 1px solid var(--card-border);
   }
   .header-inner{ max-width: 1200px; margin: 0 auto; }
-  .brand-row{ display:flex; align-items:baseline; justify-content:space-between; gap:10px; margin-bottom:12px; }
+  .brand-row{ display:flex; align-items:baseline; justify-content:space-between; gap:10px; margin-bottom:14px; }
   .brand-row h1{
     font-family:'Archivo Black', sans-serif;
-    font-size: clamp(19px, 4vw, 26px);
+    font-size: clamp(20px, 5vw, 26px);
     margin:0; letter-spacing: -0.5px;
   }
   .brand-row .tag{ color: var(--accent); }
-  .brand-row small{ color: var(--text-dim); font-size: 12px; font-weight: 500; }
+  .brand-row small{ color: var(--text-dim); font-size: 12.5px; font-weight: 500; }
 
   .info-envios{
-    display:flex; flex-wrap:wrap; gap: 6px 14px;
-    margin-bottom: 10px;
-    font-size: 11.5px;
+    display:flex; flex-wrap:wrap; gap: 7px 14px;
+    margin-bottom: 12px;
+    font-size: 12.5px;
+    line-height: 1.5;
     color: var(--text-dim);
   }
   .info-envios span{ display:flex; align-items:center; gap:5px; white-space:nowrap; }
@@ -69,22 +71,24 @@
     border: 1px solid var(--card-border);
     color: var(--text);
     border-radius: 999px;
-    padding: 11px 16px;
+    padding: 14px 18px;
     font-family: inherit;
-    font-size: 14px;
+    font-size: 16px;
+    min-height: 48px;
   }
   .search-row input::placeholder{ color: var(--text-dim); }
   .search-row input:focus{ outline: 2px solid var(--accent); outline-offset: 1px; }
 
-  .pill-filters-row{ display:flex; gap:8px; margin-top:8px; }
+  .pill-filters-row{ display:flex; gap:9px; margin-top:10px; }
   .btn-pill-filtro{
     flex:1;
     background: var(--bg-soft);
     border: 1px solid var(--card-border);
     color: var(--text);
     border-radius: 999px;
-    padding: 10px 14px;
-    font-size: 12.5px;
+    padding: 12px 14px;
+    min-height: 46px;
+    font-size: 13px;
     font-weight: 700;
     letter-spacing: 0.02em;
     cursor: pointer;
@@ -106,14 +110,15 @@
     margin-top: 10px;
   }
   .panel-pildoras.open{ display:block; }
-  .pildoras-grupo{ display:flex; flex-wrap:wrap; gap:8px; }
+  .pildoras-grupo{ display:flex; flex-wrap:wrap; gap:9px; }
   .pildora{
     background: var(--bg);
     border: 1px solid var(--card-border);
     color: var(--text);
     border-radius: 999px;
-    padding: 8px 14px;
-    font-size: 13px;
+    padding: 11px 16px;
+    min-height: 42px;
+    font-size: 13.5px;
     font-weight: 600;
     cursor: pointer;
   }
@@ -123,7 +128,7 @@
   }
 
   /* ================= MAIN ================= */
-  main{ max-width: 1200px; margin: 0 auto; padding: 18px 16px 100px; }
+  main{ max-width: 1200px; margin: 0 auto; padding: 20px 16px 120px; }
 
   /* ---- HOME: banner + tiles ---- */
   .banner-ver-todos{
@@ -131,22 +136,38 @@
     background: linear-gradient(135deg, var(--accent), var(--accent-dim));
     color: #1a0e06;
     border: none; border-radius: 14px;
-    padding: 16px 20px;
+    padding: 19px 20px;
     cursor: pointer;
-    margin-bottom: 22px;
+    margin-bottom: 24px;
   }
-  .banner-ver-todos .titulo{ font-family:'Archivo Black', sans-serif; font-size: 16px; letter-spacing:0.03em; }
-  .banner-ver-todos .sub{ font-size: 12.5px; font-weight:600; opacity:0.85; margin-top:2px; }
+  .banner-ver-todos .titulo{ font-family:'Archivo Black', sans-serif; font-size: 17px; letter-spacing:0.03em; }
+  .banner-ver-todos .sub{ font-size: 13px; font-weight:600; opacity:0.85; margin-top:3px; }
+
+  .banner-promo{
+    background: var(--card);
+    border: 1px solid var(--card-border);
+    border-left: 3px solid var(--accent);
+    border-radius: 10px;
+    padding: 13px 16px;
+    margin-bottom: 18px;
+  }
+  .banner-promo .promo-linea{
+    font-size: 13px; font-weight: 700; letter-spacing: 0.02em;
+    color: var(--text-dim); padding: 4px 0;
+    line-height: 1.5;
+  }
+  .banner-promo .promo-linea.minimo{ color: var(--text); }
+  .banner-promo .promo-linea b{ color: var(--accent); font-weight: 800; }
 
   .seccion-label{
-    font-size: 11.5px; letter-spacing: 0.08em; color: var(--text-dim); font-weight:700;
-    margin: 0 0 10px 2px;
+    font-size: 12px; letter-spacing: 0.08em; color: var(--text-dim); font-weight:700;
+    margin: 0 0 12px 2px;
   }
 
   .tiles-grid{
     display:grid;
     grid-template-columns: repeat(3, 1fr);
-    gap: 10px;
+    gap: 12px;
   }
   @media (min-width: 560px){ .tiles-grid{ grid-template-columns: repeat(4, 1fr); } }
   @media (min-width: 820px){ .tiles-grid{ grid-template-columns: repeat(5, 1fr); } }
@@ -160,39 +181,40 @@
     cursor: pointer;
     text-align:center;
     transition: border-color .12s ease;
+    box-shadow: 0 1px 3px rgba(20,20,30,0.06);
   }
   .tile:hover{ border-color: var(--accent); }
   .tile .tile-photo{
     aspect-ratio: 1/1;
-    background: #0d0f14;
+    background: var(--img-bg);
     display:flex; align-items:center; justify-content:center;
     overflow:hidden;
   }
   .tile .tile-photo img{ width:100%; height:100%; object-fit:cover; }
   .tile .tile-photo .sin{ color: var(--text-dim); font-size: 10px; }
-  .tile .tile-info{ padding: 8px 6px 10px; }
+  .tile .tile-info{ padding: 9px 7px 12px; }
   .tile .tile-nombre{
-    font-size: 11.5px; font-weight: 800; letter-spacing:0.02em;
+    font-size: 12.5px; font-weight: 800; letter-spacing:0.02em;
     white-space:nowrap; overflow:hidden; text-overflow:ellipsis;
   }
-  .tile .tile-count{ font-size: 10.5px; color: var(--text-dim); margin-top: 2px; }
+  .tile .tile-count{ font-size: 11px; color: var(--text-dim); margin-top: 3px; }
 
   /* ---- LISTADO ---- */
   #vista-listado{ display:none; }
-  .listado-header{ display:flex; align-items:center; gap:10px; margin-bottom:14px; flex-wrap:wrap; }
+  .listado-header{ display:flex; align-items:center; gap:10px; margin-bottom:16px; flex-wrap:wrap; }
   .btn-volver{
     background: var(--bg-soft); border:1px solid var(--card-border); color: var(--text);
-    border-radius: 999px; padding: 8px 14px; font-size: 13px; cursor:pointer; flex-shrink:0;
+    border-radius: 999px; padding: 11px 16px; min-height: 42px; font-size: 13.5px; cursor:pointer; flex-shrink:0;
   }
-  .listado-titulo{ font-family:'Archivo Black', sans-serif; font-size: 18px; flex:1; min-width:120px; }
-  .listado-count{ color: var(--text-dim); font-size: 12.5px; width:100%; }
+  .listado-titulo{ font-family:'Archivo Black', sans-serif; font-size: 19px; flex:1; min-width:120px; }
+  .listado-count{ color: var(--text-dim); font-size: 13px; width:100%; }
 
   .grid{
     display:grid;
     grid-template-columns: repeat(2, 1fr);
-    gap: 10px;
+    gap: 12px;
   }
-  @media (min-width: 560px){ .grid{ grid-template-columns: repeat(3, 1fr); gap:14px; } }
+  @media (min-width: 560px){ .grid{ grid-template-columns: repeat(3, 1fr); gap:16px; } }
   @media (min-width: 820px){ .grid{ grid-template-columns: repeat(4, 1fr); } }
   @media (min-width: 1100px){ .grid{ grid-template-columns: repeat(5, 1fr); } }
 
@@ -202,10 +224,11 @@
     border-radius: var(--radius);
     overflow: hidden;
     display:flex; flex-direction:column;
+    box-shadow: 0 1px 3px rgba(20,20,30,0.06);
   }
   .card .photo-wrap{
     aspect-ratio: 1/1;
-    background: #0d0f14;
+    background: var(--img-bg);
     display:flex; align-items:center; justify-content:center;
     overflow:hidden;
     position: relative;
@@ -213,16 +236,16 @@
   .card img{ width:100%; height:100%; object-fit: cover; }
   .card .noimg{ color: var(--text-dim); font-size: 12px; }
 
-  .card .body{ padding: 10px; display:flex; flex-direction:column; gap: 8px; flex:1; }
-  .card .marca{ font-size: 10px; letter-spacing: 0.04em; color: var(--accent); font-weight: 700; }
-  .card h3{ font-size: 13px; margin: 0; line-height: 1.3; min-height: 2.4em; }
-  .card .precio{ font-family:'Archivo Black', sans-serif; font-size: 16px; }
-  .card .precio.sin-precio{ font-family: 'Inter', sans-serif; font-size: 11.5px; color: var(--text-dim); font-weight:600; }
+  .card .body{ padding: 12px; display:flex; flex-direction:column; gap: 9px; flex:1; }
+  .card .marca{ font-size: 10.5px; letter-spacing: 0.04em; color: var(--accent); font-weight: 700; }
+  .card h3{ font-size: 14.5px; margin: 0; line-height: 1.35; min-height: 2.6em; }
+  .card .precio{ font-family:'Archivo Black', sans-serif; font-size: 18px; }
+  .card .precio.sin-precio{ font-family: 'Inter', sans-serif; font-size: 12.5px; color: var(--text-dim); font-weight:600; }
 
-  .talles-label{ font-size: 10px; color: var(--text-dim); margin-bottom: -4px; }
-  .talles{ display:flex; flex-wrap:wrap; gap: 5px; }
+  .talles-label{ font-size: 10.5px; color: var(--text-dim); margin-bottom: -2px; }
+  .talles{ display:flex; flex-wrap:wrap; gap: 6px; }
   .talle-chip{
-    font-size: 11px; padding: 5px 8px; border-radius: 6px;
+    font-size: 11.5px; padding: 6px 9px; border-radius: 6px;
     border: 1px solid var(--card-border);
     background: var(--bg-soft);
     color: var(--text);
@@ -249,10 +272,11 @@
     background: var(--accent);
     color: #1a0e06;
     font-weight: 700;
-    font-size: 12px;
-    padding: 9px 10px;
+    font-size: 13.5px;
+    padding: 13px 10px;
+    min-height: 46px;
     border: none;
-    border-radius: 8px;
+    border-radius: 9px;
     cursor: pointer;
     transition: background .15s ease;
   }
@@ -282,14 +306,15 @@
     position: fixed; left:50%; top:50%;
     transform: translate(-50%,-50%);
     width: min(440px, calc(100% - 24px));
-    max-height: min(88vh, 720px);
-    background: var(--bg-soft);
+    max-height: min(92vh, 760px);
+    background: var(--card);
     border: 1px solid var(--card-border);
     border-radius: var(--radius);
     z-index: 65;
     display:none;
     flex-direction: column;
     overflow: hidden;
+    box-shadow: 0 12px 40px rgba(20,20,30,0.18);
   }
   .modal-detalle.open{ display:flex; }
   .modal-detalle-header{
@@ -303,46 +328,46 @@
   .modal-detalle-close{
     background:none; border:none; color: var(--text); font-size: 22px; cursor:pointer; line-height:1;
   }
-  .modal-detalle-body{ padding: 16px; overflow-y:auto; flex:1; }
+  .modal-detalle-body{ padding: 18px; overflow-y:auto; flex:1; }
   .modal-detalle-foto{
     width:100%; aspect-ratio: 1/1; max-height: 320px;
-    background:#0d0f14;
+    background:var(--img-bg);
     border-radius:10px; overflow:hidden;
-    display:flex; align-items:center; justify-content:center; margin-bottom: 14px;
+    display:flex; align-items:center; justify-content:center; margin-bottom: 16px;
   }
   .modal-detalle-foto img{ width:100%; height:100%; object-fit: contain; }
-  .modal-detalle-nombre{ font-size: 16px; font-weight:800; margin: 0 0 4px; }
-  .modal-detalle-precio{ font-family:'Archivo Black', sans-serif; font-size: 20px; color: var(--ok); margin-bottom: 14px; }
-  .modal-detalle-precio.sin-precio{ font-family:'Inter',sans-serif; font-size:13px; color:var(--text-dim); font-weight:600; }
-  .modal-detalle-label{ font-size: 13px; color: var(--text-dim); margin-bottom: 10px; }
+  .modal-detalle-nombre{ font-size: 18px; font-weight:800; margin: 0 0 5px; line-height:1.3; }
+  .modal-detalle-precio{ font-family:'Archivo Black', sans-serif; font-size: 22px; color: var(--ok); margin-bottom: 16px; }
+  .modal-detalle-precio.sin-precio{ font-family:'Inter',sans-serif; font-size:13.5px; color:var(--text-dim); font-weight:600; }
+  .modal-detalle-label{ font-size: 13.5px; color: var(--text-dim); margin-bottom: 12px; }
 
   .fila-talle{
     display:flex; align-items:center; justify-content:space-between;
-    background: var(--card); border: 1px solid var(--card-border); border-radius: 10px;
-    padding: 10px 12px; margin-bottom: 8px;
+    background: var(--bg-soft); border: 1px solid var(--card-border); border-radius: 10px;
+    padding: 13px 14px; margin-bottom: 9px;
   }
-  .fila-talle.agotado{ opacity:0.45; }
-  .fila-talle .talle-info{ font-size: 13px; }
+  .fila-talle.agotado{ opacity:0.5; }
+  .fila-talle .talle-info{ font-size: 14.5px; }
   .fila-talle .talle-info b{ font-weight:800; }
-  .fila-talle .talle-disp{ color: var(--text-dim); font-weight:500; margin-left:6px; }
+  .fila-talle .talle-disp{ color: var(--text-dim); font-weight:500; margin-left:7px; font-size:13px; }
   .fila-talle.agotado .talle-disp{ color: var(--off); }
-  .stepper{ display:flex; align-items:center; gap:10px; }
+  .stepper{ display:flex; align-items:center; gap:13px; }
   .stepper button{
-    width:28px; height:28px; border-radius:7px; border:none;
-    background: var(--accent); color:#1a0e06; font-weight:800; font-size:16px;
+    width:38px; height:38px; border-radius:9px; border:none;
+    background: var(--accent); color:#1a0e06; font-weight:800; font-size:19px;
     cursor:pointer; display:flex; align-items:center; justify-content:center;
     transition: opacity .12s ease;
   }
   .stepper button:disabled{ background: var(--card-border); color: var(--text-dim); cursor:not-allowed; }
-  .stepper .cant{ min-width:16px; text-align:center; font-weight:700; font-size:14px; }
+  .stepper .cant{ min-width:22px; text-align:center; font-weight:700; font-size:15.5px; }
 
   .modal-detalle-footer{
-    padding: 14px 16px calc(14px + env(safe-area-inset-bottom,0px));
+    padding: 16px 18px calc(16px + env(safe-area-inset-bottom,0px));
     border-top: 1px solid var(--card-border);
   }
   .btn-agregar-detalle{
-    width:100%; background: var(--accent); color:#1a0e06; font-weight:800; font-size:14px;
-    border:none; border-radius:10px; padding:13px 10px; cursor:pointer;
+    width:100%; background: var(--accent); color:#1a0e06; font-weight:800; font-size:15.5px;
+    border:none; border-radius:10px; padding:16px 10px; min-height:52px; cursor:pointer;
   }
   .btn-agregar-detalle:disabled{ background: var(--card-border); color: var(--text-dim); cursor:not-allowed; }
   .modal-detalle-footer .nota{ text-align:center; font-size: 11px; color: var(--text-dim); margin-top:8px; }
@@ -358,25 +383,26 @@
   /* --- Carrito flotante --- */
   .cart-fab{
     position: fixed;
-    right: calc(18px + env(safe-area-inset-right,0px));
-    bottom: calc(18px + env(safe-area-inset-bottom,0px));
+    right: calc(16px + env(safe-area-inset-right,0px));
+    bottom: calc(16px + env(safe-area-inset-bottom,0px));
     z-index: 30;
     background: var(--accent);
     color: #1a0e06;
     border: none;
     border-radius: 999px;
-    padding: 14px 20px;
+    padding: 16px 22px;
+    min-height: 54px;
     font-weight: 700;
-    font-size: 14px;
-    display:flex; align-items:center; gap:8px;
-    box-shadow: 0 6px 20px rgba(0,0,0,0.4);
+    font-size: 14.5px;
+    display:flex; align-items:center; gap:9px;
+    box-shadow: 0 6px 20px rgba(20,20,30,0.25);
     cursor: pointer;
   }
   .cart-fab .badge{
     background: #1a0e06; color: var(--accent);
-    border-radius: 999px; min-width: 20px; height:20px;
+    border-radius: 999px; min-width: 22px; height:22px;
     display:flex; align-items:center; justify-content:center;
-    font-size: 12px; padding: 0 5px;
+    font-size: 12.5px; padding: 0 5px;
   }
 
   .overlay{
@@ -388,7 +414,7 @@
   .drawer{
     position: fixed; top:0; right:0; bottom:0;
     width: min(420px, 100%);
-    background: var(--bg-soft);
+    background: var(--card);
     border-left: 1px solid var(--card-border);
     z-index: 50;
     transform: translateX(100%);
@@ -396,62 +422,79 @@
     display:flex; flex-direction:column;
     padding-top: env(safe-area-inset-top,0px);
     padding-bottom: env(safe-area-inset-bottom,0px);
+    box-shadow: -4px 0 20px rgba(20,20,30,0.08);
   }
   .drawer.open{ transform: translateX(0); }
 
   .drawer-header{
-    padding: 18px 18px 14px; border-bottom: 1px solid var(--card-border);
+    padding: 20px 18px 16px; border-bottom: 1px solid var(--card-border);
     display:flex; align-items:center; justify-content:space-between;
   }
-  .drawer-header h2{ font-size: 18px; margin:0; font-family:'Archivo Black', sans-serif; }
+  .drawer-header h2{ font-size: 19px; margin:0; font-family:'Archivo Black', sans-serif; }
   .drawer-close{
-    background:none; border:none; color: var(--text); font-size: 22px; cursor:pointer; line-height:1;
+    background:none; border:none; color: var(--text); font-size: 26px; cursor:pointer; line-height:1;
+    padding: 4px 8px;
   }
 
-  .drawer-body{ flex:1; overflow-y:auto; padding: 14px 18px; }
-  .drawer-empty{ color: var(--text-dim); font-size: 14px; text-align:center; padding: 40px 10px; }
+  .drawer-body{ flex:1; overflow-y:auto; padding: 16px 18px; }
+  .drawer-empty{ color: var(--text-dim); font-size: 14.5px; text-align:center; padding: 40px 10px; line-height:1.5; }
+
+  .descuento-info{
+    margin: 16px 18px 0; padding: 13px 14px; border-radius: 10px; font-size: 13px; line-height:1.5;
+    background: rgba(255,106,26,0.1); border: 1px solid rgba(255,106,26,0.3); color: var(--text);
+  }
+  .descuento-info.activo{ background: rgba(63,191,111,0.12); border-color: rgba(63,191,111,0.35); }
+  .descuento-info b{ color: var(--accent); }
+  .descuento-info.activo b{ color: var(--ok); }
+
+  .minimo-aviso{
+    font-size: 13px; color: var(--off); background: rgba(230,72,79,0.12);
+    border-radius: 8px; padding: 11px 13px; margin-bottom: 14px; line-height:1.4;
+  }
 
   .cart-item{
-    display:flex; gap:12px; padding: 12px 0; border-bottom: 1px solid var(--card-border);
+    display:flex; gap:14px; padding: 16px 0; border-bottom: 1px solid var(--card-border);
   }
-  .cart-item img{ width:56px; height:56px; object-fit:cover; border-radius:8px; background:#0d0f14; flex-shrink:0; }
+  .cart-item img{ width:68px; height:68px; object-fit:cover; border-radius:9px; background:var(--img-bg); flex-shrink:0; }
   .cart-item-info{ flex:1; min-width:0; }
-  .cart-item-info .nombre{ font-size: 13.5px; font-weight:600; line-height:1.3; }
-  .cart-item-info .detalle{ font-size: 12px; color: var(--text-dim); margin-top:2px; }
-  .cart-item-info .precio-linea{ font-size: 13px; margin-top: 6px; font-weight:700; }
+  .cart-item-info .nombre{ font-size: 14.5px; font-weight:600; line-height:1.3; }
+  .cart-item-info .detalle{ font-size: 12.5px; color: var(--text-dim); margin-top:3px; }
+  .cart-item-info .precio-linea{ font-size: 14px; margin-top: 8px; font-weight:700; }
+  .cart-item-info .precio-linea .precio-tachado{ color: var(--text-dim); text-decoration: line-through; font-weight:500; margin-right:6px; font-size:12.5px; }
+  .cart-item-info .precio-linea .precio-con-desc{ color: var(--ok); }
 
-  .qty-control{ display:flex; align-items:center; gap:8px; margin-top:8px; }
+  .qty-control{ display:flex; align-items:center; gap:12px; margin-top:10px; }
   .qty-control button{
-    width:24px; height:24px; border-radius:6px; border:1px solid var(--card-border);
-    background: var(--bg); color: var(--text); cursor:pointer; font-size:14px;
+    width:34px; height:34px; border-radius:8px; border:1px solid var(--card-border);
+    background: var(--bg-soft); color: var(--text); cursor:pointer; font-size:16px;
   }
-  .qty-control span{ font-size: 13px; min-width: 18px; text-align:center; }
+  .qty-control span{ font-size: 14.5px; min-width: 20px; text-align:center; font-weight:600; }
   .btn-quitar{
-    background:none; border:none; color: var(--off); font-size:12px; cursor:pointer;
-    text-decoration: underline; margin-top: 6px; padding: 0;
+    background:none; border:none; color: var(--off); font-size:13px; cursor:pointer;
+    text-decoration: underline; margin-top: 9px; padding: 4px 0;
   }
 
   .drawer-footer{
     border-top: 1px solid var(--card-border);
-    padding: 16px 18px calc(18px + env(safe-area-inset-bottom,0px));
+    padding: 18px 18px calc(20px + env(safe-area-inset-bottom,0px));
   }
   .total-row{
     display:flex; justify-content:space-between; align-items:baseline;
-    margin-bottom: 12px; font-size: 15px;
+    margin-bottom: 14px; font-size: 15.5px;
   }
-  .total-row strong{ font-family:'Archivo Black', sans-serif; font-size: 20px; }
-  .total-nota{ font-size: 11.5px; color: var(--text-dim); margin-bottom: 12px; }
+  .total-row strong{ font-family:'Archivo Black', sans-serif; font-size: 22px; }
+  .total-nota{ font-size: 12px; color: var(--text-dim); margin-bottom: 14px; line-height:1.4; }
 
   .btn-pedido{
     width:100%; background: var(--ok); color:#06210f; border:none; border-radius:10px;
-    padding: 13px; font-weight:700; font-size: 14.5px; cursor:pointer;
+    padding: 16px; min-height:54px; font-weight:700; font-size: 15.5px; cursor:pointer;
     display:flex; align-items:center; justify-content:center; gap:8px;
   }
   .btn-pedido:hover{ filter: brightness(1.08); }
 
   .btn-vaciar{
     width:100%; background:none; border:1px solid var(--card-border); color: var(--text-dim);
-    border-radius:10px; padding: 10px; font-size: 13px; cursor:pointer; margin-top:8px;
+    border-radius:10px; padding: 13px; min-height:46px; font-size: 13.5px; cursor:pointer; margin-top:10px;
   }
 </style>
 </head>
@@ -465,9 +508,9 @@
     </div>
 
     <div class="info-envios">
-      <span>🚚 Despachos: <b>Lunes, Miércoles y Viernes</b></span>
-      <span class="express">⚡ Envío express en el día para CABA/GBA</span>
-      <span>📦 Envíos a todo el país por Cargo / Correo Argentino</span>
+      <span>Despachos: <b>Lunes, Miércoles y Viernes</b></span>
+      <span class="express">Envío express en el día para CABA/GBA</span>
+      <span>Envíos a todo el país por Cargo / Correo Argentino</span>
     </div>
 
     <div class="search-row">
@@ -492,6 +535,12 @@
 
   <!-- ============ VISTA HOME ============ -->
   <div id="vista-home">
+    <div class="banner-promo">
+      <div class="promo-linea minimo">MÍNIMO 3 PARES SURTIDOS</div>
+      <div class="promo-linea">LLEVANDO 6 DE ADULTO <b>-$2.000</b> X PAR</div>
+      <div class="promo-linea">LLEVANDO 12 DE ADULTO <b>-$4.000</b> X PAR</div>
+    </div>
+
     <button class="banner-ver-todos" id="btn-ver-todos">
       <div class="titulo">VER TODOS LOS MODELOS</div>
       <div class="sub" id="banner-sub">cargando catálogo…</div>
@@ -517,7 +566,7 @@
 <footer>GIANZA Mayorista · Catálogo actualizado desde inventario</footer>
 
 <button class="cart-fab" id="cart-fab">
-  🛒 Carrito <span class="badge" id="cart-badge">0</span>
+  Carrito <span class="badge" id="cart-badge">0</span>
 </button>
 
 <div class="overlay" id="overlay"></div>
@@ -526,14 +575,16 @@
     <h2>Tu pedido</h2>
     <button class="drawer-close" id="drawer-close">&times;</button>
   </div>
+  <div class="descuento-info" id="descuento-info" style="display:none;"></div>
   <div class="drawer-body" id="drawer-body"></div>
   <div class="drawer-footer">
+    <div class="minimo-aviso" id="minimo-aviso" style="display:none;"></div>
     <div class="total-row">
       <span>Total</span>
       <strong id="cart-total">$0</strong>
     </div>
     <div class="total-nota" id="cart-nota" style="display:none;">* Hay productos a consultar precio, no están sumados al total.</div>
-    <button class="btn-pedido" id="btn-pedido">✅ Hacer pedido por WhatsApp</button>
+    <button class="btn-pedido" id="btn-pedido">Hacer pedido por WhatsApp</button>
     <button class="btn-vaciar" id="btn-vaciar">Vaciar carrito</button>
   </div>
 </div>
@@ -553,6 +604,21 @@
 
 <script>
 const WHATSAPP_NUMERO = "5491128375698";
+
+// Descuento por cantidad: aplica solo a pares de categoria "Adulto" (no ojotas/infantil/nike mind).
+// Se calcula sobre el total de pares adulto del pedido (mezclando modelos/talles libremente)
+// y el descuento por par se aplica a TODOS los pares adulto del pedido, no solo a los que superan el escalon.
+const ESCALONES_DESCUENTO = [
+  { minimo: 12, descuentoPorPar: 4000 },
+  { minimo: 6,  descuentoPorPar: 2000 },
+  { minimo: 0,  descuentoPorPar: 0 },
+];
+const PEDIDO_MINIMO_PARES = 3; // pares totales del pedido, de cualquier categoria combinada
+
+function descuentoPorCantidadAdulto(totalParesAdulto){
+  const escalon = ESCALONES_DESCUENTO.find(e => totalParesAdulto >= e.minimo);
+  return escalon ? escalon.descuentoPorPar : 0;
+}
 
 const SUPABASE_URL = "https://koevucbehoqfktkjjwme.supabase.co";
 const SUPABASE_ANON_KEY = "sb_publishable_kn4THufXr7EI9S2uA1SJyg_RUby7TQw";
@@ -894,7 +960,7 @@ function agregarAlCarrito(pid, talle, cantidad){
   }else{
     cart.push({
       id: p.id, nombre: p.nombre, marca: p.marca, precio: p.precio,
-      foto: p.foto, talle: talle, cantidad: cantidad
+      foto: p.foto, talle: talle, cantidad: cantidad, categoria: p.categoria || null
     });
   }
   guardarCarrito();
@@ -1022,13 +1088,42 @@ function actualizarBadge(){
   document.getElementById('cart-badge').textContent = total;
 }
 
+// calcula todo lo necesario del carrito: pares totales, pares adulto, descuento vigente y totales en $
+function calcularTotalesCarrito(){
+  const totalPares = cart.reduce((acc, i) => acc + i.cantidad, 0);
+  const totalParesAdulto = cart.reduce((acc, i) => acc + (i.categoria === "Adulto" ? i.cantidad : 0), 0);
+  const descuentoPorPar = descuentoPorCantidadAdulto(totalParesAdulto);
+
+  let totalNumerico = 0;
+  let hayConsultar = false;
+  cart.forEach(i => {
+    if(!i.precio){ hayConsultar = true; return; }
+    const aplicaDescuento = i.categoria === "Adulto" && descuentoPorPar > 0;
+    const precioUnit = aplicaDescuento ? Math.max(i.precio - descuentoPorPar, 0) : i.precio;
+    totalNumerico += precioUnit * i.cantidad;
+  });
+
+  return { totalPares, totalParesAdulto, descuentoPorPar, totalNumerico, hayConsultar };
+}
+
 function renderDrawer(){
   const body = document.getElementById('drawer-body');
+  const { totalPares, totalParesAdulto, descuentoPorPar, totalNumerico, hayConsultar } = calcularTotalesCarrito();
+
   if(cart.length === 0){
     body.innerHTML = '<div class="drawer-empty">Todavía no agregaste nada.<br>Elegí talle y sumá zapatillas al pedido.</div>';
   }else{
     body.innerHTML = cart.map((item, idx) => {
-      const lineaPrecio = item.precio ? money(item.precio * item.cantidad) : 'A consultar';
+      const aplicaDescuento = item.categoria === "Adulto" && descuentoPorPar > 0 && item.precio;
+      let lineaPrecio;
+      if(!item.precio){
+        lineaPrecio = 'A consultar';
+      }else if(aplicaDescuento){
+        const precioConDesc = Math.max(item.precio - descuentoPorPar, 0);
+        lineaPrecio = `<span class="precio-tachado">${money(item.precio * item.cantidad)}</span><span class="precio-con-desc">${money(precioConDesc * item.cantidad)}</span>`;
+      }else{
+        lineaPrecio = money(item.precio * item.cantidad);
+      }
       const fotoHtml = item.foto ? `<img src="${item.foto}" alt="${item.nombre}">` : '';
       return `
         <div class="cart-item">
@@ -1049,8 +1144,43 @@ function renderDrawer(){
     }).join('');
   }
 
-  const totalNumerico = cart.reduce((acc, i) => acc + (i.precio ? i.precio * i.cantidad : 0), 0);
-  const hayConsultar = cart.some(i => !i.precio);
+  // ---- cartel de descuento por cantidad (solo pares adulto) ----
+  const infoDesc = document.getElementById('descuento-info');
+  if(cart.length === 0){
+    infoDesc.style.display = 'none';
+  }else{
+    infoDesc.style.display = 'block';
+    if(descuentoPorPar > 0){
+      infoDesc.classList.add('activo');
+      const faltanPara12 = totalParesAdulto < 12 ? 12 - totalParesAdulto : 0;
+      infoDesc.innerHTML = `Descuento aplicado: <b>-${money(descuentoPorPar)} por par</b> en tus ${totalParesAdulto} pares adulto.`
+        + (faltanPara12 > 0 ? ` Llevando ${faltanPara12} más llegás a 12 pares y pasa a <b>-${money(4000)} por par</b>.` : '');
+    }else{
+      infoDesc.classList.remove('activo');
+      const faltanPara6 = 6 - totalParesAdulto;
+      infoDesc.innerHTML = totalParesAdulto > 0
+        ? `Llevando <b>${faltanPara6} par${faltanPara6===1?'':'es'} adulto más</b> (6 en total) cada par te queda <b>-${money(2000)}</b>.`
+        : `Comprando <b>6 pares de zapatillas adulto</b> cada par te queda -${money(2000)}, y desde <b>12 pares</b>, -${money(4000)} por par.`;
+    }
+  }
+
+  // ---- aviso de pedido minimo (3 pares, de cualquier categoria) ----
+  const avisoMin = document.getElementById('minimo-aviso');
+  const btnPedido = document.getElementById('btn-pedido');
+  if(cart.length > 0 && totalPares < PEDIDO_MINIMO_PARES){
+    const faltan = PEDIDO_MINIMO_PARES - totalPares;
+    avisoMin.style.display = 'block';
+    avisoMin.textContent = `El pedido mínimo es de ${PEDIDO_MINIMO_PARES} pares (de cualquier modelo). Te ${faltan===1?'falta':'faltan'} ${faltan} par${faltan===1?'':'es'} más.`;
+    btnPedido.disabled = true;
+    btnPedido.style.opacity = '0.5';
+    btnPedido.style.cursor = 'not-allowed';
+  }else{
+    avisoMin.style.display = 'none';
+    btnPedido.disabled = false;
+    btnPedido.style.opacity = '';
+    btnPedido.style.cursor = '';
+  }
+
   document.getElementById('cart-total').textContent = money(totalNumerico);
   document.getElementById('cart-nota').style.display = hayConsultar ? 'block' : 'none';
 }
@@ -1097,15 +1227,27 @@ document.getElementById('btn-pedido').addEventListener('click', () => {
     return;
   }
 
+  const { totalPares, totalParesAdulto, descuentoPorPar, totalNumerico, hayConsultar } = calcularTotalesCarrito();
+
+  if(totalPares < PEDIDO_MINIMO_PARES){
+    alert(`El pedido mínimo es de ${PEDIDO_MINIMO_PARES} pares. Te faltan ${PEDIDO_MINIMO_PARES - totalPares} par(es) más.`);
+    return;
+  }
+
   let lineas = cart.map(i => {
-    const precioTxt = i.precio ? money(i.precio * i.cantidad) : 'a consultar';
+    if(!i.precio) return `• ${i.nombre} (${i.marca}) — talle ${i.talle} — x${i.cantidad} — a consultar`;
+    const aplicaDescuento = i.categoria === "Adulto" && descuentoPorPar > 0;
+    const precioUnit = aplicaDescuento ? Math.max(i.precio - descuentoPorPar, 0) : i.precio;
+    const precioTxt = money(precioUnit * i.cantidad) + (aplicaDescuento ? ` (c/u ${money(precioUnit)}, con descuento por cantidad)` : '');
     return `• ${i.nombre} (${i.marca}) — talle ${i.talle} — x${i.cantidad} — ${precioTxt}`;
   });
 
-  const totalNumerico = cart.reduce((acc, i) => acc + (i.precio ? i.precio * i.cantidad : 0), 0);
-  const hayConsultar = cart.some(i => !i.precio);
+  let avisoDescuento = '';
+  if(descuentoPorPar > 0){
+    avisoDescuento = `\n(Descuento por cantidad aplicado: -${money(descuentoPorPar)} por par en ${totalParesAdulto} pares adulto)`;
+  }
 
-  let mensaje = `Hola! Quiero hacer este pedido:\n\n${lineas.join('\n')}\n\nTotal: ${money(totalNumerico)}${hayConsultar ? ' (+ productos a consultar)' : ''}`;
+  let mensaje = `Hola! Quiero hacer este pedido:\n\n${lineas.join('\n')}\n\nTotal: ${money(totalNumerico)}${hayConsultar ? ' (+ productos a consultar)' : ''}${avisoDescuento}`;
 
   const url = `https://wa.me/${WHATSAPP_NUMERO}?text=${encodeURIComponent(mensaje)}`;
   window.open(url, '_blank');
