@@ -154,22 +154,11 @@
   .tile:hover{ border-color: var(--accent); }
   .tile .tile-photo{
     aspect-ratio: 1/1;
-    background-color: #0d0f14;
-    background-size: cover;
-    background-position: center;
+    background: #0d0f14;
     display:flex; align-items:center; justify-content:center;
     overflow:hidden;
-    position: relative;
   }
-  .tile .tile-photo::before{
-    content:"";
-    position:absolute; inset: -10%;
-    background: inherit;
-    filter: blur(16px) brightness(0.55);
-    transform: scale(1.15);
-    z-index: 0;
-  }
-  .tile .tile-photo img{ position:relative; z-index:1; width:100%; height:100%; object-fit:contain; }
+  .tile .tile-photo img{ width:100%; height:100%; object-fit:cover; }
   .tile .tile-photo .sin{ color: var(--text-dim); font-size: 10px; }
   .tile .tile-info{ padding: 8px 6px 10px; }
   .tile .tile-nombre{
@@ -206,22 +195,12 @@
   }
   .card .photo-wrap{
     aspect-ratio: 1/1;
-    background-color: #0d0f14;
-    background-size: cover;
-    background-position: center;
+    background: #0d0f14;
     display:flex; align-items:center; justify-content:center;
     overflow:hidden;
     position: relative;
   }
-  .card .photo-wrap::before{
-    content:"";
-    position:absolute; inset: -10%;
-    background: inherit;
-    filter: blur(16px) brightness(0.55);
-    transform: scale(1.15);
-    z-index: 0;
-  }
-  .card img{ position:relative; z-index:1; width:100%; height:100%; object-fit: contain; }
+  .card img{ width:100%; height:100%; object-fit: cover; }
   .card .noimg{ color: var(--text-dim); font-size: 12px; }
 
   .card .body{ padding: 10px; display:flex; flex-direction:column; gap: 8px; flex:1; }
@@ -317,19 +296,11 @@
   .modal-detalle-body{ padding: 16px; overflow-y:auto; flex:1; }
   .modal-detalle-foto{
     width:100%; aspect-ratio: 4/3; max-height: 220px;
-    background-color:#0d0f14; background-size:cover; background-position:center;
-    border-radius:10px; overflow:hidden; position: relative;
+    background:#0d0f14;
+    border-radius:10px; overflow:hidden;
     display:flex; align-items:center; justify-content:center; margin-bottom: 14px;
   }
-  .modal-detalle-foto::before{
-    content:"";
-    position:absolute; inset: -10%;
-    background: inherit;
-    filter: blur(18px) brightness(0.5);
-    transform: scale(1.15);
-    z-index: 0;
-  }
-  .modal-detalle-foto img{ position:relative; z-index:1; width:100%; height:100%; object-fit: contain; }
+  .modal-detalle-foto img{ width:100%; height:100%; object-fit: cover; }
   .modal-detalle-nombre{ font-size: 16px; font-weight:800; margin: 0 0 4px; }
   .modal-detalle-precio{ font-family:'Archivo Black', sans-serif; font-size: 20px; color: var(--ok); margin-bottom: 14px; }
   .modal-detalle-precio.sin-precio{ font-family:'Inter',sans-serif; font-size:13px; color:var(--text-dim); font-weight:600; }
@@ -510,7 +481,7 @@
       <div class="sub" id="banner-sub">cargando catálogo…</div>
     </button>
 
-    <div class="seccion-label">O ELEGÍ UNA MARCA</div>
+    <div class="seccion-label">CATEGORIAS</div>
     <div class="tiles-grid" id="tiles-grid"></div>
   </div>
 
@@ -596,6 +567,7 @@ const TILE_COVERS = {
   "NEW BALANCE": "NEWBALANCE 530",
   "INFANTILES": "DUNK PANDA INFANTIL",
   "OJOTAS": "OJOTA ADIDAS ABROJO CLASICAS",
+  "VANS": "VANS KNU BLACK",
 };
 
 let productosTodos = [];  // tal cual vienen de la base, sin filtrar (se usa para resolver fotos de portada)
@@ -617,6 +589,7 @@ let filtroMarca = "";
 let filtroCategoria = "";
 let filtroTalle = "";
 let tituloListado = "Todos los modelos";
+let modoVerTodos = false; // true solo cuando entras por el banner "VER TODOS LOS MODELOS"
 
 // ---------- utilidades ----------
 function formatoPrecio(p){
@@ -641,6 +614,7 @@ function mostrarHome(){
   filtroMarca = "";
   filtroCategoria = "";
   filtroTalle = "";
+  modoVerTodos = false;
   document.getElementById('buscador').value = "";
   cerrarPaneles();
   actualizarPildorasSeleccionadas();
@@ -662,6 +636,7 @@ function mostrarListado(titulo){
 document.getElementById('btn-volver').addEventListener('click', mostrarHome);
 document.getElementById('btn-ver-todos').addEventListener('click', () => {
   filtroMarca = ""; filtroCategoria = "";
+  modoVerTodos = true;
   mostrarListado("Todos los modelos");
 });
 
@@ -686,11 +661,9 @@ function renderTiles(){
     const fotoHtml = fotoPortada
       ? `<img src="${fotoPortada}" alt="${tile.label}" loading="lazy" />`
       : `<span class="sin">Sin foto</span>`;
-    const bgStyle = fotoPortada ? ` style="background-image:url('${fotoPortada}')"` : '';
-
     return `
       <div class="tile" data-tipo="${tile.tipo}" data-valor="${tile.valor}" data-label="${tile.label}">
-        <div class="tile-photo"${bgStyle}>${fotoHtml}</div>
+        <div class="tile-photo">${fotoHtml}</div>
         <div class="tile-info">
           <div class="tile-nombre">${tile.label}</div>
           <div class="tile-count">${matches.length} modelo${matches.length===1?'':'s'}</div>
@@ -708,6 +681,7 @@ document.getElementById('tiles-grid').addEventListener('click', (e) => {
   const label = tile.dataset.label;
   filtroMarca = tipo === "marca" ? valor : "";
   filtroCategoria = tipo === "categoria" ? valor : "";
+  modoVerTodos = false;
   mostrarListado(label);
 });
 
@@ -777,6 +751,7 @@ document.getElementById('pildoras-marca').addEventListener('click', (e) => {
   if(!btn) return;
   filtroMarca = btn.dataset.valor;
   filtroCategoria = ""; // una marca puntual reemplaza un filtro de categoria previo
+  modoVerTodos = false;
   cerrarPaneles();
   actualizarPildorasSeleccionadas();
   mostrarListado(filtroMarca || "Todos los modelos");
@@ -788,6 +763,7 @@ document.getElementById('pildoras-talle').addEventListener('click', (e) => {
   cerrarPaneles();
   actualizarPildorasSeleccionadas();
   if(vista === "home"){
+    modoVerTodos = false;
     mostrarListado("Todos los modelos");
   }else{
     aplicarFiltros();
@@ -820,11 +796,10 @@ function render(lista){
     const fotoHtml = p.foto
       ? `<img src="${p.foto}" alt="${p.nombre}" loading="lazy" />`
       : `<span class="noimg">Sin foto</span>`;
-    const bgStyle = p.foto ? ` style="background-image:url('${p.foto}')"` : '';
 
     return `
       <div class="card" data-card-id="${p.id}">
-        <div class="photo-wrap"${bgStyle}>
+        <div class="photo-wrap">
           ${agotadoTotal ? '<span class="badge-agotado-total">AGOTADO</span>' : ''}
           ${fotoHtml}
         </div>
@@ -846,21 +821,33 @@ function render(lista){
 function aplicarFiltros(){
   const q = document.getElementById('buscador').value.trim().toLowerCase();
 
-  const filtrado = productos.filter(p => {
+  let filtrado = productos.filter(p => {
     if(q && !p.nombre.toLowerCase().includes(q) && !(p.marca||'').toLowerCase().includes(q)) return false;
     // navegar por marca excluye ojotas/infantiles/nike mind: esas solo aparecen en su propia categoria
     if(filtroMarca && (p.marca !== filtroMarca || p.categoria !== "Adulto")) return false;
     if(filtroCategoria && p.categoria !== filtroCategoria) return false;
     // el talle filtrado tiene que tener stock real, no alcanza con que exista el talle
     if(filtroTalle && !p.talles.some(t => t.talle === filtroTalle && t.stock > 0)) return false;
+    // ojotas solo se ven entrando por su categoria o si se busca algo puntual, no en listados generales
+    if(p.categoria === "Ojotas" && filtroCategoria !== "Ojotas" && !q) return false;
     return true;
   });
+
+  // "ver todos los modelos" ordena automaticamente por mas talles disponibles primero
+  if(modoVerTodos){
+    filtrado = [...filtrado].sort((a, b) => {
+      const dispA = a.talles.filter(t => t.stock > 0).length;
+      const dispB = b.talles.filter(t => t.stock > 0).length;
+      return dispB - dispA;
+    });
+  }
 
   render(filtrado);
 }
 
 document.getElementById('buscador').addEventListener('input', () => {
   const q = document.getElementById('buscador').value.trim();
+  modoVerTodos = false;
   if(q && vista === "home"){
     mostrarListado("Resultados de búsqueda");
     return;
@@ -919,7 +906,6 @@ function renderModalDetalle(p){
   const fotoHtml = p.foto
     ? `<img src="${p.foto}" alt="${p.nombre}">`
     : `<span class="noimg">Sin foto</span>`;
-  const bgStyle = p.foto ? ` style="background-image:url('${p.foto}')"` : '';
   const precioHtml = p.precio
     ? `<div class="modal-detalle-precio">$${p.precio.toLocaleString('es-AR')}</div>`
     : `<div class="modal-detalle-precio sin-precio">Consultar precio</div>`;
@@ -941,7 +927,7 @@ function renderModalDetalle(p){
   }).join('');
 
   body.innerHTML = `
-    <div class="modal-detalle-foto"${bgStyle}>${fotoHtml}</div>
+    <div class="modal-detalle-foto">${fotoHtml}</div>
     <div class="modal-detalle-nombre">${p.nombre}</div>
     ${precioHtml}
     <div class="modal-detalle-label">Seleccioná la cantidad por talle:</div>
@@ -988,7 +974,6 @@ document.getElementById('btn-agregar-detalle').addEventListener('click', () => {
   if(entradas.length === 0) return;
   entradas.forEach(([talle, cantidad]) => agregarAlCarrito(detalleProductoId, talle, cantidad));
   cerrarDetalle();
-  abrirDrawer();
 });
 
 document.getElementById('modal-detalle-close').addEventListener('click', cerrarDetalle);
