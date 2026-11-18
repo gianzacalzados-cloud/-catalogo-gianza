@@ -30,11 +30,11 @@
     --off: #ef4a5c;
     --img-bg: #212329;
     --radius: 14px;
-    --grad-accent: linear-gradient(135deg, #ff8a45, var(--accent) 50%, var(--accent-dim));
+    --grad-accent: linear-gradient(160deg, var(--accent) 0%, var(--accent-dim) 100%);
     --grad-lime: linear-gradient(135deg, #d9ff6e, var(--accent-2) 60%, #a8d930);
-    --grad-ok: linear-gradient(135deg, #58d884, var(--ok) 65%, #2e9c58);
-    --shadow-accent: 0 6px 16px rgba(255,106,26,0.38);
-    --shadow-ok: 0 6px 16px rgba(63,191,111,0.3);
+    --grad-ok: linear-gradient(160deg, var(--ok) 0%, #2e9c58 100%);
+    --shadow-accent: 0 3px 10px rgba(0,0,0,0.35);
+    --shadow-ok: 0 3px 10px rgba(0,0,0,0.35);
     --shadow-soft: 0 4px 20px rgba(0,0,0,0.4);
     --glass: rgba(37,40,46,0.55);
   }
@@ -108,7 +108,7 @@
   }
   .btn-pill-filtro.activo{
     background: var(--grad-accent); border-color: var(--accent); color:#1a0e06;
-    box-shadow: var(--shadow-accent), inset 0 1px 0 rgba(255,255,255,0.35);
+    box-shadow: var(--shadow-accent);
   }
   .btn-pill-filtro .chev{ font-size:10px; transition: transform .15s ease; }
   .btn-pill-filtro.abierto .chev{ transform: rotate(180deg); }
@@ -140,7 +140,7 @@
   .pildora:hover{ border-color: var(--accent); }
   .pildora.selected{
     background: var(--grad-accent); border-color: var(--accent); color:#1a0e06;
-    box-shadow: var(--shadow-accent), inset 0 1px 0 rgba(255,255,255,0.35);
+    box-shadow: var(--shadow-accent);
   }
 
   /* ================= MAIN ================= */
@@ -150,7 +150,7 @@
   .banner-ver-todos{
     display:block; width:100%; text-align:center;
     background: var(--grad-accent);
-    box-shadow: var(--shadow-accent), inset 0 1px 0 rgba(255,255,255,0.35);
+    box-shadow: var(--shadow-accent);
     color: #1a0e06;
     border: none; border-radius: 14px;
     padding: 19px 20px;
@@ -353,7 +353,7 @@
     margin-top: 2px;
     display:flex; align-items:center; justify-content:center; gap:6px;
     background: var(--grad-accent);
-    box-shadow: var(--shadow-accent), inset 0 1px 0 rgba(255,255,255,0.35);
+    box-shadow: var(--shadow-accent);
     color: #1a0e06;
     font-weight: 700;
     font-size: 14.5px;
@@ -372,7 +372,7 @@
     color: var(--label-dim);
     cursor: not-allowed;
   }
-  .btn-agregar.agregado{ background: var(--grad-ok); box-shadow: var(--shadow-ok), inset 0 1px 0 rgba(255,255,255,0.35); color: #06210f; }
+  .btn-agregar.agregado{ background: var(--grad-ok); box-shadow: var(--shadow-ok); color: #06210f; }
 
   .badge-agotado-total{
     position:absolute; margin:8px; background: var(--off);
@@ -438,7 +438,7 @@
   .stepper{ display:flex; align-items:center; gap:14px; }
   .stepper button{
     width:42px; height:42px; border-radius:9px; border:none;
-    background: var(--grad-accent); box-shadow: var(--shadow-accent), inset 0 1px 0 rgba(255,255,255,0.35);
+    background: var(--grad-accent); box-shadow: var(--shadow-accent);
     color:#1a0e06; font-weight:800; font-size:20px;
     cursor:pointer; display:flex; align-items:center; justify-content:center;
     transition: filter .12s ease, transform .1s ease;
@@ -453,7 +453,7 @@
   }
   .btn-agregar-detalle{
     width:100%; background: var(--grad-accent); color:#1a0e06; font-weight:800; font-size:16.5px;
-    box-shadow: var(--shadow-accent), inset 0 1px 0 rgba(255,255,255,0.35);
+    box-shadow: var(--shadow-accent);
     border:none; border-radius:10px; padding:16px 10px; min-height:54px; cursor:pointer;
     transition: filter .15s ease;
   }
@@ -478,7 +478,7 @@
     background: var(--grad-accent);
     color: #1a0e06;
     border: none;
-    box-shadow: var(--shadow-accent), inset 0 1px 0 rgba(255,255,255,0.35);
+    box-shadow: var(--shadow-accent);
     border-radius: 999px;
     padding: 16px 22px;
     min-height: 54px;
@@ -577,7 +577,7 @@
 
   .btn-pedido{
     width:100%; background: var(--grad-ok); color:#06210f; border:none; border-radius:10px;
-    box-shadow: var(--shadow-ok), inset 0 1px 0 rgba(255,255,255,0.35);
+    box-shadow: var(--shadow-ok);
     padding: 16px; min-height:54px; font-weight:700; font-size: 16.5px; cursor:pointer;
     display:flex; align-items:center; justify-content:center; gap:8px;
     transition: filter .15s ease;
