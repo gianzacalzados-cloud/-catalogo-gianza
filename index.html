@@ -148,19 +148,21 @@
 
   /* ---- HOME: banner + tiles ---- */
   .banner-ver-todos{
-    display:block; width:100%; text-align:center;
-    background: var(--grad-accent);
-    box-shadow: var(--shadow-accent);
-    color: #1a0e06;
-    border: none; border-radius: 14px;
-    padding: 19px 20px;
+    display:flex; align-items:center; justify-content:space-between; gap:10px;
+    width:100%; text-align:left;
+    background: var(--card);
+    border: 1px solid var(--soft-border);
+    color: var(--text);
+    border-radius: 10px;
+    padding: 14px 16px;
     cursor: pointer;
-    margin-bottom: 24px;
-    transition: filter .15s ease;
+    margin-bottom: 22px;
+    transition: border-color .15s ease;
   }
-  .banner-ver-todos:hover{ filter: brightness(1.05); }
-  .banner-ver-todos .titulo{ font-family:'Archivo Black', sans-serif; font-size: 17px; letter-spacing:0.03em; }
-  .banner-ver-todos .sub{ font-size: 13px; font-weight:600; opacity:0.85; margin-top:3px; }
+  .banner-ver-todos:hover{ border-color: var(--soft-border-hover); }
+  .banner-ver-todos .titulo{ font-family:'Archivo Black', sans-serif; font-size: 14.5px; letter-spacing:0.01em; color: var(--text); }
+  .banner-ver-todos .sub{ font-size: 11.5px; font-weight:600; color: var(--text-dim); margin-top:3px; }
+  .banner-ver-todos .arrow{ font-size: 18px; color: var(--accent); flex-shrink:0; }
 
   /* ---- franja de envíos, separada arriba ---- */
   .info-strip{
@@ -186,33 +188,33 @@
   /* ---- ticket de descuentos ---- */
   .banner-promo{
     background: var(--bg);
-    border: 2px solid var(--accent);
+    border: 1.5px solid var(--accent);
     border-radius: 10px;
-    margin-bottom: 20px;
+    margin-bottom: 18px;
     overflow: hidden;
     position: relative;
     box-shadow: var(--shadow-soft);
   }
-  .promo-top{ padding: 16px 16px; }
+  .promo-top{ padding: 13px 14px; }
   .promo-top .promo-tag{
     font-family:'Archivo Black', sans-serif;
-    font-size: 16px; letter-spacing:0.01em; text-transform: uppercase;
-    color: var(--accent); margin-bottom: 12px;
+    font-size: 13px; letter-spacing:0.01em; text-transform: uppercase;
+    color: var(--accent); margin-bottom: 10px;
   }
-  .promo-grid{ display:grid; grid-template-columns: 0.78fr 1.11fr 1.11fr; gap:7px; position:relative; }
+  .promo-grid{ display:grid; grid-template-columns: 0.78fr 1.11fr 1.11fr; gap:6px; position:relative; }
   .promo-item{
-    text-align:center; padding: 10px 3px; border-radius: 8px; min-width:0;
+    text-align:center; padding: 8px 3px; border-radius: 8px; min-width:0;
     display:flex; flex-direction:column; align-items:center; justify-content:center;
     background: var(--card);
     border: 1px solid var(--soft-border);
   }
   .promo-item .promo-eyebrow{
-    font-size: 8.5px; font-weight:700; letter-spacing:0.07em;
+    font-size: 8px; font-weight:700; letter-spacing:0.06em;
     text-transform: uppercase; color: var(--text-dim);
   }
   .promo-item .promo-figure{
-    font-family:'Archivo Black', sans-serif; font-size: 26px; line-height:1.1;
-    color: var(--text); margin-top: 3px;
+    font-family:'Archivo Black', sans-serif; font-size: 22px; line-height:1.1;
+    color: var(--text); margin-top: 2px;
   }
   .promo-item .promo-caption{
     font-family:'Archivo Black', sans-serif;
@@ -230,7 +232,7 @@
   .promo-item .promo-price .unidad{ color: var(--text-dim); }
 
   .promo-item.destacado,
-  .promo-item.destacado-max{ border: 1.5px solid var(--accent); }
+  .promo-item.destacado-max{ border: 1px solid var(--accent); }
   .promo-item.destacado .promo-figure,
   .promo-item.destacado-max .promo-figure{ color: var(--accent); }
   .promo-item.destacado-max .promo-price .monto{ color: var(--accent); }
@@ -655,8 +657,11 @@
     </div>
 
     <button class="banner-ver-todos" id="btn-ver-todos">
-      <div class="titulo">VER TODOS LOS MODELOS</div>
-      <div class="sub" id="banner-sub">cargando catálogo…</div>
+      <div>
+        <div class="titulo">Ver todos los modelos</div>
+        <div class="sub" id="banner-sub">cargando catálogo…</div>
+      </div>
+      <div class="arrow">→</div>
     </button>
 
     <div class="seccion-label">CATEGORIAS</div>
