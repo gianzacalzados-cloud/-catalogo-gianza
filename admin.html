@@ -1,0 +1,402 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+<title>GIANZA — Panel de administración</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+<style>
+  :root{
+    --bg:#111318; --bg-soft:#181b22; --card:#1d2029; --card-border:#2a2e3a;
+    --accent:#ff6a1a; --accent-dim:#c65315; --text:#f3f3f1; --text-dim:#9a9ea8;
+    --ok:#3fbf6f; --off:#e6484f;
+  }
+  *{ box-sizing:border-box; }
+  html,body{ margin:0; padding:0; }
+  body{ background:var(--bg); color:var(--text); font-family:'Inter',sans-serif;
+        padding-top:env(safe-area-inset-top,0px); padding-bottom:env(safe-area-inset-bottom,0px); }
+  button, input, select{ font-family:inherit; }
+
+  /* ---- login ---- */
+  #login-screen{
+    min-height:100vh; display:flex; align-items:center; justify-content:center; padding:20px;
+  }
+  .login-box{
+    background:var(--card); border:1px solid var(--card-border); border-radius:14px;
+    padding:30px; width:100%; max-width:360px;
+  }
+  .login-box h1{ font-family:'Archivo Black',sans-serif; font-size:22px; margin:0 0 6px; }
+  .login-box .tag{ color:var(--accent); }
+  .login-box p{ color:var(--text-dim); font-size:13px; margin:0 0 20px; }
+  .login-box input{
+    width:100%; background:var(--bg-soft); border:1px solid var(--card-border); color:var(--text);
+    border-radius:9px; padding:11px 13px; font-size:14px; margin-bottom:10px;
+  }
+  .login-box button{
+    width:100%; background:var(--accent); color:#1a0e06; border:none; border-radius:9px;
+    padding:12px; font-weight:700; font-size:14px; cursor:pointer; margin-top:6px;
+  }
+  .login-box button:hover{ background:var(--accent-dim); color:#fff; }
+  .login-error{ color:var(--off); font-size:13px; margin-top:10px; display:none; }
+
+  /* ---- panel ---- */
+  #panel{ display:none; }
+  header{
+    position:sticky; top:0; z-index:10; background:rgba(17,19,24,0.95); backdrop-filter:blur(10px);
+    border-bottom:1px solid var(--card-border);
+    padding:16px 20px calc(14px + env(safe-area-inset-top,0px));
+    display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:10px;
+  }
+  header h1{ font-family:'Archivo Black',sans-serif; font-size:20px; margin:0; }
+  header h1 .tag{ color:var(--accent); }
+  .header-actions{ display:flex; gap:10px; align-items:center; }
+  .btn-salir{ background:none; border:1px solid var(--card-border); color:var(--text-dim);
+              border-radius:8px; padding:8px 14px; font-size:13px; cursor:pointer; }
+  .btn-nuevo{ background:var(--ok); color:#06210f; border:none; border-radius:8px;
+              padding:9px 16px; font-weight:700; font-size:13.5px; cursor:pointer; }
+
+  main{ max-width:1100px; margin:0 auto; padding:20px; }
+
+  .toolbar{ display:flex; gap:10px; margin-bottom:16px; flex-wrap:wrap; }
+  .toolbar input{ flex:1 1 220px; background:var(--bg-soft); border:1px solid var(--card-border);
+                  color:var(--text); border-radius:9px; padding:10px 13px; font-size:14px; }
+
+  .status-msg{ font-size:13px; padding:10px 14px; border-radius:8px; margin-bottom:14px; display:none; }
+  .status-msg.ok{ background:rgba(63,191,111,0.12); color:var(--ok); display:block; }
+  .status-msg.error{ background:rgba(230,72,79,0.12); color:var(--off); display:block; }
+
+  .producto-row{
+    background:var(--card); border:1px solid var(--card-border); border-radius:12px;
+    padding:14px; margin-bottom:10px; display:flex; gap:14px; align-items:flex-start; flex-wrap:wrap;
+  }
+  .producto-row img{ width:60px; height:60px; object-fit:cover; border-radius:8px; background:#0d0f14; flex-shrink:0; }
+  .producto-fields{ flex:1; min-width:260px; display:grid; grid-template-columns: 2fr 1fr 1fr; gap:8px; }
+  .producto-fields label{ font-size:11px; color:var(--text-dim); display:block; margin-bottom:3px; }
+  .producto-fields input{
+    width:100%; background:var(--bg-soft); border:1px solid var(--card-border); color:var(--text);
+    border-radius:7px; padding:8px 10px; font-size:13.5px;
+  }
+  .campo-foto{ grid-column: 1 / -1; }
+
+  .talles-editor{ grid-column: 1 / -1; }
+  .talles-editor label{ margin-bottom:6px; }
+  .talle-row{ display:flex; gap:6px; margin-bottom:6px; align-items:center; }
+  .talle-row input{ padding:7px 9px; font-size:13px; }
+  .talle-row input.talle-nombre{ width:70px; flex:none; }
+  .talle-row input.talle-stock{ width:70px; flex:none; }
+  .talle-row button{
+    background:none; border:1px solid var(--card-border); color:var(--off); border-radius:6px;
+    width:28px; height:28px; cursor:pointer; font-size:14px; flex:none;
+  }
+  .btn-add-talle{
+    background:none; border:1px dashed var(--card-border); color:var(--text-dim);
+    border-radius:7px; padding:6px 12px; font-size:12px; cursor:pointer; margin-top:2px;
+  }
+
+  .row-actions{ display:flex; flex-direction:column; gap:8px; flex-shrink:0; }
+  .btn-guardar{
+    background:var(--accent); color:#1a0e06; border:none; border-radius:8px;
+    padding:9px 14px; font-weight:700; font-size:13px; cursor:pointer; white-space:nowrap;
+  }
+  .btn-guardar:hover{ background:var(--accent-dim); color:#fff; }
+  .btn-guardar.guardado{ background:var(--ok); color:#06210f; }
+  .btn-borrar{
+    background:none; border:1px solid var(--card-border); color:var(--off); border-radius:8px;
+    padding:9px 14px; font-size:13px; cursor:pointer;
+  }
+
+  .nuevo-badge{
+    display:inline-block; background:var(--accent); color:#1a0e06; font-size:10px; font-weight:700;
+    padding:3px 8px; border-radius:6px; margin-bottom:8px;
+  }
+
+  .empty{ text-align:center; color:var(--text-dim); padding:50px 20px; }
+  .loading{ text-align:center; color:var(--text-dim); padding:50px 20px; }
+</style>
+</head>
+<body>
+
+<!-- ============ LOGIN ============ -->
+<div id="login-screen">
+  <div class="login-box">
+    <h1>GIANZA <span class="tag">Admin</span></h1>
+    <p>Ingresá con tu usuario de administrador para gestionar el catálogo.</p>
+    <input type="email" id="login-email" placeholder="Email" autocomplete="username" />
+    <input type="password" id="login-password" placeholder="Contraseña" autocomplete="current-password" />
+    <button id="btn-login">Ingresar</button>
+    <div class="login-error" id="login-error">Email o contraseña incorrectos.</div>
+  </div>
+</div>
+
+<!-- ============ PANEL ============ -->
+<div id="panel">
+  <header>
+    <h1>GIANZA <span class="tag">Admin</span></h1>
+    <div class="header-actions">
+      <button class="btn-nuevo" id="btn-nuevo">+ Nuevo producto</button>
+      <button class="btn-salir" id="btn-salir">Salir</button>
+    </div>
+  </header>
+
+  <main>
+    <div class="status-msg" id="status-msg"></div>
+    <div class="toolbar">
+      <input type="text" id="buscador-admin" placeholder="Buscar por nombre o marca…" />
+    </div>
+    <div id="lista-productos" class="loading">Cargando productos…</div>
+  </main>
+</div>
+
+<script>
+// ⚠️ Reemplazá estos dos valores por los de TU proyecto de Supabase
+// (Project Settings → API → Project URL / anon public key)
+const SUPABASE_URL = "https://koevucbehoqfktkjjwme.supabase.co";
+const SUPABASE_ANON_KEY = "sb_publishable_kn4THufXr7EI9S2uA1SJyg_RUby7TQw";
+
+const sb = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+let productos = [];
+let nuevosPendientes = []; // productos creados en esta sesión que todavía no se guardaron
+
+// ---------- login ----------
+async function checkSession(){
+  const { data } = await sb.auth.getSession();
+  if(data.session){
+    mostrarPanel();
+  }else{
+    mostrarLogin();
+  }
+}
+
+function mostrarLogin(){
+  document.getElementById('login-screen').style.display = 'flex';
+  document.getElementById('panel').style.display = 'none';
+}
+function mostrarPanel(){
+  document.getElementById('login-screen').style.display = 'none';
+  document.getElementById('panel').style.display = 'block';
+  cargarProductos();
+}
+
+document.getElementById('btn-login').addEventListener('click', async () => {
+  const email = document.getElementById('login-email').value.trim();
+  const password = document.getElementById('login-password').value;
+  const errorBox = document.getElementById('login-error');
+  errorBox.style.display = 'none';
+
+  const { error } = await sb.auth.signInWithPassword({ email, password });
+  if(error){
+    errorBox.textContent = 'Email o contraseña incorrectos.';
+    errorBox.style.display = 'block';
+    return;
+  }
+  mostrarPanel();
+});
+
+document.getElementById('btn-salir').addEventListener('click', async () => {
+  await sb.auth.signOut();
+  mostrarLogin();
+});
+
+// permitir Enter para loguear
+document.getElementById('login-password').addEventListener('keydown', (e) => {
+  if(e.key === 'Enter') document.getElementById('btn-login').click();
+});
+
+// ---------- carga de productos ----------
+async function cargarProductos(){
+  const cont = document.getElementById('lista-productos');
+  cont.className = 'loading';
+  cont.textContent = 'Cargando productos…';
+
+  const { data, error } = await sb.from('productos').select('*').order('id', { ascending: false });
+  if(error){
+    mostrarStatus('error', 'Error cargando productos: ' + error.message);
+    cont.textContent = '';
+    return;
+  }
+  productos = data || [];
+  renderLista();
+}
+
+function mostrarStatus(tipo, texto){
+  const el = document.getElementById('status-msg');
+  el.className = 'status-msg ' + tipo;
+  el.textContent = texto;
+  setTimeout(() => { el.style.display = 'none'; }, 4000);
+}
+
+function renderLista(){
+  const cont = document.getElementById('lista-productos');
+  const q = document.getElementById('buscador-admin').value.trim().toLowerCase();
+
+  const todos = [...nuevosPendientes, ...productos];
+  const filtrados = todos.filter(p =>
+    !q || p.nombre.toLowerCase().includes(q) || (p.marca||'').toLowerCase().includes(q)
+  );
+
+  if(filtrados.length === 0){
+    cont.className = 'empty';
+    cont.textContent = 'No se encontraron productos.';
+    return;
+  }
+  cont.className = '';
+  cont.innerHTML = filtrados.map(p => filaProducto(p)).join('');
+}
+
+function filaProducto(p){
+  const esNuevo = p.id === undefined;
+  const refId = esNuevo ? p._tempId : p.id;
+  const talles = p.talles || [];
+
+  const tallesHtml = talles.map((t, idx) => `
+    <div class="talle-row" data-idx="${idx}">
+      <input class="talle-nombre" value="${t.talle}" placeholder="Talle" />
+      <input class="talle-stock" type="number" min="0" value="${t.stock}" placeholder="Stock" />
+      <button class="btn-quitar-talle" title="Quitar talle">&times;</button>
+    </div>
+  `).join('');
+
+  return `
+    <div class="producto-row" data-ref="${refId}" data-nuevo="${esNuevo ? '1' : '0'}">
+      <img src="${p.foto || ''}" onerror="this.style.visibility='hidden'" alt="">
+      <div class="producto-fields">
+        ${esNuevo ? '<span class="nuevo-badge" style="grid-column:1/-1;">NUEVO — todavía no guardado</span>' : ''}
+        <div>
+          <label>Nombre</label>
+          <input class="campo-nombre" value="${(p.nombre||'').replace(/"/g,'&quot;')}" />
+        </div>
+        <div>
+          <label>Marca</label>
+          <input class="campo-marca" value="${(p.marca||'').replace(/"/g,'&quot;')}" />
+        </div>
+        <div>
+          <label>Precio</label>
+          <input class="campo-precio" type="number" min="0" value="${p.precio||0}" />
+        </div>
+        <div class="campo-foto">
+          <label>URL de la foto</label>
+          <input class="campo-foto-input" value="${(p.foto||'').replace(/"/g,'&quot;')}" placeholder="https://..." />
+        </div>
+        <div class="talles-editor">
+          <label>Talles y stock</label>
+          <div class="talles-rows">${tallesHtml}</div>
+          <button class="btn-add-talle">+ Agregar talle</button>
+        </div>
+      </div>
+      <div class="row-actions">
+        <button class="btn-guardar">Guardar</button>
+        <button class="btn-borrar">Borrar</button>
+      </div>
+    </div>
+  `;
+}
+
+// ---------- nuevo producto ----------
+let tempCounter = 0;
+document.getElementById('btn-nuevo').addEventListener('click', () => {
+  tempCounter++;
+  nuevosPendientes.unshift({
+    _tempId: 'nuevo-' + tempCounter,
+    nombre: '', marca: '', precio: 0, foto: '',
+    talles: [{ talle: '', stock: 0 }]
+  });
+  renderLista();
+  document.getElementById('lista-productos').scrollIntoView({ behavior:'smooth' });
+});
+
+// ---------- buscador ----------
+document.getElementById('buscador-admin').addEventListener('input', renderLista);
+
+// ---------- delegación de eventos en la lista ----------
+document.getElementById('lista-productos').addEventListener('click', async (e) => {
+  const fila = e.target.closest('.producto-row');
+  if(!fila) return;
+  const refId = fila.dataset.ref;
+  const esNuevo = fila.dataset.nuevo === '1';
+
+  // agregar talle
+  if(e.target.closest('.btn-add-talle')){
+    const rows = fila.querySelector('.talles-rows');
+    const div = document.createElement('div');
+    div.className = 'talle-row';
+    div.innerHTML = `
+      <input class="talle-nombre" placeholder="Talle" />
+      <input class="talle-stock" type="number" min="0" value="0" placeholder="Stock" />
+      <button class="btn-quitar-talle" title="Quitar talle">&times;</button>
+    `;
+    rows.appendChild(div);
+    return;
+  }
+
+  // quitar talle
+  if(e.target.closest('.btn-quitar-talle')){
+    e.target.closest('.talle-row').remove();
+    return;
+  }
+
+  // guardar
+  if(e.target.closest('.btn-guardar')){
+    const btn = fila.querySelector('.btn-guardar');
+    const payload = leerFormulario(fila);
+
+    if(!payload.nombre){
+      mostrarStatus('error', 'El nombre no puede estar vacío.');
+      return;
+    }
+
+    if(esNuevo){
+      const { error } = await sb.from('productos').insert(payload);
+      if(error){ mostrarStatus('error', 'Error guardando: ' + error.message); return; }
+      nuevosPendientes = nuevosPendientes.filter(p => p._tempId !== refId);
+      mostrarStatus('ok', 'Producto creado correctamente.');
+      await cargarProductos();
+    }else{
+      const { error } = await sb.from('productos').update(payload).eq('id', refId);
+      if(error){ mostrarStatus('error', 'Error guardando: ' + error.message); return; }
+      btn.textContent = '✓ Guardado';
+      btn.classList.add('guardado');
+      mostrarStatus('ok', 'Cambios guardados.');
+      setTimeout(() => { btn.textContent = 'Guardar'; btn.classList.remove('guardado'); }, 1200);
+    }
+    return;
+  }
+
+  // borrar
+  if(e.target.closest('.btn-borrar')){
+    if(esNuevo){
+      nuevosPendientes = nuevosPendientes.filter(p => p._tempId !== refId);
+      renderLista();
+      return;
+    }
+    if(!confirm('¿Borrar este producto del catálogo? No se puede deshacer.')) return;
+    const { error } = await sb.from('productos').delete().eq('id', refId);
+    if(error){ mostrarStatus('error', 'Error borrando: ' + error.message); return; }
+    mostrarStatus('ok', 'Producto borrado.');
+    await cargarProductos();
+    return;
+  }
+});
+
+function leerFormulario(fila){
+  const nombre = fila.querySelector('.campo-nombre').value.trim();
+  const marca = fila.querySelector('.campo-marca').value.trim();
+  const precio = parseFloat(fila.querySelector('.campo-precio').value) || 0;
+  const foto = fila.querySelector('.campo-foto-input').value.trim();
+
+  const talles = [...fila.querySelectorAll('.talle-row')].map(row => ({
+    talle: row.querySelector('.talle-nombre').value.trim(),
+    stock: parseInt(row.querySelector('.talle-stock').value, 10) || 0
+  })).filter(t => t.talle !== '');
+
+  return { nombre, marca, precio, foto, talles };
+}
+
+checkSession();
+</script>
+
+</body>
+</html>

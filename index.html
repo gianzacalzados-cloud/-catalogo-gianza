@@ -7,6 +7,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
 <style>
   :root{
     --bg: #111318;
@@ -311,6 +312,12 @@
 <script>
 const WHATSAPP_NUMERO = "5491128375698";
 
+// ⚠️ Reemplazá estos dos valores por los de TU proyecto de Supabase
+// (son los mismos que pusiste en admin.html — Project Settings → API)
+const SUPABASE_URL = "https://koevucbehoqfktkjjwme.supabase.co";
+const SUPABASE_ANON_KEY = "sb_publishable_kn4THufXr7EI9S2uA1SJyg_RUby7TQw";
+const sb = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
 let productos = [];
 let cart = [];
 
@@ -558,10 +565,15 @@ async function init(){
   actualizarBadge();
 
   try{
-    const res = await fetch('productos.json');
-    productos = await res.json();
+    const { data, error } = await sb.from('productos').select('*').order('id', { ascending: false });
+    if(error) throw error;
+    productos = (data || []).map(p => ({
+      ...p,
+      talles: p.talles || [],
+      stockTotal: (p.talles || []).reduce((acc, t) => acc + (t.stock || 0), 0)
+    }));
   }catch(e){
-    document.getElementById('total-info').textContent = 'Error cargando productos.json';
+    document.getElementById('total-info').textContent = 'Error cargando el catálogo';
     return;
   }
 
