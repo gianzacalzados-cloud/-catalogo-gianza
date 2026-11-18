@@ -1,0 +1,589 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+<title>GIANZA Mayorista — Catálogo</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg: #111318;
+    --bg-soft: #181b22;
+    --card: #1d2029;
+    --card-border: #2a2e3a;
+    --accent: #ff6a1a;
+    --accent-dim: #c65315;
+    --text: #f3f3f1;
+    --text-dim: #9a9ea8;
+    --ok: #3fbf6f;
+    --off: #e6484f;
+    --radius: 14px;
+  }
+  *{ box-sizing:border-box; }
+  html,body{ margin:0; padding:0; }
+  body{
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Inter', sans-serif;
+    padding-top: env(safe-area-inset-top, 0px);
+    padding-bottom: env(safe-area-inset-bottom, 0px);
+  }
+  a{ color: inherit; }
+  button{ font-family: inherit; }
+
+  header{
+    position: sticky; top:0; z-index: 20;
+    padding: 18px 20px calc(16px + env(safe-area-inset-top,0px));
+    background: rgba(17,19,24,0.92);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid var(--card-border);
+  }
+  .header-inner{ max-width: 1200px; margin: 0 auto; }
+  .brand{ display:flex; align-items:baseline; gap:10px; margin-bottom:14px; flex-wrap: wrap; }
+  .brand h1{
+    font-family:'Archivo Black', sans-serif;
+    font-size: clamp(22px, 4vw, 30px);
+    margin:0; letter-spacing: -0.5px;
+  }
+  .brand .tag{ color: var(--accent); }
+  .brand small{ color: var(--text-dim); font-size: 13px; font-weight: 500; }
+
+  .controls{ display:flex; gap:10px; flex-wrap: wrap; }
+  .controls input, .controls select{
+    background: var(--bg-soft);
+    border: 1px solid var(--card-border);
+    color: var(--text);
+    border-radius: 10px;
+    padding: 11px 14px;
+    font-family: inherit;
+    font-size: 14px;
+  }
+  .controls input{ flex: 1 1 220px; min-width: 180px; }
+  .controls input::placeholder{ color: var(--text-dim); }
+  .controls select{ flex: 0 1 160px; }
+  .controls input:focus, .controls select:focus{ outline: 2px solid var(--accent); outline-offset: 1px; }
+
+  main{ max-width: 1200px; margin: 0 auto; padding: 22px 20px 100px; }
+
+  .count-row{ color: var(--text-dim); font-size: 13px; margin-bottom: 14px; }
+
+  .grid{
+    display:grid;
+    grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
+    gap: 16px;
+  }
+
+  .card{
+    background: var(--card);
+    border: 1px solid var(--card-border);
+    border-radius: var(--radius);
+    overflow: hidden;
+    display:flex; flex-direction:column;
+  }
+  .card .photo-wrap{
+    aspect-ratio: 1/1;
+    background: #0d0f14;
+    display:flex; align-items:center; justify-content:center;
+    overflow:hidden;
+    position: relative;
+  }
+  .card img{ width:100%; height:100%; object-fit: cover; }
+  .card .noimg{ color: var(--text-dim); font-size: 13px; }
+
+  .card .body{ padding: 14px; display:flex; flex-direction:column; gap: 10px; flex:1; }
+  .card .marca{ font-size: 11px; letter-spacing: 0.04em; color: var(--accent); font-weight: 700; }
+  .card h3{ font-size: 15px; margin: 0; line-height: 1.3; min-height: 2.6em; }
+  .card .precio{ font-family:'Archivo Black', sans-serif; font-size: 19px; }
+  .card .precio.sin-precio{ font-family: 'Inter', sans-serif; font-size: 13px; color: var(--text-dim); font-weight:600; }
+
+  .talles-label{ font-size: 11px; color: var(--text-dim); margin-bottom: -4px; }
+  .talles{ display:flex; flex-wrap:wrap; gap: 6px; }
+  .talle-chip{
+    font-size: 12px; padding: 6px 10px; border-radius: 7px;
+    border: 1px solid var(--card-border);
+    background: var(--bg-soft);
+    color: var(--text);
+    cursor: pointer;
+    transition: all .12s ease;
+  }
+  .talle-chip:hover:not(.agotado){ border-color: var(--accent); }
+  .talle-chip.selected{
+    background: var(--accent);
+    border-color: var(--accent);
+    color: #1a0e06;
+    font-weight: 700;
+  }
+  .talle-chip.agotado{
+    color: var(--text-dim);
+    text-decoration: line-through;
+    opacity: 0.45;
+    cursor: not-allowed;
+  }
+
+  .btn-agregar{
+    margin-top: auto;
+    display:flex; align-items:center; justify-content:center; gap:8px;
+    background: var(--accent);
+    color: #1a0e06;
+    font-weight: 700;
+    font-size: 13.5px;
+    padding: 10px 12px;
+    border: none;
+    border-radius: 9px;
+    cursor: pointer;
+    transition: background .15s ease;
+  }
+  .btn-agregar:hover{ background: var(--accent-dim); color: #fff; }
+  .btn-agregar:disabled{
+    background: var(--bg-soft);
+    color: var(--text-dim);
+    cursor: not-allowed;
+  }
+  .btn-agregar.agregado{ background: var(--ok); color: #06210f; }
+
+  .badge-agotado-total{
+    position:absolute; margin:10px; background: var(--off);
+    color:white; font-size:11px; font-weight:700; padding:4px 9px; border-radius:7px;
+    z-index: 2;
+  }
+
+  .empty-state{
+    text-align:center; color: var(--text-dim); padding: 60px 20px; font-size: 15px;
+  }
+
+  footer{
+    text-align:center; color: var(--text-dim); font-size: 12px; padding: 30px 20px 40px;
+  }
+
+  /* --- Carrito flotante --- */
+  .cart-fab{
+    position: fixed;
+    right: calc(18px + env(safe-area-inset-right,0px));
+    bottom: calc(18px + env(safe-area-inset-bottom,0px));
+    z-index: 30;
+    background: var(--accent);
+    color: #1a0e06;
+    border: none;
+    border-radius: 999px;
+    padding: 14px 20px;
+    font-weight: 700;
+    font-size: 14px;
+    display:flex; align-items:center; gap:8px;
+    box-shadow: 0 6px 20px rgba(0,0,0,0.4);
+    cursor: pointer;
+  }
+  .cart-fab .badge{
+    background: #1a0e06; color: var(--accent);
+    border-radius: 999px; min-width: 20px; height:20px;
+    display:flex; align-items:center; justify-content:center;
+    font-size: 12px; padding: 0 5px;
+  }
+
+  .overlay{
+    position: fixed; inset:0; background: rgba(0,0,0,0.55);
+    z-index: 40; display:none;
+  }
+  .overlay.open{ display:block; }
+
+  .drawer{
+    position: fixed; top:0; right:0; bottom:0;
+    width: min(420px, 100%);
+    background: var(--bg-soft);
+    border-left: 1px solid var(--card-border);
+    z-index: 50;
+    transform: translateX(100%);
+    transition: transform .25s ease;
+    display:flex; flex-direction:column;
+    padding-top: env(safe-area-inset-top,0px);
+    padding-bottom: env(safe-area-inset-bottom,0px);
+  }
+  .drawer.open{ transform: translateX(0); }
+
+  .drawer-header{
+    padding: 18px 18px 14px; border-bottom: 1px solid var(--card-border);
+    display:flex; align-items:center; justify-content:space-between;
+  }
+  .drawer-header h2{ font-size: 18px; margin:0; font-family:'Archivo Black', sans-serif; }
+  .drawer-close{
+    background:none; border:none; color: var(--text); font-size: 22px; cursor:pointer; line-height:1;
+  }
+
+  .drawer-body{ flex:1; overflow-y:auto; padding: 14px 18px; }
+  .drawer-empty{ color: var(--text-dim); font-size: 14px; text-align:center; padding: 40px 10px; }
+
+  .cart-item{
+    display:flex; gap:12px; padding: 12px 0; border-bottom: 1px solid var(--card-border);
+  }
+  .cart-item img{ width:56px; height:56px; object-fit:cover; border-radius:8px; background:#0d0f14; flex-shrink:0; }
+  .cart-item-info{ flex:1; min-width:0; }
+  .cart-item-info .nombre{ font-size: 13.5px; font-weight:600; line-height:1.3; }
+  .cart-item-info .detalle{ font-size: 12px; color: var(--text-dim); margin-top:2px; }
+  .cart-item-info .precio-linea{ font-size: 13px; margin-top: 6px; font-weight:700; }
+
+  .qty-control{ display:flex; align-items:center; gap:8px; margin-top:8px; }
+  .qty-control button{
+    width:24px; height:24px; border-radius:6px; border:1px solid var(--card-border);
+    background: var(--bg); color: var(--text); cursor:pointer; font-size:14px;
+  }
+  .qty-control span{ font-size: 13px; min-width: 18px; text-align:center; }
+  .btn-quitar{
+    background:none; border:none; color: var(--off); font-size:12px; cursor:pointer;
+    text-decoration: underline; margin-top: 6px; padding: 0;
+  }
+
+  .drawer-footer{
+    border-top: 1px solid var(--card-border);
+    padding: 16px 18px calc(18px + env(safe-area-inset-bottom,0px));
+  }
+  .total-row{
+    display:flex; justify-content:space-between; align-items:baseline;
+    margin-bottom: 12px; font-size: 15px;
+  }
+  .total-row strong{ font-family:'Archivo Black', sans-serif; font-size: 20px; }
+  .total-nota{ font-size: 11.5px; color: var(--text-dim); margin-bottom: 12px; }
+
+  .btn-pedido{
+    width:100%; background: var(--ok); color:#06210f; border:none; border-radius:10px;
+    padding: 13px; font-weight:700; font-size: 14.5px; cursor:pointer;
+    display:flex; align-items:center; justify-content:center; gap:8px;
+  }
+  .btn-pedido:hover{ filter: brightness(1.08); }
+
+  .btn-vaciar{
+    width:100%; background:none; border:1px solid var(--card-border); color: var(--text-dim);
+    border-radius:10px; padding: 10px; font-size: 13px; cursor:pointer; margin-top:8px;
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="header-inner">
+    <div class="brand">
+      <h1>GIANZA <span class="tag">Mayorista</span></h1>
+      <small id="total-info">cargando catálogo…</small>
+    </div>
+    <div class="controls">
+      <input id="buscador" type="text" placeholder="Buscar modelo (ej: dunk, 530, air force)…" autocomplete="off" />
+      <select id="filtro-marca">
+        <option value="">Todas las marcas</option>
+      </select>
+      <select id="filtro-stock">
+        <option value="">Todos</option>
+        <option value="con-stock">Con stock</option>
+      </select>
+    </div>
+  </div>
+</header>
+
+<main>
+  <div class="count-row" id="count-row"></div>
+  <div class="grid" id="grid"></div>
+  <div class="empty-state" id="empty-state" style="display:none;">No encontramos zapatillas con esa búsqueda.</div>
+</main>
+
+<footer>GIANZA Mayorista · Catálogo actualizado desde inventario</footer>
+
+<button class="cart-fab" id="cart-fab">
+  🛒 Carrito <span class="badge" id="cart-badge">0</span>
+</button>
+
+<div class="overlay" id="overlay"></div>
+<div class="drawer" id="drawer">
+  <div class="drawer-header">
+    <h2>Tu pedido</h2>
+    <button class="drawer-close" id="drawer-close">&times;</button>
+  </div>
+  <div class="drawer-body" id="drawer-body"></div>
+  <div class="drawer-footer">
+    <div class="total-row">
+      <span>Total</span>
+      <strong id="cart-total">$0</strong>
+    </div>
+    <div class="total-nota" id="cart-nota" style="display:none;">* Hay productos a consultar precio, no están sumados al total.</div>
+    <button class="btn-pedido" id="btn-pedido">✅ Hacer pedido por WhatsApp</button>
+    <button class="btn-vaciar" id="btn-vaciar">Vaciar carrito</button>
+  </div>
+</div>
+
+<script>
+const WHATSAPP_NUMERO = "5491128375698";
+
+let productos = [];
+let cart = [];
+
+// ---------- utilidades ----------
+function formatoPrecio(p){
+  if(!p || p === 0) return '<span class="precio sin-precio">Consultar precio</span>';
+  return `<span class="precio">$${p.toLocaleString('es-AR')}</span>`;
+}
+function money(n){ return `$${n.toLocaleString('es-AR')}`; }
+
+function cargarCarrito(){
+  try{
+    const raw = localStorage.getItem('gianza_cart');
+    cart = raw ? JSON.parse(raw) : [];
+  }catch(e){ cart = []; }
+}
+function guardarCarrito(){
+  try{ localStorage.setItem('gianza_cart', JSON.stringify(cart)); }catch(e){}
+}
+
+// ---------- render del catálogo ----------
+function render(lista){
+  const grid = document.getElementById('grid');
+  const empty = document.getElementById('empty-state');
+  const countRow = document.getElementById('count-row');
+
+  if(lista.length === 0){
+    grid.innerHTML = '';
+    empty.style.display = 'block';
+    countRow.textContent = '';
+    return;
+  }
+  empty.style.display = 'none';
+  countRow.textContent = `${lista.length} modelo${lista.length===1?'':'s'} encontrado${lista.length===1?'':'s'}`;
+
+  grid.innerHTML = lista.map(p => {
+    const agotadoTotal = p.stockTotal === 0;
+    const primerConStock = p.talles.find(t => t.stock > 0);
+
+    const tallesHtml = p.talles.map(t => {
+      const sinStock = t.stock === 0;
+      const esSeleccionado = primerConStock && t.talle === primerConStock.talle;
+      return `<span class="talle-chip ${sinStock ? 'agotado' : ''} ${esSeleccionado ? 'selected' : ''}"
+                    data-pid="${p.id}" data-talle="${t.talle}" data-stock="${t.stock}">${t.talle}</span>`;
+    }).join('');
+
+    const fotoHtml = p.foto
+      ? `<img src="${p.foto}" alt="${p.nombre}" loading="lazy" />`
+      : `<span class="noimg">Sin foto</span>`;
+
+    return `
+      <div class="card" data-card-id="${p.id}">
+        <div class="photo-wrap">
+          ${agotadoTotal ? '<span class="badge-agotado-total">AGOTADO</span>' : ''}
+          ${fotoHtml}
+        </div>
+        <div class="body">
+          <span class="marca">${p.marca || '—'}</span>
+          <h3>${p.nombre}</h3>
+          ${formatoPrecio(p.precio)}
+          <div class="talles-label">Talles</div>
+          <div class="talles">${tallesHtml}</div>
+          <button class="btn-agregar" data-pid="${p.id}" ${agotadoTotal ? 'disabled' : ''}>
+            ${agotadoTotal ? 'Sin stock' : '+ Agregar al carrito'}
+          </button>
+        </div>
+      </div>
+    `;
+  }).join('');
+}
+
+function aplicarFiltros(){
+  const q = document.getElementById('buscador').value.trim().toLowerCase();
+  const marca = document.getElementById('filtro-marca').value;
+  const soloConStock = document.getElementById('filtro-stock').value === 'con-stock';
+
+  const filtrado = productos.filter(p => {
+    if(q && !p.nombre.toLowerCase().includes(q) && !(p.marca||'').toLowerCase().includes(q)) return false;
+    if(marca && p.marca !== marca) return false;
+    if(soloConStock && p.stockTotal === 0) return false;
+    return true;
+  });
+
+  render(filtrado);
+}
+
+// click en chips de talle (selecciona talle dentro de esa tarjeta) y en botón agregar
+document.getElementById('grid').addEventListener('click', (e) => {
+  const chip = e.target.closest('.talle-chip');
+  if(chip && !chip.classList.contains('agotado')){
+    const card = chip.closest('.card');
+    card.querySelectorAll('.talle-chip').forEach(c => c.classList.remove('selected'));
+    chip.classList.add('selected');
+    return;
+  }
+
+  const btn = e.target.closest('.btn-agregar');
+  if(btn && !btn.disabled){
+    const pid = parseInt(btn.dataset.pid, 10);
+    const card = btn.closest('.card');
+    const chipSel = card.querySelector('.talle-chip.selected');
+    if(!chipSel){ return; }
+    const talle = chipSel.dataset.talle;
+    agregarAlCarrito(pid, talle);
+
+    const original = btn.textContent;
+    btn.textContent = '✓ Agregado';
+    btn.classList.add('agregado');
+    setTimeout(() => { btn.textContent = original; btn.classList.remove('agregado'); }, 900);
+  }
+});
+
+// ---------- carrito ----------
+function agregarAlCarrito(pid, talle){
+  const p = productos.find(x => x.id === pid);
+  if(!p) return;
+  const existente = cart.find(i => i.id === pid && i.talle === talle);
+  if(existente){
+    existente.cantidad += 1;
+  }else{
+    cart.push({
+      id: p.id, nombre: p.nombre, marca: p.marca, precio: p.precio,
+      foto: p.foto, talle: talle, cantidad: 1
+    });
+  }
+  guardarCarrito();
+  actualizarBadge();
+}
+
+function quitarDelCarrito(idx){
+  cart.splice(idx, 1);
+  guardarCarrito();
+  actualizarBadge();
+  renderDrawer();
+}
+
+function cambiarCantidad(idx, delta){
+  cart[idx].cantidad += delta;
+  if(cart[idx].cantidad <= 0){
+    quitarDelCarrito(idx);
+    return;
+  }
+  guardarCarrito();
+  actualizarBadge();
+  renderDrawer();
+}
+
+function actualizarBadge(){
+  const total = cart.reduce((acc, i) => acc + i.cantidad, 0);
+  document.getElementById('cart-badge').textContent = total;
+}
+
+function renderDrawer(){
+  const body = document.getElementById('drawer-body');
+  if(cart.length === 0){
+    body.innerHTML = '<div class="drawer-empty">Todavía no agregaste nada.<br>Elegí talle y sumá zapatillas al pedido.</div>';
+  }else{
+    body.innerHTML = cart.map((item, idx) => {
+      const lineaPrecio = item.precio ? money(item.precio * item.cantidad) : 'A consultar';
+      const fotoHtml = item.foto ? `<img src="${item.foto}" alt="${item.nombre}">` : '';
+      return `
+        <div class="cart-item">
+          ${fotoHtml}
+          <div class="cart-item-info">
+            <div class="nombre">${item.nombre}</div>
+            <div class="detalle">${item.marca} · Talle ${item.talle}</div>
+            <div class="qty-control">
+              <button data-idx="${idx}" data-delta="-1">−</button>
+              <span>${item.cantidad}</span>
+              <button data-idx="${idx}" data-delta="1">+</button>
+            </div>
+            <div class="precio-linea">${lineaPrecio}</div>
+            <button class="btn-quitar" data-idx="${idx}">Quitar</button>
+          </div>
+        </div>
+      `;
+    }).join('');
+  }
+
+  const totalNumerico = cart.reduce((acc, i) => acc + (i.precio ? i.precio * i.cantidad : 0), 0);
+  const hayConsultar = cart.some(i => !i.precio);
+  document.getElementById('cart-total').textContent = money(totalNumerico);
+  document.getElementById('cart-nota').style.display = hayConsultar ? 'block' : 'none';
+}
+
+document.getElementById('drawer-body').addEventListener('click', (e) => {
+  const qtyBtn = e.target.closest('button[data-delta]');
+  if(qtyBtn){
+    cambiarCantidad(parseInt(qtyBtn.dataset.idx,10), parseInt(qtyBtn.dataset.delta,10));
+    return;
+  }
+  const quitarBtn = e.target.closest('.btn-quitar');
+  if(quitarBtn){
+    quitarDelCarrito(parseInt(quitarBtn.dataset.idx,10));
+  }
+});
+
+function abrirDrawer(){
+  renderDrawer();
+  document.getElementById('drawer').classList.add('open');
+  document.getElementById('overlay').classList.add('open');
+}
+function cerrarDrawer(){
+  document.getElementById('drawer').classList.remove('open');
+  document.getElementById('overlay').classList.remove('open');
+}
+
+document.getElementById('cart-fab').addEventListener('click', abrirDrawer);
+document.getElementById('drawer-close').addEventListener('click', cerrarDrawer);
+document.getElementById('overlay').addEventListener('click', cerrarDrawer);
+
+document.getElementById('btn-vaciar').addEventListener('click', () => {
+  if(cart.length === 0) return;
+  if(confirm('¿Vaciar todo el carrito?')){
+    cart = [];
+    guardarCarrito();
+    actualizarBadge();
+    renderDrawer();
+  }
+});
+
+document.getElementById('btn-pedido').addEventListener('click', () => {
+  if(cart.length === 0){
+    alert('Tu carrito está vacío. Agregá al menos una zapatilla antes de hacer el pedido.');
+    return;
+  }
+
+  let lineas = cart.map(i => {
+    const precioTxt = i.precio ? money(i.precio * i.cantidad) : 'a consultar';
+    return `• ${i.nombre} (${i.marca}) — talle ${i.talle} — x${i.cantidad} — ${precioTxt}`;
+  });
+
+  const totalNumerico = cart.reduce((acc, i) => acc + (i.precio ? i.precio * i.cantidad : 0), 0);
+  const hayConsultar = cart.some(i => !i.precio);
+
+  let mensaje = `Hola! Quiero hacer este pedido:\n\n${lineas.join('\n')}\n\nTotal: ${money(totalNumerico)}${hayConsultar ? ' (+ productos a consultar)' : ''}`;
+
+  const url = `https://wa.me/${WHATSAPP_NUMERO}?text=${encodeURIComponent(mensaje)}`;
+  window.open(url, '_blank');
+});
+
+// ---------- init ----------
+async function init(){
+  cargarCarrito();
+  actualizarBadge();
+
+  try{
+    const res = await fetch('productos.json');
+    productos = await res.json();
+  }catch(e){
+    document.getElementById('total-info').textContent = 'Error cargando productos.json';
+    return;
+  }
+
+  document.getElementById('total-info').textContent = `${productos.length} modelos en catálogo`;
+
+  const marcas = [...new Set(productos.map(p => p.marca).filter(Boolean))].sort();
+  const sel = document.getElementById('filtro-marca');
+  marcas.forEach(m => {
+    const opt = document.createElement('option');
+    opt.value = m; opt.textContent = m;
+    sel.appendChild(opt);
+  });
+
+  document.getElementById('buscador').addEventListener('input', aplicarFiltros);
+  document.getElementById('filtro-marca').addEventListener('change', aplicarFiltros);
+  document.getElementById('filtro-stock').addEventListener('change', aplicarFiltros);
+
+  render(productos);
+}
+
+init();
+</script>
+
+</body>
+</html>

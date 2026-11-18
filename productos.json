@@ -1,0 +1,8674 @@
+[
+  {
+    "id": 1,
+    "nombre": "530 AZUL",
+    "marca": "NEW BALANCE",
+    "precio": 41500,
+    "foto": "https://d3l9wd8kivvlqy.cloudfront.net/15a261de-254e-4395-9d79-4360fc7a50a1?w=500&h=500",
+    "talles": [
+      {
+        "talle": "39",
+        "stock": 0
+      },
+      {
+        "talle": "40",
+        "stock": 2
+      },
+      {
+        "talle": "41",
+        "stock": 2
+      },
+      {
+        "talle": "42",
+        "stock": 6
+      },
+      {
+        "talle": "43",
+        "stock": 4
+      },
+      {
+        "talle": "44",
+        "stock": 0
+      }
+    ],
+    "stockTotal": 14
+  },
+  {
+    "id": 2,
+    "nombre": "ADI2000 NEGRA",
+    "marca": "ADIDAS",
+    "precio": 0,
+    "foto": "https://d3l9wd8kivvlqy.cloudfront.net/974ae042-3642-493b-a01d-ba9f77af5c84?w=500&h=500",
+    "talles": [
+      {
+        "talle": "38",
+        "stock": 1
+      },
+      {
+        "talle": "39",
+        "stock": 0
+      },
+      {
+        "talle": "40",
+        "stock": 0
+      },
+      {
+        "talle": "41",
+        "stock": 0
+      },
+      {
+        "talle": "42",
+        "stock": 0
+      },
+      {
+        "talle": "43",
+        "stock": 0
+      }
+    ],
+    "stockTotal": 1
+  },
+  {
+    "id": 3,
+    "nombre": "ADIDAS ADIOS PRO",
+    "marca": "ADIDAS",
+    "precio": 41500,
+    "foto": "https://d3l9wd8kivvlqy.cloudfront.net/0c83ae1d-a0d7-42d3-b176-5bfc30420409?w=500&h=500",
+    "talles": [
+      {
+        "talle": "34",
+        "stock": 1
+      },
+      {
+        "talle": "35",
+        "stock": 1
+      },
+      {
+        "talle": "36",
+        "stock": 1
+      },
+      {
+        "talle": "37",
+        "stock": 0
+      },
+      {
+        "talle": "38",
+        "stock": 0
+      },
+      {
+        "talle": "39",
+        "stock": 0
+      }
+    ],
+    "stockTotal": 3
+  },
+  {
+    "id": 4,
+    "nombre": "ADIDAS BOOST MARRON/BEIGE",
+    "marca": "ADIDAS",
+    "precio": 35500,
+    "foto": "https://d3l9wd8kivvlqy.cloudfront.net/91d905f6-f628-430a-8a35-03ed72916cac?w=500&h=500",
+    "talles": [
+      {
+        "talle": "34",
+        "stock": 3
+      },
+      {
+        "talle": "35",
+        "stock": 1
+      },
+      {
+        "talle": "36",
+        "stock": 0
+      },
+      {
+        "talle": "37",
+        "stock": 1
+      },
+      {
+        "talle": "38",
+        "stock": 1
+      },
+      {
+        "talle": "39",
+        "stock": 0
+      }
+    ],
+    "stockTotal": 6
+  },
+  {
+    "id": 5,
+    "nombre": "ADIDAS BOOST NEGRA",
+    "marca": "ADIDAS",
+    "precio": 35500,
+    "foto": "https://d3l9wd8kivvlqy.cloudfront.net/b490f82c-eeaa-4967-b361-93eb475caabd?w=500&h=500",
+    "talles": [
+      {
+        "talle": "34",
+        "stock": 1
+      },
+      {
+        "talle": "35",
+        "stock": 1
+      },
+      {
+        "talle": "36",
+        "stock": 3
+      },
+      {
+        "talle": "37",
+        "stock": 1
+      },
+      {
+        "talle": "38",
+        "stock": 0
+      },
+      {
+        "talle": "39",
+        "stock": 0
+      }
+    ],
+    "stockTotal": 6
+  },
+  {
+    "id": 6,
+    "nombre": "ADIDAS BOOST ROSA",
+    "marca": "ADIDAS",
+    "precio": 35500,
+    "foto": "https://d3l9wd8kivvlqy.cloudfront.net/207aadda-a6bf-4aa7-92c7-f27b6bd876af?w=500&h=500",
+    "talles": [
+      {
+        "talle": "34",
+        "stock": 1
+      },
+      {
+        "talle": "35",
+        "stock": 0
+      },
+      {
+        "talle": "36",
+        "stock": 0
+      },
+      {
+        "talle": "37",
+        "stock": 1
+      },
+      {
+        "talle": "38",
+        "stock": 0
+      },
+      {
+        "talle": "39",
+        "stock": 0
+      }
+    ],
+    "stockTotal": 2
+  },
+  {
+    "id": 7,
+    "nombre": "ADIDAS OSIRIS",
+    "marca": "ADIDAS",
+    "precio": 0,
+    "foto": "https://d3l9wd8kivvlqy.cloudfront.net/0458c080-b003-4a2e-81e2-562b146008fc?w=500&h=500",
+    "talles": [
+      {
+        "talle": "34",
+        "stock": 0
+      },
+      {
+        "talle": "35",
+        "stock": 0
+      },
+      {
+        "talle": "36",
+        "stock": 0
+      },
+      {
+        "talle": "37",
+        "stock": 0
+      },
+      {
+        "talle": "38",
+        "stock": 0
+      },
+      {
+        "talle": "39",
+        "stock": 0
+      }
+    ],
+    "stockTotal": 0
+  },
+  {
+    "id": 8,
+    "nombre": "ADIDAS SAMBA BEIGE",
+    "marca": "ADIDAS",
+    "precio": 39000,
+    "foto": "https://d3l9wd8kivvlqy.cloudfront.net/17c9f485-d5a0-49c3-80d8-757573235136?w=500&h=500",
+    "talles": [
+      {
+        "talle": "34",
+        "stock": 0
+      },
+      {
+        "talle": "35",
+        "stock": 1
+      },
+      {
+        "talle": "36",
+        "stock": 2
+      },
+      {
+        "talle": "37",
+        "stock": 0
+      },
+      {
+        "talle": "38",
+        "stock": 0
+      },
+      {
+        "talle": "39",
+        "stock": 0
+      }
+    ],
+    "stockTotal": 3
+  },
+  {
+    "id": 9,
+    "nombre": "ADIZERO BOSTON 11 AZUL",
+    "marca": "ADIDAS",
+    "precio": 0,
+    "foto": "https://d3l9wd8kivvlqy.cloudfront.net/be9fe695-9dd6-42db-b65a-9695f085be54?w=500&h=500",
+    "talles": [
+      {
+        "talle": "38",
+        "stock": 0
+      },
+      {
+        "talle": "39",
+        "stock": 2
+      },
+      {
+        "talle": "40",
+        "stock": 0
+      },
+      {
+        "talle": "41",
+        "stock": 0
+      },
+      {
+        "talle": "42",
+        "stock": 0
+      },
+      {
+        "talle": "43",
+        "stock": 0
+      }
+    ],
+    "stockTotal": 2
+  },
+  {
+    "id": 10,
+    "nombre": "ADIZERO BOSTON 11 BLANCO/ROSA",
+    "marca": "ADIDAS",
+    "precio": 0,
+    "foto": "https://d3l9wd8kivvlqy.cloudfront.net/bd3fc5d9-c5a5-4133-8e29-8ad83661477e?w=500&h=500",
+    "talles": [
+      {
+        "talle": "34",
+        "stock": 0
+      },
+      {
+        "talle": "36",
+        "stock": 2
+      },
+      {
+        "talle": "37",
+        "stock": 0
+      }
+    ],
+    "stockTotal": 2
+  },
+  {
+    "id": 11,
+    "nombre": "ADIZERO BOSTON 11 GRIS",
+    "marca": "ADIDAS",
+    "precio": 0,
+    "foto": "https://d3l9wd8kivvlqy.cloudfront.net/67ef1562-0f6a-449c-8c98-c4a40d59a69b?w=500&h=500",
+    "talles": [
+      {
+        "talle": "38",
+        "stock": 0
+      },
+      {
+        "talle": "39",
+        "stock": 1
+      },
+      {
+        "talle": "40",
+        "stock": 0
+      },
+      {
+        "talle": "41",
+        "stock": 1
+      },
+      {
+        "talle": "42",
+        "stock": 0
+      },
+      {
+        "talle": "43",
+        "stock": 0
+      }
+    ],
+    "stockTotal": 2
+  },
+  {
+    "id": 12,
+    "nombre": "ADIZERO BOSTON 11 NEGRA/ROSA",
+    "marca": "ADIDAS",
+    "precio": 0,
+    "foto": "https://d3l9wd8kivvlqy.cloudfront.net/8acfc028-6b90-4dfa-93a7-7cddc5d83db7?w=500&h=500",
+    "talles": [
+      {
+        "talle": "35",
+        "stock": 0
+      },
+      {
+        "talle": "36",
+        "stock": 0
+      }
+    ],
+    "stockTotal": 0
+  },
+  {
+    "id": 13,
+    "nombre": "ADIZERO BOSTON 12 BLANCO/ROSA",
+    "marca": "ADIDAS",
+    "precio": 0,
+    "foto": "https://d3l9wd8kivvlqy.cloudfront.net/8fb130b0-dcd7-45a0-90b6-3c8520c56a25?w=500&h=500",
+    "talles": [
+      {
+        "talle": "34",
+        "stock": 1
+      },
+      {
+        "talle": "35",
+        "stock": 1
+      }
+    ],
+    "stockTotal": 2
+  },
+  {
+    "id": 14,
+    "nombre": "ADIZERO BOSTON 12 CELESTE",
+    "marca": "ADIDAS",
+    "precio": 0,
+    "foto": "https://d3l9wd8kivvlqy.cloudfront.net/fc739c42-a1ae-4121-a397-1f7f1d0d5d83?w=500&h=500",
+    "talles": [
+      {
+        "talle": "34",
+        "stock": 2
+      }
+    ],
+    "stockTotal": 2
+  },
+  {
+    "id": 15,
+    "nombre": "ADIZERO LIGHSTRIKE NEGRA",
+    "marca": "ADIDAS",
+    "precio": 39000,
+    "foto": "https://d3l9wd8kivvlqy.cloudfront.net/f01bc017-a062-4e9e-b6cf-a9700b292363?w=500&h=500",
+    "talles": [
+      {
+        "talle": "34",
+        "stock": 2
+      },
+      {
+        "talle": "35",
+        "stock": 1
+      },
+      {
+        "talle": "36",
+        "stock": 2
+      },
+      {
+        "talle": "37",
+        "stock": 0
+      },
+      {
+        "talle": "38",
+        "stock": 1
+      },
+      {
+        "talle": "39",
+        "stock": 2
+      },
+      {
+        "talle": "40",
+        "stock": 2
+      },
+      {
+        "talle": "41",
+        "stock": 2
+      },
+      {
+        "talle": "42",
+        "stock": 1
+      },
+      {
+        "talle": "43",
+        "stock": 2
+      }
+    ],
+    "stockTotal": 15
+  },
+  {
+    "id": 16,
+    "nombre": "ADIZERO LIGHSTRIKE NEGRA/ROJA",
+    "marca": "ADIDAS",
+    "precio": 39000,
+    "foto": "https://d3l9wd8kivvlqy.cloudfront.net/8e567276-bc22-40e0-a575-f28ac0480248?w=500&h=500",
+    "talles": [
+      {
+        "talle": "38",
+        "stock": 0
+      },
+      {
+        "talle": "39",
+        "stock": 0
+      },
+      {
+        "talle": "40",
+        "stock": 0
+      },
+      {
+        "talle": "41",
+        "stock": 0
+      },
+      {
+        "talle": "42",
+        "stock": 0
+      },
+      {
+        "talle": "43",
+        "stock": 0
+      }
+    ],
+    "stockTotal": 0
+  },
+  {
+    "id": 17,
+    "nombre": "ADIZERO LIGHTSTRIKE AZUL",
+    "marca": "ADIDAS",
+    "precio": 39000,
+    "foto": "https://d3l9wd8kivvlqy.cloudfront.net/5937279f-4c62-4d25-b87e-5110c3226ef1?w=500&h=500",
+    "talles": [
+      {
+        "talle": "38",
+        "stock": 0
+      },
+      {
+        "talle": "39",
+        "stock": 1
+      },
+      {
+        "talle": "40",
+        "stock": 0
+      },
+      {
+        "talle": "41",
+        "stock": 2
+      },
+      {
+        "talle": "42",
+        "stock": 1
+      },
+      {
+        "talle": "43",
+        "stock": 0
+      }
+    ],
+    "stockTotal": 4
+  },
+  {
+    "id": 18,
+    "nombre": "ADIZERO LIGHTSTRIKE BEIGE",
+    "marca": "ADIDAS",
+    "precio": 39000,
+    "foto": "https://d3l9wd8kivvlqy.cloudfront.net/b47efe4f-dd7f-4acb-bce9-3515e442887c?w=500&h=500",
+    "talles": [
+      {
+        "talle": "34",
+        "stock": 1
+      },
+      {
+        "talle": "35",
+        "stock": 1
+      },
+      {
+        "talle": "36",
+        "stock": 0
+      },
+      {
+        "talle": "37",
+        "stock": 1
+      },
+      {
+        "talle": "38",
+        "stock": 0
+      },
+      {
+        "talle": "39",
+        "stock": 0
+      }
+    ],
+    "stockTotal": 3
+  },
+  {
+    "id": 19,
+    "nombre": "ADIZERO LIGHTSTRIKE CELESTE",
+    "marca": "ADIDAS",
+    "precio": 39000,
+    "foto": "https://d3l9wd8kivvlqy.cloudfront.net/8df00f70-9c96-46ad-b5a2-a648c0195927?w=500&h=500",
+    "talles": [
+      {
+        "talle": "34",
+        "stock": 2
+      },
+      {
+        "talle": "35",
+        "stock": 1
+      },
+      {
+        "talle": "36",
+        "stock": 4
+      },
+      {
+        "talle": "37",
+        "stock": 2
+      },
+      {
+        "talle": "38",
+        "stock": 2
+      },
+      {
+        "talle": "39",
+        "stock": 1
+      }
+    ],
+    "stockTotal": 12
+  },
+  {
+    "id": 20,
+    "nombre": "ADIZERO LIGHTSTRIKE GRIS N/A",
+    "marca": "ADIDAS",
+    "precio": 39000,
+    "foto": "https://d3l9wd8kivvlqy.cloudfront.net/57ad3652-a823-4302-963a-75fc784db17b?w=500&h=500",
+    "talles": [
+      {
+        "talle": "38",
+        "stock": 0
+      },
+      {
+        "talle": "39",
+        "stock": 1
+      },
+      {
+        "talle": "40",
+        "stock": 0
+      },
+      {
+        "talle": "41",
+        "stock": 0
+      },
+      {
+        "talle": "42",
+        "stock": 1
+      },
+      {
+        "talle": "43",
+        "stock": 0
+      }
+    ],
+    "stockTotal": 2
+  },
+  {
+    "id": 21,
+    "nombre": "ADIZERO LIGHTSTRIKE NEGRA",
+    "marca": "ADIDAS",
+    "precio": 39000,
+    "foto": "https://d3l9wd8kivvlqy.cloudfront.net/f160c437-4b4b-4ca3-9802-c7e7d42dc6d7?w=500&h=500",
+    "talles": [
+      {
+        "talle": "34",
+        "stock": 0
+      },
+      {
+        "talle": "35",
+        "stock": 1
+      },
+      {
+        "talle": "36",
+        "stock": 0
+      },
+      {
+        "talle": "37",
+        "stock": 1
+      },
+      {
+        "talle": "38",
+        "stock": 0
+      },
+      {
+        "talle": "39",
+        "stock": 0
+      }
+    ],
+    "stockTotal": 2
+  },
+  {
+    "id": 22,
+    "nombre": "ADIZERO LIGHTSTRIKE ROSA",
+    "marca": "ADIDAS",
+    "precio": 39000,
+    "foto": "https://d3l9wd8kivvlqy.cloudfront.net/0ed9b344-2e2d-4817-869f-ec552af7ec5e?w=500&h=500",
+    "talles": [
+      {
+        "talle": "34",
+        "stock": 1
+      },
+      {
+        "talle": "35",
+        "stock": 2
+      },
+      {
+        "talle": "36",
+        "stock": 0
+      },
+      {
+        "talle": "37",
+        "stock": 0
+      },
+      {
+        "talle": "38",
+        "stock": 0
+      },
+      {
+        "talle": "39",
+        "stock": 0
+      }
+    ],
+    "stockTotal": 3
+  },
+  {
+    "id": 23,
+    "nombre": "ADIZERO NEGRA INFANTIL",
+    "marca": "ADIDAS",
+    "precio": 29000,
+    "foto": "https://d3l9wd8kivvlqy.cloudfront.net/bcf08465-a195-4792-9f77-4623de71a787?w=500&h=500",
+    "talles": [
+      {
+        "talle": "26",
+        "stock": 0
+      },
+      {
+        "talle": "27",
+        "stock": 0
+      },
+      {
+        "talle": "28",
+        "stock": 0
+      },
+      {
+        "talle": "29",
+        "stock": 2
+      },
+      {
+        "talle": "30",
+        "stock": 0
+      },
+      {
+        "talle": "31",
+        "stock": 1
+      },
+      {
+        "talle": "32",
+        "stock": 0
+      },
+      {
+        "talle": "33",
+        "stock": 1
+      }
+    ],
+    "stockTotal": 4
+  },
+  {
+    "id": 24,
+    "nombre": "ADIZERO PRO 4 BLANCAS",
+    "marca": "ADIDAS",
+    "precio": 0,
+    "foto": "https://d3l9wd8kivvlqy.cloudfront.net/bca1f36c-b063-4004-9712-09036101930d?w=500&h=500",
+    "talles": [
+      {
+        "talle": "43",
+        "stock": 0
+      }
+    ],
+    "stockTotal": 0
+  },
+  {
+    "id": 25,
+    "nombre": "ADIZERO PRO 4 NEGRAS",
+    "marca": "ADIDAS",
+    "precio": 0,
+    "foto": "https://d3l9wd8kivvlqy.cloudfront.net/c62b9f5e-f190-4e82-b94e-7570bb36b0f7?w=500&h=500",
+    "talles": [
+      {
+        "talle": "40",
+        "stock": 0
+      },
+      {
+        "talle": "41",
+        "stock": 0
+      },
+      {
+        "talle": "42",
+        "stock": 1
+      }
+    ],
+    "stockTotal": 1
+  },
+  {
+    "id": 26,
+    "nombre": "AF1 NEGRA",
+    "marca": "NIKE",
+    "precio": 0,
+    "foto": "https://d3l9wd8kivvlqy.cloudfront.net/6994bcff-0e4b-49e3-9593-5ca8bd217570?w=500&h=500",
+    "talles": [
+      {
+        "talle": "34",
+        "stock": 1
+      },
+      {
+        "talle": "35",
+        "stock": 2
+      },
+      {
+        "talle": "36",
+        "stock": 2
+      },
+      {
+        "talle": "37",
+        "stock": 0
+      },
+      {
+        "talle": "38",
+        "stock": 0
+      },
+      {
+        "talle": "39",
+        "stock": 0
+      }
+    ],
+    "stockTotal": 5
+  },
+  {
+    "id": 27,
+    "nombre": "AF1 NEGRA",
+    "marca": "ADIDAS",
+    "precio": 0,
+    "foto": "https://d3l9wd8kivvlqy.cloudfront.net/d1f2b036-4abf-4f4e-a198-642ad74f5656?w=500&h=500",
+    "talles": [
+      {
+        "talle": "38",
+        "stock": 0
+      }
+    ],
+    "stockTotal": 0
+  },
+  {
+    "id": 28,
+    "nombre": "AIR FORCE 1 FLAMINGO",
+    "marca": "NIKE",
+    "precio": 0,
+    "foto": "https://d3l9wd8kivvlqy.cloudfront.net/0c89ccb1-c2d2-48e0-9e02-0c7fbe372627?w=500&h=500",
+    "talles": [
+      {
+        "talle": "39",
+        "stock": 1
+      }
+    ],
+    "stockTotal": 1
+  },
+  {
+    "id": 29,
+    "nombre": "AIR FORCE BEIGE/ROSA",
+    "marca": "NIKE",
+    "precio": 0,
+    "foto": "https://d3l9wd8kivvlqy.cloudfront.net/b41d159a-e29b-4b16-9bfe-857c20d24b82?w=500&h=500",
+    "talles": [
+      {
+        "talle": "34",
+        "stock": 1
+      },
+      {
+        "talle": "35",
+        "stock": 1
+      }
+    ],
+    "stockTotal": 2
+  },
+  {
+    "id": 30,
+    "nombre": "BOOST BEIGE/ROSA",
+    "marca": "ADIDAS",
+    "precio": 35500,
+    "foto": "https://d3l9wd8kivvlqy.cloudfront.net/917920a6-a8fd-41c6-8e4f-88aa3d7b6252?w=500&h=500",
+    "talles": [
+      {
+        "talle": "34",
+        "stock": 0
+      },
+      {
+        "talle": "35",
+        "stock": 1
+      },
+      {
+        "talle": "36",
+        "stock": 1
+      },
+      {
+        "talle": "37",
+        "stock": 2
+      },
+      {
+        "talle": "38",
+        "stock": 2
+      },
+      {
+        "talle": "39",
+        "stock": 0
+      }
+    ],
+    "stockTotal": 6
+  },
+  {
+    "id": 31,
+    "nombre": "BOSTON 11 BEIGE",
+    "marca": "ADIDAS",
+    "precio": 0,
+    "foto": "https://d3l9wd8kivvlqy.cloudfront.net/5ee84e66-cb13-4044-9034-574b6cc96800?w=500&h=500",
+    "talles": [
+      {
+        "talle": "34",
+        "stock": 0
+      },
+      {
+        "talle": "35",
+        "stock": 0
+      },
+      {
+        "talle": "36",
+        "stock": 0
+      },
+      {
+        "talle": "37",
+        "stock": 0
+      },
+      {
+        "talle": "38",
+        "stock": 0
+      },
+      {
+        "talle": "39",
+        "stock": 0
+      }
+    ],
+    "stockTotal": 0
+  },
+  {
+    "id": 32,
+    "nombre": "BOSTON 11 NEGRA Y VIOLETA",
+    "marca": "ADIDAS",
+    "precio": 0,
+    "foto": "https://d3l9wd8kivvlqy.cloudfront.net/5851ee5c-aad8-44bd-83fd-9a347dd2343c?w=500&h=500",
+    "talles": [
+      {
+        "talle": "34",
+        "stock": 1
+      },
+      {
+        "talle": "35",
+        "stock": 0
+      },
+      {
+        "talle": "36",
+        "stock": 0
+      },
+      {
+        "talle": "37",
+        "stock": 1
+      }
+    ],
+    "stockTotal": 2
+  },
+  {
+    "id": 33,
+    "nombre": "BOSTON 11 NEGRA/R",
+    "marca": "ADIDAS",
+    "precio": 0,
+    "foto": "https://d3l9wd8kivvlqy.cloudfront.net/e65fe14e-70e6-4290-93d2-018f09aa37ca?w=500&h=500",
+    "talles": [
+      {
+        "talle": "36",
+        "stock": 0
+      },
+      {
+        "talle": "38",
+        "stock": 0
+      }
+    ],
+    "stockTotal": 0
+  },
+  {
+    "id": 34,
+    "nombre": "BOSTON 12 CACAO",
+    "marca": "ADIDAS",
+    "precio": 36000,
+    "foto": "https://d3l9wd8kivvlqy.cloudfront.net/2f4987cc-c536-4029-a52d-64cc501aabd0?w=500&h=500",
+    "talles": [
+      {
+        "talle": "34",
+        "stock": 1
+      },
+      {
+        "talle": "35",
+        "stock": 1
+      },
+      {
+        "talle": "36",
+        "stock": 2
+      },
+      {
+        "talle": "37",
+        "stock": 1
+      },
+      {
+        "talle": "38",
+        "stock": 0
+      },
+      {
+        "talle": "39",
+        "stock": 0
+      }
+    ],
+    "stockTotal": 5
+  },
+  {
+    "id": 35,
+    "nombre": "BOSTON 12 CELESTE/BEIGE",
+    "marca": "ADIDAS",
+    "precio": 36000,
+    "foto": "https://d3l9wd8kivvlqy.cloudfront.net/89051e9f-8abf-4423-b62b-7bb1ecd68652?w=500&h=500",
+    "talles": [
+      {
+        "talle": "34",
+        "stock": 0
+      },
+      {
+        "talle": "35",
+        "stock": 0
+      },
+      {
+        "talle": "36",
+        "stock": 0
+      },
+      {
+        "talle": "37",
+        "stock": 0
+      },
+      {
+        "talle": "38",
+        "stock": 0
+      },
+      {
+        "talle": "39",
+        "stock": 0
+      }
+    ],
+    "stockTotal": 0
+  },
+  {
+    "id": 36,
+    "nombre": "BOSTON 12 NEGRA",
+    "marca": "ADIDAS",
+    "precio": 36000,
+    "foto": "https://d3l9wd8kivvlqy.cloudfront.net/6c69c172-9b76-495d-b3f2-0b5c0799da6d?w=500&h=500",
+    "talles": [
+      {
+        "talle": "34",
+        "stock": 1
+      },
+      {
+        "talle": "35",
+        "stock": 1
+      },
+      {
+        "talle": "36",
+        "stock": 0
+      },
+      {
+        "talle": "37",
+        "stock": 2
+      },
+      {
+        "talle": "38",
+        "stock": 0
+      },
+      {
+        "talle": "39",
+        "stock": 1
+      }
+    ],
+    "stockTotal": 5
+  },
+  {
+    "id": 37,
+    "nombre": "BOSTON 12 ROSE",
+    "marca": "ADIDAS",
+    "precio": 0,
+    "foto": "https://d3l9wd8kivvlqy.cloudfront.net/ecbe4948-3745-4e62-806d-ca126c9db884?w=500&h=500",
+    "talles": [
+      {
+        "talle": "34",
+        "stock": 0
+      }
+    ],
+    "stockTotal": 0
+  },
+  {
+    "id": 38,
+    "nombre": "CAMPUS BLACK",
+    "marca": "ADIDAS",
+    "precio": 41500,
+    "foto": "https://d3l9wd8kivvlqy.cloudfront.net/d861816b-b660-42d3-8219-dfc7c4a8300c?w=500&h=500",
+    "talles": [
+      {
+        "talle": "34",
+        "stock": 1
+      },
+      {
+        "talle": "35",
+        "stock": 1
+      },
+      {
+        "talle": "36",
+        "stock": 0
+      },
+      {
+        "talle": "37",
+        "stock": 1
+      },
+      {
+        "talle": "38",
+        "stock": 0
+      },
+      {
+        "talle": "39",
+        "stock": 0
+      },
+      {
+        "talle": "40",
+        "stock": 0
+      },
+      {
+        "talle": "41",
+        "stock": 1
+      },
+      {
+        "talle": "42",
+        "stock": 0
+      },
+      {
+        "talle": "43",
+        "stock": 0
+      }
+    ],
+    "stockTotal": 4
+  },
+  {
+    "id": 39,
+    "nombre": "CAMPUS CLASICAS",
+    "marca": "ADIDAS",
+    "precio": 41500,
+    "foto": "https://d3l9wd8kivvlqy.cloudfront.net/8933cdc7-0a8f-4b10-bd95-357a318e8cc9?w=500&h=500",
+    "talles": [
+      {
+        "talle": "34",
+        "stock": 2
+      },
+      {
+        "talle": "35",
+        "stock": 2
+      },
+      {
+        "talle": "36",
+        "stock": 1
+      },
+      {
+        "talle": "37",
+        "stock": 3
+      },
+      {
+        "talle": "38",
+        "stock": 2
+      },
+      {
+        "talle": "39",
+        "stock": 3
+      },
+      {
+        "talle": "40",
+        "stock": 3
+      },
+      {
+        "talle": "41",
+        "stock": 4
+      },
+      {
+        "talle": "42",
+        "stock": 2
+      },
+      {
+        "talle": "43",
+        "stock": 1
+      }
+    ],
+    "stockTotal": 23
+  },
+  {
+    "id": 40,
+    "nombre": "CAMPUS MARRÓN",
+    "marca": "ADIDAS",
+    "precio": 41500,
+    "foto": "https://d3l9wd8kivvlqy.cloudfront.net/91796736-563e-4ea3-9ec6-2c6fa50d1ba0?w=500&h=500",
+    "talles": [
+      {
+        "talle": "34",
+        "stock": 1
+      },
+      {
+        "talle": "35",
+        "stock": 1
+      },
+      {
+        "talle": "36",
+        "stock": 0
+      },
+      {
+        "talle": "37",
+        "stock": 0
+      },
+      {
+        "talle": "38",
+        "stock": 0
+      },
+      {
+        "talle": "39",
+        "stock": 0
+      }
+    ],
+    "stockTotal": 2
+  },
+  {
+    "id": 41,
+    "nombre": "CONVERSE ALL STAR GLITTER",
+    "marca": "CONVERSE",
+    "precio": 32500,
+    "foto": "https://d3l9wd8kivvlqy.cloudfront.net/cf573b40-b2e2-457a-befa-50311c854565?w=500&h=500",
+    "talles": [
+      {
+        "talle": "34",
+        "stock": 1
+      },
+      {
+        "talle": "35",
+        "stock": 2
+      },
+      {
+        "talle": "36",
+        "stock": 3
+      },
+      {
+        "talle": "37",
+        "stock": 1
+      },
+      {
+        "talle": "38",
+        "stock": 2
+      },
+      {
+        "talle": "39",
+        "stock": 1
+      }
+    ],
+    "stockTotal": 10
+  },
+  {
+    "id": 42,
+    "nombre": "CONVERSE ALL STAR NEGRA",
+    "marca": "CONVERSE",
+    "precio": 32500,
+    "foto": "https://d3l9wd8kivvlqy.cloudfront.net/0f4b54d9-83d1-439e-95a7-4015f7090328?w=500&h=500",
+    "talles": [
+      {
+        "talle": "34",
+        "stock": 0
+      },
+      {
+        "talle": "35",
+        "stock": 0
+      },
+      {
+        "talle": "36",
+        "stock": 1
+      },
+      {
+        "talle": "37",
+        "stock": 3
+      },
+      {
+        "talle": "38",
+        "stock": 2
+      },
+      {
+        "talle": "39",
+        "stock": 3
+      },
+      {
+        "talle": "40",
+        "stock": 3
+      },
+      {
+        "talle": "41",
+        "stock": 3
+      },
+      {
+        "talle": "42",
+        "stock": 2
+      },
+      {
+        "talle": "43",
+        "stock": 1
+      }
+    ],
+    "stockTotal": 18
+  },
+  {
+    "id": 43,
+    "nombre": "CONVERSE MID BLANCAS",
+    "marca": "CONVERSE",
+    "precio": 0,
+    "foto": "https://d3l9wd8kivvlqy.cloudfront.net/f4e40beb-2381-43ca-ad38-162c730caf85?w=500&h=500",
+    "talles": [
+      {
+        "talle": "34",
+        "stock": 0
+      },
+      {
+        "talle": "35",
+        "stock": 0
+      },
+      {
+        "talle": "36",
+        "stock": 0
+      },
+      {
+        "talle": "37",
+        "stock": 0
+      },
+      {
+        "talle": "38",
+        "stock": 0
+      },
+      {
+        "talle": "39",
+        "stock": 0
+      }
+    ],
+    "stockTotal": 0
+  },
+  {
+    "id": 44,
+    "nombre": "CONVERSE MID NEGRAS",
+    "marca": "CONVERSE",
+    "precio": 0,
+    "foto": "https://d3l9wd8kivvlqy.cloudfront.net/76ec0843-3812-421f-bd26-b24976d4dd4c?w=500&h=500",
+    "talles": [
+      {
+        "talle": "34",
+        "stock": 2
+      },
+      {
+        "talle": "35",
+        "stock": 0
+      },
+      {
+        "talle": "36",
+        "stock": 0
+      },
+      {
+        "talle": "37",
+        "stock": 0
+      },
+      {
+        "talle": "38",
+        "stock": 0
+      },
+      {
+        "talle": "39",
+        "stock": 0
+      }
+    ],
+    "stockTotal": 2
+  },
+  {
+    "id": 45,
+    "nombre": "DC BLANCAS",
+    "marca": "DC",
+    "precio": 0,
+    "foto": "https://d3l9wd8kivvlqy.cloudfront.net/7490d7cc-2003-42ac-ad5e-7c4a3d1c33af?w=500&h=500",
+    "talles": [
+      {
+        "talle": "38",
+        "stock": 0
+      },
+      {
+        "talle": "39",
+        "stock": 0
+      },
+      {
+        "talle": "40",
+        "stock": 1
+      },
+      {
+        "talle": "41",
+        "stock": 4
+      },
+      {
+        "talle": "42",
+        "stock": 3
+      },
+      {
+        "talle": "43",
+        "stock": 1
+      }
+    ],
+    "stockTotal": 9
+  },
+  {
+    "id": 46,
+    "nombre": "DC GRAFFIK",
+    "marca": "DC",
+    "precio": 0,
+    "foto": "https://d3l9wd8kivvlqy.cloudfront.net/52ffdb50-b176-470b-899b-2eb9474b3310?w=500&h=500",
+    "talles": [
+      {
+        "talle": "41",
+        "stock": 1
+      }
+    ],
+    "stockTotal": 1
+  },
+  {
+    "id": 47,
+    "nombre": "DN8 SUPREME",
+    "marca": "NIKE",
+    "precio": 0,
+    "foto": "https://d3l9wd8kivvlqy.cloudfront.net/1e2873e3-21f5-48c5-81af-ff8af8666da7?w=500&h=500",
+    "talles": [
+      {
+        "talle": "38",
+        "stock": 1
+      },
+      {
+        "talle": "39",
+        "stock": 2
+      },
+      {
+        "talle": "40",
+        "stock": 1
+      },
+      {
+        "talle": "41",
+        "stock": 3
+      },
+      {
+        "talle": "42",
+        "stock": 2
+      },
+      {
+        "talle": "43",
+        "stock": 1
+      }
+    ],
+    "stockTotal": 10
+  },
+  {
+    "id": 48,
+    "nombre": "DUNK BLACK",
+    "marca": "NIKE",
+    "precio": 40000,
+    "foto": "https://d3l9wd8kivvlqy.cloudfront.net/c515d525-4a5d-4e2f-8f0a-f36a72c72e44?w=500&h=500",
+    "talles": [
+      {
+        "talle": "38",
+        "stock": 0
+      },
+      {
+        "talle": "39",
+        "stock": 0
+      },
+      {
+        "talle": "40",
+        "stock": 0
+      },
+      {
+        "talle": "41",
+        "stock": 0
+      },
+      {
+        "talle": "42",
+        "stock": 0
+      },
+      {
+        "talle": "43",
+        "stock": 0
+      }
+    ],
+    "stockTotal": 0
+  },
+  {
+    "id": 49,
+    "nombre": "DUNK BLACK/RED CHAROL INFANTIL",
+    "marca": "NIKE",
+    "precio": 29000,
+    "foto": "https://d3l9wd8kivvlqy.cloudfront.net/9ba311f5-6d5f-4248-a118-6f3bcb8afe5c?w=500&h=500",
+    "talles": [
+      {
+        "talle": "26",
+        "stock": 1
+      },
+      {
+        "talle": "27",
+        "stock": 2
+      },
+      {
+        "talle": "28",
+        "stock": 2
+      },
+      {
+        "talle": "29",
+        "stock": 3
+      },
+      {
+        "talle": "30",
+        "stock": 2
+      },
+      {
+        "talle": "31",
+        "stock": 2
+      },
+      {
+        "talle": "32",
+        "stock": 3
+      },
+      {
+        "talle": "33",
+        "stock": 2
+      }
+    ],
+    "stockTotal": 17
+  },
+  {
+    "id": 50,
+    "nombre": "DUNK BLACK/WHITE",
+    "marca": "NIKE",
+    "precio": 40000,
+    "foto": "https://d3l9wd8kivvlqy.cloudfront.net/efa8921c-24b0-4abc-8df5-fb20fe0b8380?w=500&h=500",
+    "talles": [
+      {
+        "talle": "38",
+        "stock": 0
+      },
+      {
+        "talle": "39",
+        "stock": 0
+      },
+      {
+        "talle": "40",
+        "stock": 1
+      },
+      {
+        "talle": "41",
+        "stock": 1
+      },
+      {
+        "talle": "42",
+        "stock": 1
+      },
+      {
+        "talle": "43",
+        "stock": 1
+      }
+    ],
+    "stockTotal": 4
+  },
+  {
+    "id": 51,
+    "nombre": "DUNK BLANCAS",
+    "marca": "NIKE",
+    "precio": 40000,
+    "foto": "https://d3l9wd8kivvlqy.cloudfront.net/788f20f0-f8db-40ac-9af4-d8a07b6e50f3?w=500&h=500",
+    "talles": [
+      {
+        "talle": "34",
+        "stock": 2
+      },
+      {
+        "talle": "35",
+        "stock": 4
+      },
+      {
+        "talle": "36",
+        "stock": 1
+      },
+      {
+        "talle": "37",
+        "stock": 1
+      },
+      {
+        "talle": "38",
+        "stock": 0
+      },
+      {
+        "talle": "39",
+        "stock": 0
+      },
+      {
+        "talle": "40",
+        "stock": 2
+      },
+      {
+        "talle": "41",
+        "stock": 1
+      },
+      {
+        "talle": "42",
+        "stock": 3
+      },
+      {
+        "talle": "43",
+        "stock": 1
+      }
+    ],
+    "stockTotal": 15
+  },
+  {
+    "id": 52,
+    "nombre": "DUNK BORDO",
+    "marca": "NIKE",
+    "precio": 40000,
+    "foto": "https://d3l9wd8kivvlqy.cloudfront.net/a23e8826-7820-4cf3-b132-62d3cf0b0820?w=500&h=500",
+    "talles": [
+      {
+        "talle": "34",
+        "stock": 1
+      },
+      {
+        "talle": "35",
+        "stock": 2
+      },
+      {
+        "talle": "36",
+        "stock": 1
+      },
+      {
+        "talle": "37",
+        "stock": 0
+      },
+      {
+        "talle": "38",
+        "stock": 1
+      },
+      {
+        "talle": "39",
+        "stock": 0
+      }
+    ],
+    "stockTotal": 5
+  },
+  {
+    "id": 53,
+    "nombre": "DUNK CACAO",
+    "marca": "NIKE",
+    "precio": 40000,
+    "foto": "https://d3l9wd8kivvlqy.cloudfront.net/cb7ee21f-500c-47a6-8869-0d03d442efb5?w=500&h=500",
+    "talles": [
+      {
+        "talle": "34",
+        "stock": 1
+      },
+      {
+        "talle": "35",
+        "stock": 2
+      },
+      {
+        "talle": "36",
+        "stock": 2
+      },
+      {
+        "talle": "37",
+        "stock": 2
+      },
+      {
+        "talle": "38",
+        "stock": 2
+      },
+      {
+        "talle": "39",
+        "stock": 0
+      }
+    ],
+    "stockTotal": 9
+  },
+  {
+    "id": 54,
+    "nombre": "DUNK GLITTER",
+    "marca": "NIKE",
+    "precio": 40000,
+    "foto": "https://d3l9wd8kivvlqy.cloudfront.net/2d0f7edc-6ee5-42de-b1e8-3f19297387aa?w=500&h=500",
+    "talles": [
+      {
+        "talle": "34",
+        "stock": 4
+      },
+      {
+        "talle": "35",
+        "stock": 2
+      },
+      {
+        "talle": "36",
+        "stock": 2
+      },
+      {
+        "talle": "37",
+        "stock": 3
+      },
+      {
+        "talle": "38",
+        "stock": 2
+      },
+      {
+        "talle": "39",
+        "stock": 1
+      }
+    ],
+    "stockTotal": 14
+  },
+  {
+    "id": 55,
+    "nombre": "DUNK GLITTER AZUL",
+    "marca": "NIKE",
+    "precio": 40000,
+    "foto": "https://d3l9wd8kivvlqy.cloudfront.net/d53168f3-6417-4e2a-b5e0-709068fa58a6?w=500&h=500",
+    "talles": [
+      {
+        "talle": "34",
+        "stock": 0
+      },
+      {
+        "talle": "35",
+        "stock": 2
+      },
+      {
+        "talle": "36",
+        "stock": 0
+      },
+      {
+        "talle": "37",
+        "stock": 0
+      },
+      {
+        "talle": "38",
+        "stock": 0
+      },
+      {
+        "talle": "39",
+        "stock": 0
+      }
+    ],
+    "stockTotal": 2
+  },
+  {
+    "id": 56,
+    "nombre": "DUNK GLITTER INFANTIL",
+    "marca": "NIKE",
+    "precio": 29000,
+    "foto": "https://d3l9wd8kivvlqy.cloudfront.net/b2d7fe79-ab8d-458c-bf88-c1405d903588?w=500&h=500",
+    "talles": [
+      {
+        "talle": "26",
+        "stock": 0
+      },
+      {
+        "talle": "27",
+        "stock": 0
+      },
+      {
+        "talle": "28",
+        "stock": 2
+      },
+      {
+        "talle": "29",
+        "stock": 4
+      },
+      {
+        "talle": "30",
+        "stock": 0
+      },
+      {
+        "talle": "31",
+        "stock": 3
+      },
+      {
+        "talle": "32",
+        "stock": 2
+      },
+      {
+        "talle": "33",
+        "stock": 1
+      }
+    ],
+    "stockTotal": 12
+  },
+  {
+    "id": 57,
+    "nombre": "DUNK GLITTER ROSA",
+    "marca": "NIKE",
+    "precio": 40000,
+    "foto": "https://d3l9wd8kivvlqy.cloudfront.net/7172ed23-32fb-4e1b-8f46-c0c99b4fd64f?w=500&h=500",
+    "talles": [
+      {
+        "talle": "34",
+        "stock": 0
+      },
+      {
+        "talle": "35",
+        "stock": 0
+      },
+      {
+        "talle": "36",
+        "stock": 0
+      },
+      {
+        "talle": "37",
+        "stock": 1
+      },
+      {
+        "talle": "38",
+        "stock": 0
+      },
+      {
+        "talle": "39",
+        "stock": 1
+      }
+    ],
+    "stockTotal": 2
+  },
+  {
+    "id": 58,
+    "nombre": "DUNK GREEN",
+    "marca": "NIKE",
+    "precio": 40000,
+    "foto": "https://d3l9wd8kivvlqy.cloudfront.net/535d4334-b08a-41d0-a9c4-1a308a4f729f?w=500&h=500",
+    "talles": [
+      {
+        "talle": "38",
+        "stock": 1
+      },
+      {
+        "talle": "39",
+        "stock": 0
+      },
+      {
+        "talle": "40",
+        "stock": 0
+      },
+      {
+        "talle": "41",
+        "stock": 0
+      },
+      {
+        "talle": "42",
+        "stock": 0
+      },
+      {
+        "talle": "43",
+        "stock": 0
+      }
+    ],
+    "stockTotal": 1
+  },
+  {
+    "id": 59,
+    "nombre": "DUNK GREY",
+    "marca": "NIKE",
+    "precio": 40000,
+    "foto": "https://d3l9wd8kivvlqy.cloudfront.net/a591dcfc-b452-4063-86d0-65dcac8489fb?w=500&h=500",
+    "talles": [
+      {
+        "talle": "34",
+        "stock": 1
+      },
+      {
+        "talle": "35",
+        "stock": 0
+      },
+      {
+        "talle": "36",
+        "stock": 1
+      },
+      {
+        "talle": "37",
+        "stock": 1
+      },
+      {
+        "talle": "38",
+        "stock": 2
+      },
+      {
+        "talle": "39",
+        "stock": 0
+      },
+      {
+        "talle": "40",
+        "stock": 0
+      },
+      {
+        "talle": "41",
+        "stock": 0
+      },
+      {
+        "talle": "42",
+        "stock": 0
+      },
+      {
+        "talle": "43",
+        "stock": 1
+      }
+    ],
+    "stockTotal": 6
+  },
+  {
+    "id": 60,
+    "nombre": "DUNK GRIS",
+    "marca": "NIKE",
+    "precio": 41500,
+    "foto": "https://d3l9wd8kivvlqy.cloudfront.net/ada9f881-a28a-4c90-99ff-6c9b0f356b49?w=500&h=500",
+    "talles": [
+      {
+        "talle": "38",
+        "stock": 0
+      },
+      {
+        "talle": "39",
+        "stock": 0
+      },
+      {
+        "talle": "40",
+        "stock": 0
+      },
+      {
+        "talle": "41",
+        "stock": 0
+      },
+      {
+        "talle": "42",
+        "stock": 1
+      },
+      {
+        "talle": "43",
+        "stock": 0
+      }
+    ],
+    "stockTotal": 1
+  },
+  {
+    "id": 61,
+    "nombre": "DUNK GRIS/NEGRA",
+    "marca": "NIKE",
+    "precio": 40000,
+    "foto": "https://d3l9wd8kivvlqy.cloudfront.net/03b51628-a8e1-4b02-9448-12cf839a51b6?w=500&h=500",
+    "talles": [
+      {
+        "talle": "38",
+        "stock": 0
+      },
+      {
+        "talle": "39",
+        "stock": 0
+      },
+      {
+        "talle": "40",
+        "stock": 0
+      },
+      {
+        "talle": "41",
+        "stock": 0
+      },
+      {
+        "talle": "42",
+        "stock": 0
+      },
+      {
+        "talle": "43",
+        "stock": 0
+      }
+    ],
+    "stockTotal": 0
+  },
+  {
+    "id": 62,
+    "nombre": "DUNK NEGRA/GRIS",
+    "marca": "NIKE",
+    "precio": 40000,
+    "foto": "https://d3l9wd8kivvlqy.cloudfront.net/c3a8d4eb-b9d7-40c2-839c-3b0be156f791?w=500&h=500",
+    "talles": [
+      {
+        "talle": "43",
+        "stock": 2
+      }
+    ],
+    "stockTotal": 2
+  },
+  {
+    "id": 63,
+    "nombre": "DUNK PANDA",
+    "marca": "NIKE",
+    "precio": 40000,
+    "foto": "https://d3l9wd8kivvlqy.cloudfront.net/f0a0e005-8ade-4b74-8532-98c9a57e07a6?w=500&h=500",
+    "talles": [
+      {
+        "talle": "34",
+        "stock": 0
+      },
+      {
+        "talle": "35",
+        "stock": 1
+      },
+      {
+        "talle": "36",
+        "stock": 4
+      },
+      {
+        "talle": "37",
+        "stock": 3
+      },
+      {
+        "talle": "38",
+        "stock": 4
+      },
+      {
+        "talle": "39",
+        "stock": 1
+      },
+      {
+        "talle": "40",
+        "stock": 2
+      },
+      {
+        "talle": "41",
+        "stock": 3
+      },
+      {
+        "talle": "42",
+        "stock": 0
+      },
+      {
+        "talle": "43",
+        "stock": 1
+      }
+    ],
+    "stockTotal": 19
+  },
+  {
+    "id": 64,
+    "nombre": "DUNK PANDA INFANTIL",
+    "marca": "NIKE",
+    "precio": 29000,
+    "foto": "https://d3l9wd8kivvlqy.cloudfront.net/cbe827da-92e1-4bc6-9dbe-6192b6ddf680?w=500&h=500",
+    "talles": [
+      {
+        "talle": "26",
+        "stock": 0
+      },
+      {
+        "talle": "27",
+        "stock": 3
+      },
+      {
+        "talle": "28",
+        "stock": 1
+      },
+      {
+        "talle": "29",
+        "stock": 1
+      },
+      {
+        "talle": "30",
+        "stock": 0
+      },
+      {
+        "talle": "31",
+        "stock": 3
+      },
+      {
+        "talle": "32",
+        "stock": 1
+      },
+      {
+        "talle": "33",
+        "stock": 1
+      }
+    ],
+    "stockTotal": 10
+  },
+  {
+    "id": 65,
+    "nombre": "DUNK PINK",
+    "marca": "NIKE",
+    "precio": 0,
+    "foto": "https://d3l9wd8kivvlqy.cloudfront.net/f0988565-e5ea-4cc9-bf1b-2a76ffb0631b?w=500&h=500",
+    "talles": [
+      {
+        "talle": "34",
+        "stock": 2
+      },
+      {
+        "talle": "35",
+        "stock": 1
+      },
+      {
+        "talle": "36",
+        "stock": 1
+      },
+      {
+        "talle": "37",
+        "stock": 3
+      },
+      {
+        "talle": "38",
+        "stock": 2
+      },
+      {
+        "talle": "39",
+        "stock": 1
+      }
+    ],
+    "stockTotal": 10
+  },
+  {
+    "id": 66,
+    "nombre": "DUNK TEDDY MARRON",
+    "marca": "NIKE",
+    "precio": 0,
+    "foto": "https://d3l9wd8kivvlqy.cloudfront.net/764e0ee0-f904-4069-964b-8fcd90636445?w=500&h=500",
+    "talles": [
+      {
+        "talle": "34",
+        "stock": 3
+      },
+      {
+        "talle": "35",
+        "stock": 2
+      },
+      {
+        "talle": "36",
+        "stock": 6
+      }
+    ],
+    "stockTotal": 11
+  },
+  {
+    "id": 67,
+    "nombre": "DUNK TEDDY NEGRA",
+    "marca": "NIKE",
+    "precio": 0,
+    "foto": "https://d3l9wd8kivvlqy.cloudfront.net/0ace904e-2b1d-47ee-9430-e98057e27fae?w=500&h=500",
+    "talles": [
+      {
+        "talle": "34",
+        "stock": 1
+      },
+      {
+        "talle": "35",
+        "stock": 0
+      }
+    ],
+    "stockTotal": 1
+  },
+  {
+    "id": 68,
+    "nombre": "DUNK TEDDY ROSA",
+    "marca": "NIKE",
+    "precio": 0,
+    "foto": "https://d3l9wd8kivvlqy.cloudfront.net/1217e87c-e673-4492-96b9-d0923f6f5ea2?w=500&h=500",
+    "talles": [
+      {
+        "talle": "34",
+        "stock": 5
+      },
+      {
+        "talle": "35",
+        "stock": 2
+      },
+      {
+        "talle": "36",
+        "stock": 1
+      },
+      {
+        "talle": "37",
+        "stock": 0
+      },
+      {
+        "talle": "38",
+        "stock": 0
+      },
+      {
+        "talle": "39",
+        "stock": 0
+      }
+    ],
+    "stockTotal": 8
+  },
+  {
+    "id": 69,
+    "nombre": "DURAMO 12 NEGRA/VERDE",
+    "marca": "ADIDAS",
+    "precio": 36500,
+    "foto": "https://d3l9wd8kivvlqy.cloudfront.net/ca9f9d2a-0cac-4735-91a5-5b74d5a31a2f?w=500&h=500",
+    "talles": [
+      {
+        "talle": "40",
+        "stock": 1
+      },
+      {
+        "talle": "41",
+        "stock": 0
+      },
+      {
+        "talle": "43",
+        "stock": 0
+      }
+    ],
+    "stockTotal": 1
+  },
+  {
+    "id": 70,
+    "nombre": "DURAMO BLANCA",
+    "marca": "ADIDAS",
+    "precio": 36500,
+    "foto": "https://d3l9wd8kivvlqy.cloudfront.net/fcafc84d-e660-471a-b400-8a14b5587ce8?w=500&h=500",
+    "talles": [
+      {
+        "talle": "34",
+        "stock": 1
+      },
+      {
+        "talle": "35",
+        "stock": 2
+      },
+      {
+        "talle": "36",
+        "stock": 0
+      },
+      {
+        "talle": "37",
+        "stock": 0
+      },
+      {
+        "talle": "38",
+        "stock": 3
+      },
+      {
+        "talle": "39",
+        "stock": 3
+      },
+      {
+        "talle": "40",
+        "stock": 3
+      },
+      {
+        "talle": "41",
+        "stock": 3
+      },
+      {
+        "talle": "42",
+        "stock": 1
+      },
+      {
+        "talle": "43",
+        "stock": 1
+      }
+    ],
+    "stockTotal": 17
+  },
+  {
+    "id": 71,
+    "nombre": "DURAMO NEGRA/BLANCO",
+    "marca": "ADIDAS",
+    "precio": 36500,
+    "foto": "https://d3l9wd8kivvlqy.cloudfront.net/c5e4bda4-dbac-4cd0-82ee-f90a1e51ced3?w=500&h=500",
+    "talles": [
+      {
+        "talle": "34",
+        "stock": 2
+      },
+      {
+        "talle": "35",
+        "stock": 6
+      },
+      {
+        "talle": "36",
+        "stock": 4
+      },
+      {
+        "talle": "37",
+        "stock": 1
+      },
+      {
+        "talle": "38",
+        "stock": 2
+      },
+      {
+        "talle": "39",
+        "stock": 3
+      },
+      {
+        "talle": "40",
+        "stock": 3
+      },
+      {
+        "talle": "41",
+        "stock": 7
+      },
+      {
+        "talle": "42",
+        "stock": 1
+      },
+      {
+        "talle": "43",
+        "stock": 1
+      }
+    ],
+    "stockTotal": 30
+  },
+  {
+    "id": 72,
+    "nombre": "DURAMO SPEED ROSA",
+    "marca": "ADIDAS",
+    "precio": 0,
+    "foto": "https://d3l9wd8kivvlqy.cloudfront.net/67b9fa93-82fa-4601-aa04-e7eacdfef3ee?w=500&h=500",
+    "talles": [
+      {
+        "talle": "36",
+        "stock": 1
+      }
+    ],
+    "stockTotal": 1
+  },
+  {
+    "id": 73,
+    "nombre": "FORUM BLACK",
+    "marca": "ADIDAS",
+    "precio": 43500,
+    "foto": "https://d3l9wd8kivvlqy.cloudfront.net/cec646b9-cf2c-40e9-8e21-3caa7bb4c602?w=500&h=500",
+    "talles": [
+      {
+        "talle": "34",
+        "stock": 1
+      },
+      {
+        "talle": "35",
+        "stock": 0
+      },
+      {
+        "talle": "36",
+        "stock": 0
+      },
+      {
+        "talle": "37",
+        "stock": 3
+      },
+      {
+        "talle": "38",
+        "stock": 2
+      },
+      {
+        "talle": "39",
+        "stock": 1
+      },
+      {
+        "talle": "40",
+        "stock": 2
+      },
+      {
+        "talle": "41",
+        "stock": 4
+      },
+      {
+        "talle": "42",
+        "stock": 1
+      },
+      {
+        "talle": "43",
+        "stock": 1
+      }
+    ],
+    "stockTotal": 15
+  },
+  {
+    "id": 74,
+    "nombre": "FORUM BLANCA/GRIS",
+    "marca": "ADIDAS",
+    "precio": 0,
+    "foto": "https://d3l9wd8kivvlqy.cloudfront.net/716f9348-6286-4b29-b47b-7b2fb70c287d?w=500&h=500",
+    "talles": [
+      {
+        "talle": "41",
+        "stock": 0
+      },
+      {
+        "talle": "42",
+        "stock": 1
+      }
+    ],
+    "stockTotal": 1
+  },
+  {
+    "id": 75,
+    "nombre": "FORUM BLANCAS",
+    "marca": "ADIDAS",
+    "precio": 41500,
+    "foto": "https://d3l9wd8kivvlqy.cloudfront.net/f79541f6-2534-4bcb-ac03-7bc548fab458?w=500&h=500",
+    "talles": [
+      {
+        "talle": "34",
+        "stock": 3
+      },
+      {
+        "talle": "35",
+        "stock": 4
+      },
+      {
+        "talle": "36",
+        "stock": 5
+      },
+      {
+        "talle": "37",
+        "stock": 3
+      },
+      {
+        "talle": "38",
+        "stock": 2
+      },
+      {
+        "talle": "39",
+        "stock": 1
+      },
+      {
+        "talle": "40",
+        "stock": 1
+      },
+      {
+        "talle": "41",
+        "stock": 1
+      },
+      {
+        "talle": "42",
+        "stock": 1
+      },
+      {
+        "talle": "43",
+        "stock": 1
+      }
+    ],
+    "stockTotal": 22
+  },
+  {
+    "id": 76,
+    "nombre": "FORUM BORDO",
+    "marca": "FORUM",
+    "precio": 43500,
+    "foto": "https://d3l9wd8kivvlqy.cloudfront.net/daf24210-dea9-40ee-9b31-5958ecffdf23?w=500&h=500",
+    "talles": [
+      {
+        "talle": "34",
+        "stock": 1
+      },
+      {
+        "talle": "35",
+        "stock": 1
+      },
+      {
+        "talle": "36",
+        "stock": 1
+      },
+      {
+        "talle": "37",
+        "stock": 0
+      },
+      {
+        "talle": "38",
+        "stock": 0
+      },
+      {
+        "talle": "39",
+        "stock": 0
+      }
+    ],
+    "stockTotal": 3
+  },
+  {
+    "id": 77,
+    "nombre": "FORUM CELESTE",
+    "marca": "ADIDAS",
+    "precio": 41500,
+    "foto": "https://d3l9wd8kivvlqy.cloudfront.net/6cde3825-b266-437c-9934-a879610dcaf0?w=500&h=500",
+    "talles": [
+      {
+        "talle": "34",
+        "stock": 2
+      },
+      {
+        "talle": "35",
+        "stock": 2
+      },
+      {
+        "talle": "36",
+        "stock": 3
+      },
+      {
+        "talle": "37",
+        "stock": 4
+      },
+      {
+        "talle": "38",
+        "stock": 1
+      },
+      {
+        "talle": "39",
+        "stock": 2
+      }
+    ],
+    "stockTotal": 14
+  },
+  {
+    "id": 78,
+    "nombre": "FORUM GRAFITE",
+    "marca": "ADIDAS",
+    "precio": 43500,
+    "foto": "https://d3l9wd8kivvlqy.cloudfront.net/9d6eaa9e-213d-488d-9d07-850db2ba4045?w=500&h=500",
+    "talles": [
+      {
+        "talle": "34",
+        "stock": 2
+      },
+      {
+        "talle": "35",
+        "stock": 7
+      },
+      {
+        "talle": "36",
+        "stock": 5
+      },
+      {
+        "talle": "37",
+        "stock": 0
+      },
+      {
+        "talle": "38",
+        "stock": 1
+      },
+      {
+        "talle": "39",
+        "stock": 2
+      },
+      {
+        "talle": "40",
+        "stock": 8
+      },
+      {
+        "talle": "41",
+        "stock": 2
+      },
+      {
+        "talle": "42",
+        "stock": 1
+      },
+      {
+        "talle": "43",
+        "stock": 0
+      }
+    ],
+    "stockTotal": 28
+  },
+  {
+    "id": 79,
+    "nombre": "FORUM GRIS",
+    "marca": "ADIDAS",
+    "precio": 0,
+    "foto": "https://d3l9wd8kivvlqy.cloudfront.net/572b2db3-05a2-4646-84ca-f7140ac3aac7?w=500&h=500",
+    "talles": [
+      {
+        "talle": "34",
+        "stock": 1
+      },
+      {
+        "talle": "35",
+        "stock": 2
+      },
+      {
+        "talle": "36",
+        "stock": 3
+      },
+      {
+        "talle": "37",
+        "stock": 1
+      },
+      {
+        "talle": "38",
+        "stock": 3
+      },
+      {
+        "talle": "39",
+        "stock": 0
+      }
+    ],
+    "stockTotal": 10
+  },
+  {
+    "id": 80,
+    "nombre": "FORUM MARRON INFANTIL",
+    "marca": "ADIDAS",
+    "precio": 29000,
+    "foto": "https://d3l9wd8kivvlqy.cloudfront.net/305f3274-6be2-4e95-9317-4c10370d4fc1?w=500&h=500",
+    "talles": [
+      {
+        "talle": "26",
+        "stock": 0
+      },
+      {
+        "talle": "27",
+        "stock": 1
+      },
+      {
+        "talle": "28",
+        "stock": 2
+      },
+      {
+        "talle": "29",
+        "stock": 0
+      },
+      {
+        "talle": "30",
+        "stock": 0
+      },
+      {
+        "talle": "31",
+        "stock": 2
+      },
+      {
+        "talle": "32",
+        "stock": 0
+      },
+      {
+        "talle": "33",
+        "stock": 0
+      }
+    ],
+    "stockTotal": 5
+  },
+  {
+    "id": 81,
+    "nombre": "FORUM MARRÓN",
+    "marca": "ADIDAS",
+    "precio": 43500,
+    "foto": "https://d3l9wd8kivvlqy.cloudfront.net/260c096a-4b2a-4ee9-a082-582a225f239b?w=500&h=500",
+    "talles": [
+      {
+        "talle": "38",
+        "stock": 2
+      },
+      {
+        "talle": "39",
+        "stock": 2
+      },
+      {
+        "talle": "40",
+        "stock": 3
+      },
+      {
+        "talle": "41",
+        "stock": 4
+      },
+      {
+        "talle": "42",
+        "stock": 0
+      },
+      {
+        "talle": "43",
+        "stock": 0
+      }
+    ],
+    "stockTotal": 11
+  },
+  {
+    "id": 82,
+    "nombre": "FORUM MID CLASICAS",
+    "marca": "ADIDAS",
+    "precio": 0,
+    "foto": "https://d3l9wd8kivvlqy.cloudfront.net/7f890fa4-bce0-4345-8db6-f47aac7774f6?w=500&h=500",
+    "talles": [
+      {
+        "talle": "35",
+        "stock": 2
+      },
+      {
+        "talle": "36",
+        "stock": 0
+      },
+      {
+        "talle": "37",
+        "stock": 0
+      }
+    ],
+    "stockTotal": 2
+  },
+  {
+    "id": 83,
+    "nombre": "FORUM NEGRA",
+    "marca": "ADIDAS",
+    "precio": 0,
+    "foto": "https://d3l9wd8kivvlqy.cloudfront.net/ec0b3dff-40d5-4143-aa99-523473472ecb?w=500&h=500",
+    "talles": [
+      {
+        "talle": "38",
+        "stock": 0
+      },
+      {
+        "talle": "39",
+        "stock": 0
+      },
+      {
+        "talle": "40",
+        "stock": 0
+      },
+      {
+        "talle": "41",
+        "stock": 2
+      },
+      {
+        "talle": "42",
+        "stock": 1
+      },
+      {
+        "talle": "43",
+        "stock": 1
+      }
+    ],
+    "stockTotal": 4
+  },
+  {
+    "id": 84,
+    "nombre": "FORUM NEGRA/BLANCO",
+    "marca": "ADIDAS",
+    "precio": 41500,
+    "foto": "https://d3l9wd8kivvlqy.cloudfront.net/639c2473-8c5b-45ab-8eb1-366db8aada53?w=500&h=500",
+    "talles": [
+      {
+        "talle": "34",
+        "stock": 1
+      },
+      {
+        "talle": "35",
+        "stock": 3
+      },
+      {
+        "talle": "36",
+        "stock": 2
+      },
+      {
+        "talle": "37",
+        "stock": 1
+      },
+      {
+        "talle": "38",
+        "stock": 6
+      },
+      {
+        "talle": "39",
+        "stock": 3
+      },
+      {
+        "talle": "40",
+        "stock": 2
+      },
+      {
+        "talle": "41",
+        "stock": 6
+      },
+      {
+        "talle": "42",
+        "stock": 2
+      },
+      {
+        "talle": "43",
+        "stock": 1
+      }
+    ],
+    "stockTotal": 27
+  },
+  {
+    "id": 85,
+    "nombre": "FORUM OFF GREY",
+    "marca": "ADIDAS",
+    "precio": 43500,
+    "foto": "https://d3l9wd8kivvlqy.cloudfront.net/927ef8c5-45f7-48f9-a53e-fb565784e695?w=500&h=500",
+    "talles": [
+      {
+        "talle": "34",
+        "stock": 0
+      },
+      {
+        "talle": "35",
+        "stock": 1
+      },
+      {
+        "talle": "36",
+        "stock": 3
+      },
+      {
+        "talle": "37",
+        "stock": 0
+      },
+      {
+        "talle": "38",
+        "stock": 1
+      },
+      {
+        "talle": "39",
+        "stock": 0
+      }
+    ],
+    "stockTotal": 5
+  },
+  {
+    "id": 86,
+    "nombre": "FORUM ROSA",
+    "marca": "ADIDAS",
+    "precio": 41500,
+    "foto": "https://d3l9wd8kivvlqy.cloudfront.net/dbc86afe-324c-4b25-a2b3-38807590a4e1?w=500&h=500",
+    "talles": [
+      {
+        "talle": "34",
+        "stock": 2
+      },
+      {
+        "talle": "35",
+        "stock": 2
+      },
+      {
+        "talle": "36",
+        "stock": 3
+      },
+      {
+        "talle": "37",
+        "stock": 4
+      },
+      {
+        "talle": "38",
+        "stock": 2
+      },
+      {
+        "talle": "39",
+        "stock": 1
+      }
+    ],
+    "stockTotal": 14
+  },
+  {
+    "id": 87,
+    "nombre": "FORUM ROSE",
+    "marca": "ADIDAS",
+    "precio": 43500,
+    "foto": "https://d3l9wd8kivvlqy.cloudfront.net/6a5d0d08-b99d-4a0e-b6f9-1cb626b282c6?w=500&h=500",
+    "talles": [
+      {
+        "talle": "34",
+        "stock": 1
+      },
+      {
+        "talle": "35",
+        "stock": 4
+      },
+      {
+        "talle": "36",
+        "stock": 4
+      },
+      {
+        "talle": "37",
+        "stock": 3
+      },
+      {
+        "talle": "38",
+        "stock": 2
+      },
+      {
+        "talle": "39",
+        "stock": 1
+      }
+    ],
+    "stockTotal": 15
+  },
+  {
+    "id": 88,
+    "nombre": "FORUM VERDE",
+    "marca": "ADIDAS",
+    "precio": 41500,
+    "foto": "https://d3l9wd8kivvlqy.cloudfront.net/553c45e2-4d84-4a73-9b71-48bd7e58c2ac?w=500&h=500",
+    "talles": [
+      {
+        "talle": "34",
+        "stock": 0
+      },
+      {
+        "talle": "35",
+        "stock": 3
+      },
+      {
+        "talle": "36",
+        "stock": 4
+      },
+      {
+        "talle": "37",
+        "stock": 5
+      },
+      {
+        "talle": "38",
+        "stock": 2
+      },
+      {
+        "talle": "39",
+        "stock": 1
+      }
+    ],
+    "stockTotal": 15
+  },
+  {
+    "id": 89,
+    "nombre": "GAZELLE BORDO",
+    "marca": "ADIDAS",
+    "precio": 0,
+    "foto": "https://d3l9wd8kivvlqy.cloudfront.net/13a897e7-18c5-4498-b768-f51a826b14b6?w=500&h=500",
+    "talles": [
+      {
+        "talle": "34",
+        "stock": 0
+      },
+      {
+        "talle": "35",
+        "stock": 0
+      },
+      {
+        "talle": "36",
+        "stock": 0
+      },
+      {
+        "talle": "37",
+        "stock": 0
+      },
+      {
+        "talle": "38",
+        "stock": 0
+      },
+      {
+        "talle": "39",
+        "stock": 0
+      }
+    ],
+    "stockTotal": 0
+  },
+  {
+    "id": 90,
+    "nombre": "HYLANE BLANCA",
+    "marca": "VANS",
+    "precio": 42000,
+    "foto": "https://d3l9wd8kivvlqy.cloudfront.net/ebc8bb85-bd52-459d-852c-1ab59003d2fc?w=500&h=500",
+    "talles": [
+      {
+        "talle": "34",
+        "stock": 2
+      },
+      {
+        "talle": "35",
+        "stock": 0
+      },
+      {
+        "talle": "36",
+        "stock": 3
+      },
+      {
+        "talle": "37",
+        "stock": 3
+      },
+      {
+        "talle": "38",
+        "stock": 3
+      },
+      {
+        "talle": "39",
+        "stock": 2
+      },
+      {
+        "talle": "40",
+        "stock": 0
+      },
+      {
+        "talle": "41",
+        "stock": 1
+      },
+      {
+        "talle": "42",
+        "stock": 1
+      },
+      {
+        "talle": "43",
+        "stock": 0
+      }
+    ],
+    "stockTotal": 15
+  },
+  {
+    "id": 91,
+    "nombre": "HYLANE NEGRA",
+    "marca": "VANS",
+    "precio": 39000,
+    "foto": "https://d3l9wd8kivvlqy.cloudfront.net/a4ff712c-7b6f-4e2c-b2a2-9462483eb5e8?w=500&h=500",
+    "talles": [
+      {
+        "talle": "34",
+        "stock": 1
+      },
+      {
+        "talle": "35",
+        "stock": 1
+      },
+      {
+        "talle": "36",
+        "stock": 2
+      },
+      {
+        "talle": "37",
+        "stock": 1
+      },
+      {
+        "talle": "38",
+        "stock": 1
+      },
+      {
+        "talle": "39",
+        "stock": 0
+      }
+    ],
+    "stockTotal": 6
+  },
+  {
+    "id": 92,
+    "nombre": "JORDAN 4RM NEGRA",
+    "marca": "JORDAN",
+    "precio": 43000,
+    "foto": "https://d3l9wd8kivvlqy.cloudfront.net/a6030c35-f80e-495e-a76d-22ea5fc2bb7c?w=500&h=500",
+    "talles": [
+      {
+        "talle": "38",
+        "stock": 1
+      },
+      {
+        "talle": "39",
+        "stock": 0
+      },
+      {
+        "talle": "40",
+        "stock": 0
+      },
+      {
+        "talle": "41",
+        "stock": 0
+      },
+      {
+        "talle": "42",
+        "stock": 1
+      },
+      {
+        "talle": "43",
+        "stock": 0
+      }
+    ],
+    "stockTotal": 2
+  },
+  {
+    "id": 93,
+    "nombre": "JORDAN AZUL CHAROL",
+    "marca": "JORDAN",
+    "precio": 38000,
+    "foto": "https://d3l9wd8kivvlqy.cloudfront.net/9c29f66c-2e4b-4b5d-9054-f90b7ed267a4?w=500&h=500",
+    "talles": [
+      {
+        "talle": "34",
+        "stock": 0
+      },
+      {
+        "talle": "35",
+        "stock": 0
+      },
+      {
+        "talle": "36",
+        "stock": 0
+      },
+      {
+        "talle": "37",
+        "stock": 0
+      },
+      {
+        "talle": "38",
+        "stock": 0
+      },
+      {
+        "talle": "39",
+        "stock": 0
+      }
+    ],
+    "stockTotal": 0
+  },
+  {
+    "id": 94,
+    "nombre": "JORDAN BEIGE/ROSA",
+    "marca": "JORDAN",
+    "precio": 39500,
+    "foto": "https://d3l9wd8kivvlqy.cloudfront.net/8947b5a3-9762-47d4-8d7b-974e20e46d84?w=500&h=500",
+    "talles": [
+      {
+        "talle": "34",
+        "stock": 1
+      },
+      {
+        "talle": "35",
+        "stock": 2
+      },
+      {
+        "talle": "36",
+        "stock": 4
+      },
+      {
+        "talle": "37",
+        "stock": 3
+      },
+      {
+        "talle": "38",
+        "stock": 2
+      },
+      {
+        "talle": "39",
+        "stock": 1
+      }
+    ],
+    "stockTotal": 13
+  },
+  {
+    "id": 95,
+    "nombre": "JORDAN BLACK RED INFANTIL",
+    "marca": "JORDAN",
+    "precio": 29000,
+    "foto": "https://d3l9wd8kivvlqy.cloudfront.net/c2611be9-db9e-4df2-9598-6c268138b129?w=500&h=500",
+    "talles": [
+      {
+        "talle": "26",
+        "stock": 2
+      },
+      {
+        "talle": "27",
+        "stock": 2
+      },
+      {
+        "talle": "28",
+        "stock": 2
+      },
+      {
+        "talle": "29",
+        "stock": 3
+      },
+      {
+        "talle": "30",
+        "stock": 2
+      },
+      {
+        "talle": "31",
+        "stock": 3
+      },
+      {
+        "talle": "32",
+        "stock": 1
+      },
+      {
+        "talle": "33",
+        "stock": 0
+      }
+    ],
+    "stockTotal": 15
+  },
+  {
+    "id": 96,
+    "nombre": "JORDAN J30 NEGRA",
+    "marca": "JORDAN",
+    "precio": 0,
+    "foto": "https://d3l9wd8kivvlqy.cloudfront.net/6418b2ee-2672-45eb-9e6a-f0a7f21728aa?w=500&h=500",
+    "talles": [
+      {
+        "talle": "40",
+        "stock": 1
+      }
+    ],
+    "stockTotal": 1
+  },
+  {
+    "id": 97,
+    "nombre": "JORDAN LOW",
+    "marca": "JORDAN",
+    "precio": 38000,
+    "foto": "https://d3l9wd8kivvlqy.cloudfront.net/01c023b8-eced-4e29-8993-2569cb66d7df?w=500&h=500",
+    "talles": [
+      {
+        "talle": "34",
+        "stock": 0
+      },
+      {
+        "talle": "35",
+        "stock": 4
+      },
+      {
+        "talle": "36",
+        "stock": 1
+      },
+      {
+        "talle": "37",
+        "stock": 4
+      },
+      {
+        "talle": "38",
+        "stock": 0
+      },
+      {
+        "talle": "39",
+        "stock": 0
+      }
+    ],
+    "stockTotal": 9
+  },
+  {
+    "id": 98,
+    "nombre": "JORDAN LOW BLACK/RED",
+    "marca": "JORDAN",
+    "precio": 0,
+    "foto": "https://d3l9wd8kivvlqy.cloudfront.net/c9fce367-808e-4a56-bf10-186275445ab5?w=500&h=500",
+    "talles": [
+      {
+        "talle": "38",
+        "stock": 0
+      },
+      {
+        "talle": "39",
+        "stock": 0
+      },
+      {
+        "talle": "40",
+        "stock": 0
+      },
+      {
+        "talle": "41",
+        "stock": 1
+      },
+      {
+        "talle": "42",
+        "stock": 0
+      },
+      {
+        "talle": "43",
+        "stock": 0
+      }
+    ],
+    "stockTotal": 1
+  },
+  {
+    "id": 99,
+    "nombre": "JORDAN LOW BLANCA/AZUL",
+    "marca": "NIKE",
+    "precio": 0,
+    "foto": "https://d3l9wd8kivvlqy.cloudfront.net/0cceef35-0e13-458f-b669-1a17ee706322?w=500&h=500",
+    "talles": [
+      {
+        "talle": "38",
+        "stock": 1
+      },
+      {
+        "talle": "39",
+        "stock": 0
+      },
+      {
+        "talle": "40",
+        "stock": 0
+      },
+      {
+        "talle": "41",
+        "stock": 0
+      },
+      {
+        "talle": "42",
+        "stock": 0
+      },
+      {
+        "talle": "43",
+        "stock": 0
+      }
+    ],
+    "stockTotal": 1
+  },
+  {
+    "id": 100,
+    "nombre": "JORDAN LOW CHAROL BLACK/RED",
+    "marca": "JORDAN",
+    "precio": 38000,
+    "foto": "https://d3l9wd8kivvlqy.cloudfront.net/8ce3c9f4-1470-4150-b5ab-8a80c9a1a77f?w=500&h=500",
+    "talles": [
+      {
+        "talle": "34",
+        "stock": 0
+      },
+      {
+        "talle": "35",
+        "stock": 0
+      },
+      {
+        "talle": "36",
+        "stock": 1
+      },
+      {
+        "talle": "37",
+        "stock": 0
+      },
+      {
+        "talle": "38",
+        "stock": 0
+      },
+      {
+        "talle": "39",
+        "stock": 0
+      }
+    ],
+    "stockTotal": 1
+  },
+  {
+    "id": 101,
+    "nombre": "JORDAN LOW MARRON",
+    "marca": "JORDAN",
+    "precio": 38000,
+    "foto": "https://d3l9wd8kivvlqy.cloudfront.net/98a3e4b8-6db0-433a-a172-d102085a1ebc?w=500&h=500",
+    "talles": [
+      {
+        "talle": "38",
+        "stock": 0
+      },
+      {
+        "talle": "39",
+        "stock": 0
+      },
+      {
+        "talle": "40",
+        "stock": 0
+      },
+      {
+        "talle": "41",
+        "stock": 1
+      },
+      {
+        "talle": "42",
+        "stock": 0
+      },
+      {
+        "talle": "43",
+        "stock": 0
+      }
+    ],
+    "stockTotal": 1
+  },
+  {
+    "id": 102,
+    "nombre": "JORDAN MID BLACK",
+    "marca": "JORDAN",
+    "precio": 0,
+    "foto": "https://d3l9wd8kivvlqy.cloudfront.net/6d9908f9-8659-4973-bf43-41cfe834014c?w=500&h=500",
+    "talles": [
+      {
+        "talle": "34",
+        "stock": 0
+      },
+      {
+        "talle": "35",
+        "stock": 0
+      },
+      {
+        "talle": "36",
+        "stock": 0
+      },
+      {
+        "talle": "37",
+        "stock": 0
+      },
+      {
+        "talle": "38",
+        "stock": 0
+      },
+      {
+        "talle": "39",
+        "stock": 0
+      }
+    ],
+    "stockTotal": 0
+  },
+  {
+    "id": 103,
+    "nombre": "JORDAN MID BLACK INFANTIL",
+    "marca": "JORDAN",
+    "precio": 29000,
+    "foto": "https://d3l9wd8kivvlqy.cloudfront.net/19aa0ff4-5bc3-4bb8-85e8-7cc5d126f731?w=500&h=500",
+    "talles": [
+      {
+        "talle": "26",
+        "stock": 2
+      },
+      {
+        "talle": "27",
+        "stock": 3
+      },
+      {
+        "talle": "28",
+        "stock": 2
+      },
+      {
+        "talle": "29",
+        "stock": 2
+      },
+      {
+        "talle": "30",
+        "stock": 2
+      },
+      {
+        "talle": "31",
+        "stock": 2
+      },
+      {
+        "talle": "32",
+        "stock": 1
+      },
+      {
+        "talle": "33",
+        "stock": 0
+      }
+    ],
+    "stockTotal": 14
+  },
+  {
+    "id": 104,
+    "nombre": "JORDAN MID CELESTE",
+    "marca": "JORDAN",
+    "precio": 39000,
+    "foto": "https://d3l9wd8kivvlqy.cloudfront.net/9fb55f87-0666-49ff-9d7d-116d9575ed9c?w=500&h=500",
+    "talles": [
+      {
+        "talle": "34",
+        "stock": 0
+      },
+      {
+        "talle": "35",
+        "stock": 0
+      },
+      {
+        "talle": "36",
+        "stock": 1
+      },
+      {
+        "talle": "37",
+        "stock": 1
+      },
+      {
+        "talle": "38",
+        "stock": 0
+      },
+      {
+        "talle": "39",
+        "stock": 0
+      }
+    ],
+    "stockTotal": 2
+  },
+  {
+    "id": 105,
+    "nombre": "JORDAN MID CHAROL BLACK/RED",
+    "marca": "JORDAN",
+    "precio": 41500,
+    "foto": "https://d3l9wd8kivvlqy.cloudfront.net/f50f5c22-1f79-472a-a261-f79d26b1829a?w=500&h=500",
+    "talles": [
+      {
+        "talle": "34",
+        "stock": 0
+      },
+      {
+        "talle": "35",
+        "stock": 2
+      },
+      {
+        "talle": "36",
+        "stock": 2
+      },
+      {
+        "talle": "37",
+        "stock": 0
+      },
+      {
+        "talle": "38",
+        "stock": 0
+      },
+      {
+        "talle": "39",
+        "stock": 1
+      },
+      {
+        "talle": "40",
+        "stock": 1
+      },
+      {
+        "talle": "41",
+        "stock": 3
+      },
+      {
+        "talle": "42",
+        "stock": 2
+      },
+      {
+        "talle": "43",
+        "stock": 0
+      }
+    ],
+    "stockTotal": 11
+  },
+  {
+    "id": 106,
+    "nombre": "JORDAN MID ROSA",
+    "marca": "JORDAN",
+    "precio": 39000,
+    "foto": "https://d3l9wd8kivvlqy.cloudfront.net/ee791352-2a6f-41a4-ade6-354816ff1975?w=500&h=500",
+    "talles": [
+      {
+        "talle": "34",
+        "stock": 0
+      },
+      {
+        "talle": "35",
+        "stock": 0
+      },
+      {
+        "talle": "36",
+        "stock": 2
+      },
+      {
+        "talle": "37",
+        "stock": 3
+      },
+      {
+        "talle": "38",
+        "stock": 2
+      },
+      {
+        "talle": "39",
+        "stock": 0
+      }
+    ],
+    "stockTotal": 7
+  },
+  {
+    "id": 107,
+    "nombre": "JORDAN MID ROSE NUDE",
+    "marca": "JORDAN",
+    "precio": 39000,
+    "foto": "https://d3l9wd8kivvlqy.cloudfront.net/3160321c-9696-4b59-a54e-4f699bcbd0ce?w=500&h=500",
+    "talles": [
+      {
+        "talle": "34",
+        "stock": 1
+      },
+      {
+        "talle": "35",
+        "stock": 1
+      },
+      {
+        "talle": "36",
+        "stock": 0
+      },
+      {
+        "talle": "37",
+        "stock": 0
+      },
+      {
+        "talle": "38",
+        "stock": 1
+      },
+      {
+        "talle": "39",
+        "stock": 0
+      }
+    ],
+    "stockTotal": 3
+  },
+  {
+    "id": 108,
+    "nombre": "JORDAN MID WHITE/M",
+    "marca": "JORDAN",
+    "precio": 41500,
+    "foto": "https://d3l9wd8kivvlqy.cloudfront.net/2ecdd882-beb0-46c6-9efb-53b18b57c5f1?w=500&h=500",
+    "talles": [
+      {
+        "talle": "34",
+        "stock": 2
+      },
+      {
+        "talle": "35",
+        "stock": 1
+      },
+      {
+        "talle": "36",
+        "stock": 3
+      },
+      {
+        "talle": "37",
+        "stock": 2
+      },
+      {
+        "talle": "38",
+        "stock": 1
+      },
+      {
+        "talle": "39",
+        "stock": 0
+      }
+    ],
+    "stockTotal": 9
+  },
+  {
+    "id": 109,
+    "nombre": "JORDAN PHANTOM",
+    "marca": "JORDAN",
+    "precio": 0,
+    "foto": "https://d3l9wd8kivvlqy.cloudfront.net/67cf521c-48bc-4c71-a2c2-e14e70c3ad37?w=500&h=500",
+    "talles": [
+      {
+        "talle": "38",
+        "stock": 0
+      },
+      {
+        "talle": "39",
+        "stock": 0
+      },
+      {
+        "talle": "40",
+        "stock": 0
+      },
+      {
+        "talle": "41",
+        "stock": 0
+      },
+      {
+        "talle": "42",
+        "stock": 0
+      },
+      {
+        "talle": "43",
+        "stock": 2
+      }
+    ],
+    "stockTotal": 2
+  },
+  {
+    "id": 110,
+    "nombre": "JORDAN RETRO 4 BLACK/WHITE",
+    "marca": "JORDAN",
+    "precio": 41500,
+    "foto": "https://d3l9wd8kivvlqy.cloudfront.net/dc434239-bcf2-4a9f-b314-3ee9ef0c55e6?w=500&h=500",
+    "talles": [
+      {
+        "talle": "38",
+        "stock": 1
+      },
+      {
+        "talle": "39",
+        "stock": 2
+      },
+      {
+        "talle": "40",
+        "stock": 3
+      },
+      {
+        "talle": "41",
+        "stock": 3
+      },
+      {
+        "talle": "42",
+        "stock": 2
+      },
+      {
+        "talle": "43",
+        "stock": 2
+      }
+    ],
+    "stockTotal": 13
+  },
+  {
+    "id": 111,
+    "nombre": "JORDAN RETRO 4 GRAFITO",
+    "marca": "JORDAN",
+    "precio": 41500,
+    "foto": "https://d3l9wd8kivvlqy.cloudfront.net/337a5a6f-9879-416e-878a-6edb06e07a1a?w=500&h=500",
+    "talles": [
+      {
+        "talle": "38",
+        "stock": 0
+      },
+      {
+        "talle": "39",
+        "stock": 0
+      },
+      {
+        "talle": "40",
+        "stock": 3
+      },
+      {
+        "talle": "41",
+        "stock": 4
+      },
+      {
+        "talle": "42",
+        "stock": 1
+      },
+      {
+        "talle": "43",
+        "stock": 1
+      }
+    ],
+    "stockTotal": 9
+  },
+  {
+    "id": 112,
+    "nombre": "JORDAN RETRO 4 NEGRA",
+    "marca": "JORDAN",
+    "precio": 40000,
+    "foto": "https://d3l9wd8kivvlqy.cloudfront.net/41e46452-9b71-411c-8d6c-7d9c453f47ed?w=500&h=500",
+    "talles": [
+      {
+        "talle": "34",
+        "stock": 1
+      },
+      {
+        "talle": "35",
+        "stock": 2
+      },
+      {
+        "talle": "36",
+        "stock": 6
+      },
+      {
+        "talle": "37",
+        "stock": 5
+      },
+      {
+        "talle": "38",
+        "stock": 1
+      },
+      {
+        "talle": "39",
+        "stock": 0
+      }
+    ],
+    "stockTotal": 15
+  },
+  {
+    "id": 113,
+    "nombre": "JORDAN RETRO 4 ROSA",
+    "marca": "JORDAN",
+    "precio": 40000,
+    "foto": "https://d3l9wd8kivvlqy.cloudfront.net/d345f01b-e772-43e2-a099-75ad1d036ae7?w=500&h=500",
+    "talles": [
+      {
+        "talle": "34",
+        "stock": 1
+      },
+      {
+        "talle": "35",
+        "stock": 2
+      },
+      {
+        "talle": "36",
+        "stock": 2
+      },
+      {
+        "talle": "37",
+        "stock": 1
+      },
+      {
+        "talle": "38",
+        "stock": 1
+      },
+      {
+        "talle": "39",
+        "stock": 0
+      }
+    ],
+    "stockTotal": 7
+  },
+  {
+    "id": 114,
+    "nombre": "JORDAN RETRO 4 WHITE",
+    "marca": "JORDAN",
+    "precio": 41500,
+    "foto": "https://d3l9wd8kivvlqy.cloudfront.net/6069cf72-acb2-4b75-b8cf-ae5ed1eab212?w=500&h=500",
+    "talles": [
+      {
+        "talle": "38",
+        "stock": 0
+      },
+      {
+        "talle": "39",
+        "stock": 0
+      },
+      {
+        "talle": "40",
+        "stock": 3
+      },
+      {
+        "talle": "41",
+        "stock": 0
+      },
+      {
+        "talle": "42",
+        "stock": 0
+      },
+      {
+        "talle": "43",
+        "stock": 0
+      }
+    ],
+    "stockTotal": 3
+  },
+  {
+    "id": 115,
+    "nombre": "JORDAN TRAVIS OLIVA",
+    "marca": "JORDAN",
+    "precio": 0,
+    "foto": "https://d3l9wd8kivvlqy.cloudfront.net/6af9f33d-dc7c-416b-8e5d-869f10d77b5c?w=500&h=500",
+    "talles": [
+      {
+        "talle": "38",
+        "stock": 2
+      },
+      {
+        "talle": "39",
+        "stock": 1
+      },
+      {
+        "talle": "40",
+        "stock": 0
+      },
+      {
+        "talle": "41",
+        "stock": 3
+      },
+      {
+        "talle": "42",
+        "stock": 2
+      },
+      {
+        "talle": "43",
+        "stock": 0
+      }
+    ],
+    "stockTotal": 8
+  },
+  {
+    "id": 116,
+    "nombre": "NEW BALANCE 530 BEIGE",
+    "marca": "NEW BALANCE",
+    "precio": 41500,
+    "foto": "https://d3l9wd8kivvlqy.cloudfront.net/31fc2620-4b40-49b1-a30b-fbee5b192fd8?w=500&h=500",
+    "talles": [
+      {
+        "talle": "35",
+        "stock": 0
+      },
+      {
+        "talle": "36",
+        "stock": 0
+      },
+      {
+        "talle": "37",
+        "stock": 0
+      },
+      {
+        "talle": "38",
+        "stock": 0
+      },
+      {
+        "talle": "39",
+        "stock": 1
+      },
+      {
+        "talle": "40",
+        "stock": 2
+      },
+      {
+        "talle": "41",
+        "stock": 2
+      },
+      {
+        "talle": "42",
+        "stock": 3
+      },
+      {
+        "talle": "43",
+        "stock": 3
+      }
+    ],
+    "stockTotal": 11
+  },
+  {
+    "id": 117,
+    "nombre": "NEW BALANCE 530 ROSA",
+    "marca": "NEW BALANCE",
+    "precio": 41500,
+    "foto": "https://d3l9wd8kivvlqy.cloudfront.net/b1d80cc5-cd66-4ec3-b44c-ad686e5327e0?w=500&h=500",
+    "talles": [
+      {
+        "talle": "35",
+        "stock": 1
+      },
+      {
+        "talle": "36",
+        "stock": 0
+      },
+      {
+        "talle": "37",
+        "stock": 0
+      },
+      {
+        "talle": "38",
+        "stock": 0
+      },
+      {
+        "talle": "39",
+        "stock": 0
+      },
+      {
+        "talle": "40",
+        "stock": 1
+      }
+    ],
+    "stockTotal": 2
+  },
+  {
+    "id": 118,
+    "nombre": "NEW BALANCE 550 MARRON",
+    "marca": "NEW BALANCE",
+    "precio": 0,
+    "foto": "https://d3l9wd8kivvlqy.cloudfront.net/2b153408-4f84-4bbf-83d3-d71db4af23e6?w=500&h=500",
+    "talles": [
+      {
+        "talle": "36",
+        "stock": 3
+      }
+    ],
+    "stockTotal": 3
+  },
+  {
+    "id": 119,
+    "nombre": "NEW BALANCE 1000 ROSA",
+    "marca": "NEW BALANCE",
+    "precio": 0,
+    "foto": "https://d3l9wd8kivvlqy.cloudfront.net/e5512ed0-7355-4a54-889c-398971530b45?w=500&h=500",
+    "talles": [
+      {
+        "talle": "35",
+        "stock": 0
+      },
+      {
+        "talle": "36",
+        "stock": 0
+      },
+      {
+        "talle": "37",
+        "stock": 0
+      },
+      {
+        "talle": "38",
+        "stock": 0
+      },
+      {
+        "talle": "39",
+        "stock": 0
+      },
+      {
+        "talle": "40",
+        "stock": 0
+      }
+    ],
+    "stockTotal": 0
+  },
+  {
+    "id": 120,
+    "nombre": "NEW BALANCE 9060 ROSA",
+    "marca": "NEW BALANCE",
+    "precio": 43500,
+    "foto": "https://d3l9wd8kivvlqy.cloudfront.net/f7093822-c647-4207-ac23-daf7d80e991c?w=500&h=500",
+    "talles": [
+      {
+        "talle": "34",
+        "stock": 2
+      },
+      {
+        "talle": "35",
+        "stock": 4
+      },
+      {
+        "talle": "36",
+        "stock": 3
+      },
+      {
+        "talle": "37",
+        "stock": 0
+      },
+      {
+        "talle": "38",
+        "stock": 0
+      },
+      {
+        "talle": "39",
+        "stock": 2
+      }
+    ],
+    "stockTotal": 11
+  },
+  {
+    "id": 121,
+    "nombre": "NEW BALANCE ABZORB",
+    "marca": "NEWBALANCE",
+    "precio": 0,
+    "foto": "https://d3l9wd8kivvlqy.cloudfront.net/148e9068-604a-4f65-9646-e321759d4909?w=500&h=500",
+    "talles": [
+      {
+        "talle": "34",
+        "stock": 4
+      },
+      {
+        "talle": "35",
+        "stock": 5
+      },
+      {
+        "talle": "36",
+        "stock": 3
+      },
+      {
+        "talle": "37",
+        "stock": 1
+      },
+      {
+        "talle": "38",
+        "stock": 1
+      },
+      {
+        "talle": "39",
+        "stock": 2
+      }
+    ],
+    "stockTotal": 16
+  },
+  {
+    "id": 122,
+    "nombre": "NEW BALANCE ABZORB GRIS",
+    "marca": "NEW BALANCE",
+    "precio": 0,
+    "foto": "https://d3l9wd8kivvlqy.cloudfront.net/9be6bbf8-5807-4c6e-b5f9-f9fff6fb6a96?w=500&h=500",
+    "talles": [
+      {
+        "talle": "34",
+        "stock": 1
+      },
+      {
+        "talle": "35",
+        "stock": 2
+      },
+      {
+        "talle": "36",
+        "stock": 1
+      },
+      {
+        "talle": "37",
+        "stock": 0
+      },
+      {
+        "talle": "38",
+        "stock": 0
+      },
+      {
+        "talle": "39",
+        "stock": 1
+      }
+    ],
+    "stockTotal": 5
+  },
+  {
+    "id": 123,
+    "nombre": "NEW BALANCE ABZORB MARRON",
+    "marca": "NEWBALANCE",
+    "precio": 0,
+    "foto": "https://d3l9wd8kivvlqy.cloudfront.net/973a1a80-f735-4a26-b64e-bf93411edfc3?w=500&h=500",
+    "talles": [
+      {
+        "talle": "34",
+        "stock": 0
+      },
+      {
+        "talle": "35",
+        "stock": 0
+      },
+      {
+        "talle": "36",
+        "stock": 0
+      },
+      {
+        "talle": "37",
+        "stock": 2
+      },
+      {
+        "talle": "38",
+        "stock": 0
+      },
+      {
+        "talle": "39",
+        "stock": 1
+      }
+    ],
+    "stockTotal": 3
+  },
+  {
+    "id": 124,
+    "nombre": "NEW BALANCE ABZORB NEGRA",
+    "marca": "NEW BALANCE",
+    "precio": 0,
+    "foto": "https://d3l9wd8kivvlqy.cloudfront.net/06cf8bee-fb96-4648-89a2-bffd4faacf09?w=500&h=500",
+    "talles": [
+      {
+        "talle": "34",
+        "stock": 0
+      },
+      {
+        "talle": "35",
+        "stock": 1
+      },
+      {
+        "talle": "36",
+        "stock": 0
+      },
+      {
+        "talle": "37",
+        "stock": 1
+      },
+      {
+        "talle": "38",
+        "stock": 2
+      },
+      {
+        "talle": "39",
+        "stock": 1
+      }
+    ],
+    "stockTotal": 5
+  },
+  {
+    "id": 125,
+    "nombre": "NEWBALANCE 530",
+    "marca": "NEW BALANCE",
+    "precio": 41500,
+    "foto": "https://d3l9wd8kivvlqy.cloudfront.net/c8a9b3c4-9c16-40d6-85e2-cabfb0ed3beb?w=500&h=500",
+    "talles": [
+      {
+        "talle": "34",
+        "stock": 0
+      },
+      {
+        "talle": "35",
+        "stock": 1
+      },
+      {
+        "talle": "36",
+        "stock": 0
+      },
+      {
+        "talle": "37",
+        "stock": 1
+      },
+      {
+        "talle": "38",
+        "stock": 1
+      },
+      {
+        "talle": "39",
+        "stock": 1
+      }
+    ],
+    "stockTotal": 4
+  },
+  {
+    "id": 126,
+    "nombre": "NEWBALANCE 530 AZUL",
+    "marca": "NEWBALANCE",
+    "precio": 0,
+    "foto": "https://d3l9wd8kivvlqy.cloudfront.net/6fc1b078-7ac6-4d8a-9ddf-f717a1562bfd?w=500&h=500",
+    "talles": [
+      {
+        "talle": "35",
+        "stock": 1
+      },
+      {
+        "talle": "36",
+        "stock": 2
+      },
+      {
+        "talle": "37",
+        "stock": 6
+      },
+      {
+        "talle": "38",
+        "stock": 3
+      },
+      {
+        "talle": "39",
+        "stock": 4
+      },
+      {
+        "talle": "40",
+        "stock": 2
+      }
+    ],
+    "stockTotal": 18
+  },
+  {
+    "id": 127,
+    "nombre": "NEWBALANCE 530 AZUL INFANTIL",
+    "marca": "NEW BALANCE",
+    "precio": 29000,
+    "foto": "https://d3l9wd8kivvlqy.cloudfront.net/9528ab96-4a3f-4f5a-a777-4f83bb2e5884?w=500&h=500",
+    "talles": [
+      {
+        "talle": "26",
+        "stock": 0
+      },
+      {
+        "talle": "27",
+        "stock": 0
+      },
+      {
+        "talle": "28",
+        "stock": 0
+      },
+      {
+        "talle": "29",
+        "stock": 0
+      },
+      {
+        "talle": "30",
+        "stock": 0
+      },
+      {
+        "talle": "31",
+        "stock": 0
+      },
+      {
+        "talle": "32",
+        "stock": 0
+      },
+      {
+        "talle": "33",
+        "stock": 0
+      }
+    ],
+    "stockTotal": 0
+  },
+  {
+    "id": 128,
+    "nombre": "NEWBALANCE 530 BEIGE",
+    "marca": "NEWBALANCE",
+    "precio": 41500,
+    "foto": "https://d3l9wd8kivvlqy.cloudfront.net/d3f754f9-c973-4ffa-8f50-c56ea326359c?w=500&h=500",
+    "talles": [
+      {
+        "talle": "44",
+        "stock": 1
+      }
+    ],
+    "stockTotal": 1
+  },
+  {
+    "id": 129,
+    "nombre": "NEWBALANCE 530 GRAFITO",
+    "marca": "NEWBALANCE",
+    "precio": 41500,
+    "foto": "https://d3l9wd8kivvlqy.cloudfront.net/09ea18a8-d3ff-4a7f-972e-9fe70b52b9e0?w=500&h=500",
+    "talles": [
+      {
+        "talle": "35",
+        "stock": 0
+      },
+      {
+        "talle": "36",
+        "stock": 1
+      },
+      {
+        "talle": "37",
+        "stock": 0
+      },
+      {
+        "talle": "38",
+        "stock": 0
+      },
+      {
+        "talle": "39",
+        "stock": 2
+      },
+      {
+        "talle": "40",
+        "stock": 2
+      },
+      {
+        "talle": "41",
+        "stock": 3
+      },
+      {
+        "talle": "42",
+        "stock": 2
+      },
+      {
+        "talle": "43",
+        "stock": 2
+      },
+      {
+        "talle": "44",
+        "stock": 1
+      }
+    ],
+    "stockTotal": 13
+  },
+  {
+    "id": 130,
+    "nombre": "NEWBALANCE 530 MARRON",
+    "marca": "NEWBALANCE",
+    "precio": 41500,
+    "foto": "https://d3l9wd8kivvlqy.cloudfront.net/0eee6f1a-de89-4a4a-8492-4f6760eda48e?w=500&h=500",
+    "talles": [
+      {
+        "talle": "38",
+        "stock": 0
+      },
+      {
+        "talle": "39",
+        "stock": 0
+      },
+      {
+        "talle": "40",
+        "stock": 0
+      },
+      {
+        "talle": "41",
+        "stock": 3
+      },
+      {
+        "talle": "42",
+        "stock": 2
+      },
+      {
+        "talle": "43",
+        "stock": 2
+      }
+    ],
+    "stockTotal": 7
+  },
+  {
+    "id": 131,
+    "nombre": "NEWBALANCE 530 NEGRA",
+    "marca": "NEWBALANCE",
+    "precio": 41500,
+    "foto": "https://d3l9wd8kivvlqy.cloudfront.net/e8e6c3a3-2fec-45df-8604-c4a93c1d637d?w=500&h=500",
+    "talles": [
+      {
+        "talle": "34",
+        "stock": 0
+      },
+      {
+        "talle": "35",
+        "stock": 0
+      },
+      {
+        "talle": "36",
+        "stock": 0
+      },
+      {
+        "talle": "37",
+        "stock": 2
+      },
+      {
+        "talle": "38",
+        "stock": 2
+      },
+      {
+        "talle": "39",
+        "stock": 0
+      }
+    ],
+    "stockTotal": 4
+  },
+  {
+    "id": 132,
+    "nombre": "NEWBALANCE 550 MARRON",
+    "marca": "NEW BALANCE",
+    "precio": 0,
+    "foto": "https://d3l9wd8kivvlqy.cloudfront.net/4ca9b5a5-bf27-483f-9652-0bb1e44cd90a?w=500&h=500",
+    "talles": [
+      {
+        "talle": "34",
+        "stock": 0
+      },
+      {
+        "talle": "35",
+        "stock": 1
+      },
+      {
+        "talle": "36",
+        "stock": 2
+      },
+      {
+        "talle": "37",
+        "stock": 0
+      },
+      {
+        "talle": "38",
+        "stock": 0
+      },
+      {
+        "talle": "39",
+        "stock": 0
+      }
+    ],
+    "stockTotal": 3
+  },
+  {
+    "id": 133,
+    "nombre": "NEWBALANCE 1000 AZUL",
+    "marca": "NEWBALANCE",
+    "precio": 0,
+    "foto": "https://d3l9wd8kivvlqy.cloudfront.net/1c2abbe1-916f-4141-921d-7bc16a00942b?w=500&h=500",
+    "talles": [
+      {
+        "talle": "35",
+        "stock": 0
+      },
+      {
+        "talle": "36",
+        "stock": 2
+      },
+      {
+        "talle": "37",
+        "stock": 3
+      },
+      {
+        "talle": "38",
+        "stock": 2
+      },
+      {
+        "talle": "39",
+        "stock": 0
+      },
+      {
+        "talle": "40",
+        "stock": 0
+      }
+    ],
+    "stockTotal": 7
+  },
+  {
+    "id": 134,
+    "nombre": "NEWBALANCE 1000 MARRON",
+    "marca": "NEWBALANCE",
+    "precio": 0,
+    "foto": "https://d3l9wd8kivvlqy.cloudfront.net/63fc9667-6dcd-40d6-8c01-77947d8d959a?w=500&h=500",
+    "talles": [
+      {
+        "talle": "35",
+        "stock": 1
+      },
+      {
+        "talle": "36",
+        "stock": 2
+      },
+      {
+        "talle": "37",
+        "stock": 0
+      },
+      {
+        "talle": "38",
+        "stock": 2
+      },
+      {
+        "talle": "39",
+        "stock": 0
+      },
+      {
+        "talle": "40",
+        "stock": 0
+      }
+    ],
+    "stockTotal": 5
+  },
+  {
+    "id": 135,
+    "nombre": "NEWBALANCE 1080",
+    "marca": "NEWBALANCE",
+    "precio": 0,
+    "foto": "https://d3l9wd8kivvlqy.cloudfront.net/9ed5b1be-e44e-4521-83f4-158e766afbe3?w=500&h=500",
+    "talles": [
+      {
+        "talle": "38",
+        "stock": 0
+      },
+      {
+        "talle": "39",
+        "stock": 1
+      },
+      {
+        "talle": "40",
+        "stock": 2
+      },
+      {
+        "talle": "41",
+        "stock": 0
+      },
+      {
+        "talle": "42",
+        "stock": 0
+      },
+      {
+        "talle": "43",
+        "stock": 0
+      }
+    ],
+    "stockTotal": 3
+  },
+  {
+    "id": 136,
+    "nombre": "NEWBALANCE 1080 NEGRA",
+    "marca": "NEWBALANCE",
+    "precio": 0,
+    "foto": "https://d3l9wd8kivvlqy.cloudfront.net/223e07ff-ca41-460d-9209-656bae74e3ea?w=500&h=500",
+    "talles": [
+      {
+        "talle": "38",
+        "stock": 1
+      },
+      {
+        "talle": "39",
+        "stock": 0
+      },
+      {
+        "talle": "40",
+        "stock": 0
+      },
+      {
+        "talle": "41",
+        "stock": 3
+      },
+      {
+        "talle": "42",
+        "stock": 0
+      },
+      {
+        "talle": "43",
+        "stock": 0
+      }
+    ],
+    "stockTotal": 4
+  },
+  {
+    "id": 137,
+    "nombre": "NEWBALANCE 2002R",
+    "marca": "NEWBALANCE",
+    "precio": 0,
+    "foto": "https://d3l9wd8kivvlqy.cloudfront.net/cc3bb024-fb18-4aca-9b02-7f6ca59ac5ac?w=500&h=500",
+    "talles": [
+      {
+        "talle": "38",
+        "stock": 0
+      },
+      {
+        "talle": "39",
+        "stock": 1
+      },
+      {
+        "talle": "40",
+        "stock": 0
+      },
+      {
+        "talle": "41",
+        "stock": 0
+      },
+      {
+        "talle": "42",
+        "stock": 0
+      },
+      {
+        "talle": "43",
+        "stock": 0
+      }
+    ],
+    "stockTotal": 1
+  },
+  {
+    "id": 138,
+    "nombre": "NEWBALANCE 9060 BCO/GRIS",
+    "marca": "NEWBALANCE",
+    "precio": 0,
+    "foto": "https://d3l9wd8kivvlqy.cloudfront.net/3eedc71a-d956-41b0-b90c-985a66f7df23?w=500&h=500",
+    "talles": [
+      {
+        "talle": "34",
+        "stock": 1
+      },
+      {
+        "talle": "35",
+        "stock": 0
+      },
+      {
+        "talle": "36",
+        "stock": 0
+      },
+      {
+        "talle": "37",
+        "stock": 0
+      },
+      {
+        "talle": "38",
+        "stock": 0
+      },
+      {
+        "talle": "39",
+        "stock": 0
+      }
+    ],
+    "stockTotal": 1
+  },
+  {
+    "id": 139,
+    "nombre": "NEWBALANCE 9060 BROWN",
+    "marca": "NEW BALANCE",
+    "precio": 43500,
+    "foto": "https://d3l9wd8kivvlqy.cloudfront.net/f4f9bacb-ee22-43a3-9520-932645582251?w=500&h=500",
+    "talles": [
+      {
+        "talle": "34",
+        "stock": 1
+      },
+      {
+        "talle": "35",
+        "stock": 0
+      },
+      {
+        "talle": "36",
+        "stock": 0
+      },
+      {
+        "talle": "37",
+        "stock": 0
+      },
+      {
+        "talle": "38",
+        "stock": 0
+      },
+      {
+        "talle": "39",
+        "stock": 0
+      }
+    ],
+    "stockTotal": 1
+  },
+  {
+    "id": 140,
+    "nombre": "NEWBALANCE 9060 MARRÓN",
+    "marca": "NEWBALANCE",
+    "precio": 43500,
+    "foto": "https://d3l9wd8kivvlqy.cloudfront.net/1a72f2bf-102d-457f-a1fa-4203e7c91385?w=500&h=500",
+    "talles": [
+      {
+        "talle": "34",
+        "stock": 2
+      },
+      {
+        "talle": "35",
+        "stock": 2
+      },
+      {
+        "talle": "36",
+        "stock": 3
+      },
+      {
+        "talle": "37",
+        "stock": 0
+      },
+      {
+        "talle": "38",
+        "stock": 0
+      },
+      {
+        "talle": "39",
+        "stock": 0
+      }
+    ],
+    "stockTotal": 7
+  },
+  {
+    "id": 141,
+    "nombre": "NEWBALANCE 9060 NEGRA",
+    "marca": "NEWBALANCE",
+    "precio": 43500,
+    "foto": "https://d3l9wd8kivvlqy.cloudfront.net/8c8006d4-6450-4121-8af7-c14457edf40c?w=500&h=500",
+    "talles": [
+      {
+        "talle": "34",
+        "stock": 1
+      },
+      {
+        "talle": "35",
+        "stock": 0
+      },
+      {
+        "talle": "36",
+        "stock": 3
+      },
+      {
+        "talle": "37",
+        "stock": 1
+      },
+      {
+        "talle": "38",
+        "stock": 0
+      },
+      {
+        "talle": "39",
+        "stock": 1
+      }
+    ],
+    "stockTotal": 6
+  },
+  {
+    "id": 142,
+    "nombre": "NEWBALANCE 9060 NEGRA/BLANCO",
+    "marca": "NEWBALANCE",
+    "precio": 43500,
+    "foto": "https://d3l9wd8kivvlqy.cloudfront.net/09971be9-5eac-4631-8de1-20403a520db9?w=500&h=500",
+    "talles": [
+      {
+        "talle": "34",
+        "stock": 2
+      },
+      {
+        "talle": "35",
+        "stock": 3
+      },
+      {
+        "talle": "36",
+        "stock": 3
+      },
+      {
+        "talle": "37",
+        "stock": 1
+      },
+      {
+        "talle": "38",
+        "stock": 2
+      },
+      {
+        "talle": "39",
+        "stock": 1
+      }
+    ],
+    "stockTotal": 12
+  },
+  {
+    "id": 143,
+    "nombre": "NIKE AF1 GLOW",
+    "marca": "NIKE",
+    "precio": 0,
+    "foto": "https://d3l9wd8kivvlqy.cloudfront.net/f6c38032-2339-40af-ba60-837235ffd3a8?w=500&h=500",
+    "talles": [
+      {
+        "talle": "34",
+        "stock": 0
+      },
+      {
+        "talle": "35",
+        "stock": 0
+      },
+      {
+        "talle": "36",
+        "stock": 0
+      },
+      {
+        "talle": "37",
+        "stock": 1
+      },
+      {
+        "talle": "38",
+        "stock": 0
+      },
+      {
+        "talle": "39",
+        "stock": 0
+      }
+    ],
+    "stockTotal": 1
+  },
+  {
+    "id": 144,
+    "nombre": "NIKE AIR BEIGE",
+    "marca": "NIKE",
+    "precio": 0,
+    "foto": "https://d3l9wd8kivvlqy.cloudfront.net/c7175022-32c7-4a06-88b1-a2905aa4b92e?w=500&h=500",
+    "talles": [
+      {
+        "talle": "34",
+        "stock": 0
+      },
+      {
+        "talle": "35",
+        "stock": 1
+      },
+      {
+        "talle": "36",
+        "stock": 2
+      },
+      {
+        "talle": "37",
+        "stock": 0
+      },
+      {
+        "talle": "38",
+        "stock": 0
+      },
+      {
+        "talle": "39",
+        "stock": 0
+      }
+    ],
+    "stockTotal": 3
+  },
+  {
+    "id": 145,
+    "nombre": "NIKE AIR DN SUB",
+    "marca": "NIKE",
+    "precio": 0,
+    "foto": "https://d3l9wd8kivvlqy.cloudfront.net/f2dc7b6e-9722-4304-922d-b073124d33c2?w=500&h=500",
+    "talles": [
+      {
+        "talle": "39",
+        "stock": 0
+      },
+      {
+        "talle": "40",
+        "stock": 0
+      }
+    ],
+    "stockTotal": 0
+  },
+  {
+    "id": 146,
+    "nombre": "NIKE AIR FORCE 1",
+    "marca": "NIKE",
+    "precio": 34500,
+    "foto": "https://d3l9wd8kivvlqy.cloudfront.net/c2495cf4-8e86-4ef9-8de1-5fa4d166b110?w=500&h=500",
+    "talles": [
+      {
+        "talle": "38",
+        "stock": 0
+      },
+      {
+        "talle": "39",
+        "stock": 0
+      },
+      {
+        "talle": "40",
+        "stock": 0
+      },
+      {
+        "talle": "41",
+        "stock": 0
+      },
+      {
+        "talle": "42",
+        "stock": 0
+      },
+      {
+        "talle": "43",
+        "stock": 0
+      }
+    ],
+    "stockTotal": 0
+  },
+  {
+    "id": 147,
+    "nombre": "NIKE AIR FORCE 1 BLANCAS",
+    "marca": "NIKE",
+    "precio": 0,
+    "foto": "https://d3l9wd8kivvlqy.cloudfront.net/633691f0-dcfb-4bcb-9016-3fdfbbf6d1c4?w=500&h=500",
+    "talles": [
+      {
+        "talle": "34",
+        "stock": 1
+      },
+      {
+        "talle": "35",
+        "stock": 1
+      },
+      {
+        "talle": "36",
+        "stock": 3
+      },
+      {
+        "talle": "37",
+        "stock": 3
+      },
+      {
+        "talle": "38",
+        "stock": 5
+      },
+      {
+        "talle": "39",
+        "stock": 3
+      },
+      {
+        "talle": "40",
+        "stock": 3
+      },
+      {
+        "talle": "41",
+        "stock": 4
+      },
+      {
+        "talle": "42",
+        "stock": 4
+      },
+      {
+        "talle": "43",
+        "stock": 3
+      }
+    ],
+    "stockTotal": 30
+  },
+  {
+    "id": 148,
+    "nombre": "NIKE AIR FORCE 1 CREMA",
+    "marca": "NIKE",
+    "precio": 0,
+    "foto": "https://d3l9wd8kivvlqy.cloudfront.net/20d5e41e-9203-4ae4-a1f1-a48e908746d0?w=500&h=500",
+    "talles": [
+      {
+        "talle": "",
+        "stock": 0
+      }
+    ],
+    "stockTotal": 0
+  },
+  {
+    "id": 149,
+    "nombre": "NIKE AIR FORCE 1 NEGRA",
+    "marca": "NIKE",
+    "precio": 0,
+    "foto": "https://d3l9wd8kivvlqy.cloudfront.net/db8328bb-1857-4f77-b5ea-b1d28306d533?w=500&h=500",
+    "talles": [
+      {
+        "talle": "34",
+        "stock": 1
+      },
+      {
+        "talle": "35",
+        "stock": 4
+      },
+      {
+        "talle": "36",
+        "stock": 0
+      },
+      {
+        "talle": "37",
+        "stock": 0
+      },
+      {
+        "talle": "38",
+        "stock": 0
+      },
+      {
+        "talle": "39",
+        "stock": 0
+      },
+      {
+        "talle": "40",
+        "stock": 0
+      },
+      {
+        "talle": "41",
+        "stock": 1
+      },
+      {
+        "talle": "42",
+        "stock": 1
+      },
+      {
+        "talle": "43",
+        "stock": 0
+      }
+    ],
+    "stockTotal": 7
+  },
+  {
+    "id": 150,
+    "nombre": "NIKE AIR FORCE ROSE",
+    "marca": "NIKE",
+    "precio": 0,
+    "foto": "https://d3l9wd8kivvlqy.cloudfront.net/3fb964d8-c775-46ff-9b3e-6ff0837d4a85?w=500&h=500",
+    "talles": [
+      {
+        "talle": "34",
+        "stock": 1
+      },
+      {
+        "talle": "35",
+        "stock": 1
+      },
+      {
+        "talle": "36",
+        "stock": 1
+      },
+      {
+        "talle": "37",
+        "stock": 3
+      },
+      {
+        "talle": "38",
+        "stock": 2
+      },
+      {
+        "talle": "39",
+        "stock": 1
+      }
+    ],
+    "stockTotal": 9
+  },
+  {
+    "id": 151,
+    "nombre": "NIKE AIR GRIS",
+    "marca": "NIKE",
+    "precio": 0,
+    "foto": "https://d3l9wd8kivvlqy.cloudfront.net/3037dccb-3c13-4dab-af8d-9d0b683b7d58?w=500&h=500",
+    "talles": [
+      {
+        "talle": "34",
+        "stock": 0
+      },
+      {
+        "talle": "35",
+        "stock": 2
+      },
+      {
+        "talle": "36",
+        "stock": 2
+      },
+      {
+        "talle": "37",
+        "stock": 0
+      },
+      {
+        "talle": "38",
+        "stock": 1
+      },
+      {
+        "talle": "39",
+        "stock": 0
+      }
+    ],
+    "stockTotal": 5
+  },
+  {
+    "id": 152,
+    "nombre": "NIKE AIR TN NEGRA/BLANCO PREMIUM",
+    "marca": "NIKE",
+    "precio": 0,
+    "foto": "https://d3l9wd8kivvlqy.cloudfront.net/8ea52bb2-431d-482e-916f-3a9b856e555f?w=500&h=500",
+    "talles": [
+      {
+        "talle": "38",
+        "stock": 0
+      },
+      {
+        "talle": "39",
+        "stock": 3
+      },
+      {
+        "talle": "40",
+        "stock": 0
+      },
+      {
+        "talle": "41",
+        "stock": 0
+      },
+      {
+        "talle": "42",
+        "stock": 0
+      },
+      {
+        "talle": "43",
+        "stock": 0
+      }
+    ],
+    "stockTotal": 3
+  },
+  {
+    "id": 153,
+    "nombre": "NIKE DN NEGRA/ROSA",
+    "marca": "NIKE",
+    "precio": 0,
+    "foto": "https://d3l9wd8kivvlqy.cloudfront.net/b4b114f3-6c8d-4fef-9d6e-d9d6be630d3c?w=500&h=500",
+    "talles": [
+      {
+        "talle": "35",
+        "stock": 1
+      },
+      {
+        "talle": "36",
+        "stock": 0
+      },
+      {
+        "talle": "37",
+        "stock": 0
+      },
+      {
+        "talle": "38",
+        "stock": 1
+      },
+      {
+        "talle": "39",
+        "stock": 2
+      },
+      {
+        "talle": "40",
+        "stock": 0
+      }
+    ],
+    "stockTotal": 4
+  },
+  {
+    "id": 154,
+    "nombre": "NIKE DN8 BEIGE",
+    "marca": "NIKE",
+    "precio": 0,
+    "foto": "https://d3l9wd8kivvlqy.cloudfront.net/7771dbe9-d407-4bdc-9d6d-842d129666d2?w=500&h=500",
+    "talles": [
+      {
+        "talle": "35",
+        "stock": 1
+      },
+      {
+        "talle": "36",
+        "stock": 2
+      },
+      {
+        "talle": "37",
+        "stock": 3
+      },
+      {
+        "talle": "38",
+        "stock": 1
+      },
+      {
+        "talle": "39",
+        "stock": 0
+      },
+      {
+        "talle": "40",
+        "stock": 0
+      }
+    ],
+    "stockTotal": 7
+  },
+  {
+    "id": 155,
+    "nombre": "NIKE DN8 BLANCAS/NEGRA",
+    "marca": "NIKE",
+    "precio": 0,
+    "foto": "https://d3l9wd8kivvlqy.cloudfront.net/177d6850-4207-41dc-b7da-c21bc936c28b?w=500&h=500",
+    "talles": [
+      {
+        "talle": "38",
+        "stock": 0
+      },
+      {
+        "talle": "39",
+        "stock": 0
+      },
+      {
+        "talle": "40",
+        "stock": 0
+      },
+      {
+        "talle": "41",
+        "stock": 0
+      },
+      {
+        "talle": "42",
+        "stock": 0
+      },
+      {
+        "talle": "43",
+        "stock": 1
+      }
+    ],
+    "stockTotal": 1
+  },
+  {
+    "id": 156,
+    "nombre": "NIKE DN8 NEGRA/ROJA",
+    "marca": "NIKE",
+    "precio": 0,
+    "foto": "https://d3l9wd8kivvlqy.cloudfront.net/b4d08064-6f8f-4a45-a7a6-db5ac8ac7be0?w=500&h=500",
+    "talles": [
+      {
+        "talle": "38",
+        "stock": 1
+      },
+      {
+        "talle": "39",
+        "stock": 0
+      },
+      {
+        "talle": "40",
+        "stock": 4
+      },
+      {
+        "talle": "41",
+        "stock": 3
+      },
+      {
+        "talle": "42",
+        "stock": 0
+      },
+      {
+        "talle": "43",
+        "stock": 1
+      }
+    ],
+    "stockTotal": 9
+  },
+  {
+    "id": 157,
+    "nombre": "NIKE DN8 ROSÉ",
+    "marca": "NIKE",
+    "precio": 0,
+    "foto": "https://d3l9wd8kivvlqy.cloudfront.net/61f436ed-8ebe-488b-b60f-96ded5ef9448?w=500&h=500",
+    "talles": [
+      {
+        "talle": "34",
+        "stock": 0
+      },
+      {
+        "talle": "35",
+        "stock": 2
+      },
+      {
+        "talle": "36",
+        "stock": 1
+      },
+      {
+        "talle": "37",
+        "stock": 0
+      },
+      {
+        "talle": "38",
+        "stock": 0
+      },
+      {
+        "talle": "39",
+        "stock": 0
+      }
+    ],
+    "stockTotal": 3
+  },
+  {
+    "id": 158,
+    "nombre": "NIKE MIND 001 BEIGE",
+    "marca": "NIKE",
+    "precio": 0,
+    "foto": "https://d3l9wd8kivvlqy.cloudfront.net/08f4e4cf-8d9a-424c-91cf-c50c167c4bd0?w=500&h=500",
+    "talles": [
+      {
+        "talle": "38/39",
+        "stock": 0
+      },
+      {
+        "talle": "40/41",
+        "stock": 2
+      },
+      {
+        "talle": "42/43",
+        "stock": 1
+      }
+    ],
+    "stockTotal": 3
+  },
+  {
+    "id": 159,
+    "nombre": "NIKE MIND 001 BLANCAS",
+    "marca": "NIKE",
+    "precio": 0,
+    "foto": "https://d3l9wd8kivvlqy.cloudfront.net/d5c20c02-6555-4ee9-9c90-f71a73cdb62c?w=500&h=500",
+    "talles": [
+      {
+        "talle": "38/39",
+        "stock": 0
+      },
+      {
+        "talle": "40/41",
+        "stock": 4
+      },
+      {
+        "talle": "42/43",
+        "stock": 2
+      }
+    ],
+    "stockTotal": 6
+  },
+  {
+    "id": 160,
+    "nombre": "NIKE MIND 001 GRIS",
+    "marca": "NIKE",
+    "precio": 0,
+    "foto": "https://d3l9wd8kivvlqy.cloudfront.net/db6581f2-b40b-4d95-bee4-48ca943fa501?w=500&h=500",
+    "talles": [
+      {
+        "talle": "38/39",
+        "stock": 0
+      },
+      {
+        "talle": "40/41",
+        "stock": 5
+      },
+      {
+        "talle": "42/43",
+        "stock": 2
+      }
+    ],
+    "stockTotal": 7
+  },
+  {
+    "id": 161,
+    "nombre": "NIKE MIND 001 NEGRA",
+    "marca": "NIKE",
+    "precio": 0,
+    "foto": "https://d3l9wd8kivvlqy.cloudfront.net/06e552be-286e-4446-84fb-30d5ae110b14?w=500&h=500",
+    "talles": [
+      {
+        "talle": "38/39",
+        "stock": 0
+      },
+      {
+        "talle": "40/41",
+        "stock": 2
+      },
+      {
+        "talle": "42/43",
+        "stock": 0
+      }
+    ],
+    "stockTotal": 2
+  },
+  {
+    "id": 162,
+    "nombre": "NIKE SHOX R4 TOTAL BLACK",
+    "marca": "NIKE",
+    "precio": 0,
+    "foto": "https://d3l9wd8kivvlqy.cloudfront.net/8468fef6-885d-4071-979e-bc485a05a1e1?w=500&h=500",
+    "talles": [
+      {
+        "talle": "38",
+        "stock": 1
+      },
+      {
+        "talle": "39",
+        "stock": 2
+      },
+      {
+        "talle": "40",
+        "stock": 1
+      },
+      {
+        "talle": "41",
+        "stock": 2
+      },
+      {
+        "talle": "42",
+        "stock": 2
+      },
+      {
+        "talle": "43",
+        "stock": 0
+      }
+    ],
+    "stockTotal": 8
+  },
+  {
+    "id": 163,
+    "nombre": "NIKE TN BLACK",
+    "marca": "NIKE",
+    "precio": 0,
+    "foto": "https://d3l9wd8kivvlqy.cloudfront.net/6f125474-1ab7-4af6-b39a-a15c9db4eaf3?w=500&h=500",
+    "talles": [
+      {
+        "talle": "38",
+        "stock": 0
+      },
+      {
+        "talle": "39",
+        "stock": 3
+      },
+      {
+        "talle": "40",
+        "stock": 2
+      },
+      {
+        "talle": "41",
+        "stock": 2
+      },
+      {
+        "talle": "42",
+        "stock": 1
+      },
+      {
+        "talle": "43",
+        "stock": 1
+      }
+    ],
+    "stockTotal": 9
+  },
+  {
+    "id": 164,
+    "nombre": "NIKE TN NEGRA/BLANCO",
+    "marca": "NIKE",
+    "precio": 0,
+    "foto": "https://d3l9wd8kivvlqy.cloudfront.net/66b8f1ca-d0e0-4b8b-9dae-527f3db8f465?w=500&h=500",
+    "talles": [
+      {
+        "talle": "38",
+        "stock": 0
+      },
+      {
+        "talle": "39",
+        "stock": 2
+      },
+      {
+        "talle": "40",
+        "stock": 3
+      },
+      {
+        "talle": "41",
+        "stock": 8
+      },
+      {
+        "talle": "42",
+        "stock": 0
+      },
+      {
+        "talle": "43",
+        "stock": 0
+      }
+    ],
+    "stockTotal": 13
+  },
+  {
+    "id": 165,
+    "nombre": "NIKE V5 RNR",
+    "marca": "NIKE",
+    "precio": 0,
+    "foto": "https://d3l9wd8kivvlqy.cloudfront.net/6c77f655-576c-4ff3-989c-830507fe33a3?w=500&h=500",
+    "talles": [
+      {
+        "talle": "35",
+        "stock": 0
+      },
+      {
+        "talle": "36",
+        "stock": 0
+      },
+      {
+        "talle": "37",
+        "stock": 0
+      },
+      {
+        "talle": "38",
+        "stock": 0
+      },
+      {
+        "talle": "39",
+        "stock": 2
+      },
+      {
+        "talle": "40",
+        "stock": 1
+      }
+    ],
+    "stockTotal": 3
+  },
+  {
+    "id": 166,
+    "nombre": "NIKE V5 RNR BLACK",
+    "marca": "NIKE",
+    "precio": 0,
+    "foto": "https://d3l9wd8kivvlqy.cloudfront.net/c23fe337-5112-4341-b939-10b6e35b6744?w=500&h=500",
+    "talles": [
+      {
+        "talle": "38",
+        "stock": 0
+      },
+      {
+        "talle": "39",
+        "stock": 0
+      },
+      {
+        "talle": "40",
+        "stock": 0
+      },
+      {
+        "talle": "41",
+        "stock": 0
+      },
+      {
+        "talle": "42",
+        "stock": 0
+      },
+      {
+        "talle": "43",
+        "stock": 0
+      }
+    ],
+    "stockTotal": 0
+  },
+  {
+    "id": 167,
+    "nombre": "OJOTA ADIDAS ABROJO AZUL",
+    "marca": "ADIDAS",
+    "precio": 18000,
+    "foto": "https://d3l9wd8kivvlqy.cloudfront.net/a95e956e-6a4a-404d-b4e2-1ee7e33629a3?w=500&h=500",
+    "talles": [
+      {
+        "talle": "38/39",
+        "stock": 8
+      },
+      {
+        "talle": "40/41",
+        "stock": 16
+      },
+      {
+        "talle": "42/43",
+        "stock": 0
+      }
+    ],
+    "stockTotal": 24
+  },
+  {
+    "id": 168,
+    "nombre": "OJOTA ADIDAS ABROJO BEIGE",
+    "marca": "ADIDAS",
+    "precio": 18000,
+    "foto": "https://d3l9wd8kivvlqy.cloudfront.net/e11ad13c-411e-4af1-a3ea-fd6a19441bbf?w=500&h=500",
+    "talles": [
+      {
+        "talle": "38/39",
+        "stock": 5
+      },
+      {
+        "talle": "40/41",
+        "stock": 13
+      },
+      {
+        "talle": "42/43",
+        "stock": 6
+      }
+    ],
+    "stockTotal": 24
+  },
+  {
+    "id": 169,
+    "nombre": "OJOTA ADIDAS ABROJO CLASICAS",
+    "marca": "ADIDAS",
+    "precio": 18000,
+    "foto": "https://d3l9wd8kivvlqy.cloudfront.net/7dca69f2-c57d-4c4d-8a02-55dc636e47b0?w=500&h=500",
+    "talles": [
+      {
+        "talle": "38/39",
+        "stock": 6
+      },
+      {
+        "talle": "40/41",
+        "stock": 11
+      },
+      {
+        "talle": "42/43",
+        "stock": 0
+      }
+    ],
+    "stockTotal": 17
+  },
+  {
+    "id": 170,
+    "nombre": "OJOTA ADIDAS ABROJO NEGRA/ROSA",
+    "marca": "ADIDAS",
+    "precio": 18000,
+    "foto": "https://d3l9wd8kivvlqy.cloudfront.net/53e4b761-7322-479c-97b3-8b7d5c035223?w=500&h=500",
+    "talles": [
+      {
+        "talle": "34/35",
+        "stock": 4
+      },
+      {
+        "talle": "36/37",
+        "stock": 2
+      },
+      {
+        "talle": "38/39",
+        "stock": 2
+      }
+    ],
+    "stockTotal": 8
+  },
+  {
+    "id": 171,
+    "nombre": "OJOTA ADIDAS BEIGE",
+    "marca": "ADIDAS",
+    "precio": 16000,
+    "foto": "https://d3l9wd8kivvlqy.cloudfront.net/0d454e80-316c-493c-92f7-4b4fa8703d47?w=500&h=500",
+    "talles": [
+      {
+        "talle": "34/35",
+        "stock": 2
+      },
+      {
+        "talle": "36/37",
+        "stock": 7
+      },
+      {
+        "talle": "38/39",
+        "stock": 8
+      },
+      {
+        "talle": "40/41",
+        "stock": 9
+      },
+      {
+        "talle": "42/43",
+        "stock": 4
+      }
+    ],
+    "stockTotal": 30
+  },
+  {
+    "id": 172,
+    "nombre": "OJOTA ADIDAS BLANCA",
+    "marca": "ADIDAS",
+    "precio": 16000,
+    "foto": "https://d3l9wd8kivvlqy.cloudfront.net/74ea642c-6af2-4d83-9588-23d136e05cf5?w=500&h=500",
+    "talles": [
+      {
+        "talle": "38/39",
+        "stock": 0
+      },
+      {
+        "talle": "40/41",
+        "stock": 0
+      },
+      {
+        "talle": "42/43",
+        "stock": 0
+      }
+    ],
+    "stockTotal": 0
+  },
+  {
+    "id": 173,
+    "nombre": "OJOTA ADIDAS FUCSIA",
+    "marca": "ADIDAS",
+    "precio": 16000,
+    "foto": "https://d3l9wd8kivvlqy.cloudfront.net/26c8ba95-b768-4708-a2ac-1b250331f883?w=500&h=500",
+    "talles": [
+      {
+        "talle": "34/35",
+        "stock": 6
+      },
+      {
+        "talle": "36/37",
+        "stock": 16
+      },
+      {
+        "talle": "38/39",
+        "stock": 0
+      }
+    ],
+    "stockTotal": 22
+  },
+  {
+    "id": 174,
+    "nombre": "OJOTA ADIDAS GOLD",
+    "marca": "ADIDAS",
+    "precio": 16000,
+    "foto": "https://d3l9wd8kivvlqy.cloudfront.net/117d0c7d-a256-4d31-af7a-e17fe4c231ab?w=500&h=500",
+    "talles": [
+      {
+        "talle": "34/35",
+        "stock": 2
+      },
+      {
+        "talle": "36/37",
+        "stock": 11
+      },
+      {
+        "talle": "38/39",
+        "stock": 5
+      }
+    ],
+    "stockTotal": 18
+  },
+  {
+    "id": 175,
+    "nombre": "OJOTA NIKE ABROJO BEIGE/NEGRA",
+    "marca": "NIKE",
+    "precio": 18000,
+    "foto": "https://d3l9wd8kivvlqy.cloudfront.net/4465a5a2-5eb8-48d8-8efe-14904ec66d57?w=500&h=500",
+    "talles": [
+      {
+        "talle": "38/39",
+        "stock": 8
+      },
+      {
+        "talle": "40/41",
+        "stock": 12
+      },
+      {
+        "talle": "42/43",
+        "stock": 6
+      }
+    ],
+    "stockTotal": 26
+  },
+  {
+    "id": 176,
+    "nombre": "OJOTA NIKE ABROJO BEIGE/ROJO",
+    "marca": "NIKE",
+    "precio": 18000,
+    "foto": "https://d3l9wd8kivvlqy.cloudfront.net/722e4a27-0807-4b4a-9fd5-044940af850b?w=500&h=500",
+    "talles": [
+      {
+        "talle": "38/39",
+        "stock": 1
+      },
+      {
+        "talle": "40/41",
+        "stock": 1
+      },
+      {
+        "talle": "42/43",
+        "stock": 0
+      }
+    ],
+    "stockTotal": 2
+  },
+  {
+    "id": 177,
+    "nombre": "OJOTA NIKE ABROJO NEGRA/BLANCO",
+    "marca": "NIKE",
+    "precio": 18000,
+    "foto": "https://d3l9wd8kivvlqy.cloudfront.net/7558ac3b-771e-473d-ad42-4787839bacb1?w=500&h=500",
+    "talles": [
+      {
+        "talle": "38/39",
+        "stock": 4
+      },
+      {
+        "talle": "40/41",
+        "stock": 5
+      },
+      {
+        "talle": "42/43",
+        "stock": 0
+      }
+    ],
+    "stockTotal": 9
+  },
+  {
+    "id": 178,
+    "nombre": "OJOTA NIKE ABROJO NEGRA/ROJA",
+    "marca": "NIKE",
+    "precio": 18000,
+    "foto": "https://d3l9wd8kivvlqy.cloudfront.net/18f194d8-b23d-4e61-a1b6-7804d72e67f4?w=500&h=500",
+    "talles": [
+      {
+        "talle": "38/39",
+        "stock": 10
+      },
+      {
+        "talle": "40/41",
+        "stock": 20
+      },
+      {
+        "talle": "42/43",
+        "stock": 3
+      }
+    ],
+    "stockTotal": 33
+  },
+  {
+    "id": 179,
+    "nombre": "OJOTA NIKE AIR BEIGE",
+    "marca": "NIKE",
+    "precio": 16000,
+    "foto": "https://d3l9wd8kivvlqy.cloudfront.net/347c8568-56a3-496e-bfa3-87a8cb8aa247?w=500&h=500",
+    "talles": [
+      {
+        "talle": "38/39",
+        "stock": 8
+      },
+      {
+        "talle": "40/41",
+        "stock": 15
+      },
+      {
+        "talle": "42/43",
+        "stock": 2
+      }
+    ],
+    "stockTotal": 25
+  },
+  {
+    "id": 180,
+    "nombre": "OJOTA NIKE BLACK",
+    "marca": "NIKE",
+    "precio": 16000,
+    "foto": "https://d3l9wd8kivvlqy.cloudfront.net/c18f12bb-4a2b-4262-8625-c48639b6aed7?w=500&h=500",
+    "talles": [
+      {
+        "talle": "34/35",
+        "stock": 0
+      },
+      {
+        "talle": "36/37",
+        "stock": 0
+      },
+      {
+        "talle": "38/39",
+        "stock": 0
+      }
+    ],
+    "stockTotal": 0
+  },
+  {
+    "id": 181,
+    "nombre": "OJOTA NIKE JUST DO IT",
+    "marca": "",
+    "precio": 16000,
+    "foto": "https://d3l9wd8kivvlqy.cloudfront.net/a070d333-8b1c-4434-b880-cd478cbe2cfa?w=500&h=500",
+    "talles": [
+      {
+        "talle": "38/39",
+        "stock": 6
+      },
+      {
+        "talle": "40/41",
+        "stock": 11
+      },
+      {
+        "talle": "42/43",
+        "stock": 1
+      }
+    ],
+    "stockTotal": 18
+  },
+  {
+    "id": 182,
+    "nombre": "ON CLOUD BEIGE",
+    "marca": "ON CLOUD",
+    "precio": 36500,
+    "foto": "https://d3l9wd8kivvlqy.cloudfront.net/b3f912fa-50d7-4b2b-b2f8-9e010acaf2f2?w=500&h=500",
+    "talles": [
+      {
+        "talle": "34",
+        "stock": 0
+      },
+      {
+        "talle": "35",
+        "stock": 1
+      },
+      {
+        "talle": "36",
+        "stock": 0
+      },
+      {
+        "talle": "37",
+        "stock": 0
+      },
+      {
+        "talle": "38",
+        "stock": 0
+      },
+      {
+        "talle": "39",
+        "stock": 0
+      }
+    ],
+    "stockTotal": 1
+  },
+  {
+    "id": 183,
+    "nombre": "ON CLOUD NEGRA",
+    "marca": "ON CLOUD",
+    "precio": 36500,
+    "foto": "https://d3l9wd8kivvlqy.cloudfront.net/86962039-5ba2-4c97-b6f2-5fc59c974343?w=500&h=500",
+    "talles": [
+      {
+        "talle": "34",
+        "stock": 1
+      },
+      {
+        "talle": "35",
+        "stock": 0
+      },
+      {
+        "talle": "36",
+        "stock": 2
+      },
+      {
+        "talle": "37",
+        "stock": 0
+      },
+      {
+        "talle": "38",
+        "stock": 1
+      },
+      {
+        "talle": "39",
+        "stock": 0
+      }
+    ],
+    "stockTotal": 4
+  },
+  {
+    "id": 184,
+    "nombre": "P6000 BEIGE",
+    "marca": "NIKE",
+    "precio": 0,
+    "foto": "https://d3l9wd8kivvlqy.cloudfront.net/7e7bf71a-f105-4c77-b957-54c3cd111f66?w=500&h=500",
+    "talles": [
+      {
+        "talle": "34",
+        "stock": 0
+      },
+      {
+        "talle": "35",
+        "stock": 0
+      },
+      {
+        "talle": "36",
+        "stock": 0
+      },
+      {
+        "talle": "37",
+        "stock": 0
+      },
+      {
+        "talle": "38",
+        "stock": 0
+      },
+      {
+        "talle": "39",
+        "stock": 0
+      }
+    ],
+    "stockTotal": 0
+  },
+  {
+    "id": 185,
+    "nombre": "P6000 NEGRAS",
+    "marca": "NIKE",
+    "precio": 0,
+    "foto": "https://d3l9wd8kivvlqy.cloudfront.net/b8a0d17f-1ebd-4e5d-aca1-35f8899c6f06?w=500&h=500",
+    "talles": [
+      {
+        "talle": "34",
+        "stock": 1
+      },
+      {
+        "talle": "35",
+        "stock": 2
+      },
+      {
+        "talle": "36",
+        "stock": 0
+      },
+      {
+        "talle": "37",
+        "stock": 0
+      },
+      {
+        "talle": "38",
+        "stock": 0
+      },
+      {
+        "talle": "39",
+        "stock": 0
+      }
+    ],
+    "stockTotal": 3
+  },
+  {
+    "id": 186,
+    "nombre": "PEAGASUS NEGRA/BLANCO",
+    "marca": "NIKE",
+    "precio": 0,
+    "foto": "https://d3l9wd8kivvlqy.cloudfront.net/edd46b37-8ca8-45c3-a14a-5c8dce1df07c?w=500&h=500",
+    "talles": [
+      {
+        "talle": "38",
+        "stock": 0
+      },
+      {
+        "talle": "40",
+        "stock": 0
+      },
+      {
+        "talle": "42",
+        "stock": 0
+      },
+      {
+        "talle": "43",
+        "stock": 0
+      }
+    ],
+    "stockTotal": 0
+  },
+  {
+    "id": 187,
+    "nombre": "PEGASUS AZUL MARINO",
+    "marca": "NIKE",
+    "precio": 32000,
+    "foto": "https://d3l9wd8kivvlqy.cloudfront.net/136ed357-1ede-4997-9710-7ad13f3fbd70?w=500&h=500",
+    "talles": [
+      {
+        "talle": "38",
+        "stock": 0
+      },
+      {
+        "talle": "39",
+        "stock": 0
+      },
+      {
+        "talle": "40",
+        "stock": 0
+      },
+      {
+        "talle": "41",
+        "stock": 0
+      },
+      {
+        "talle": "42",
+        "stock": 0
+      },
+      {
+        "talle": "43",
+        "stock": 0
+      }
+    ],
+    "stockTotal": 0
+  },
+  {
+    "id": 188,
+    "nombre": "PEGASUS BLACK",
+    "marca": "NIKE",
+    "precio": 32000,
+    "foto": "https://d3l9wd8kivvlqy.cloudfront.net/384ab565-d3f1-4a92-aed5-5ba54d9efff3?w=500&h=500",
+    "talles": [
+      {
+        "talle": "38",
+        "stock": 0
+      },
+      {
+        "talle": "39",
+        "stock": 0
+      },
+      {
+        "talle": "40",
+        "stock": 0
+      },
+      {
+        "talle": "41",
+        "stock": 0
+      },
+      {
+        "talle": "42",
+        "stock": 0
+      },
+      {
+        "talle": "43",
+        "stock": 0
+      }
+    ],
+    "stockTotal": 0
+  },
+  {
+    "id": 189,
+    "nombre": "PEGASUS BLANCA/VERDE",
+    "marca": "NIKE",
+    "precio": 32000,
+    "foto": "https://d3l9wd8kivvlqy.cloudfront.net/9178c647-14c3-4a25-86d9-e123f87f668f?w=500&h=500",
+    "talles": [
+      {
+        "talle": "34",
+        "stock": 1
+      },
+      {
+        "talle": "35",
+        "stock": 2
+      },
+      {
+        "talle": "36",
+        "stock": 1
+      },
+      {
+        "talle": "37",
+        "stock": 0
+      },
+      {
+        "talle": "38",
+        "stock": 0
+      },
+      {
+        "talle": "39",
+        "stock": 0
+      }
+    ],
+    "stockTotal": 4
+  },
+  {
+    "id": 190,
+    "nombre": "PEGASUS NEGRA",
+    "marca": "NIKE",
+    "precio": 32000,
+    "foto": "https://d3l9wd8kivvlqy.cloudfront.net/8c6835c0-dee7-41d7-a854-bbbd52d20873?w=500&h=500",
+    "talles": [
+      {
+        "talle": "43",
+        "stock": 2
+      }
+    ],
+    "stockTotal": 2
+  },
+  {
+    "id": 191,
+    "nombre": "PEGASUS ROSA",
+    "marca": "NIKE",
+    "precio": 32000,
+    "foto": "https://d3l9wd8kivvlqy.cloudfront.net/806121d0-2d9a-45a5-90b3-cab592d5f1f8?w=500&h=500",
+    "talles": [
+      {
+        "talle": "34",
+        "stock": 2
+      },
+      {
+        "talle": "35",
+        "stock": 0
+      },
+      {
+        "talle": "36",
+        "stock": 1
+      },
+      {
+        "talle": "37",
+        "stock": 1
+      },
+      {
+        "talle": "38",
+        "stock": 2
+      },
+      {
+        "talle": "39",
+        "stock": 0
+      }
+    ],
+    "stockTotal": 6
+  },
+  {
+    "id": 192,
+    "nombre": "PUMA 180",
+    "marca": "PUMA",
+    "precio": 43500,
+    "foto": "https://d3l9wd8kivvlqy.cloudfront.net/70d70196-fc40-469e-b2c8-0532d2e078b5?w=500&h=500",
+    "talles": [
+      {
+        "talle": "34",
+        "stock": 1
+      },
+      {
+        "talle": "35",
+        "stock": 2
+      },
+      {
+        "talle": "36",
+        "stock": 3
+      },
+      {
+        "talle": "37",
+        "stock": 2
+      },
+      {
+        "talle": "38",
+        "stock": 0
+      },
+      {
+        "talle": "38",
+        "stock": 2
+      },
+      {
+        "talle": "39",
+        "stock": 0
+      },
+      {
+        "talle": "39",
+        "stock": 3
+      },
+      {
+        "talle": "40",
+        "stock": 0
+      },
+      {
+        "talle": "40",
+        "stock": 0
+      },
+      {
+        "talle": "41",
+        "stock": 1
+      },
+      {
+        "talle": "41",
+        "stock": 3
+      },
+      {
+        "talle": "42",
+        "stock": 3
+      },
+      {
+        "talle": "42",
+        "stock": 2
+      },
+      {
+        "talle": "43",
+        "stock": 0
+      },
+      {
+        "talle": "43",
+        "stock": 1
+      }
+    ],
+    "stockTotal": 23
+  },
+  {
+    "id": 193,
+    "nombre": "PUMA 180 REVERSE BEIGE",
+    "marca": "PUMA",
+    "precio": 43500,
+    "foto": "https://d3l9wd8kivvlqy.cloudfront.net/41a0cb76-1798-46d2-916b-211a83da082d?w=500&h=500",
+    "talles": [
+      {
+        "talle": "34",
+        "stock": 1
+      },
+      {
+        "talle": "35",
+        "stock": 1
+      },
+      {
+        "talle": "36",
+        "stock": 2
+      },
+      {
+        "talle": "37",
+        "stock": 2
+      },
+      {
+        "talle": "38",
+        "stock": 1
+      },
+      {
+        "talle": "39",
+        "stock": 0
+      },
+      {
+        "talle": "40",
+        "stock": 0
+      },
+      {
+        "talle": "41",
+        "stock": 0
+      },
+      {
+        "talle": "42",
+        "stock": 0
+      },
+      {
+        "talle": "43",
+        "stock": 0
+      }
+    ],
+    "stockTotal": 7
+  },
+  {
+    "id": 194,
+    "nombre": "PUMA 180 REVERSE BLACK",
+    "marca": "PUMA",
+    "precio": 0,
+    "foto": "https://d3l9wd8kivvlqy.cloudfront.net/6e463d6c-2c64-4808-9b9f-d84b262148c6?w=500&h=500",
+    "talles": [
+      {
+        "talle": "34",
+        "stock": 1
+      },
+      {
+        "talle": "35",
+        "stock": 1
+      },
+      {
+        "talle": "36",
+        "stock": 0
+      },
+      {
+        "talle": "37",
+        "stock": 2
+      },
+      {
+        "talle": "38",
+        "stock": 2
+      },
+      {
+        "talle": "39",
+        "stock": 0
+      }
+    ],
+    "stockTotal": 6
+  },
+  {
+    "id": 195,
+    "nombre": "PUMA 180 TOTAL BLACK",
+    "marca": "PUMA",
+    "precio": 43500,
+    "foto": "https://d3l9wd8kivvlqy.cloudfront.net/4f1ee706-1585-43b2-9130-821ec5e9550a?w=500&h=500",
+    "talles": [
+      {
+        "talle": "34",
+        "stock": 0
+      },
+      {
+        "talle": "35",
+        "stock": 0
+      },
+      {
+        "talle": "36",
+        "stock": 0
+      },
+      {
+        "talle": "37",
+        "stock": 0
+      },
+      {
+        "talle": "38",
+        "stock": 0
+      },
+      {
+        "talle": "39",
+        "stock": 0
+      },
+      {
+        "talle": "40",
+        "stock": 0
+      },
+      {
+        "talle": "41",
+        "stock": 1
+      },
+      {
+        "talle": "42",
+        "stock": 0
+      },
+      {
+        "talle": "43",
+        "stock": 1
+      }
+    ],
+    "stockTotal": 2
+  },
+  {
+    "id": 196,
+    "nombre": "PUMA NEGRA",
+    "marca": "PUMA",
+    "precio": 0,
+    "foto": "https://d3l9wd8kivvlqy.cloudfront.net/017cf1ec-31f9-4e65-b346-20dc45ce83dc?w=500&h=500",
+    "talles": [
+      {
+        "talle": "34",
+        "stock": 0
+      },
+      {
+        "talle": "35",
+        "stock": 0
+      },
+      {
+        "talle": "36",
+        "stock": 0
+      },
+      {
+        "talle": "37",
+        "stock": 0
+      },
+      {
+        "talle": "38",
+        "stock": 0
+      },
+      {
+        "talle": "39",
+        "stock": 0
+      }
+    ],
+    "stockTotal": 0
+  },
+  {
+    "id": 197,
+    "nombre": "PUMA SUEDE XL BEIGE",
+    "marca": "PUMA",
+    "precio": 0,
+    "foto": "https://d3l9wd8kivvlqy.cloudfront.net/1e57cf0a-f696-4c0e-b30d-915e16ad742d?w=500&h=500",
+    "talles": [
+      {
+        "talle": "34",
+        "stock": 1
+      },
+      {
+        "talle": "35",
+        "stock": 1
+      },
+      {
+        "talle": "36",
+        "stock": 1
+      },
+      {
+        "talle": "37",
+        "stock": 2
+      },
+      {
+        "talle": "38",
+        "stock": 0
+      },
+      {
+        "talle": "39",
+        "stock": 1
+      }
+    ],
+    "stockTotal": 6
+  },
+  {
+    "id": 198,
+    "nombre": "RUN FALCON",
+    "marca": "ADIDAS",
+    "precio": 0,
+    "foto": "https://d3l9wd8kivvlqy.cloudfront.net/c9a7334e-57e6-4d92-9120-6ee419057e3e?w=500&h=500",
+    "talles": [
+      {
+        "talle": "34",
+        "stock": 0
+      }
+    ],
+    "stockTotal": 0
+  },
+  {
+    "id": 199,
+    "nombre": "SAMBA BROWN",
+    "marca": "ADIDAS",
+    "precio": 39000,
+    "foto": "https://d3l9wd8kivvlqy.cloudfront.net/ad54f27b-cf4b-4aa8-a7d7-beb5365150bc?w=500&h=500",
+    "talles": [
+      {
+        "talle": "34",
+        "stock": 1
+      },
+      {
+        "talle": "35",
+        "stock": 2
+      },
+      {
+        "talle": "36",
+        "stock": 2
+      },
+      {
+        "talle": "37",
+        "stock": 1
+      },
+      {
+        "talle": "38",
+        "stock": 0
+      },
+      {
+        "talle": "39",
+        "stock": 0
+      }
+    ],
+    "stockTotal": 6
+  },
+  {
+    "id": 200,
+    "nombre": "SAMBA CLASICA",
+    "marca": "ADIDAS",
+    "precio": 39000,
+    "foto": "https://d3l9wd8kivvlqy.cloudfront.net/a5948d1f-891c-4077-9624-2060e06bdc99?w=500&h=500",
+    "talles": [
+      {
+        "talle": "34",
+        "stock": 0
+      },
+      {
+        "talle": "35",
+        "stock": 0
+      },
+      {
+        "talle": "36",
+        "stock": 3
+      },
+      {
+        "talle": "37",
+        "stock": 2
+      },
+      {
+        "talle": "38",
+        "stock": 2
+      },
+      {
+        "talle": "39",
+        "stock": 1
+      },
+      {
+        "talle": "40",
+        "stock": 2
+      },
+      {
+        "talle": "41",
+        "stock": 2
+      },
+      {
+        "talle": "42",
+        "stock": 2
+      },
+      {
+        "talle": "43",
+        "stock": 1
+      }
+    ],
+    "stockTotal": 15
+  },
+  {
+    "id": 201,
+    "nombre": "SAMBA CLASICA INFANTIL",
+    "marca": "ADIDAS",
+    "precio": 29000,
+    "foto": "https://d3l9wd8kivvlqy.cloudfront.net/0cc42e5f-6b82-475b-8db1-d60a8eac3e1a?w=500&h=500",
+    "talles": [
+      {
+        "talle": "26",
+        "stock": 0
+      },
+      {
+        "talle": "27",
+        "stock": 0
+      },
+      {
+        "talle": "28",
+        "stock": 1
+      },
+      {
+        "talle": "29",
+        "stock": 2
+      },
+      {
+        "talle": "30",
+        "stock": 0
+      },
+      {
+        "talle": "31",
+        "stock": 1
+      },
+      {
+        "talle": "32",
+        "stock": 0
+      },
+      {
+        "talle": "33",
+        "stock": 0
+      }
+    ],
+    "stockTotal": 4
+  },
+  {
+    "id": 202,
+    "nombre": "SAMBA NEGRA",
+    "marca": "ADIDAS",
+    "precio": 39000,
+    "foto": "https://d3l9wd8kivvlqy.cloudfront.net/3ad426e4-8924-4a46-a0df-d3015445057b?w=500&h=500",
+    "talles": [
+      {
+        "talle": "34",
+        "stock": 0
+      },
+      {
+        "talle": "35",
+        "stock": 0
+      },
+      {
+        "talle": "36",
+        "stock": 1
+      },
+      {
+        "talle": "37",
+        "stock": 0
+      },
+      {
+        "talle": "38",
+        "stock": 1
+      },
+      {
+        "talle": "39",
+        "stock": 2
+      },
+      {
+        "talle": "40",
+        "stock": 0
+      },
+      {
+        "talle": "41",
+        "stock": 0
+      },
+      {
+        "talle": "42",
+        "stock": 2
+      },
+      {
+        "talle": "43",
+        "stock": 1
+      }
+    ],
+    "stockTotal": 7
+  },
+  {
+    "id": 203,
+    "nombre": "SAMBA NEGRA INFANTIL",
+    "marca": "ADIDAS",
+    "precio": 29000,
+    "foto": "https://d3l9wd8kivvlqy.cloudfront.net/61ec2205-5921-4f05-b51a-7dfcbcc726fa?w=500&h=500",
+    "talles": [
+      {
+        "talle": "26",
+        "stock": 0
+      },
+      {
+        "talle": "27",
+        "stock": 0
+      },
+      {
+        "talle": "28",
+        "stock": 2
+      },
+      {
+        "talle": "29",
+        "stock": 2
+      },
+      {
+        "talle": "30",
+        "stock": 1
+      },
+      {
+        "talle": "31",
+        "stock": 0
+      },
+      {
+        "talle": "32",
+        "stock": 0
+      },
+      {
+        "talle": "33",
+        "stock": 0
+      }
+    ],
+    "stockTotal": 5
+  },
+  {
+    "id": 204,
+    "nombre": "SAMBA OG BORDO",
+    "marca": "ADIDAS",
+    "precio": 0,
+    "foto": "https://d3l9wd8kivvlqy.cloudfront.net/47263f59-480c-448d-b1ca-ae5890a7260e?w=500&h=500",
+    "talles": [
+      {
+        "talle": "40",
+        "stock": 1
+      }
+    ],
+    "stockTotal": 1
+  },
+  {
+    "id": 205,
+    "nombre": "SAMBA XLG BLANCA/NEGRA",
+    "marca": "ADIDAS",
+    "precio": 41500,
+    "foto": "https://d3l9wd8kivvlqy.cloudfront.net/6333cfe5-d2c3-4d60-875f-bd43a25ac1ec?w=500&h=500",
+    "talles": [
+      {
+        "talle": "34",
+        "stock": 1
+      },
+      {
+        "talle": "35",
+        "stock": 3
+      },
+      {
+        "talle": "36",
+        "stock": 3
+      },
+      {
+        "talle": "37",
+        "stock": 3
+      },
+      {
+        "talle": "38",
+        "stock": 1
+      },
+      {
+        "talle": "39",
+        "stock": 1
+      }
+    ],
+    "stockTotal": 12
+  },
+  {
+    "id": 206,
+    "nombre": "SAMBA XLG CREMA",
+    "marca": "ADIDAS",
+    "precio": 41500,
+    "foto": "https://d3l9wd8kivvlqy.cloudfront.net/880bf4d0-265d-4483-8c3c-163d055a886e?w=500&h=500",
+    "talles": [
+      {
+        "talle": "34",
+        "stock": 3
+      },
+      {
+        "talle": "35",
+        "stock": 3
+      },
+      {
+        "talle": "36",
+        "stock": 3
+      },
+      {
+        "talle": "37",
+        "stock": 4
+      },
+      {
+        "talle": "38",
+        "stock": 2
+      },
+      {
+        "talle": "39",
+        "stock": 0
+      }
+    ],
+    "stockTotal": 15
+  },
+  {
+    "id": 207,
+    "nombre": "SAMBA XLG NEGRA",
+    "marca": "ADIDAS",
+    "precio": 41500,
+    "foto": "https://d3l9wd8kivvlqy.cloudfront.net/95426952-7be4-4413-a71e-ebd79e1bc3b5?w=500&h=500",
+    "talles": [
+      {
+        "talle": "34",
+        "stock": 1
+      },
+      {
+        "talle": "35",
+        "stock": 2
+      },
+      {
+        "talle": "36",
+        "stock": 2
+      },
+      {
+        "talle": "37",
+        "stock": 1
+      },
+      {
+        "talle": "38",
+        "stock": 2
+      },
+      {
+        "talle": "39",
+        "stock": 0
+      }
+    ],
+    "stockTotal": 8
+  },
+  {
+    "id": 208,
+    "nombre": "SHOX R4",
+    "marca": "NIKE",
+    "precio": 0,
+    "foto": "https://d3l9wd8kivvlqy.cloudfront.net/04dcb9f2-fa05-448f-8ab6-57bb9b12548e?w=500&h=500",
+    "talles": [
+      {
+        "talle": "38",
+        "stock": 1
+      },
+      {
+        "talle": "38",
+        "stock": 1
+      },
+      {
+        "talle": "39",
+        "stock": 0
+      },
+      {
+        "talle": "39",
+        "stock": 4
+      },
+      {
+        "talle": "40",
+        "stock": 0
+      },
+      {
+        "talle": "40",
+        "stock": 3
+      },
+      {
+        "talle": "41",
+        "stock": 0
+      },
+      {
+        "talle": "41",
+        "stock": 5
+      },
+      {
+        "talle": "42",
+        "stock": 0
+      },
+      {
+        "talle": "42",
+        "stock": 2
+      },
+      {
+        "talle": "43",
+        "stock": 0
+      },
+      {
+        "talle": "43",
+        "stock": 2
+      }
+    ],
+    "stockTotal": 18
+  },
+  {
+    "id": 209,
+    "nombre": "SHOX RIDE 2 NEGRA",
+    "marca": "NIKE",
+    "precio": 0,
+    "foto": "https://d3l9wd8kivvlqy.cloudfront.net/ea48f7b5-cd1c-4932-b149-e7b264256a75?w=500&h=500",
+    "talles": [
+      {
+        "talle": "38",
+        "stock": 0
+      },
+      {
+        "talle": "39",
+        "stock": 0
+      },
+      {
+        "talle": "40",
+        "stock": 0
+      },
+      {
+        "talle": "41",
+        "stock": 0
+      },
+      {
+        "talle": "42",
+        "stock": 0
+      },
+      {
+        "talle": "43",
+        "stock": 0
+      }
+    ],
+    "stockTotal": 0
+  },
+  {
+    "id": 210,
+    "nombre": "SUPERNOVA AZUL/NARANJA",
+    "marca": "ADIDAS",
+    "precio": 36500,
+    "foto": "https://d3l9wd8kivvlqy.cloudfront.net/e6d61884-2855-4cd0-bcad-e44ce3d78582?w=500&h=500",
+    "talles": [
+      {
+        "talle": "38",
+        "stock": 1
+      },
+      {
+        "talle": "39",
+        "stock": 2
+      },
+      {
+        "talle": "40",
+        "stock": 5
+      },
+      {
+        "talle": "41",
+        "stock": 2
+      },
+      {
+        "talle": "42",
+        "stock": 1
+      },
+      {
+        "talle": "43",
+        "stock": 0
+      }
+    ],
+    "stockTotal": 11
+  },
+  {
+    "id": 211,
+    "nombre": "SUPERNOVA BEIGE",
+    "marca": "ADIDAS",
+    "precio": 36500,
+    "foto": "https://d3l9wd8kivvlqy.cloudfront.net/957c9afe-616c-418d-90fe-04982556543c?w=500&h=500",
+    "talles": [
+      {
+        "talle": "34",
+        "stock": 0
+      },
+      {
+        "talle": "35",
+        "stock": 0
+      },
+      {
+        "talle": "36",
+        "stock": 1
+      },
+      {
+        "talle": "37",
+        "stock": 0
+      },
+      {
+        "talle": "38",
+        "stock": 0
+      },
+      {
+        "talle": "39",
+        "stock": 0
+      }
+    ],
+    "stockTotal": 1
+  },
+  {
+    "id": 212,
+    "nombre": "SUPERNOVA BLACK/N",
+    "marca": "ADIDAS",
+    "precio": 36500,
+    "foto": "https://d3l9wd8kivvlqy.cloudfront.net/5cc7921d-df96-46e7-ad6c-2af85a9b9eaf?w=500&h=500",
+    "talles": [
+      {
+        "talle": "38",
+        "stock": 0
+      },
+      {
+        "talle": "39",
+        "stock": 0
+      },
+      {
+        "talle": "40",
+        "stock": 0
+      },
+      {
+        "talle": "41",
+        "stock": 1
+      },
+      {
+        "talle": "42",
+        "stock": 0
+      },
+      {
+        "talle": "43",
+        "stock": 1
+      }
+    ],
+    "stockTotal": 2
+  },
+  {
+    "id": 213,
+    "nombre": "SUPERNOVA BLANCA",
+    "marca": "ADIDAS",
+    "precio": 36500,
+    "foto": "https://d3l9wd8kivvlqy.cloudfront.net/7e5482ff-1184-4144-9e78-b51078d1a47f?w=500&h=500",
+    "talles": [
+      {
+        "talle": "34",
+        "stock": 0
+      },
+      {
+        "talle": "35",
+        "stock": 0
+      },
+      {
+        "talle": "36",
+        "stock": 0
+      },
+      {
+        "talle": "37",
+        "stock": 0
+      },
+      {
+        "talle": "38",
+        "stock": 0
+      },
+      {
+        "talle": "39",
+        "stock": 0
+      }
+    ],
+    "stockTotal": 0
+  },
+  {
+    "id": 214,
+    "nombre": "SUPERNOVA BLANCA/ROSA",
+    "marca": "ADIDAS",
+    "precio": 36500,
+    "foto": "https://d3l9wd8kivvlqy.cloudfront.net/2d81c44a-8a9b-4b0c-85b2-735e6d192b64?w=500&h=500",
+    "talles": [
+      {
+        "talle": "34",
+        "stock": 2
+      },
+      {
+        "talle": "35",
+        "stock": 5
+      },
+      {
+        "talle": "36",
+        "stock": 3
+      },
+      {
+        "talle": "37",
+        "stock": 3
+      },
+      {
+        "talle": "38",
+        "stock": 2
+      },
+      {
+        "talle": "39",
+        "stock": 0
+      }
+    ],
+    "stockTotal": 15
+  },
+  {
+    "id": 215,
+    "nombre": "SUPERNOVA CAFE",
+    "marca": "ADIDAS",
+    "precio": 36500,
+    "foto": "https://d3l9wd8kivvlqy.cloudfront.net/d53f52d3-527d-41ce-a9d2-dfc41f26d689?w=500&h=500",
+    "talles": [
+      {
+        "talle": "34",
+        "stock": 0
+      },
+      {
+        "talle": "35",
+        "stock": 0
+      },
+      {
+        "talle": "36",
+        "stock": 0
+      },
+      {
+        "talle": "37",
+        "stock": 0
+      },
+      {
+        "talle": "38",
+        "stock": 0
+      },
+      {
+        "talle": "39",
+        "stock": 0
+      }
+    ],
+    "stockTotal": 0
+  },
+  {
+    "id": 216,
+    "nombre": "SUPERNOVA CELESTE",
+    "marca": "ADIDAS",
+    "precio": 36500,
+    "foto": "https://d3l9wd8kivvlqy.cloudfront.net/336a5b6e-1af5-4f00-8ef6-0c2357103b1e?w=500&h=500",
+    "talles": [
+      {
+        "talle": "34",
+        "stock": 1
+      },
+      {
+        "talle": "35",
+        "stock": 5
+      },
+      {
+        "talle": "36",
+        "stock": 1
+      },
+      {
+        "talle": "37",
+        "stock": 0
+      },
+      {
+        "talle": "38",
+        "stock": 0
+      },
+      {
+        "talle": "39",
+        "stock": 0
+      }
+    ],
+    "stockTotal": 7
+  },
+  {
+    "id": 217,
+    "nombre": "SUPERNOVA FUCSIA",
+    "marca": "ADIDAS",
+    "precio": 36500,
+    "foto": "https://d3l9wd8kivvlqy.cloudfront.net/9574dc0d-d9e7-480d-9c1b-867dbe882dea?w=500&h=500",
+    "talles": [
+      {
+        "talle": "34",
+        "stock": 3
+      },
+      {
+        "talle": "35",
+        "stock": 1
+      },
+      {
+        "talle": "36",
+        "stock": 3
+      },
+      {
+        "talle": "37",
+        "stock": 2
+      },
+      {
+        "talle": "38",
+        "stock": 0
+      },
+      {
+        "talle": "39",
+        "stock": 0
+      }
+    ],
+    "stockTotal": 9
+  },
+  {
+    "id": 218,
+    "nombre": "SUPERNOVA GRIS/AMARILLO",
+    "marca": "ADIDAS",
+    "precio": 36500,
+    "foto": "https://d3l9wd8kivvlqy.cloudfront.net/74163a98-7ac2-45e1-8134-75a9372d1349?w=500&h=500",
+    "talles": [
+      {
+        "talle": "38",
+        "stock": 3
+      },
+      {
+        "talle": "39",
+        "stock": 4
+      },
+      {
+        "talle": "40",
+        "stock": 1
+      },
+      {
+        "talle": "41",
+        "stock": 3
+      },
+      {
+        "talle": "42",
+        "stock": 0
+      },
+      {
+        "talle": "43",
+        "stock": 0
+      }
+    ],
+    "stockTotal": 11
+  },
+  {
+    "id": 219,
+    "nombre": "SUPERNOVA GRIS/NARANJA",
+    "marca": "ADIDAS",
+    "precio": 36500,
+    "foto": "https://d3l9wd8kivvlqy.cloudfront.net/8b49f84b-2a8a-40d0-932e-72ea7cfa6ce8?w=500&h=500",
+    "talles": [
+      {
+        "talle": "38",
+        "stock": 2
+      },
+      {
+        "talle": "39",
+        "stock": 2
+      },
+      {
+        "talle": "40",
+        "stock": 4
+      },
+      {
+        "talle": "41",
+        "stock": 4
+      },
+      {
+        "talle": "42",
+        "stock": 0
+      },
+      {
+        "talle": "43",
+        "stock": 1
+      }
+    ],
+    "stockTotal": 13
+  },
+  {
+    "id": 220,
+    "nombre": "SUPERNOVA NEGRA/BLANCA",
+    "marca": "ADIDAS",
+    "precio": 36500,
+    "foto": "https://d3l9wd8kivvlqy.cloudfront.net/20a38522-1be9-4ade-a2d3-2b6e380f6d54?w=500&h=500",
+    "talles": [
+      {
+        "talle": "38",
+        "stock": 0
+      },
+      {
+        "talle": "39",
+        "stock": 2
+      },
+      {
+        "talle": "40",
+        "stock": 0
+      },
+      {
+        "talle": "41",
+        "stock": 1
+      },
+      {
+        "talle": "42",
+        "stock": 2
+      },
+      {
+        "talle": "43",
+        "stock": 0
+      }
+    ],
+    "stockTotal": 5
+  },
+  {
+    "id": 221,
+    "nombre": "SUPERNOVA NEGRA/BLANCO",
+    "marca": "ADIDAS",
+    "precio": 36500,
+    "foto": "https://d3l9wd8kivvlqy.cloudfront.net/07f2f12e-b794-4b4c-b291-03c935f6ddc0?w=500&h=500",
+    "talles": [
+      {
+        "talle": "34",
+        "stock": 0
+      },
+      {
+        "talle": "35",
+        "stock": 1
+      },
+      {
+        "talle": "36",
+        "stock": 2
+      },
+      {
+        "talle": "37",
+        "stock": 2
+      },
+      {
+        "talle": "38",
+        "stock": 1
+      },
+      {
+        "talle": "39",
+        "stock": 0
+      }
+    ],
+    "stockTotal": 6
+  },
+  {
+    "id": 222,
+    "nombre": "SUPERNOVA NEGRA/FUCSIA",
+    "marca": "ADIDAS",
+    "precio": 36500,
+    "foto": "https://d3l9wd8kivvlqy.cloudfront.net/900c53b8-611b-48f1-94da-a85af46fe907?w=500&h=500",
+    "talles": [
+      {
+        "talle": "34",
+        "stock": 2
+      },
+      {
+        "talle": "35",
+        "stock": 3
+      },
+      {
+        "talle": "36",
+        "stock": 4
+      },
+      {
+        "talle": "37",
+        "stock": 3
+      },
+      {
+        "talle": "38",
+        "stock": 2
+      },
+      {
+        "talle": "39",
+        "stock": 1
+      }
+    ],
+    "stockTotal": 15
+  },
+  {
+    "id": 223,
+    "nombre": "SUPERNOVA NEGRA/NARANJA",
+    "marca": "ADIDAS",
+    "precio": 36500,
+    "foto": "https://d3l9wd8kivvlqy.cloudfront.net/da47e180-f994-463d-bc93-653cf4a1d7c9?w=500&h=500",
+    "talles": [
+      {
+        "talle": "38",
+        "stock": 0
+      },
+      {
+        "talle": "39",
+        "stock": 1
+      },
+      {
+        "talle": "40",
+        "stock": 0
+      },
+      {
+        "talle": "41",
+        "stock": 0
+      },
+      {
+        "talle": "42",
+        "stock": 0
+      },
+      {
+        "talle": "43",
+        "stock": 0
+      }
+    ],
+    "stockTotal": 1
+  },
+  {
+    "id": 224,
+    "nombre": "SUPERNOVA NEGRA/ROJA",
+    "marca": "ADIDAS",
+    "precio": 36500,
+    "foto": "https://d3l9wd8kivvlqy.cloudfront.net/7320d2b3-c5f9-4b2c-bf3e-8979e4d51223?w=500&h=500",
+    "talles": [
+      {
+        "talle": "38",
+        "stock": 2
+      },
+      {
+        "talle": "39",
+        "stock": 4
+      },
+      {
+        "talle": "40",
+        "stock": 8
+      },
+      {
+        "talle": "41",
+        "stock": 4
+      },
+      {
+        "talle": "42",
+        "stock": 2
+      },
+      {
+        "talle": "43",
+        "stock": 1
+      }
+    ],
+    "stockTotal": 21
+  },
+  {
+    "id": 225,
+    "nombre": "SUPERNOVA NEGRA/ROSA",
+    "marca": "ADIDAS",
+    "precio": 36500,
+    "foto": "https://d3l9wd8kivvlqy.cloudfront.net/1cfd20ca-b475-4da7-86c9-78bfe0e3412b?w=500&h=500",
+    "talles": [
+      {
+        "talle": "34",
+        "stock": 5
+      },
+      {
+        "talle": "35",
+        "stock": 5
+      },
+      {
+        "talle": "36",
+        "stock": 3
+      },
+      {
+        "talle": "37",
+        "stock": 2
+      },
+      {
+        "talle": "38",
+        "stock": 0
+      },
+      {
+        "talle": "39",
+        "stock": 1
+      }
+    ],
+    "stockTotal": 16
+  },
+  {
+    "id": 226,
+    "nombre": "SUPERNOVA NEGRA/VERDE",
+    "marca": "ADIDAS",
+    "precio": 36500,
+    "foto": "https://d3l9wd8kivvlqy.cloudfront.net/a472def3-7996-418c-bba1-7501f647524e?w=500&h=500",
+    "talles": [
+      {
+        "talle": "38",
+        "stock": 1
+      },
+      {
+        "talle": "39",
+        "stock": 1
+      },
+      {
+        "talle": "40",
+        "stock": 0
+      },
+      {
+        "talle": "41",
+        "stock": 3
+      },
+      {
+        "talle": "42",
+        "stock": 1
+      },
+      {
+        "talle": "43",
+        "stock": 1
+      }
+    ],
+    "stockTotal": 7
+  },
+  {
+    "id": 227,
+    "nombre": "SUPERNOVA ROSÉ",
+    "marca": "ADIDAS",
+    "precio": 36500,
+    "foto": "https://d3l9wd8kivvlqy.cloudfront.net/9bd0aadb-6a2b-481c-a9d1-7eb80d9a3637?w=500&h=500",
+    "talles": [
+      {
+        "talle": "34",
+        "stock": 4
+      },
+      {
+        "talle": "35",
+        "stock": 2
+      },
+      {
+        "talle": "36",
+        "stock": 0
+      },
+      {
+        "talle": "37",
+        "stock": 0
+      },
+      {
+        "talle": "38",
+        "stock": 0
+      },
+      {
+        "talle": "39",
+        "stock": 0
+      }
+    ],
+    "stockTotal": 6
+  },
+  {
+    "id": 228,
+    "nombre": "SUPERNOVA VERDE",
+    "marca": "ADIDAS",
+    "precio": 36500,
+    "foto": "https://d3l9wd8kivvlqy.cloudfront.net/a4349239-fd71-4b06-97e9-4ca8842dc0d0?w=500&h=500",
+    "talles": [
+      {
+        "talle": "34",
+        "stock": 1
+      },
+      {
+        "talle": "35",
+        "stock": 4
+      },
+      {
+        "talle": "36",
+        "stock": 3
+      },
+      {
+        "talle": "37",
+        "stock": 2
+      },
+      {
+        "talle": "38",
+        "stock": 1
+      },
+      {
+        "talle": "39",
+        "stock": 1
+      }
+    ],
+    "stockTotal": 12
+  },
+  {
+    "id": 229,
+    "nombre": "SUPERSTAR BLANCA",
+    "marca": "ADIDAS",
+    "precio": 43000,
+    "foto": "https://d3l9wd8kivvlqy.cloudfront.net/46fcd99a-f7ed-473e-b263-a085291b3472?w=500&h=500",
+    "talles": [
+      {
+        "talle": "34",
+        "stock": 0
+      },
+      {
+        "talle": "35",
+        "stock": 0
+      },
+      {
+        "talle": "36",
+        "stock": 0
+      },
+      {
+        "talle": "37",
+        "stock": 1
+      },
+      {
+        "talle": "38",
+        "stock": 3
+      },
+      {
+        "talle": "39",
+        "stock": 3
+      },
+      {
+        "talle": "40",
+        "stock": 2
+      },
+      {
+        "talle": "41",
+        "stock": 4
+      },
+      {
+        "talle": "42",
+        "stock": 2
+      },
+      {
+        "talle": "43",
+        "stock": 1
+      }
+    ],
+    "stockTotal": 16
+  },
+  {
+    "id": 230,
+    "nombre": "SUPERSTAR BONEGA BEIGE",
+    "marca": "ADIDAS",
+    "precio": 0,
+    "foto": "https://d3l9wd8kivvlqy.cloudfront.net/a68881b1-0971-4f1a-abed-f05a11fcaf6f?w=500&h=500",
+    "talles": [
+      {
+        "talle": "34",
+        "stock": 0
+      },
+      {
+        "talle": "35",
+        "stock": 0
+      },
+      {
+        "talle": "36",
+        "stock": 0
+      },
+      {
+        "talle": "37",
+        "stock": 1
+      },
+      {
+        "talle": "38",
+        "stock": 1
+      },
+      {
+        "talle": "39",
+        "stock": 0
+      }
+    ],
+    "stockTotal": 2
+  },
+  {
+    "id": 231,
+    "nombre": "SUPERSTAR INFANTIL",
+    "marca": "ADIDAS",
+    "precio": 29000,
+    "foto": "https://d3l9wd8kivvlqy.cloudfront.net/0d4ee590-d794-4f2f-a094-53f2e9079988?w=500&h=500",
+    "talles": [
+      {
+        "talle": "26",
+        "stock": 0
+      },
+      {
+        "talle": "27",
+        "stock": 2
+      },
+      {
+        "talle": "28",
+        "stock": 1
+      },
+      {
+        "talle": "29",
+        "stock": 1
+      },
+      {
+        "talle": "30",
+        "stock": 1
+      },
+      {
+        "talle": "31",
+        "stock": 3
+      },
+      {
+        "talle": "32",
+        "stock": 0
+      },
+      {
+        "talle": "33",
+        "stock": 0
+      }
+    ],
+    "stockTotal": 8
+  },
+  {
+    "id": 232,
+    "nombre": "SUPERSTAR NEGRA",
+    "marca": "ADIDAS",
+    "precio": 0,
+    "foto": "https://d3l9wd8kivvlqy.cloudfront.net/48069775-126a-4792-b518-49d903f165d9?w=500&h=500",
+    "talles": [
+      {
+        "talle": "34",
+        "stock": 1
+      },
+      {
+        "talle": "35",
+        "stock": 2
+      },
+      {
+        "talle": "36",
+        "stock": 2
+      },
+      {
+        "talle": "37",
+        "stock": 2
+      },
+      {
+        "talle": "38",
+        "stock": 4
+      },
+      {
+        "talle": "39",
+        "stock": 3
+      },
+      {
+        "talle": "40",
+        "stock": 3
+      },
+      {
+        "talle": "41",
+        "stock": 3
+      },
+      {
+        "talle": "42",
+        "stock": 0
+      },
+      {
+        "talle": "43",
+        "stock": 1
+      }
+    ],
+    "stockTotal": 21
+  },
+  {
+    "id": 233,
+    "nombre": "TN BEIGE",
+    "marca": "NIKE",
+    "precio": 0,
+    "foto": "https://d3l9wd8kivvlqy.cloudfront.net/51a2d50d-27ed-49b2-a5a0-b0b90cfb55a8?w=500&h=500",
+    "talles": [
+      {
+        "talle": "34",
+        "stock": 0
+      },
+      {
+        "talle": "35",
+        "stock": 2
+      },
+      {
+        "talle": "36",
+        "stock": 3
+      },
+      {
+        "talle": "37",
+        "stock": 2
+      },
+      {
+        "talle": "38",
+        "stock": 2
+      },
+      {
+        "talle": "39",
+        "stock": 0
+      }
+    ],
+    "stockTotal": 9
+  },
+  {
+    "id": 234,
+    "nombre": "TN NEGRA/ROSA",
+    "marca": "NIKE",
+    "precio": 0,
+    "foto": "https://d3l9wd8kivvlqy.cloudfront.net/d49479de-e22f-4bd1-8612-dd3a3a3732b5?w=500&h=500",
+    "talles": [
+      {
+        "talle": "34",
+        "stock": 1
+      },
+      {
+        "talle": "35",
+        "stock": 2
+      },
+      {
+        "talle": "36",
+        "stock": 0
+      },
+      {
+        "talle": "37",
+        "stock": 0
+      },
+      {
+        "talle": "38",
+        "stock": 1
+      },
+      {
+        "talle": "39",
+        "stock": 1
+      }
+    ],
+    "stockTotal": 5
+  },
+  {
+    "id": 235,
+    "nombre": "V2K BEIGE",
+    "marca": "NIKE",
+    "precio": 0,
+    "foto": "https://d3l9wd8kivvlqy.cloudfront.net/c4f423a2-2c8f-47ea-a975-27dbf2d79c62?w=500&h=500",
+    "talles": [
+      {
+        "talle": "35",
+        "stock": 0
+      },
+      {
+        "talle": "36",
+        "stock": 0
+      },
+      {
+        "talle": "37",
+        "stock": 0
+      },
+      {
+        "talle": "38",
+        "stock": 0
+      },
+      {
+        "talle": "39",
+        "stock": 0
+      },
+      {
+        "talle": "40",
+        "stock": 0
+      }
+    ],
+    "stockTotal": 0
+  },
+  {
+    "id": 236,
+    "nombre": "VANS HYLANE",
+    "marca": "VANS",
+    "precio": 39000,
+    "foto": "https://d3l9wd8kivvlqy.cloudfront.net/8d5a9653-84ec-4eb9-98b7-5a8d3b0f0e07?w=500&h=500",
+    "talles": [
+      {
+        "talle": "34",
+        "stock": 0
+      },
+      {
+        "talle": "35",
+        "stock": 3
+      },
+      {
+        "talle": "36",
+        "stock": 0
+      },
+      {
+        "talle": "37",
+        "stock": 3
+      },
+      {
+        "talle": "38",
+        "stock": 3
+      },
+      {
+        "talle": "39",
+        "stock": 0
+      },
+      {
+        "talle": "40",
+        "stock": 1
+      },
+      {
+        "talle": "41",
+        "stock": 0
+      },
+      {
+        "talle": "42",
+        "stock": 1
+      },
+      {
+        "talle": "43",
+        "stock": 1
+      }
+    ],
+    "stockTotal": 12
+  },
+  {
+    "id": 237,
+    "nombre": "VANS HYLANE GREY",
+    "marca": "VANS",
+    "precio": 0,
+    "foto": "https://d3l9wd8kivvlqy.cloudfront.net/1a464cf3-3613-4624-bca6-86709c15dc50?w=500&h=500",
+    "talles": [
+      {
+        "talle": "34",
+        "stock": 0
+      },
+      {
+        "talle": "35",
+        "stock": 1
+      },
+      {
+        "talle": "36",
+        "stock": 0
+      },
+      {
+        "talle": "37",
+        "stock": 2
+      },
+      {
+        "talle": "38",
+        "stock": 0
+      },
+      {
+        "talle": "39",
+        "stock": 2
+      },
+      {
+        "talle": "40",
+        "stock": 0
+      },
+      {
+        "talle": "41",
+        "stock": 0
+      },
+      {
+        "talle": "42",
+        "stock": 0
+      },
+      {
+        "talle": "43",
+        "stock": 0
+      }
+    ],
+    "stockTotal": 5
+  },
+  {
+    "id": 238,
+    "nombre": "VANS KNU BLACK",
+    "marca": "VANS",
+    "precio": 39000,
+    "foto": "https://d3l9wd8kivvlqy.cloudfront.net/641adb66-d801-42ed-8b22-4d8ca4440705?w=500&h=500",
+    "talles": [
+      {
+        "talle": "34",
+        "stock": 1
+      },
+      {
+        "talle": "35",
+        "stock": 1
+      },
+      {
+        "talle": "36",
+        "stock": 1
+      },
+      {
+        "talle": "37",
+        "stock": 3
+      },
+      {
+        "talle": "38",
+        "stock": 2
+      },
+      {
+        "talle": "39",
+        "stock": 2
+      },
+      {
+        "talle": "40",
+        "stock": 1
+      },
+      {
+        "talle": "41",
+        "stock": 1
+      },
+      {
+        "talle": "42",
+        "stock": 1
+      },
+      {
+        "talle": "43",
+        "stock": 1
+      }
+    ],
+    "stockTotal": 14
+  },
+  {
+    "id": 239,
+    "nombre": "VANS KNU BLANCAS",
+    "marca": "VANS",
+    "precio": 39000,
+    "foto": "https://d3l9wd8kivvlqy.cloudfront.net/0568290f-d975-4f00-87b1-300891d4744c?w=500&h=500",
+    "talles": [
+      {
+        "talle": "34",
+        "stock": 1
+      },
+      {
+        "talle": "35",
+        "stock": 0
+      },
+      {
+        "talle": "36",
+        "stock": 0
+      },
+      {
+        "talle": "37",
+        "stock": 0
+      },
+      {
+        "talle": "38",
+        "stock": 0
+      },
+      {
+        "talle": "39",
+        "stock": 0
+      },
+      {
+        "talle": "40",
+        "stock": 0
+      },
+      {
+        "talle": "41",
+        "stock": 3
+      },
+      {
+        "talle": "42",
+        "stock": 1
+      },
+      {
+        "talle": "43",
+        "stock": 0
+      }
+    ],
+    "stockTotal": 5
+  },
+  {
+    "id": 240,
+    "nombre": "VANS KNU CLASICAS",
+    "marca": "VANS",
+    "precio": 39000,
+    "foto": "https://d3l9wd8kivvlqy.cloudfront.net/8ca94f87-f490-44d1-bd02-e1ced63af4e5?w=500&h=500",
+    "talles": [
+      {
+        "talle": "34",
+        "stock": 0
+      },
+      {
+        "talle": "35",
+        "stock": 0
+      },
+      {
+        "talle": "36",
+        "stock": 2
+      },
+      {
+        "talle": "37",
+        "stock": 2
+      },
+      {
+        "talle": "38",
+        "stock": 0
+      },
+      {
+        "talle": "39",
+        "stock": 0
+      },
+      {
+        "talle": "40",
+        "stock": 0
+      },
+      {
+        "talle": "41",
+        "stock": 2
+      },
+      {
+        "talle": "42",
+        "stock": 6
+      },
+      {
+        "talle": "43",
+        "stock": 2
+      }
+    ],
+    "stockTotal": 14
+  },
+  {
+    "id": 241,
+    "nombre": "VANS KNU CREMA",
+    "marca": "VANS",
+    "precio": 39000,
+    "foto": "https://d3l9wd8kivvlqy.cloudfront.net/7be16843-fbf7-4228-902d-807ca7b3e9e6?w=500&h=500",
+    "talles": [
+      {
+        "talle": "34",
+        "stock": 2
+      },
+      {
+        "talle": "35",
+        "stock": 0
+      },
+      {
+        "talle": "36",
+        "stock": 0
+      },
+      {
+        "talle": "37",
+        "stock": 0
+      },
+      {
+        "talle": "38",
+        "stock": 0
+      },
+      {
+        "talle": "39",
+        "stock": 0
+      },
+      {
+        "talle": "40",
+        "stock": 0
+      },
+      {
+        "talle": "41",
+        "stock": 2
+      },
+      {
+        "talle": "42",
+        "stock": 2
+      },
+      {
+        "talle": "43",
+        "stock": 1
+      }
+    ],
+    "stockTotal": 7
+  },
+  {
+    "id": 242,
+    "nombre": "VANS KNU NAVY",
+    "marca": "VANS",
+    "precio": 39000,
+    "foto": "https://d3l9wd8kivvlqy.cloudfront.net/10e55e4d-a80d-4296-b0f7-98fe01dcac54?w=500&h=500",
+    "talles": [
+      {
+        "talle": "34",
+        "stock": 1
+      },
+      {
+        "talle": "35",
+        "stock": 2
+      },
+      {
+        "talle": "36",
+        "stock": 1
+      },
+      {
+        "talle": "37",
+        "stock": 1
+      },
+      {
+        "talle": "38",
+        "stock": 1
+      },
+      {
+        "talle": "39",
+        "stock": 0
+      },
+      {
+        "talle": "40",
+        "stock": 1
+      },
+      {
+        "talle": "41",
+        "stock": 0
+      },
+      {
+        "talle": "42",
+        "stock": 0
+      },
+      {
+        "talle": "43",
+        "stock": 0
+      }
+    ],
+    "stockTotal": 7
+  },
+  {
+    "id": 243,
+    "nombre": "VANS KNU OREO",
+    "marca": "VANS",
+    "precio": 39000,
+    "foto": "https://d3l9wd8kivvlqy.cloudfront.net/d7c5dac3-befd-4445-aaca-39fbcc4d9a8b?w=500&h=500",
+    "talles": [
+      {
+        "talle": "34",
+        "stock": 1
+      }
+    ],
+    "stockTotal": 1
+  },
+  {
+    "id": 244,
+    "nombre": "VANS MID NEGRA",
+    "marca": "VANS",
+    "precio": 39000,
+    "foto": "https://d3l9wd8kivvlqy.cloudfront.net/0aeceeb5-667f-4e0d-800b-1aead6aa6f06?w=500&h=500",
+    "talles": [
+      {
+        "talle": "34",
+        "stock": 1
+      },
+      {
+        "talle": "35",
+        "stock": 0
+      },
+      {
+        "talle": "36",
+        "stock": 0
+      },
+      {
+        "talle": "37",
+        "stock": 0
+      },
+      {
+        "talle": "38",
+        "stock": 0
+      },
+      {
+        "talle": "39",
+        "stock": 0
+      },
+      {
+        "talle": "40",
+        "stock": 1
+      },
+      {
+        "talle": "41",
+        "stock": 2
+      },
+      {
+        "talle": "42",
+        "stock": 0
+      },
+      {
+        "talle": "43",
+        "stock": 0
+      }
+    ],
+    "stockTotal": 4
+  },
+  {
+    "id": 245,
+    "nombre": "VANS VR3 BLANCAS",
+    "marca": "NIKE",
+    "precio": 0,
+    "foto": "https://d3l9wd8kivvlqy.cloudfront.net/49766e7a-7a85-4fab-b7d9-b0e6433a86b2?w=500&h=500",
+    "talles": [
+      {
+        "talle": "34",
+        "stock": 0
+      },
+      {
+        "talle": "35",
+        "stock": 0
+      },
+      {
+        "talle": "36",
+        "stock": 0
+      },
+      {
+        "talle": "37",
+        "stock": 1
+      },
+      {
+        "talle": "38",
+        "stock": 0
+      },
+      {
+        "talle": "39",
+        "stock": 0
+      }
+    ],
+    "stockTotal": 1
+  },
+  {
+    "id": 246,
+    "nombre": "VANS VR3 INFANTIL",
+    "marca": "VANS",
+    "precio": 29000,
+    "foto": "https://d3l9wd8kivvlqy.cloudfront.net/7dfe8569-720c-46e7-9350-972a15245969?w=500&h=500",
+    "talles": [
+      {
+        "talle": "26",
+        "stock": 0
+      },
+      {
+        "talle": "27",
+        "stock": 2
+      },
+      {
+        "talle": "28",
+        "stock": 0
+      },
+      {
+        "talle": "29",
+        "stock": 0
+      },
+      {
+        "talle": "30",
+        "stock": 0
+      },
+      {
+        "talle": "31",
+        "stock": 1
+      },
+      {
+        "talle": "32",
+        "stock": 0
+      },
+      {
+        "talle": "33",
+        "stock": 0
+      }
+    ],
+    "stockTotal": 3
+  },
+  {
+    "id": 247,
+    "nombre": "VANS VR3 NEGRAS",
+    "marca": "VANS",
+    "precio": 0,
+    "foto": "https://d3l9wd8kivvlqy.cloudfront.net/4b519df4-dc51-4812-9bf8-e1f98472f7a0?w=500&h=500",
+    "talles": [
+      {
+        "talle": "34",
+        "stock": 0
+      },
+      {
+        "talle": "35",
+        "stock": 0
+      },
+      {
+        "talle": "36",
+        "stock": 0
+      },
+      {
+        "talle": "37",
+        "stock": 0
+      },
+      {
+        "talle": "38",
+        "stock": 0
+      },
+      {
+        "talle": "39",
+        "stock": 0
+      }
+    ],
+    "stockTotal": 0
+  },
+  {
+    "id": 248,
+    "nombre": "ZOOMX CACAO",
+    "marca": "NIKE",
+    "precio": 36000,
+    "foto": "https://d3l9wd8kivvlqy.cloudfront.net/fbae0ee3-6b53-41a0-96ec-6cd3e7f6b775?w=500&h=500",
+    "talles": [
+      {
+        "talle": "34",
+        "stock": 0
+      },
+      {
+        "talle": "35",
+        "stock": 0
+      },
+      {
+        "talle": "36",
+        "stock": 0
+      },
+      {
+        "talle": "37",
+        "stock": 0
+      },
+      {
+        "talle": "38",
+        "stock": 0
+      },
+      {
+        "talle": "39",
+        "stock": 0
+      }
+    ],
+    "stockTotal": 0
+  },
+  {
+    "id": 249,
+    "nombre": "ZOOMX DORADA",
+    "marca": "NIKE",
+    "precio": 36000,
+    "foto": "https://d3l9wd8kivvlqy.cloudfront.net/e4554ed3-c0f0-4994-9adb-4dc4c476f42b?w=500&h=500",
+    "talles": [
+      {
+        "talle": "38",
+        "stock": 0
+      },
+      {
+        "talle": "39",
+        "stock": 0
+      },
+      {
+        "talle": "40",
+        "stock": 0
+      },
+      {
+        "talle": "41",
+        "stock": 1
+      },
+      {
+        "talle": "42",
+        "stock": 0
+      },
+      {
+        "talle": "43",
+        "stock": 0
+      }
+    ],
+    "stockTotal": 1
+  },
+  {
+    "id": 250,
+    "nombre": "ZOOMX GRAFITO",
+    "marca": "NIKE",
+    "precio": 36000,
+    "foto": "https://d3l9wd8kivvlqy.cloudfront.net/ab27e4da-e413-4c0a-aaf4-d2cc9565cb01?w=500&h=500",
+    "talles": [
+      {
+        "talle": "34",
+        "stock": 1
+      },
+      {
+        "talle": "35",
+        "stock": 1
+      }
+    ],
+    "stockTotal": 2
+  },
+  {
+    "id": 251,
+    "nombre": "ZOOMX NEGRA",
+    "marca": "NIKE",
+    "precio": 36000,
+    "foto": "https://d3l9wd8kivvlqy.cloudfront.net/e7527dbf-e134-4788-ae84-73579803849f?w=500&h=500",
+    "talles": [
+      {
+        "talle": "34",
+        "stock": 4
+      },
+      {
+        "talle": "35",
+        "stock": 4
+      },
+      {
+        "talle": "36",
+        "stock": 3
+      },
+      {
+        "talle": "37",
+        "stock": 3
+      },
+      {
+        "talle": "38",
+        "stock": 2
+      },
+      {
+        "talle": "39",
+        "stock": 1
+      },
+      {
+        "talle": "40",
+        "stock": 3
+      },
+      {
+        "talle": "41",
+        "stock": 1
+      },
+      {
+        "talle": "42",
+        "stock": 0
+      },
+      {
+        "talle": "43",
+        "stock": 0
+      }
+    ],
+    "stockTotal": 21
+  },
+  {
+    "id": 252,
+    "nombre": "ZOOMX NK47",
+    "marca": "NIKE",
+    "precio": 0,
+    "foto": "https://d3l9wd8kivvlqy.cloudfront.net/833f147e-8b88-4aea-b572-c52ceae7184b?w=500&h=500",
+    "talles": [
+      {
+        "talle": "34",
+        "stock": 1
+      },
+      {
+        "talle": "35",
+        "stock": 2
+      },
+      {
+        "talle": "36",
+        "stock": 2
+      },
+      {
+        "talle": "37",
+        "stock": 0
+      },
+      {
+        "talle": "38",
+        "stock": 0
+      },
+      {
+        "talle": "39",
+        "stock": 0
+      },
+      {
+        "talle": "40",
+        "stock": 2
+      },
+      {
+        "talle": "41",
+        "stock": 0
+      },
+      {
+        "talle": "42",
+        "stock": 0
+      },
+      {
+        "talle": "43",
+        "stock": 0
+      },
+      {
+        "talle": "44",
+        "stock": 0
+      },
+      {
+        "talle": "45",
+        "stock": 0
+      }
+    ],
+    "stockTotal": 7
+  },
+  {
+    "id": 253,
+    "nombre": "ZOOMX NK47 ROSA",
+    "marca": "NIKE",
+    "precio": 0,
+    "foto": "https://d3l9wd8kivvlqy.cloudfront.net/06309d2a-ec9f-4ec6-8948-a04d3c60bcd7?w=500&h=500",
+    "talles": [
+      {
+        "talle": "34",
+        "stock": 0
+      },
+      {
+        "talle": "35",
+        "stock": 2
+      },
+      {
+        "talle": "36",
+        "stock": 0
+      },
+      {
+        "talle": "37",
+        "stock": 0
+      },
+      {
+        "talle": "38",
+        "stock": 0
+      },
+      {
+        "talle": "39",
+        "stock": 0
+      }
+    ],
+    "stockTotal": 2
+  },
+  {
+    "id": 254,
+    "nombre": "ZOOMX ROSA",
+    "marca": "NIKE",
+    "precio": 36000,
+    "foto": "https://d3l9wd8kivvlqy.cloudfront.net/4049063f-9cb7-4bf6-8a73-04dd2dc4231b?w=500&h=500",
+    "talles": [
+      {
+        "talle": "34",
+        "stock": 4
+      },
+      {
+        "talle": "35",
+        "stock": 1
+      },
+      {
+        "talle": "36",
+        "stock": 1
+      },
+      {
+        "talle": "37",
+        "stock": 1
+      },
+      {
+        "talle": "38",
+        "stock": 0
+      },
+      {
+        "talle": "39",
+        "stock": 0
+      }
+    ],
+    "stockTotal": 7
+  },
+  {
+    "id": 255,
+    "nombre": "ZOOMX VOMERO ROSA",
+    "marca": "NIKE",
+    "precio": 40000,
+    "foto": "https://d3l9wd8kivvlqy.cloudfront.net/42c10df8-1f9f-4ef7-899c-9f5945224ba7?w=500&h=500",
+    "talles": [
+      {
+        "talle": "34",
+        "stock": 1
+      },
+      {
+        "talle": "35",
+        "stock": 2
+      },
+      {
+        "talle": "36",
+        "stock": 3
+      },
+      {
+        "talle": "37",
+        "stock": 0
+      },
+      {
+        "talle": "38",
+        "stock": 0
+      },
+      {
+        "talle": "39",
+        "stock": 0
+      }
+    ],
+    "stockTotal": 6
+  },
+  {
+    "nombre": "OJOTA ADIDAS NEGRA/ROSA",
+    "marca": "ADIDAS",
+    "precio": 16000,
+    "foto": "https://d3l9wd8kivvlqy.cloudfront.net/48dde0ca-1201-43bc-886b-90a67e13fa7b?w=500&h=500",
+    "talles": [
+      {
+        "talle": "34/35",
+        "stock": 7
+      },
+      {
+        "talle": "36/37",
+        "stock": 11
+      },
+      {
+        "talle": "38/39",
+        "stock": 4
+      }
+    ],
+    "stockTotal": 22,
+    "id": 256
+  }
+]
