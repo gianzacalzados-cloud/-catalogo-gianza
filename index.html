@@ -1571,7 +1571,7 @@ selectEntrega.addEventListener('change', (e) => {
       </div>
       <div class="form-group">
         <label class="form-label">Sucursal de Vía Cargo a retirar<span class="req-star">*</span></label>
-        <input type="text" class="form-input" id="input-sucursal" placeholder="Ej: Ramírez 116 o sucursal 4" autocomplete="off">
+        <input type="text" class="form-input" id="input-sucursal" placeholder="Dirección o número de sucursal" autocomplete="off">
       </div>
     `;
   }else if(val === 'Correo Argentino'){
@@ -1685,17 +1685,40 @@ btnEnviarPedido.addEventListener('click', () => {
   const whatsapp = document.getElementById('input-whatsapp').value.trim();
   const entrega = selectEntrega.value;
 
-  let lineas = cart.map(i => {
-    if(!i.precio) return `• ${i.nombre} (${i.marca}) — talle ${i.talle} — x${i.cantidad} — a consultar`;
-    const aplicaDescuento = cuentaParaDescuentoAdulto(i.categoria) && descuentoPorPar > 0;
-    const precioUnit = aplicaDescuento ? Math.max(i.precio - descuentoPorPar, 0) : i.precio;
-    const precioTxt = money(precioUnit * i.cantidad) + (aplicaDescuento ? ` (c/u ${money(precioUnit)}, con descuento por cantidad)` : '');
-    return `• ${i.nombre} (${i.marca}) — talle ${i.talle} — x${i.cantidad} — ${precioTxt}`;
+  // agrupa las líneas del carrito por producto, juntando los talles de cada uno
+  const grupos = [];
+  cart.forEach(i => {
+    let g = grupos.find(x => x.id === i.id);
+    if(!g){
+      g = { id: i.id, nombre: i.nombre, marca: i.marca, precio: i.precio, categoria: i.categoria, foto: i.foto, talles: [] };
+      grupos.push(g);
+    }
+    g.talles.push({ talle: i.talle, cantidad: i.cantidad });
   });
 
-  let avisoDescuento = '';
-  if(descuentoPorPar > 0){
-    avisoDescuento = `\n(Descuento por cantidad aplicado: -${money(descuentoPorPar)} por par en ${totalParesAdulto} pares adulto)`;
+  let subtotalSinDescuento = 0;
+  const lineas = grupos.map(g => {
+    const tallesTxt = g.talles.map(t => `talle ${t.talle} x${t.cantidad}`).join(', ');
+    const totalParesGrupo = g.talles.reduce((a,t) => a + t.cantidad, 0);
+    const fotoTxt = g.foto ? `\n   Foto: ${g.foto}` : '';
+    if(!g.precio){
+      return `• ${g.nombre} (${g.marca})\n   ${tallesTxt} — a consultar${fotoTxt}`;
+    }
+    const aplicaDescuento = cuentaParaDescuentoAdulto(g.categoria) && descuentoPorPar > 0;
+    const precioUnit = aplicaDescuento ? Math.max(g.precio - descuentoPorPar, 0) : g.precio;
+    subtotalSinDescuento += g.precio * totalParesGrupo;
+    return `• ${g.nombre} (${g.marca})\n   ${tallesTxt}\n   ${money(precioUnit)} c/par${aplicaDescuento ? ' (con descuento)' : ''} — subtotal ${money(precioUnit * totalParesGrupo)}${fotoTxt}`;
+  });
+
+  const ahorroTotal = subtotalSinDescuento - totalNumerico;
+  let resumen = '';
+  if(descuentoPorPar > 0 && ahorroTotal > 0){
+    resumen += `Subtotal: ${money(subtotalSinDescuento)}\n`;
+    resumen += `Descuento por cantidad (${totalParesAdulto} pares adulto, -${money(descuentoPorPar)}/par): -${money(ahorroTotal)}\n`;
+    resumen += `*Total a pagar: ${money(totalNumerico)}*${hayConsultar ? ' (+ productos a consultar)' : ''}\n`;
+    resumen += `¡Estás ahorrando ${money(ahorroTotal)} en este pedido!`;
+  }else{
+    resumen += `*Total a pagar: ${money(totalNumerico)}*${hayConsultar ? ' (+ productos a consultar)' : ''}`;
   }
 
   let mensaje = `Hola! Quiero hacer este pedido:\n\n`;
@@ -1728,8 +1751,8 @@ btnEnviarPedido.addEventListener('click', () => {
     mensaje += `- Sucursal a retirar: ${document.getElementById('input-sucursal').value.trim()}\n`;
   }
 
-  mensaje += `\n*DETALLE DEL PEDIDO*\n${lineas.join('\n')}\n\n`;
-  mensaje += `Total: ${money(totalNumerico)}${hayConsultar ? ' (+ productos a consultar)' : ''}${avisoDescuento}`;
+  mensaje += `\n*DETALLE DEL PEDIDO*\n${lineas.join('\n\n')}\n\n`;
+  mensaje += resumen;
 
   const url = `https://wa.me/${WHATSAPP_NUMERO}?text=${encodeURIComponent(mensaje)}`;
   window.open(url, '_blank');
