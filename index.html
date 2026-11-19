@@ -596,6 +596,30 @@
     width:100%; background: rgba(255,255,255,0.04); border:1px solid rgba(255,255,255,0.1); color: var(--text-dim);
     border-radius:10px; padding: 13px; min-height:46px; font-size: 13.5px; cursor:pointer; margin-top:10px;
   }
+
+  /* ---- formulario de datos / entrega ---- */
+  .form-section-title{
+    font-size: 11.5px; font-weight:800; color: var(--text-dim); text-transform:uppercase;
+    letter-spacing: 0.06em; margin: 18px 0 10px; border-bottom: 1px dashed var(--card-border); padding-bottom: 6px;
+  }
+  .form-section-title:first-child{ margin-top: 2px; }
+  .form-group{ margin-bottom: 13px; display:flex; flex-direction:column; gap:5px; }
+  .form-label{ font-size: 12px; font-weight:700; color: var(--text); }
+  .form-label .req-star{ color: var(--off); margin-left:2px; }
+  .form-label .opt-tag{ color: var(--text-dim); font-size:11px; font-weight:500; text-transform:lowercase; margin-left:4px; }
+  .form-input, .form-select{
+    width:100%; padding: 12px 13px; background: var(--bg-soft); border: 1px solid var(--card-border);
+    border-radius: 9px; color: var(--text); outline:none; font-family:inherit; font-size: 14.5px;
+    min-height: 46px; transition: border-color .15s ease;
+  }
+  .form-input::placeholder{ color: var(--text-dim); }
+  .form-input:focus, .form-select:focus{ border-color: var(--accent); }
+  .form-select{ cursor:pointer; }
+  .form-select option{ background: var(--bg-soft); color: var(--text); }
+  .form-error-alert{
+    display:none; background: rgba(230,72,79,0.12); border: 1px solid rgba(230,72,79,0.3);
+    color: var(--off); font-size: 12.5px; font-weight:600; padding: 10px 12px; border-radius: 9px; margin-top: 10px;
+  }
 </style>
 </head>
 <body>
@@ -701,20 +725,68 @@
 <div class="overlay" id="overlay"></div>
 <div class="drawer" id="drawer">
   <div class="drawer-header">
-    <h2>Tu pedido</h2>
+    <h2 id="drawer-titulo">Tu pedido</h2>
     <button class="drawer-close" id="drawer-close">&times;</button>
   </div>
-  <div class="descuento-info" id="descuento-info" style="display:none;"></div>
-  <div class="drawer-body" id="drawer-body"></div>
-  <div class="drawer-footer">
-    <div class="minimo-aviso" id="minimo-aviso" style="display:none;"></div>
-    <div class="total-row">
-      <span>Total</span>
-      <strong id="cart-total">$0</strong>
+
+  <div id="vista-carrito" style="display:contents;">
+    <div class="descuento-info" id="descuento-info" style="display:none;"></div>
+    <div class="drawer-body" id="drawer-body"></div>
+    <div class="drawer-footer">
+      <div class="minimo-aviso" id="minimo-aviso" style="display:none;"></div>
+      <div class="total-row">
+        <span>Total</span>
+        <strong id="cart-total">$0</strong>
+      </div>
+      <div class="total-nota" id="cart-nota" style="display:none;">* Hay productos a consultar precio, no están sumados al total.</div>
+      <button class="btn-pedido" id="btn-pedido">Continuar con tus datos</button>
+      <button class="btn-vaciar" id="btn-vaciar">Vaciar carrito</button>
     </div>
-    <div class="total-nota" id="cart-nota" style="display:none;">* Hay productos a consultar precio, no están sumados al total.</div>
-    <button class="btn-pedido" id="btn-pedido">Hacer pedido por WhatsApp</button>
-    <button class="btn-vaciar" id="btn-vaciar">Vaciar carrito</button>
+  </div>
+
+  <div id="vista-form-datos" style="display:none;">
+    <div class="drawer-body">
+      <form id="form-datos" novalidate autocomplete="off">
+        <div class="form-section-title">Tus datos</div>
+
+        <div class="form-group">
+          <label class="form-label">Nombre y apellido<span class="req-star">*</span></label>
+          <input type="text" class="form-input text-only-input" id="input-nombre" placeholder="Nombre y apellido" autocomplete="off">
+        </div>
+        <div class="form-group">
+          <label class="form-label">DNI<span class="req-star">*</span></label>
+          <input type="text" class="form-input digits-only-input" id="input-dni" placeholder="Solo números" autocomplete="off">
+        </div>
+        <div class="form-group">
+          <label class="form-label">WhatsApp<span class="req-star">*</span></label>
+          <input type="text" class="form-input digits-only-input" id="input-whatsapp" placeholder="Solo números" autocomplete="off">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Email <span class="opt-tag" id="email-opt-tag">(opcional)</span></label>
+          <input type="email" class="form-input" id="input-email" placeholder="Email de contacto" autocomplete="off">
+        </div>
+
+        <div class="form-section-title">Método de entrega</div>
+
+        <div class="form-group">
+          <label class="form-label">Forma de entrega<span class="req-star">*</span></label>
+          <select class="form-select" id="select-entrega">
+            <option value="" disabled selected>Seleccioná una opción</option>
+            <option value="Mensajería Express">Mensajería Express (CABA/GBA)</option>
+            <option value="Vía Cargo">Vía Cargo a sucursal</option>
+            <option value="Correo Argentino">Correo Argentino a sucursal</option>
+          </select>
+        </div>
+
+        <div id="campos-entrega-dinamicos"></div>
+
+        <div class="form-error-alert" id="form-error-alert"></div>
+      </form>
+    </div>
+    <div class="drawer-footer">
+      <button class="btn-pedido" id="btn-enviar-pedido" disabled>Enviar pedido por WhatsApp</button>
+      <button class="btn-vaciar" id="btn-volver-carrito">← Volver al carrito</button>
+    </div>
   </div>
 </div>
 
@@ -1337,6 +1409,7 @@ document.getElementById('drawer-body').addEventListener('click', (e) => {
 
 function abrirDrawer(){
   renderDrawer();
+  mostrarVistaCarrito();
   document.getElementById('drawer').classList.add('open');
   document.getElementById('overlay').classList.add('open');
 }
@@ -1359,18 +1432,165 @@ document.getElementById('btn-vaciar').addEventListener('click', () => {
   }
 });
 
+// ---------- vista de datos + entrega (antes de enviar por WhatsApp) ----------
+const vistaCarrito = document.getElementById('vista-carrito');
+const vistaFormDatos = document.getElementById('vista-form-datos');
+const drawerTitulo = document.getElementById('drawer-titulo');
+const formDatos = document.getElementById('form-datos');
+const selectEntrega = document.getElementById('select-entrega');
+const camposEntregaDinamicos = document.getElementById('campos-entrega-dinamicos');
+const emailOptTag = document.getElementById('email-opt-tag');
+const formErrorAlert = document.getElementById('form-error-alert');
+const btnEnviarPedido = document.getElementById('btn-enviar-pedido');
+
+function mostrarVistaCarrito(){
+  vistaCarrito.style.display = 'contents';
+  vistaFormDatos.style.display = 'none';
+  drawerTitulo.textContent = 'Tu pedido';
+}
+function mostrarVistaFormDatos(){
+  vistaCarrito.style.display = 'none';
+  vistaFormDatos.style.display = 'contents';
+  drawerTitulo.textContent = 'Datos para el envío';
+}
+
 document.getElementById('btn-pedido').addEventListener('click', () => {
   if(cart.length === 0){
     alert('Tu carrito está vacío. Agregá al menos una zapatilla antes de hacer el pedido.');
     return;
   }
-
-  const { totalPares, totalParesAdulto, descuentoPorPar, totalNumerico, hayConsultar } = calcularTotalesCarrito();
-
+  const { totalPares } = calcularTotalesCarrito();
   if(totalPares < PEDIDO_MINIMO_PARES){
     alert(`El pedido mínimo es de ${PEDIDO_MINIMO_PARES} pares. Te faltan ${PEDIDO_MINIMO_PARES - totalPares} par(es) más.`);
     return;
   }
+  mostrarVistaFormDatos();
+  validarFormDatos();
+});
+
+document.getElementById('btn-volver-carrito').addEventListener('click', mostrarVistaCarrito);
+
+selectEntrega.addEventListener('change', (e) => {
+  const val = e.target.value;
+  camposEntregaDinamicos.innerHTML = '';
+  formErrorAlert.style.display = 'none';
+
+  if(val === 'Mensajería Express'){
+    emailOptTag.textContent = '(opcional)';
+    camposEntregaDinamicos.innerHTML = `
+      <div class="form-group">
+        <label class="form-label">Dirección de entrega<span class="req-star">*</span></label>
+        <input type="text" class="form-input" id="input-direccion" placeholder="Calle y altura" autocomplete="off">
+      </div>
+      <div class="form-group">
+        <label class="form-label">N° / piso / depto<span class="req-star">*</span></label>
+        <input type="text" class="form-input" id="input-nro" placeholder="Piso / depto / casa" autocomplete="off">
+      </div>
+      <div class="form-group">
+        <label class="form-label">Entre calles<span class="req-star">*</span></label>
+        <input type="text" class="form-input" id="input-entre-calles" placeholder="Ej: 123 y 125, o calles cercanas" autocomplete="off">
+      </div>
+      <div class="form-group">
+        <label class="form-label">Código postal<span class="req-star">*</span></label>
+        <input type="text" class="form-input digits-only-input" id="input-cp" placeholder="CP (números)" autocomplete="off">
+      </div>
+      <div class="form-group">
+        <label class="form-label">Localidad<span class="req-star">*</span></label>
+        <input type="text" class="form-input" id="input-localidad" placeholder="Localidad / barrio" autocomplete="off">
+      </div>
+    `;
+  }else if(val === 'Vía Cargo' || val === 'Correo Argentino'){
+    emailOptTag.textContent = '(obligatorio)';
+    camposEntregaDinamicos.innerHTML = `
+      <div class="form-group">
+        <label class="form-label">Localidad<span class="req-star">*</span></label>
+        <input type="text" class="form-input" id="input-localidad" placeholder="Localidad de destino" autocomplete="off">
+      </div>
+      <div class="form-group">
+        <label class="form-label">Sucursal a retirar<span class="req-star">*</span></label>
+        <input type="text" class="form-input" id="input-sucursal" placeholder="Ej: Ramírez 116 o sucursal 4" autocomplete="off">
+      </div>
+    `;
+  }
+
+  adjuntarListenersForm();
+  validarFormDatos();
+});
+
+function adjuntarListenersForm(){
+  formDatos.querySelectorAll('input, select').forEach(el => {
+    el.removeEventListener('input', restringirInput);
+    el.addEventListener('input', restringirInput);
+    el.removeEventListener('input', validarFormDatos);
+    el.addEventListener('input', validarFormDatos);
+    el.removeEventListener('change', validarFormDatos);
+    el.addEventListener('change', validarFormDatos);
+  });
+}
+
+function restringirInput(e){
+  const el = e.target;
+  if(el.classList.contains('digits-only-input')){
+    el.value = el.value.replace(/[^0-9]/g, '');
+  }
+}
+
+function emailValido(valor){
+  if(!valor) return false;
+  return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(valor);
+}
+
+function validarFormDatos(){
+  const nombre = document.getElementById('input-nombre')?.value.trim() || '';
+  const dni = document.getElementById('input-dni')?.value.trim() || '';
+  const whatsapp = document.getElementById('input-whatsapp')?.value.trim() || '';
+  const email = document.getElementById('input-email')?.value.trim() || '';
+  const entrega = selectEntrega.value;
+
+  let valido = true;
+  formErrorAlert.style.display = 'none';
+
+  if(!nombre || !dni || !whatsapp || !entrega) valido = false;
+
+  if(email && !emailValido(email)){
+    valido = false;
+    formErrorAlert.textContent = 'Ingresá un email válido (con @ y dominio), o dejalo vacío.';
+    formErrorAlert.style.display = 'block';
+  }
+
+  if(entrega === 'Mensajería Express'){
+    const direccion = document.getElementById('input-direccion')?.value.trim() || '';
+    const nro = document.getElementById('input-nro')?.value.trim() || '';
+    const entreCalles = document.getElementById('input-entre-calles')?.value.trim() || '';
+    const cp = document.getElementById('input-cp')?.value.trim() || '';
+    const localidad = document.getElementById('input-localidad')?.value.trim() || '';
+    if(!direccion || !nro || !entreCalles || !cp || !localidad) valido = false;
+  }else if(entrega === 'Vía Cargo' || entrega === 'Correo Argentino'){
+    const localidad = document.getElementById('input-localidad')?.value.trim() || '';
+    const sucursal = document.getElementById('input-sucursal')?.value.trim() || '';
+    if(!localidad || !sucursal) valido = false;
+    if(!email){
+      valido = false;
+      if(nombre && dni && whatsapp && localidad && sucursal){
+        formErrorAlert.textContent = 'El email es obligatorio para envíos por Vía Cargo o Correo Argentino.';
+        formErrorAlert.style.display = 'block';
+      }
+    }
+  }
+
+  btnEnviarPedido.disabled = !valido;
+}
+
+adjuntarListenersForm();
+
+btnEnviarPedido.addEventListener('click', () => {
+  const { totalPares, totalParesAdulto, descuentoPorPar, totalNumerico, hayConsultar } = calcularTotalesCarrito();
+
+  const nombre = document.getElementById('input-nombre').value.trim();
+  const dni = document.getElementById('input-dni').value.trim();
+  const whatsapp = document.getElementById('input-whatsapp').value.trim();
+  const email = document.getElementById('input-email').value.trim();
+  const entrega = selectEntrega.value;
 
   let lineas = cart.map(i => {
     if(!i.precio) return `• ${i.nombre} (${i.marca}) — talle ${i.talle} — x${i.cantidad} — a consultar`;
@@ -1385,7 +1605,27 @@ document.getElementById('btn-pedido').addEventListener('click', () => {
     avisoDescuento = `\n(Descuento por cantidad aplicado: -${money(descuentoPorPar)} por par en ${totalParesAdulto} pares adulto)`;
   }
 
-  let mensaje = `Hola! Quiero hacer este pedido:\n\n${lineas.join('\n')}\n\nTotal: ${money(totalNumerico)}${hayConsultar ? ' (+ productos a consultar)' : ''}${avisoDescuento}`;
+  let mensaje = `Hola! Quiero hacer este pedido:\n\n`;
+  mensaje += `*DATOS DEL CLIENTE*\n`;
+  mensaje += `- Nombre: ${nombre}\n`;
+  mensaje += `- DNI: ${dni}\n`;
+  mensaje += `- WhatsApp: ${whatsapp}\n`;
+  if(email) mensaje += `- Email: ${email}\n`;
+
+  mensaje += `\n*MÉTODO DE ENTREGA*\n`;
+  mensaje += `- Forma: ${entrega}\n`;
+  if(entrega === 'Mensajería Express'){
+    mensaje += `- Dirección: ${document.getElementById('input-direccion').value.trim()} N° ${document.getElementById('input-nro').value.trim()}\n`;
+    mensaje += `- Entre calles: ${document.getElementById('input-entre-calles').value.trim()}\n`;
+    mensaje += `- Código postal: ${document.getElementById('input-cp').value.trim()}\n`;
+    mensaje += `- Localidad: ${document.getElementById('input-localidad').value.trim()}\n`;
+  }else{
+    mensaje += `- Localidad: ${document.getElementById('input-localidad').value.trim()}\n`;
+    mensaje += `- Sucursal a retirar: ${document.getElementById('input-sucursal').value.trim()}\n`;
+  }
+
+  mensaje += `\n*DETALLE DEL PEDIDO*\n${lineas.join('\n')}\n\n`;
+  mensaje += `Total: ${money(totalNumerico)}${hayConsultar ? ' (+ productos a consultar)' : ''}${avisoDescuento}`;
 
   const url = `https://wa.me/${WHATSAPP_NUMERO}?text=${encodeURIComponent(mensaje)}`;
   window.open(url, '_blank');
