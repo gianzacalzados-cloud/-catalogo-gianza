@@ -500,9 +500,16 @@
             <option value="">Todos los modelos</option>
             <option value="__sin__">Sin modelo asignado</option>
           </select>
+          <select id="filtro-precio">
+            <option value="">Todos los precios</option>
+            <option value="__sin__">Sin precio cargado</option>
+            <option value="__con__">Con precio cargado</option>
+          </select>
           <select id="orden-admin">
             <option value="nombre-asc">Nombre A-Z</option>
             <option value="nombre-desc">Nombre Z-A</option>
+            <option value="precio-asc">Precio: menor a mayor</option>
+            <option value="precio-desc">Precio: mayor a menor</option>
           </select>
           <button class="btn-limpiar-filtros" id="btn-limpiar-filtros">Limpiar filtros</button>
         </div>
@@ -805,6 +812,7 @@ function productosFiltrados(){
   const categoria = document.getElementById('filtro-categoria').value;
   const talle = document.getElementById('filtro-talle').value;
   const modelo = document.getElementById('filtro-modelo').value;
+  const precio = document.getElementById('filtro-precio').value;
 
   return productos.filter(p => {
     const matchId = q && String(p.id) === q;
@@ -814,15 +822,25 @@ function productosFiltrados(){
     if(talle && !p.talles.some(t => t.talle === talle)) return false;
     if(modelo === '__sin__' && p.modelo) return false;
     if(modelo && modelo !== '__sin__' && p.modelo !== modelo) return false;
+    if(precio === '__sin__' && p.precio) return false;
+    if(precio === '__con__' && !p.precio) return false;
     return true;
   });
 }
 
-// ---------- orden: alfabetico elegido, pero los agotados siempre al final sea cual sea el filtro ----------
+// ---------- orden: alfabetico o por precio elegido, pero los agotados siempre al final sea cual sea el filtro ----------
 const collatorEs = new Intl.Collator('es', { sensitivity: 'base', numeric: true });
 function productosOrdenados(lista){
   const orden = document.getElementById('orden-admin').value;
   const ordenados = [...lista].sort((a, b) => {
+    if(orden === 'precio-asc' || orden === 'precio-desc'){
+      const pa = a.precio || 0, pb = b.precio || 0;
+      // los que no tienen precio cargado van siempre al final, sea cual sea el orden elegido
+      if(pa === 0 && pb === 0) return collatorEs.compare(a.nombre, b.nombre);
+      if(pa === 0) return 1;
+      if(pb === 0) return -1;
+      return orden === 'precio-desc' ? pb - pa : pa - pb;
+    }
     return orden === 'nombre-desc'
       ? collatorEs.compare(b.nombre, a.nombre)
       : collatorEs.compare(a.nombre, b.nombre);
@@ -832,7 +850,7 @@ function productosOrdenados(lista){
   return [...disponibles, ...agotados];
 }
 
-['buscador-admin','filtro-marca','filtro-categoria','filtro-talle','filtro-modelo','orden-admin'].forEach(id => {
+['buscador-admin','filtro-marca','filtro-categoria','filtro-talle','filtro-modelo','filtro-precio','orden-admin'].forEach(id => {
   document.getElementById(id).addEventListener('input', renderLista);
   document.getElementById(id).addEventListener('change', renderLista);
 });
@@ -846,6 +864,7 @@ document.getElementById('btn-limpiar-filtros').addEventListener('click', () => {
   document.getElementById('filtro-categoria').value = '';
   document.getElementById('filtro-talle').value = '';
   document.getElementById('filtro-modelo').value = '';
+  document.getElementById('filtro-precio').value = '';
   document.getElementById('orden-admin').value = 'nombre-asc';
   renderLista();
 });
