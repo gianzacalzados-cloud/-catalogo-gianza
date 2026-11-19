@@ -836,8 +836,9 @@ document.getElementById('btn-limpiar-filtros').addEventListener('click', () => {
 function renderLista(){
   const filtrados = productosOrdenados(productosFiltrados());
   const cont = document.getElementById('lista-productos');
+  const unidadesTotales = filtrados.reduce((suma, p) => suma + (p.stockTotal || 0), 0);
   document.getElementById('contador').textContent =
-    `${filtrados.length} producto${filtrados.length===1?'':'s'}`;
+    `${filtrados.length} producto${filtrados.length===1?'':'s'} · ${unidadesTotales} unidad${unidadesTotales===1?'':'es'} en total`;
 
   if(filtrados.length === 0){
     cont.className = 'empty';
