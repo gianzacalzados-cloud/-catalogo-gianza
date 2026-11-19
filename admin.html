@@ -379,6 +379,68 @@
     padding:13px 16px; font-size:13.5px; font-weight:600; cursor:pointer; transition: all .15s ease;
   }
   .btn-cerrar-modal:hover{ border-color:var(--text-dim); color:var(--text); }
+
+  /* ---------------------------------------------------------------------
+     MOBILE (iPhone 13 Pro / 14 Pro / 15 Pro / 16 Pro / 17 Pro y similares,
+     ancho CSS ~390-430px). Todo lo de arriba queda intacto para PC; estos
+     ajustes solo entran en pantallas angostas.
+     --------------------------------------------------------------------- */
+  @media (max-width: 480px){
+    header{ padding:13px 14px calc(12px + env(safe-area-inset-top,0px)); }
+    header h1{ font-size:16px; }
+    .btn-nuevo{ padding:9px 13px; font-size:12.5px; }
+    .btn-salir{ padding:8px 12px; font-size:12px; }
+
+    main{ padding:16px 12px 50px; }
+
+    /* pestañas: en vez de amontonarse o desbordar la pantalla, se deslizan
+       horizontalmente con el dedo */
+    .tabs-admin{
+      flex-wrap:nowrap; overflow-x:auto; -webkit-overflow-scrolling:touch;
+      padding-bottom:4px; margin-left:-12px; margin-right:-12px; padding-left:12px; padding-right:12px;
+      scrollbar-width:none;
+    }
+    .tabs-admin::-webkit-scrollbar{ display:none; }
+    .tab-admin{ white-space:nowrap; flex-shrink:0; font-size:12.5px; margin-right:16px; }
+
+    .toolbar{ margin-bottom:14px; }
+    .toolbar input[type="text"]{ padding:11px 14px; font-size:13.5px; }
+    .filtros-row select{ flex:1 1 calc(50% - 4px); font-size:12px; padding:9px 10px; padding-right:24px; }
+    .btn-limpiar-filtros, .btn-reordenar{ flex:1 1 100%; text-align:center; }
+
+    /* filas de producto: un poco más compactas, el toggle y el chevron
+       se mantienen visibles sin que el texto se corte */
+    .fila{ padding:11px 12px; gap:10px; }
+    .fila img{ width:40px; height:40px; }
+    .fila-info .nombre{ font-size:13px; }
+    .fila-info .sub{ font-size:10.5px; }
+    .fila-right .precio{ font-size:13px; }
+    .cat-chip{ display:none; } /* en mobile no hay lugar; ya se ve el talle/stock al entrar a la ficha */
+
+    .boxhero-resumen{ grid-template-columns:1fr 1fr; }
+    .boxhero-stat .num{ font-size:18px; }
+    .boxhero-upload{ padding:12px; }
+
+    .movimiento-fila{ flex-wrap:wrap; padding:11px 12px; }
+    .movimiento-stock{ width:100%; justify-content:space-between; margin-top:6px; padding-top:6px; border-top:1px solid var(--card-border); }
+
+    .pedido-card{ padding:13px; }
+    .pedido-acciones{ flex-direction:column; }
+    .pedido-acciones button{ width:100%; }
+
+    /* modal de editar producto: ocupa casi todo el ancho, con menos padding
+       y los campos de a uno por fila en vez de 2-3 columnas apretadas */
+    .modal-overlay{ padding:0; align-items:flex-end; }
+    .modal-box{ max-width:100%; width:100%; border-radius:16px 16px 0 0; padding:20px 16px calc(20px + env(safe-area-inset-bottom,0px)); margin-top:0; max-height:92vh; overflow-y:auto; }
+    .modal-box h2{ font-size:17px; margin-bottom:16px; }
+    .fila-2, .fila-3{ grid-template-columns:1fr; }
+    .modal-footer{ flex-wrap:wrap; }
+    .modal-footer .btn-guardar-modal{ flex:1 1 100%; order:-1; }
+    .modal-footer .btn-borrar-modal, .modal-footer .btn-cerrar-modal{ flex:1 1 calc(50% - 5px); }
+
+    .boxhero-fila{ padding:10px; gap:8px; }
+    .boxhero-fila .info{ min-width:120px; }
+  }
 </style>
 </head>
 <body>
