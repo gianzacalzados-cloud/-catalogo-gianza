@@ -183,6 +183,7 @@
     border-radius:10px; padding:10px 12px; margin-bottom:8px; flex-wrap:wrap;
   }
   .boxhero-fila img{ width:38px; height:38px; object-fit:cover; border-radius:7px; background:var(--img-bg); flex-shrink:0; }
+  .boxhero-fila input[type="checkbox"]{ width:17px; height:17px; flex-shrink:0; accent-color:var(--accent); }
   .boxhero-fila .info{ min-width:170px; }
   .boxhero-fila .info .nombre{ font-size:12.5px; font-weight:700; }
   .boxhero-fila .info .detalle{ font-size:11px; color:var(--text-dim); margin-top:2px; }
@@ -259,6 +260,24 @@
   .fila-right .stock.agotado{ color:var(--off); background:var(--off-soft); }
   .chevron{ color:var(--text-faint); font-size:18px; flex-shrink:0; transition:transform .15s ease; }
   .fila:hover .chevron{ transform:translateX(2px); color:var(--text-dim); }
+  .fila.oculto{ opacity:0.5; }
+  .chip-oculto{
+    display:inline-block; font-size:10px; font-weight:700; color:var(--off); background:var(--off-soft);
+    border-radius:5px; padding:2px 7px; margin-left:6px; text-transform:uppercase; letter-spacing:0.03em;
+  }
+  .toggle-visible{
+    position:relative; display:inline-block; width:38px; height:22px; flex-shrink:0; cursor:pointer;
+  }
+  .toggle-visible input{ opacity:0; width:0; height:0; }
+  .toggle-visible .toggle-slider{
+    position:absolute; inset:0; background:var(--card-border); border-radius:999px; transition:background .15s ease;
+  }
+  .toggle-visible .toggle-slider::before{
+    content:''; position:absolute; width:16px; height:16px; left:3px; top:3px; background:#fff; border-radius:50%;
+    transition:transform .15s ease;
+  }
+  .toggle-visible input:checked + .toggle-slider{ background:var(--ok); }
+  .toggle-visible input:checked + .toggle-slider::before{ transform:translateX(16px); }
 
   .cat-chip{
     display:inline-block; font-size:9.5px; padding:2px 8px; border-radius:999px;
@@ -477,6 +496,15 @@
             <div class="num" id="boxhero-stat-sinbox">0</div>
             <div class="label">Talles de tu catálogo sin equivalente en BoxHero</div>
           </div>
+        </div>
+
+        <div id="boxhero-nuevos-wrap" style="display:none;">
+          <div class="boxhero-seccion-titulo">Modelos nuevos (no están en tu catálogo web todavía)</div>
+          <div class="reordenar-aviso">
+            Estos artículos de BoxHero no corresponden a ningún producto existente en tu web. Se van a crear automáticamente
+            con la foto, el precio y los talles que ya tenés cargados en BoxHero. Desmarcá los que no quieras crear.
+          </div>
+          <div id="boxhero-nuevos-lista"></div>
         </div>
 
         <div id="boxhero-manual-wrap">
@@ -742,21 +770,27 @@ function renderLista(){
     const modeloChip = p.modelo
       ? `<span class="cat-chip">${escapeHtml(p.modelo)}</span>`
       : `<span class="cat-chip sin-modelo">Sin modelo</span>`;
+    const visible = p.visible !== false;
+    const ocultoChip = visible ? '' : `<span class="chip-oculto">Oculto</span>`;
     const fotoHtml = p.foto
       ? `<img src="${escapeHtml(p.foto)}" alt="" onerror="this.style.visibility='hidden'">`
       : `<div style="width:48px;height:48px;border-radius:8px;background:#0d0f14;flex-shrink:0;"></div>`;
 
     return `
-      <div class="fila" data-id="${p.id}">
+      <div class="fila ${visible ? '' : 'oculto'}" data-id="${p.id}">
         ${fotoHtml}
         <div class="fila-info">
-          <div class="nombre">${escapeHtml(p.nombre)}${catChip}${modeloChip}</div>
+          <div class="nombre">${escapeHtml(p.nombre)}${catChip}${modeloChip}${ocultoChip}</div>
           <div class="sub">${escapeHtml(p.marca) || '—'} · Cód. ${p.id}</div>
         </div>
         <div class="fila-right">
           ${precioHtml}
           <div class="stock ${agotado ? 'agotado' : ''}">${agotado ? 'Agotado' : p.stockTotal + ' u.'}</div>
         </div>
+        <label class="toggle-visible" title="${visible ? 'Visible en la web (tocá para ocultar)' : 'Oculto de la web (tocá para mostrar)'}" onclick="event.stopPropagation()">
+          <input type="checkbox" class="chk-visible" data-id="${p.id}" ${visible ? 'checked' : ''} />
+          <span class="toggle-slider"></span>
+        </label>
         <div class="chevron">›</div>
       </div>
     `;
@@ -767,6 +801,24 @@ document.getElementById('lista-productos').addEventListener('click', (e) => {
   const fila = e.target.closest('.fila');
   if(!fila) return;
   abrirModal(parseInt(fila.dataset.id, 10));
+});
+
+document.getElementById('lista-productos').addEventListener('change', async (e) => {
+  const chk = e.target.closest('.chk-visible');
+  if(!chk) return;
+  const id = parseInt(chk.dataset.id, 10);
+  const producto = productos.find(p => p.id === id);
+  if(!producto) return;
+  const nuevoValor = chk.checked;
+  const { error } = await sb.from('productos').update({ visible: nuevoValor }).eq('id', id);
+  if(error){
+    mostrarStatus('error', 'No se pudo cambiar la visibilidad: ' + error.message);
+    chk.checked = !nuevoValor;
+    return;
+  }
+  producto.visible = nuevoValor;
+  mostrarStatus('ok', nuevoValor ? 'Producto visible en la web.' : 'Producto oculto de la web.');
+  renderLista();
 });
 
 // ---------- pestaña Reordenar: arrastrar y soltar tarjetas, igual que el catálogo publico ----------
@@ -1403,6 +1455,7 @@ document.getElementById('lista-pedidos').addEventListener('click', async (e) => 
 // ---------- BoxHero: vinculación de stock ----------
 let boxheroAutoMatches = [];
 let boxheroManual = [];
+let boxheroNuevosModelos = [];
 
 document.getElementById('boxhero-file').addEventListener('change', (e) => {
   document.getElementById('btn-boxhero-procesar').disabled = !e.target.files.length;
@@ -1435,7 +1488,16 @@ function procesarMatchingBoxhero(items){
   // indice de talles del catalogo: "marca|nombre|talle" -> {producto, idx}
   const indice = new Map();
   const indiceSinMarca = new Map(); // "nombre|talle" -> [ {producto, idx} ]
+  // indice de productos (sin importar el talle): para saber si el modelo ya existe en la web
+  const indiceProducto = new Map(); // "marca|nombre" -> producto
+  const indiceProductoSinMarca = new Map(); // "nombre" -> [ producto ]
   productos.forEach(p => {
+    const claveProd = normTextoBox(p.marca) + '|' + normTextoBox(p.nombre);
+    indiceProducto.set(claveProd, p);
+    const claveProd2 = normTextoBox(p.nombre);
+    if(!indiceProductoSinMarca.has(claveProd2)) indiceProductoSinMarca.set(claveProd2, []);
+    indiceProductoSinMarca.get(claveProd2).push(p);
+
     (p.talles || []).forEach((t, idx) => {
       const clave = normTextoBox(p.marca) + '|' + normTextoBox(p.nombre) + '|' + normTalleBox(t.talle);
       indice.set(clave, { producto: p, idx });
@@ -1447,6 +1509,7 @@ function procesarMatchingBoxhero(items){
 
   const auto = [];
   const manual = [];
+  const nuevosModelos = new Map(); // "marca|nombre" -> { nombre, marca, price, photo_url, items: [{boxItem, talle}] }
 
   items.forEach(item => {
     const attrs = item.attrs || [];
@@ -1454,7 +1517,7 @@ function procesarMatchingBoxhero(items){
     const talleAttr = attrs.find(a => a.name === 'Talle');
     const marcaAttr = attrs.find(a => a.name === 'Marca');
     if(!talleAttr || !talleAttr.value){
-      manual.push({ item, talle: '', marca: marcaAttr ? marcaAttr.value : '' });
+      manual.push({ item, talle: '', marca: marcaAttr ? marcaAttr.value : '', productoExistenteId: null });
       return;
     }
     const talle = normTalleBox(talleAttr.value);
@@ -1474,8 +1537,33 @@ function procesarMatchingBoxhero(items){
 
     if(match){
       auto.push({ producto: match.producto, idx: match.idx, boxItem: item });
+      return;
+    }
+
+    // no matcheo el talle puntual: ¿existe al menos el producto (otro talle de este mismo modelo)?
+    let productoExistente = null;
+    if(marca && indiceProducto.has(marca + '|' + nombre)){
+      productoExistente = indiceProducto.get(marca + '|' + nombre);
     } else {
-      manual.push({ item, talle: talleAttr.value, marca: marcaAttr ? marcaAttr.value : '' });
+      const candidatosProd = indiceProductoSinMarca.get(nombre);
+      if(candidatosProd && candidatosProd.length === 1) productoExistente = candidatosProd[0];
+    }
+
+    if(productoExistente){
+      manual.push({ item, talle: talleAttr.value, marca: marcaAttr ? marcaAttr.value : '', productoExistenteId: productoExistente.id });
+    } else {
+      // modelo completamente nuevo: lo agrupamos para poder crearlo de un clic
+      const claveModelo = marca + '|' + nombre;
+      if(!nuevosModelos.has(claveModelo)){
+        nuevosModelos.set(claveModelo, {
+          nombre: item.name,
+          marca: marcaAttr ? marcaAttr.value : '',
+          price: item.price,
+          photo_url: item.photo_url,
+          items: []
+        });
+      }
+      nuevosModelos.get(claveModelo).items.push({ boxItem: item, talle: talleAttr.value });
     }
   });
 
@@ -1487,6 +1575,7 @@ function procesarMatchingBoxhero(items){
 
   boxheroAutoMatches = auto;
   boxheroManual = manual;
+  boxheroNuevosModelos = [...nuevosModelos.values()];
 
   document.getElementById('boxhero-stat-auto').textContent = auto.length;
   document.getElementById('boxhero-stat-manual').textContent = manual.length;
@@ -1494,12 +1583,13 @@ function procesarMatchingBoxhero(items){
   document.getElementById('boxhero-resultado').style.display = 'block';
 
   renderBoxheroManual();
+  renderBoxheroNuevosModelos();
 }
 
-function opcionesProductosHtmlBox(){
+function opcionesProductosHtmlBox(seleccionadoId){
   const ordenados = [...productos].sort((a,b) => collatorEs.compare((a.marca||'')+a.nombre, (b.marca||'')+b.nombre));
   return '<option value="">— elegir producto —</option>' + ordenados.map(p =>
-    `<option value="${p.id}">${escapeHtml(p.marca||'')} — ${escapeHtml(p.nombre)}</option>`
+    `<option value="${p.id}" ${seleccionadoId && String(p.id)===String(seleccionadoId)?'selected':''}>${escapeHtml(p.marca||'')} — ${escapeHtml(p.nombre)}</option>`
   ).join('');
 }
 
@@ -1527,7 +1617,7 @@ function renderBoxheroManual(){
         <div class="detalle">${m.marca ? escapeHtml(m.marca)+' · ' : ''}Talle ${escapeHtml(m.talle || '(sin talle)')}</div>
       </div>
       <span class="flecha">→</span>
-      <select class="sel-producto" data-i="${i}">${opcionesProductosHtmlBox()}</select>
+      <select class="sel-producto" data-i="${i}">${opcionesProductosHtmlBox(m.productoExistenteId)}</select>
       <select class="sel-talle" data-i="${i}" disabled><option value="">—</option></select>
     </div>
   `).join('');
@@ -1545,7 +1635,45 @@ function renderBoxheroManual(){
         selTalle.disabled = true;
       }
     });
+    // si ya viene con un producto pre-seleccionado (mismo modelo, otro talle), arma el segundo
+    // desplegable de una así no hay que tocar el primero para que aparezca
+    if(sel.value){
+      sel.dispatchEvent(new Event('change'));
+    }
   });
+}
+
+function categoriaSugeridaBox(nombre){
+  const n = normTextoBox(nombre);
+  if(n.includes('OJOTA')) return 'Ojotas';
+  if(n.includes('INFANT') || n.includes('KIDS')) return 'Infantil';
+  return '';
+}
+
+function renderBoxheroNuevosModelos(){
+  const wrap = document.getElementById('boxhero-nuevos-wrap');
+  const cont = document.getElementById('boxhero-nuevos-lista');
+  if(!boxheroNuevosModelos || boxheroNuevosModelos.length === 0){
+    wrap.style.display = 'none';
+    cont.innerHTML = '';
+    return;
+  }
+  wrap.style.display = 'block';
+  cont.innerHTML = boxheroNuevosModelos.map((modelo, i) => {
+    const talles = modelo.items.map(it => it.talle).join(', ');
+    const stockTotal = modelo.items.reduce((acc, it) => acc + (it.boxItem.quantity || 0), 0);
+    const categoriaSugerida = categoriaSugeridaBox(modelo.nombre);
+    return `
+      <div class="boxhero-fila" data-i="${i}">
+        <input type="checkbox" class="chk-nuevo-modelo" data-i="${i}" checked />
+        <img src="${modelo.photo_url || ''}" onerror="this.style.visibility='hidden'" />
+        <div class="info">
+          <div class="nombre">${escapeHtml(modelo.marca ? modelo.marca + ' — ' : '')}${escapeHtml(modelo.nombre)}</div>
+          <div class="detalle">Talles: ${escapeHtml(talles)} · Stock total: ${stockTotal} · $${Number(modelo.price || 0).toLocaleString('es-AR')}${categoriaSugerida ? ' · Categoría: ' + categoriaSugerida : ''}</div>
+        </div>
+      </div>
+    `;
+  }).join('');
 }
 
 document.getElementById('btn-boxhero-guardar').addEventListener('click', async () => {
@@ -1576,7 +1704,7 @@ document.getElementById('btn-boxhero-guardar').addEventListener('click', async (
     if(!producto) return;
     const talles = talleClonadoDe(producto);
     if(selTalle.value === '__nuevo__'){
-      talles.push({ talle: m.talle || '', stock: 0, boxhero_id: m.item.id });
+      talles.push({ talle: m.talle || '', stock: m.item.quantity || 0, boxhero_id: m.item.id });
     } else {
       const idx = Number(selTalle.value);
       talles[idx] = { ...talles[idx], boxhero_id: m.item.id };
@@ -1589,10 +1717,39 @@ document.getElementById('btn-boxhero-guardar').addEventListener('click', async (
     if(error) errores++;
   }
 
+  // crear los modelos nuevos que queden tildados
+  let creados = 0;
+  const contNuevos = document.getElementById('boxhero-nuevos-lista');
+  const checksNuevos = [...contNuevos.querySelectorAll('.chk-nuevo-modelo')];
+  for(const chk of checksNuevos){
+    if(!chk.checked) continue;
+    const i = Number(chk.dataset.i);
+    const modelo = boxheroNuevosModelos[i];
+    const talles = modelo.items.map(it => ({
+      talle: it.talle,
+      stock: it.boxItem.quantity || 0,
+      boxhero_id: it.boxItem.id
+    }));
+    const payload = {
+      nombre: modelo.nombre,
+      marca: modelo.marca || '',
+      modelo: null,
+      categoria: categoriaSugeridaBox(modelo.nombre) || null,
+      precio: Number(modelo.price) || 0,
+      foto: modelo.photo_url || '',
+      talles
+    };
+    const { error } = await sb.from('productos').insert(payload);
+    if(error) errores++; else creados++;
+  }
+
   btn.disabled = false; btn.textContent = 'Guardar vinculación';
   if(errores === 0){
-    mostrarStatus('ok', `Vinculación guardada en ${cambiosPorProducto.size} producto(s).`);
+    mostrarStatus('ok', `Listo: ${cambiosPorProducto.size} producto(s) actualizado(s)${creados ? ' y ' + creados + ' modelo(s) nuevo(s) creado(s)' : ''}.`);
     await cargarProductos();
+    document.getElementById('boxhero-resultado').style.display = 'none';
+    document.getElementById('boxhero-file').value = '';
+    document.getElementById('btn-boxhero-procesar').disabled = true;
   } else {
     mostrarStatus('error', `Se guardó con ${errores} error(es).`);
   }

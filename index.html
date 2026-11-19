@@ -349,11 +349,13 @@
   .talle-chip{
     font-family: 'JetBrains Mono', monospace;
     font-size: 8.5px;
-    width: 20px; height: 20px; border-radius: 50%;
+    min-width: 20px; height: 20px; border-radius: 10px;
+    padding: 0 5px;
     display:flex; align-items:center; justify-content:center;
     border: 1px solid var(--accent);
     background: transparent;
     color: var(--label-text);
+    white-space: nowrap;
   }
 
   .btn-agregar{
@@ -2004,7 +2006,7 @@ async function init(){
   actualizarBadge();
 
   try{
-    const { data, error } = await sb.from('productos').select('*').order('id', { ascending: false });
+    const { data, error } = await sb.from('productos').select('*').eq('visible', true).order('id', { ascending: false });
     if(error) throw error;
     productosTodos = (data || []).map(p => ({
       ...p,
