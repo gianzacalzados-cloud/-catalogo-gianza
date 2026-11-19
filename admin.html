@@ -139,6 +139,33 @@
     transition: all .15s ease;
   }
   .btn-limpiar-filtros:hover{ border-color:var(--text-dim); color:var(--text); }
+  .btn-reordenar{
+    background:none; border:1px solid var(--accent); color:var(--accent);
+    border-radius:9px; padding:9px 15px; font-size:12.5px; font-weight:700; cursor:pointer; flex-shrink:0;
+    transition: all .15s ease;
+  }
+  .btn-reordenar:hover{ background:var(--accent-soft); }
+
+  #panel-reordenar{ margin-top:10px; }
+  .reordenar-aviso{
+    font-size:12.5px; color:var(--text-dim); background:var(--accent-soft); border:1px solid var(--card-border);
+    border-radius:10px; padding:11px 14px; margin-bottom:14px; line-height:1.5;
+  }
+  .reordenar-aviso b{ color:var(--accent); }
+  .fila-reordenar{
+    display:flex; align-items:center; gap:12px; padding:12px 10px; background:var(--card);
+    border:1px solid var(--card-border); border-radius:10px; margin-bottom:8px; cursor:grab;
+    user-select:none;
+  }
+  .fila-reordenar.arrastrando{ opacity:0.4; }
+  .fila-reordenar .handle{ color:var(--text-faint); font-size:16px; letter-spacing:-2px; flex-shrink:0; }
+  .fila-reordenar img{ width:42px; height:42px; object-fit:cover; border-radius:8px; background:#0d0f14; flex-shrink:0; border:1px solid var(--card-border); }
+  .fila-reordenar .nombre{ font-size:13.5px; font-weight:700; flex:1; min-width:0; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+  .fila-reordenar .pos{
+    font-family:'JetBrains Mono', monospace; font-size:11px; font-weight:700; color:var(--text-faint);
+    background:var(--bg-soft); border-radius:6px; padding:3px 8px; flex-shrink:0;
+  }
+  .reordenar-acciones{ display:flex; gap:10px; margin-top:16px; }
 
   .contador{ color:var(--text-faint); font-size:12.5px; font-weight:600; letter-spacing:0.01em; margin-bottom:12px; text-transform:uppercase; }
 
@@ -172,6 +199,7 @@
     background:var(--accent-soft); color:var(--accent); font-weight:800; letter-spacing:0.03em; text-transform:uppercase;
     margin-left:7px; vertical-align:middle;
   }
+  .cat-chip.sin-modelo{ background:rgba(255,255,255,0.08); color:var(--text-dim); }
 
   .empty{ text-align:center; color:var(--text-dim); padding:60px 20px; font-size:13.5px; }
   .loading{ text-align:center; color:var(--text-dim); padding:60px 20px; font-size:13.5px; }
@@ -299,16 +327,33 @@
             <option value="Nike Mind">Nike Mind</option>
           </select>
           <select id="filtro-talle"><option value="">Todos los talles</option></select>
+          <select id="filtro-modelo">
+            <option value="">Todos los modelos</option>
+            <option value="__sin__">Sin modelo asignado</option>
+          </select>
           <select id="orden-admin">
             <option value="nombre-asc">Nombre A-Z</option>
             <option value="nombre-desc">Nombre Z-A</option>
           </select>
           <button class="btn-limpiar-filtros" id="btn-limpiar-filtros">Limpiar filtros</button>
+          <button class="btn-reordenar" id="btn-reordenar">↕ Reordenar</button>
         </div>
       </div>
 
       <div class="contador" id="contador"></div>
       <div id="lista-productos" class="loading">Cargando productos…</div>
+
+      <div id="panel-reordenar" style="display:none;">
+        <div class="reordenar-aviso">
+          Arrastrá las tarjetas para cambiar el orden dentro de <b id="reordenar-titulo"></b>.
+          Así se van a ver en el catálogo público, de arriba hacia abajo.
+        </div>
+        <div id="lista-reordenar"></div>
+        <div class="reordenar-acciones">
+          <button class="btn-guardar-modal" id="btn-guardar-orden">Guardar orden</button>
+          <button class="btn-cerrar-modal" id="btn-cancelar-orden">Cancelar</button>
+        </div>
+      </div>
     </div>
 
     <div id="vista-ventas" style="display:none;">
@@ -344,11 +389,19 @@
       <input type="text" id="campo-nombre" />
     </div>
 
-    <div class="fila-3">
+    <div class="fila-3" style="grid-template-columns:1fr 1fr;">
       <div class="campo">
         <label>Marca</label>
         <input type="text" id="campo-marca" />
       </div>
+      <div class="campo">
+        <label>Modelo</label>
+        <input type="text" id="campo-modelo" list="lista-modelos" placeholder="Ej: FORUM, SAMBA, DUNK" />
+        <datalist id="lista-modelos"></datalist>
+      </div>
+    </div>
+
+    <div class="fila-3" style="grid-template-columns:1fr 1fr;">
       <div class="campo">
         <label>Categoría</label>
         <select id="campo-categoria">
@@ -449,7 +502,7 @@ function poblarFiltros(){
   const selMarca = document.getElementById('filtro-marca');
   const valorPrevioMarca = selMarca.value;
   selMarca.innerHTML = '<option value="">Todas las marcas</option>' +
-    marcas.map(m => `<option value="${m}">${m}</option>`).join('');
+    marcas.map(m => `<option value="${escapeHtml(m)}">${escapeHtml(m)}</option>`).join('');
   selMarca.value = valorPrevioMarca;
 
   const tallesSet = new Set();
@@ -462,8 +515,17 @@ function poblarFiltros(){
   const selTalle = document.getElementById('filtro-talle');
   const valorPrevioTalle = selTalle.value;
   selTalle.innerHTML = '<option value="">Todos los talles</option>' +
-    talles.map(t => `<option value="${t}">${t}</option>`).join('');
+    talles.map(t => `<option value="${escapeHtml(t)}">${escapeHtml(t)}</option>`).join('');
   selTalle.value = valorPrevioTalle;
+
+  const modelos = [...new Set(productos.map(p => p.modelo).filter(Boolean))].sort((a,b) => collatorEs.compare(a,b));
+  const selModelo = document.getElementById('filtro-modelo');
+  const valorPrevioModelo = selModelo.value;
+  selModelo.innerHTML = '<option value="">Todos los modelos</option><option value="__sin__">Sin modelo asignado</option>' +
+    modelos.map(m => `<option value="${escapeHtml(m)}">${escapeHtml(m)}</option>`).join('');
+  selModelo.value = valorPrevioModelo;
+
+  document.getElementById('lista-modelos').innerHTML = modelos.map(m => `<option value="${escapeHtml(m)}">`).join('');
 }
 
 // ---------- filtros ----------
@@ -472,6 +534,7 @@ function productosFiltrados(){
   const marca = document.getElementById('filtro-marca').value;
   const categoria = document.getElementById('filtro-categoria').value;
   const talle = document.getElementById('filtro-talle').value;
+  const modelo = document.getElementById('filtro-modelo').value;
 
   return productos.filter(p => {
     const matchId = q && String(p.id) === q;
@@ -479,6 +542,8 @@ function productosFiltrados(){
     if(marca && p.marca !== marca) return false;
     if(categoria && p.categoria !== categoria) return false;
     if(talle && !p.talles.some(t => t.talle === talle)) return false;
+    if(modelo === '__sin__' && p.modelo) return false;
+    if(modelo && modelo !== '__sin__' && p.modelo !== modelo) return false;
     return true;
   });
 }
@@ -497,7 +562,7 @@ function productosOrdenados(lista){
   return [...disponibles, ...agotados];
 }
 
-['buscador-admin','filtro-marca','filtro-categoria','filtro-talle','orden-admin'].forEach(id => {
+['buscador-admin','filtro-marca','filtro-categoria','filtro-talle','filtro-modelo','orden-admin'].forEach(id => {
   document.getElementById(id).addEventListener('input', renderLista);
   document.getElementById(id).addEventListener('change', renderLista);
 });
@@ -506,6 +571,7 @@ document.getElementById('btn-limpiar-filtros').addEventListener('click', () => {
   document.getElementById('filtro-marca').value = '';
   document.getElementById('filtro-categoria').value = '';
   document.getElementById('filtro-talle').value = '';
+  document.getElementById('filtro-modelo').value = '';
   document.getElementById('orden-admin').value = 'nombre-asc';
   renderLista();
 });
@@ -530,6 +596,9 @@ function renderLista(){
       ? `<div class="precio">$${Number(p.precio).toLocaleString('es-AR')}</div>`
       : `<div class="precio sin">Consultar precio</div>`;
     const catChip = p.categoria ? `<span class="cat-chip">${escapeHtml(p.categoria)}</span>` : '';
+    const modeloChip = p.modelo
+      ? `<span class="cat-chip">${escapeHtml(p.modelo)}</span>`
+      : `<span class="cat-chip sin-modelo">Sin modelo</span>`;
     const fotoHtml = p.foto
       ? `<img src="${escapeHtml(p.foto)}" alt="" onerror="this.style.visibility='hidden'">`
       : `<div style="width:48px;height:48px;border-radius:8px;background:#0d0f14;flex-shrink:0;"></div>`;
@@ -538,7 +607,7 @@ function renderLista(){
       <div class="fila" data-id="${p.id}">
         ${fotoHtml}
         <div class="fila-info">
-          <div class="nombre">${escapeHtml(p.nombre)}${catChip}</div>
+          <div class="nombre">${escapeHtml(p.nombre)}${catChip}${modeloChip}</div>
           <div class="sub">${escapeHtml(p.marca) || '—'} · Cód. ${p.id}</div>
         </div>
         <div class="fila-right">
@@ -557,6 +626,117 @@ document.getElementById('lista-productos').addEventListener('click', (e) => {
   abrirModal(parseInt(fila.dataset.id, 10));
 });
 
+// ---------- reordenar (arrastrar y soltar) dentro de una marca + modelo ----------
+const collatorEsReorden = collatorEs; // mismo collator que ya usamos para ordenar
+function productosDelGrupoReordenar(marca, modelo){
+  return productos
+    .filter(p => p.marca === marca && (modelo === '__sin__' ? !p.modelo : p.modelo === modelo))
+    .sort((a, b) => {
+      const oa = (typeof a.orden === 'number') ? a.orden : null;
+      const ob = (typeof b.orden === 'number') ? b.orden : null;
+      if(oa !== null && ob !== null && oa !== ob) return oa - ob;
+      if(oa !== null && ob === null) return -1;
+      if(oa === null && ob !== null) return 1;
+      return collatorEsReorden.compare(a.nombre, b.nombre);
+    });
+}
+
+document.getElementById('btn-reordenar').addEventListener('click', () => {
+  const marca = document.getElementById('filtro-marca').value;
+  const modelo = document.getElementById('filtro-modelo').value;
+  if(!marca || !modelo){
+    mostrarStatus('error', 'Para reordenar, primero elegí una marca Y un modelo puntual en los filtros de arriba.');
+    return;
+  }
+  const grupo = productosDelGrupoReordenar(marca, modelo);
+  if(grupo.length < 2){
+    mostrarStatus('error', 'Ese grupo tiene un solo producto (o ninguno), no hay nada para reordenar.');
+    return;
+  }
+
+  document.getElementById('reordenar-titulo').textContent =
+    `${marca} · ${modelo === '__sin__' ? 'Sin modelo asignado' : modelo}`;
+  renderListaReordenar(grupo);
+  document.getElementById('lista-productos').style.display = 'none';
+  document.getElementById('contador').style.display = 'none';
+  document.getElementById('panel-reordenar').style.display = 'block';
+});
+
+function renderListaReordenar(grupo){
+  const cont = document.getElementById('lista-reordenar');
+  cont.innerHTML = grupo.map((p, i) => {
+    const fotoHtml = p.foto
+      ? `<img src="${escapeHtml(p.foto)}" alt="" onerror="this.style.visibility='hidden'">`
+      : `<div style="width:42px;height:42px;border-radius:8px;background:#0d0f14;flex-shrink:0;"></div>`;
+    return `
+      <div class="fila-reordenar" draggable="true" data-id="${p.id}">
+        <span class="handle">⠿⠿</span>
+        ${fotoHtml}
+        <div class="nombre">${escapeHtml(p.nombre)}</div>
+        <span class="pos">${i + 1}</span>
+      </div>
+    `;
+  }).join('');
+}
+
+function renumerarPosiciones(){
+  document.querySelectorAll('#lista-reordenar .fila-reordenar').forEach((fila, i) => {
+    fila.querySelector('.pos').textContent = i + 1;
+  });
+}
+
+let filaArrastrada = null;
+document.getElementById('lista-reordenar').addEventListener('dragstart', (e) => {
+  filaArrastrada = e.target.closest('.fila-reordenar');
+  if(filaArrastrada) filaArrastrada.classList.add('arrastrando');
+});
+document.getElementById('lista-reordenar').addEventListener('dragend', () => {
+  if(filaArrastrada) filaArrastrada.classList.remove('arrastrando');
+  filaArrastrada = null;
+  renumerarPosiciones();
+});
+document.getElementById('lista-reordenar').addEventListener('dragover', (e) => {
+  e.preventDefault();
+  const cont = document.getElementById('lista-reordenar');
+  const sobre = e.target.closest('.fila-reordenar');
+  if(!filaArrastrada || !sobre || sobre === filaArrastrada) return;
+  const rect = sobre.getBoundingClientRect();
+  const despuesDeMedio = (e.clientY - rect.top) > rect.height / 2;
+  cont.insertBefore(filaArrastrada, despuesDeMedio ? sobre.nextSibling : sobre);
+});
+
+document.getElementById('btn-cancelar-orden').addEventListener('click', () => {
+  document.getElementById('panel-reordenar').style.display = 'none';
+  document.getElementById('lista-productos').style.display = '';
+  document.getElementById('contador').style.display = '';
+});
+
+document.getElementById('btn-guardar-orden').addEventListener('click', async () => {
+  const filas = [...document.querySelectorAll('#lista-reordenar .fila-reordenar')];
+  const btn = document.getElementById('btn-guardar-orden');
+  btn.disabled = true;
+  btn.textContent = 'Guardando…';
+
+  try{
+    for(let i = 0; i < filas.length; i++){
+      const id = parseInt(filas[i].dataset.id, 10);
+      const { error } = await sb.from('productos').update({ orden: i + 1 }).eq('id', id);
+      if(error) throw error;
+    }
+    mostrarStatus('ok', 'Orden guardado. Ya se va a ver así en el catálogo.');
+  }catch(err){
+    mostrarStatus('error', 'Error guardando el orden: ' + err.message);
+  }finally{
+    btn.disabled = false;
+    btn.textContent = 'Guardar orden';
+  }
+
+  document.getElementById('panel-reordenar').style.display = 'none';
+  document.getElementById('lista-productos').style.display = '';
+  document.getElementById('contador').style.display = '';
+  await cargarProductos();
+});
+
 // ---------- modal: abrir / cerrar ----------
 function abrirModal(id){
   idEditando = id;
@@ -564,6 +744,7 @@ function abrirModal(id){
   document.getElementById('modal-titulo').textContent = 'Editar producto';
   document.getElementById('campo-nombre').value = p.nombre || '';
   document.getElementById('campo-marca').value = p.marca || '';
+  document.getElementById('campo-modelo').value = p.modelo || '';
   document.getElementById('campo-categoria').value = p.categoria || '';
   document.getElementById('campo-precio').value = p.precio || 0;
   document.getElementById('campo-foto').value = p.foto || '';
@@ -578,6 +759,7 @@ function abrirModalNuevo(){
   document.getElementById('modal-titulo').textContent = 'Nuevo producto';
   document.getElementById('campo-nombre').value = '';
   document.getElementById('campo-marca').value = '';
+  document.getElementById('campo-modelo').value = '';
   document.getElementById('campo-categoria').value = '';
   document.getElementById('campo-precio').value = 0;
   document.getElementById('campo-foto').value = '';
@@ -664,6 +846,7 @@ document.getElementById('input-file-foto').addEventListener('change', async (e) 
 function leerFormularioModal(){
   const nombre = document.getElementById('campo-nombre').value.trim();
   const marca = document.getElementById('campo-marca').value.trim();
+  const modelo = document.getElementById('campo-modelo').value.trim();
   const categoria = document.getElementById('campo-categoria').value;
   const precio = parseFloat(document.getElementById('campo-precio').value) || 0;
   const foto = document.getElementById('campo-foto').value.trim();
@@ -672,7 +855,7 @@ function leerFormularioModal(){
     stock: parseInt(row.querySelector('.talle-stock').value, 10) || 0
   })).filter(t => t.talle !== '');
 
-  return { nombre, marca, categoria: categoria || null, precio, foto, talles };
+  return { nombre, marca, modelo: modelo || null, categoria: categoria || null, precio, foto, talles };
 }
 
 // ---------- guardar / borrar ----------

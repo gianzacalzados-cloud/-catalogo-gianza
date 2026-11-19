@@ -1291,6 +1291,13 @@ function aplicarFiltros(){
       if(!ma && mb) return 1;
       if(ma && !mb) return -1;
       if(ma !== mb) return ma.localeCompare(mb, 'es');
+      // dentro del mismo modelo, respeta el orden manual (arrastrar y soltar en el admin)
+      // si lo tienen cargado; los que no tienen orden asignado quedan al final, por nombre
+      const oa = (typeof a.orden === 'number') ? a.orden : null;
+      const ob = (typeof b.orden === 'number') ? b.orden : null;
+      if(oa !== null && ob !== null && oa !== ob) return oa - ob;
+      if(oa !== null && ob === null) return -1;
+      if(oa === null && ob !== null) return 1;
       return a.nombre.localeCompare(b.nombre, 'es');
     });
   }
