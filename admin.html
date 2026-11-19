@@ -1596,10 +1596,14 @@ function opcionesProductosHtmlBox(seleccionadoId){
 function opcionesTallesHtmlBox(producto, talleSugerido){
   if(!producto) return '<option value="">—</option>';
   const talles = producto.talles || [];
+  // si ninguno de los talles existentes coincide con el talle de BoxHero, el default
+  // tiene que ser "agregar talle nuevo" -- nunca dejar seleccionado por accidente un
+  // talle que no corresponde (eso pisaría el boxhero_id de un talle equivocado)
+  const idxCoincide = talles.findIndex(t => normTalleBox(t.talle) === normTalleBox(talleSugerido));
   let html = talles.map((t, idx) =>
-    `<option value="${idx}" ${normTalleBox(t.talle)===normTalleBox(talleSugerido)?'selected':''}>Talle ${escapeHtml(t.talle)} (stock actual: ${t.stock||0})</option>`
+    `<option value="${idx}" ${idx === idxCoincide ? 'selected' : ''}>Talle ${escapeHtml(t.talle)} (stock actual: ${t.stock||0})</option>`
   ).join('');
-  html += `<option value="__nuevo__">+ Agregar talle nuevo (${escapeHtml(talleSugerido || '?')})</option>`;
+  html += `<option value="__nuevo__" ${idxCoincide === -1 ? 'selected' : ''}>+ Agregar talle nuevo (${escapeHtml(talleSugerido || '?')})</option>`;
   return html;
 }
 
@@ -1690,7 +1694,9 @@ document.getElementById('btn-boxhero-guardar').addEventListener('click', async (
 
   boxheroAutoMatches.forEach(({ producto, idx, boxItem }) => {
     const talles = talleClonadoDe(producto);
-    talles[idx] = { ...talles[idx], boxhero_id: boxItem.id };
+    // al vincular, también traemos el stock actual real de BoxHero (no solo el ID),
+    // para que el punto de partida quede exacto -- de ahí en más lo mantiene el webhook
+    talles[idx] = { ...talles[idx], boxhero_id: boxItem.id, stock: boxItem.quantity || 0 };
   });
 
   const cont = document.getElementById('boxhero-manual-lista');
@@ -1707,7 +1713,7 @@ document.getElementById('btn-boxhero-guardar').addEventListener('click', async (
       talles.push({ talle: m.talle || '', stock: m.item.quantity || 0, boxhero_id: m.item.id });
     } else {
       const idx = Number(selTalle.value);
-      talles[idx] = { ...talles[idx], boxhero_id: m.item.id };
+      talles[idx] = { ...talles[idx], boxhero_id: m.item.id, stock: m.item.quantity || 0 };
     }
   });
 
