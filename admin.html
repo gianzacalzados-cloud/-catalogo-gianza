@@ -206,6 +206,11 @@
     padding:6px 9px; font-size:12px; font-family:inherit;
   }
   .boxhero-fila .flecha{ color:var(--text-dim); font-size:13px; }
+  .talle-row-borrar-individual{
+    background:none; border:1px solid var(--card-border); color:var(--off); border-radius:7px;
+    width:32px; height:32px; cursor:pointer; font-size:14px; flex-shrink:0; transition: border-color .15s ease;
+  }
+  .talle-row-borrar-individual:hover{ border-color:var(--off); background:var(--off-soft); }
   .btn-boxhero-guardar{
     background:var(--ok); color:var(--on-accent-2); border:none; border-radius:8px; padding:11px 20px;
     font-size:13.5px; font-weight:700; cursor:pointer; margin-top:10px;
@@ -552,7 +557,12 @@
       <div class="reordenar-aviso">
         Estos talles de tu catálogo todavía no están conectados a ningún artículo de BoxHero, así que su stock
         <b>no se actualiza solo</b> — se quedan con el número que tengan cargado hasta que los vincules (más abajo).
+        Los que tienen <b>0 de stock</b> probablemente sean modelos viejos que ya no existen en BoxHero: podés
+        borrarlos uno por uno con el botón de cada fila, o todos juntos con el botón de abajo.
       </div>
+      <button class="btn-borrar-modal" id="btn-borrar-sinvincular-ceros" type="button" style="margin-bottom:12px;">
+        Borrar todos los que están en 0
+      </button>
       <div id="sinvincular-lista" class="loading">Cargando…</div>
 
       <div class="boxhero-seccion-titulo" style="margin-top:26px;">Vincular / actualizar desde BoxHero</div>
@@ -1507,6 +1517,8 @@ function renderPedidos(){
 // se calcula directo de los productos ya cargados (sin necesidad de subir
 // ningún archivo): cualquier talle que no tenga "boxhero_id" todavía no está
 // conectado, así que su stock no se actualiza solo.
+let sinVincularFilas = []; // se guarda la lista actual para poder borrar por índice desde los botones
+
 function renderSinVincular(){
   const cont = document.getElementById('sinvincular-lista');
   const contador = document.getElementById('sinvincular-count');
@@ -1527,6 +1539,7 @@ function renderSinVincular(){
   // los más relevantes primero: los que sí tienen stock cargado (más probable
   // que generen diferencia real con BoxHero) antes que los que ya están en 0
   filas.sort((a, b) => (b.talle.stock || 0) - (a.talle.stock || 0));
+  sinVincularFilas = filas;
 
   contador.textContent = filas.length;
 
@@ -1537,7 +1550,7 @@ function renderSinVincular(){
   }
 
   cont.className = '';
-  cont.innerHTML = filas.map(({ producto, talle }) => `
+  cont.innerHTML = filas.map(({ producto, talle }, i) => `
     <div class="boxhero-fila">
       ${producto.foto ? `<img src="${escapeHtml(producto.foto)}" alt="" />` : ''}
       <div class="info">
@@ -1545,9 +1558,88 @@ function renderSinVincular(){
         <div class="detalle">Talle ${escapeHtml(talle.talle)} · Stock actual: ${talle.stock || 0}</div>
       </div>
       <button class="btn-subir-foto" type="button" onclick="abrirModal(${producto.id})">Editar</button>
+      <button class="talle-row-borrar-individual" type="button" onclick="borrarTalleSinVincular(${i})" title="Borrar este talle">✕</button>
     </div>
   `).join('');
 }
+
+// borra un talle puntual (identificado por su posición en sinVincularFilas, no
+// por el texto del talle, porque puede haber talles duplicados con el mismo
+// nombre -- así nunca se borra el equivocado). Si era el último talle del
+// producto, borra el producto entero.
+async function borrarTalleSinVincular(i){
+  const fila = sinVincularFilas[i];
+  if(!fila) return;
+  const { producto, talle } = fila;
+
+  const ok = confirm(`¿Borrar el talle ${talle.talle} de "${producto.marca} ${producto.nombre}" (stock actual: ${talle.stock || 0})? No se puede deshacer.`);
+  if(!ok) return;
+
+  const nuevosTalles = (producto.talles || []).filter(t => t !== talle);
+  let error;
+  if(nuevosTalles.length === 0){
+    ({ error } = await sb.from('productos').delete().eq('id', producto.id));
+    if(!error) productos = productos.filter(p => p.id !== producto.id);
+  } else {
+    ({ error } = await sb.from('productos').update({ talles: nuevosTalles }).eq('id', producto.id));
+    if(!error){
+      producto.talles = nuevosTalles;
+      producto.stockTotal = nuevosTalles.reduce((acc, t) => acc + (t.stock || 0), 0);
+    }
+  }
+
+  if(error){
+    mostrarStatus('error', 'No se pudo borrar: ' + error.message);
+    return;
+  }
+  mostrarStatus('ok', 'Talle borrado.');
+  renderSinVincular();
+  if(typeof renderLista === 'function') renderLista();
+}
+
+// borra de un saque todos los talles sin vincular que estén en 0 -- agrupa
+// por producto para no pisarse si un mismo producto tiene varios
+async function borrarSinVincularEnCero(){
+  const aCero = sinVincularFilas.filter(f => (f.talle.stock || 0) === 0);
+  if(aCero.length === 0){
+    mostrarStatus('ok', 'No hay talles en 0 para borrar.');
+    return;
+  }
+  const ok = confirm(`¿Borrar ${aCero.length} talle(s) con stock 0? No se puede deshacer.`);
+  if(!ok) return;
+
+  const porProducto = new Map();
+  aCero.forEach(({ producto, talle }) => {
+    if(!porProducto.has(producto.id)) porProducto.set(producto.id, { producto, aBorrar: [] });
+    porProducto.get(producto.id).aBorrar.push(talle);
+  });
+
+  let errores = 0;
+  for(const { producto, aBorrar } of porProducto.values()){
+    const nuevosTalles = (producto.talles || []).filter(t => !aBorrar.includes(t));
+    let error;
+    if(nuevosTalles.length === 0){
+      ({ error } = await sb.from('productos').delete().eq('id', producto.id));
+      if(!error) productos = productos.filter(p => p.id !== producto.id);
+    } else {
+      ({ error } = await sb.from('productos').update({ talles: nuevosTalles }).eq('id', producto.id));
+      if(!error){
+        producto.talles = nuevosTalles;
+        producto.stockTotal = nuevosTalles.reduce((acc, t) => acc + (t.stock || 0), 0);
+      }
+    }
+    if(error) errores++;
+  }
+
+  if(errores === 0){
+    mostrarStatus('ok', 'Listo, se borraron los talles en 0.');
+  } else {
+    mostrarStatus('error', `Se borró con ${errores} error(es).`);
+  }
+  renderSinVincular();
+  if(typeof renderLista === 'function') renderLista();
+}
+document.getElementById('btn-borrar-sinvincular-ceros').addEventListener('click', borrarSinVincularEnCero);
 
 // ---------- movimientos (historial de sync con BoxHero) ----------
 async function cargarMovimientos(){
