@@ -63,6 +63,15 @@ module.exports = async (req, res) => {
     return;
   }
 
+  // nombre del cliente ("partner") asociado a esta orden/transacción en
+  // BoxHero, si la trae. Se prueban varios nombres de campo posibles porque
+  // la forma exacta del objeto "partner" no está 100% documentada.
+  const partner = body.payload && body.payload.partner;
+  const cliente = partner
+    ? (partner.name || partner.company_name || partner.companyName || partner.title || null)
+    : null;
+  const tipo = (body.payload && body.payload.type) || null; // "out" | "in" | etc.
+
   const resultados = [];
 
   for (const item of items) {
@@ -78,7 +87,7 @@ module.exports = async (req, res) => {
 
     // busca el/los productos cuyo array "talles" (jsonb) contiene un elemento con este boxhero_id
     const filtro = encodeURIComponent(JSON.stringify([{ boxhero_id: boxheroId }]));
-    const busq = await supabaseFetch(`productos?select=id,talles&talles=cs.${filtro}`);
+    const busq = await supabaseFetch(`productos?select=id,marca,nombre,talles&talles=cs.${filtro}`);
     if (!busq.ok) {
       resultados.push({ boxheroId, ok: false, motivo: 'error buscando producto: ' + (await busq.text()) });
       continue;
@@ -91,8 +100,12 @@ module.exports = async (req, res) => {
     }
 
     for (const producto of candidatos) {
+      const talleAfectado = (producto.talles || []).find(t => t.boxhero_id === boxheroId);
+      const stockAnterior = talleAfectado ? (talleAfectado.stock || 0) : null;
+      const stockNuevo = Math.max(nuevoStock, 0);
+
       const talles = (producto.talles || []).map(t =>
-        t.boxhero_id === boxheroId ? { ...t, stock: Math.max(nuevoStock, 0) } : t
+        t.boxhero_id === boxheroId ? { ...t, stock: stockNuevo } : t
       );
       const upd = await supabaseFetch(`productos?id=eq.${producto.id}`, {
         method: 'PATCH',
@@ -101,11 +114,41 @@ module.exports = async (req, res) => {
       });
       if (!upd.ok) {
         resultados.push({ boxheroId, productoId: producto.id, ok: false, motivo: await upd.text() });
-      } else {
-        resultados.push({ boxheroId, productoId: producto.id, ok: true, nuevoStock });
+        continue;
       }
+
+      resultados.push({ boxheroId, productoId: producto.id, ok: true, nuevoStock: stockNuevo });
+
+      // deja registrado el movimiento para el historial del panel admin.
+      // si esto falla no es grave (el stock ya se actualizó bien), así que
+      // no se cuenta como error del webhook.
+      await supabaseFetch('movimientos_boxhero', {
+        method: 'POST',
+        headers: { Prefer: 'return=minimal' },
+        body: JSON.stringify({
+          producto_id: producto.id,
+          marca: producto.marca || '',
+          nombre: producto.nombre || '',
+          talle: talleAfectado ? talleAfectado.talle : null,
+          boxhero_id: boxheroId,
+          stock_anterior: stockAnterior,
+          stock_nuevo: stockNuevo,
+          delta: stockAnterior === null ? null : stockNuevo - stockAnterior,
+          cliente,
+          tipo,
+        }),
+      }).catch(() => {});
     }
   }
+
+  // limpieza: borra movimientos de más de 30 días para que la tabla no
+  // crezca sin límite. No es crítico, así que no bloquea la respuesta
+  // del webhook si falla.
+  const limite = new Date(Date.now() - 30 * 24 * 60 * 60 * 1000).toISOString();
+  supabaseFetch(`movimientos_boxhero?created_at=lt.${encodeURIComponent(limite)}`, {
+    method: 'DELETE',
+    headers: { Prefer: 'return=minimal' },
+  }).catch(() => {});
 
   res.status(200).json({ ok: true, resultados });
 };
