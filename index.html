@@ -623,6 +623,8 @@
   .form-label{ font-size: 12px; font-weight:700; color: var(--text); }
   .form-label .req-star{ color: var(--off); margin-left:2px; }
   .form-label .opt-tag{ color: var(--text-dim); font-size:11px; font-weight:500; text-transform:lowercase; margin-left:4px; }
+  .form-hint{ font-size: 11px; color: var(--text-dim); margin-top: 4px; }
+  .form-hint.form-hint-error{ color: var(--off); }
   .form-input, .form-select{
     width:100%; padding: 12px 13px; background: var(--bg-soft); border: 1px solid var(--card-border);
     border-radius: 9px; color: var(--text); outline:none; font-family:inherit; font-size: 14.5px;
@@ -781,7 +783,8 @@
         </div>
         <div class="form-group">
           <label class="form-label">WhatsApp<span class="req-star">*</span></label>
-          <input type="text" class="form-input digits-only-input" id="input-whatsapp" placeholder="Solo números" autocomplete="off">
+          <input type="text" class="form-input digits-only-input" id="input-whatsapp" placeholder="Con código de área, solo números" autocomplete="off">
+          <div class="form-hint" id="whatsapp-hint">Mínimo 8 dígitos</div>
         </div>
       </form>
     </div>
@@ -929,6 +932,83 @@ function cargarCarrito(){
 }
 function guardarCarrito(){
   try{ localStorage.setItem('gianza_cart', JSON.stringify(cart)); }catch(e){}
+}
+
+// bloquea el scroll del fondo mientras hay un modal/drawer abierto (con contador por si hay mas de uno)
+// usa "position: fixed" en vez de solo overflow:hidden porque en iPhone/Safari overflow:hidden
+// en el body no siempre frena el scroll del fondo
+let overlaysAbiertos = 0;
+let scrollYGuardado = 0;
+function bloquearScrollFondo(){
+  overlaysAbiertos++;
+  if(overlaysAbiertos === 1){
+    scrollYGuardado = window.scrollY;
+    document.body.style.position = 'fixed';
+    document.body.style.top = `-${scrollYGuardado}px`;
+    document.body.style.left = '0';
+    document.body.style.right = '0';
+    document.body.style.width = '100%';
+  }
+}
+function desbloquearScrollFondo(){
+  overlaysAbiertos = Math.max(0, overlaysAbiertos - 1);
+  if(overlaysAbiertos === 0){
+    document.body.style.position = '';
+    document.body.style.top = '';
+    document.body.style.left = '';
+    document.body.style.right = '';
+    document.body.style.width = '';
+    window.scrollTo(0, scrollYGuardado);
+  }
+}
+
+// Revalida el carrito guardado (localStorage) contra los datos reales del catálogo:
+// si cambió el precio, bajó el stock, o el producto/talle ya no existe, lo corrige
+// y avisa al cliente. Se corre al cargar la página y cada vez que se abre el carrito.
+function sincronizarCarritoConCatalogo(){
+  if(!productosTodos.length || cart.length === 0) return;
+
+  const eliminados = [];
+  const reducidos = [];
+  const precioActualizado = [];
+
+  const nuevoCart = [];
+  cart.forEach(item => {
+    const p = productosTodos.find(x => x.id === item.id);
+    if(!p){
+      eliminados.push(`${item.nombre} (talle ${item.talle})`);
+      return;
+    }
+    const talleObj = (p.talles || []).find(t => t.talle === item.talle);
+    const stockActual = talleObj ? talleObj.stock : 0;
+    if(stockActual <= 0){
+      eliminados.push(`${item.nombre} (talle ${item.talle})`);
+      return;
+    }
+    let cantidad = item.cantidad;
+    if(cantidad > stockActual){
+      cantidad = stockActual;
+      reducidos.push(`${item.nombre} (talle ${item.talle}): ahora ${cantidad} disponibles`);
+    }
+    if(item.precio !== p.precio){
+      precioActualizado.push(item.nombre);
+    }
+    nuevoCart.push({
+      id: p.id, nombre: p.nombre, marca: p.marca, precio: p.precio, foto: p.foto,
+      talle: item.talle, cantidad, stock: stockActual, categoria: p.categoria || null
+    });
+  });
+
+  cart = nuevoCart;
+  guardarCarrito();
+
+  if(eliminados.length || reducidos.length || precioActualizado.length){
+    let msg = 'Actualizamos tu carrito con los datos más recientes del catálogo:\n';
+    if(eliminados.length) msg += `\n• Se quitaron (sin stock disponible):\n   - ${eliminados.join('\n   - ')}\n`;
+    if(reducidos.length) msg += `\n• Se ajustó la cantidad por stock disponible:\n   - ${reducidos.join('\n   - ')}\n`;
+    if(precioActualizado.length) msg += `\n• Se actualizó el precio de: ${precioActualizado.join(', ')}\n`;
+    alert(msg);
+  }
 }
 
 // ---------- navegación entre vistas ----------
@@ -1220,12 +1300,14 @@ function abrirDetalle(pid){
   renderModalDetalle(p);
   document.getElementById('modal-detalle').classList.add('open');
   document.getElementById('overlay-detalle').classList.add('open');
+  bloquearScrollFondo();
 }
 
 function cerrarDetalle(){
   document.getElementById('modal-detalle').classList.remove('open');
   document.getElementById('overlay-detalle').classList.remove('open');
   detalleProductoId = null;
+  desbloquearScrollFondo();
 }
 
 function renderModalDetalle(p){
@@ -1239,15 +1321,22 @@ function renderModalDetalle(p){
 
   const filasHtml = p.talles.map(t => {
     const sinStock = t.stock === 0;
+    const enCarrito = cart.filter(i => i.id === p.id && i.talle === t.talle).reduce((a,i) => a + i.cantidad, 0);
+    const disponibleParaAgregar = Math.max(t.stock - enCarrito, 0);
+    const sinDisponible = !sinStock && disponibleParaAgregar === 0;
     const cant = detalleCantidades[t.talle] || 0;
+    let dispTxt;
+    if(sinStock) dispTxt = 'AGOTADO';
+    else if(sinDisponible) dispTxt = 'Ya tenés todo el stock en tu carrito';
+    else dispTxt = `${disponibleParaAgregar} disponibles${enCarrito > 0 ? ` (ya tenés ${enCarrito} en el carrito)` : ''}`;
     return `
-      <div class="fila-talle ${sinStock ? 'agotado' : ''}" data-talle="${t.talle}" data-stock="${t.stock}">
-        <div class="talle-info"><b>TALLE ${t.talle}</b><span class="talle-disp">${sinStock ? 'AGOTADO' : `${t.stock} disponibles`}</span></div>
-        ${sinStock ? '' : `
+      <div class="fila-talle ${sinStock || sinDisponible ? 'agotado' : ''}" data-talle="${t.talle}" data-stock="${disponibleParaAgregar}">
+        <div class="talle-info"><b>TALLE ${t.talle}</b><span class="talle-disp">${dispTxt}</span></div>
+        ${(sinStock || sinDisponible) ? '' : `
         <div class="stepper">
           <button class="btn-rest" data-talle="${t.talle}" ${cant <= 0 ? 'disabled' : ''}>−</button>
           <span class="cant">${cant}</span>
-          <button class="btn-sum" data-talle="${t.talle}" ${cant >= t.stock ? 'disabled' : ''}>+</button>
+          <button class="btn-sum" data-talle="${t.talle}" ${cant >= disponibleParaAgregar ? 'disabled' : ''}>+</button>
         </div>`}
       </div>
     `;
@@ -1285,8 +1374,11 @@ document.getElementById('modal-detalle-body').addEventListener('click', (e) => {
   const talleObj = p.talles.find(t => t.talle === talle);
   if(!talleObj) return;
 
+  const enCarrito = cart.filter(i => i.id === p.id && i.talle === talle).reduce((a,i) => a + i.cantidad, 0);
+  const disponibleParaAgregar = Math.max(talleObj.stock - enCarrito, 0);
+
   const actual = detalleCantidades[talle] || 0;
-  if(btnSum && actual < talleObj.stock){
+  if(btnSum && actual < disponibleParaAgregar){
     detalleCantidades[talle] = actual + 1;
   }else if(btnRest && actual > 0){
     detalleCantidades[talle] = actual - 1;
@@ -1449,14 +1541,18 @@ document.getElementById('drawer-body').addEventListener('click', (e) => {
 });
 
 function abrirDrawer(){
+  sincronizarCarritoConCatalogo();
+  actualizarBadge();
   renderDrawer();
   mostrarVistaCarrito();
   document.getElementById('drawer').classList.add('open');
   document.getElementById('overlay').classList.add('open');
+  bloquearScrollFondo();
 }
 function cerrarDrawer(){
   document.getElementById('drawer').classList.remove('open');
   document.getElementById('overlay').classList.remove('open');
+  desbloquearScrollFondo();
 }
 
 document.getElementById('cart-fab').addEventListener('click', abrirDrawer);
@@ -1522,10 +1618,19 @@ document.getElementById('btn-volver-carrito').addEventListener('click', mostrarV
 document.getElementById('btn-volver-paso1').addEventListener('click', mostrarVistaPaso1);
 
 // ---- paso 1: nombre y whatsapp ----
+const WHATSAPP_MIN_DIGITOS = 8;
 function validarPaso1(){
   const nombre = document.getElementById('input-nombre').value.trim();
   const whatsapp = document.getElementById('input-whatsapp').value.trim();
-  btnPaso1Continuar.disabled = !(nombre && whatsapp);
+  const hint = document.getElementById('whatsapp-hint');
+  if(whatsapp.length > 0 && whatsapp.length < WHATSAPP_MIN_DIGITOS){
+    hint.textContent = `Te faltan dígitos (mínimo ${WHATSAPP_MIN_DIGITOS})`;
+    hint.classList.add('form-hint-error');
+  }else{
+    hint.textContent = `Mínimo ${WHATSAPP_MIN_DIGITOS} dígitos`;
+    hint.classList.remove('form-hint-error');
+  }
+  btnPaso1Continuar.disabled = !(nombre && whatsapp.length >= WHATSAPP_MIN_DIGITOS);
 }
 formPaso1.querySelectorAll('input').forEach(el => {
   el.addEventListener('input', (e) => {
@@ -1805,6 +1910,9 @@ async function init(){
     document.getElementById('total-info').textContent = 'Error cargando el catálogo';
     return;
   }
+
+  sincronizarCarritoConCatalogo();
+  actualizarBadge();
 
   document.getElementById('total-info').textContent = `${productos.length} modelos`;
   document.getElementById('banner-sub').textContent = `${productos.length} modelos con stock, de todas las marcas`;
