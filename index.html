@@ -535,13 +535,27 @@
   .drawer-body{ flex:1; overflow-y:auto; padding: 16px 18px; }
   .drawer-empty{ color: var(--text-dim); font-size: 15px; text-align:center; padding: 40px 10px; line-height:1.5; }
 
-  .descuento-info{
-    margin: 10px 18px 0; padding: 9px 12px; border-radius: 8px; font-size: 11.5px; line-height:1.4;
-    background: rgba(255,106,26,0.1); border: 1px solid rgba(255,106,26,0.3); color: var(--text);
+  .resumen-carrito{
+    margin-top: 14px; padding: 12px 13px; border-radius: 10px;
+    background: var(--bg-soft); border: 1px solid var(--card-border);
   }
-  .descuento-info.activo{ background: rgba(63,191,111,0.12); border-color: rgba(63,191,111,0.35); }
-  .descuento-info b{ color: var(--accent); }
-  .descuento-info.activo b{ color: var(--ok); }
+  .descuento-pill{
+    font-size: 11px; font-weight:700; line-height:1.4; padding: 7px 10px; border-radius: 7px;
+    background: rgba(255,106,26,0.1); border: 1px solid rgba(255,106,26,0.3); color: var(--text);
+    margin-bottom: 10px;
+  }
+  .descuento-pill.activo{ background: rgba(63,191,111,0.12); border-color: rgba(63,191,111,0.35); color: var(--ok); }
+  .resumen-row{
+    display:flex; justify-content:space-between; align-items:baseline;
+    font-size: 12.5px; color: var(--text-dim); padding: 3px 0;
+  }
+  .resumen-row .tachado{ text-decoration: line-through; color: var(--text-dim); }
+  .resumen-row .verde{ color: var(--ok); }
+  .resumen-row.resumen-total{
+    border-top: 1px dashed var(--card-border); margin-top: 7px; padding-top: 9px;
+    font-size: 14px; color: var(--text); font-weight:700;
+  }
+  .resumen-row.resumen-total strong{ font-family:'JetBrains Mono', monospace; font-size: 19px; }
 
   .minimo-aviso{
     font-size: 13.5px; color: var(--off); background: rgba(230,72,79,0.12);
@@ -746,14 +760,9 @@
   </div>
 
   <div id="vista-carrito" style="display:contents;">
-    <div class="descuento-info" id="descuento-info" style="display:none;"></div>
     <div class="drawer-body" id="drawer-body"></div>
     <div class="drawer-footer">
       <div class="minimo-aviso" id="minimo-aviso" style="display:none;"></div>
-      <div class="total-row">
-        <span>Total</span>
-        <strong id="cart-total">$0</strong>
-      </div>
       <div class="total-nota" id="cart-nota" style="display:none;">* Hay productos a consultar precio, no están sumados al total.</div>
       <button class="btn-pedido" id="btn-pedido">Continuar con tus datos</button>
       <button class="btn-vaciar" id="btn-vaciar">Vaciar carrito</button>
@@ -1322,25 +1331,29 @@ function calcularTotalesCarrito(){
   const descuentoPorPar = descuentoPorCantidadAdulto(totalParesAdulto);
 
   let totalNumerico = 0;
+  let subtotalSinDescuento = 0;
   let hayConsultar = false;
   cart.forEach(i => {
     if(!i.precio){ hayConsultar = true; return; }
     const aplicaDescuento = cuentaParaDescuentoAdulto(i.categoria) && descuentoPorPar > 0;
     const precioUnit = aplicaDescuento ? Math.max(i.precio - descuentoPorPar, 0) : i.precio;
     totalNumerico += precioUnit * i.cantidad;
+    subtotalSinDescuento += i.precio * i.cantidad;
   });
 
-  return { totalPares, totalParesAdulto, descuentoPorPar, totalNumerico, hayConsultar };
+  const ahorroTotal = subtotalSinDescuento - totalNumerico;
+
+  return { totalPares, totalParesAdulto, descuentoPorPar, totalNumerico, subtotalSinDescuento, ahorroTotal, hayConsultar };
 }
 
 function renderDrawer(){
   const body = document.getElementById('drawer-body');
-  const { totalPares, totalParesAdulto, descuentoPorPar, totalNumerico, hayConsultar } = calcularTotalesCarrito();
+  const { totalPares, totalParesAdulto, descuentoPorPar, totalNumerico, subtotalSinDescuento, ahorroTotal, hayConsultar } = calcularTotalesCarrito();
 
   if(cart.length === 0){
     body.innerHTML = '<div class="drawer-empty">Todavía no agregaste nada.<br>Elegí talle y sumá zapatillas al pedido.</div>';
   }else{
-    body.innerHTML = cart.map((item, idx) => {
+    const itemsHtml = cart.map((item, idx) => {
       const aplicaDescuento = cuentaParaDescuentoAdulto(item.categoria) && descuentoPorPar > 0 && item.precio;
       let lineaPrecio;
       if(!item.precio){
@@ -1369,26 +1382,29 @@ function renderDrawer(){
         </div>
       `;
     }).join('');
-  }
 
-  // ---- cartel de descuento por cantidad (solo pares adulto) ----
-  const infoDesc = document.getElementById('descuento-info');
-  if(cart.length === 0){
-    infoDesc.style.display = 'none';
-  }else{
-    infoDesc.style.display = 'block';
+    // ---- cartel de descuento (compacto) ----
+    let pillHtml;
     if(descuentoPorPar > 0){
-      infoDesc.classList.add('activo');
-      const faltanPara12 = totalParesAdulto < 12 ? 12 - totalParesAdulto : 0;
-      infoDesc.innerHTML = `Descuento aplicado: <b>-${money(descuentoPorPar)} por par</b> en tus ${totalParesAdulto} pares adulto.`
-        + (faltanPara12 > 0 ? ` Llevando ${faltanPara12} más llegás a 12 pares y pasa a <b>-${money(4000)} por par</b>.` : '');
-    }else{
-      infoDesc.classList.remove('activo');
+      const tier = totalParesAdulto >= 12 ? '12+' : '6+';
+      pillHtml = `<div class="descuento-pill activo">✓ Descuento aplicado: -${money(descuentoPorPar)} x par (${tier} pares)</div>`;
+    }else if(totalParesAdulto > 0){
       const faltanPara6 = 6 - totalParesAdulto;
-      infoDesc.innerHTML = totalParesAdulto > 0
-        ? `Llevando <b>${faltanPara6} par${faltanPara6===1?'':'es'} adulto más</b> (6 en total) cada par te queda <b>-${money(2000)}</b>.`
-        : `Comprando <b>6 pares de zapatillas adulto</b> cada par te queda -${money(2000)}, y desde <b>12 pares</b>, -${money(4000)} por par.`;
+      pillHtml = `<div class="descuento-pill">Llevando ${faltanPara6} par${faltanPara6===1?'':'es'} adulto más, cada par te queda -${money(2000)}</div>`;
+    }else{
+      pillHtml = `<div class="descuento-pill">Comprando 6 pares adulto accedés a descuento por cantidad</div>`;
     }
+
+    let filasHtml = `<div class="resumen-row"><span>Total pares</span><span>${totalPares}</span></div>`;
+    if(descuentoPorPar > 0 && ahorroTotal > 0){
+      filasHtml += `
+        <div class="resumen-row"><span>Subtotal</span><span class="tachado">${money(subtotalSinDescuento)}</span></div>
+        <div class="resumen-row"><span>Ahorro por cantidad</span><span class="verde">-${money(ahorroTotal)}</span></div>
+      `;
+    }
+    filasHtml += `<div class="resumen-row resumen-total"><span>Total a pagar</span><strong class="verde">${money(totalNumerico)}</strong></div>`;
+
+    body.innerHTML = itemsHtml + `<div class="resumen-carrito">${pillHtml}${filasHtml}</div>`;
   }
 
   // ---- aviso de pedido minimo (3 pares, de cualquier categoria) ----
@@ -1408,7 +1424,6 @@ function renderDrawer(){
     btnPedido.style.cursor = '';
   }
 
-  document.getElementById('cart-total').textContent = money(totalNumerico);
   document.getElementById('cart-nota').style.display = hayConsultar ? 'block' : 'none';
 }
 
