@@ -228,7 +228,7 @@
     <div class="status-msg" id="status-msg"></div>
 
     <div class="toolbar">
-      <input type="text" id="buscador-admin" placeholder="Buscar por nombre o marca…" />
+      <input type="text" id="buscador-admin" placeholder="Buscar por nombre, marca o código…" />
       <div class="filtros-row">
         <select id="filtro-marca"><option value="">Todas las marcas</option></select>
         <select id="filtro-categoria">
@@ -400,7 +400,8 @@ function productosFiltrados(){
   const talle = document.getElementById('filtro-talle').value;
 
   return productos.filter(p => {
-    if(q && !p.nombre.toLowerCase().includes(q) && !(p.marca||'').toLowerCase().includes(q)) return false;
+    const matchId = q && String(p.id) === q;
+    if(q && !matchId && !p.nombre.toLowerCase().includes(q) && !(p.marca||'').toLowerCase().includes(q)) return false;
     if(marca && p.marca !== marca) return false;
     if(categoria && p.categoria !== categoria) return false;
     if(talle && !p.talles.some(t => t.talle === talle)) return false;
@@ -464,7 +465,7 @@ function renderLista(){
         ${fotoHtml}
         <div class="fila-info">
           <div class="nombre">${p.nombre}${catChip}</div>
-          <div class="sub">${p.marca || '—'}</div>
+          <div class="sub">${p.marca || '—'} · Cód. ${p.id}</div>
         </div>
         <div class="fila-right">
           ${precioHtml}

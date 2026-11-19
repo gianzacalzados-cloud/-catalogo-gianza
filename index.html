@@ -1690,7 +1690,7 @@ btnEnviarPedido.addEventListener('click', () => {
   cart.forEach(i => {
     let g = grupos.find(x => x.id === i.id);
     if(!g){
-      g = { id: i.id, nombre: i.nombre, marca: i.marca, precio: i.precio, categoria: i.categoria, foto: i.foto, talles: [] };
+      g = { id: i.id, nombre: i.nombre, marca: i.marca, precio: i.precio, categoria: i.categoria, talles: [] };
       grupos.push(g);
     }
     g.talles.push({ talle: i.talle, cantidad: i.cantidad });
@@ -1700,14 +1700,13 @@ btnEnviarPedido.addEventListener('click', () => {
   const lineas = grupos.map(g => {
     const tallesTxt = g.talles.map(t => `talle ${t.talle} x${t.cantidad}`).join(', ');
     const totalParesGrupo = g.talles.reduce((a,t) => a + t.cantidad, 0);
-    const fotoTxt = g.foto ? `\n   Foto: ${g.foto}` : '';
     if(!g.precio){
-      return `• ${g.nombre} (${g.marca})\n   ${tallesTxt} — a consultar${fotoTxt}`;
+      return `• ${g.nombre} (${g.marca}) — Cód. ${g.id}\n   ${tallesTxt} — a consultar`;
     }
     const aplicaDescuento = cuentaParaDescuentoAdulto(g.categoria) && descuentoPorPar > 0;
     const precioUnit = aplicaDescuento ? Math.max(g.precio - descuentoPorPar, 0) : g.precio;
     subtotalSinDescuento += g.precio * totalParesGrupo;
-    return `• ${g.nombre} (${g.marca})\n   ${tallesTxt}\n   ${money(precioUnit)} c/par${aplicaDescuento ? ' (con descuento)' : ''} — subtotal ${money(precioUnit * totalParesGrupo)}${fotoTxt}`;
+    return `• ${g.nombre} (${g.marca}) — Cód. ${g.id}\n   ${tallesTxt}\n   ${money(precioUnit)} c/par${aplicaDescuento ? ' (con descuento)' : ''} — subtotal ${money(precioUnit * totalParesGrupo)}`;
   });
 
   const ahorroTotal = subtotalSinDescuento - totalNumerico;
