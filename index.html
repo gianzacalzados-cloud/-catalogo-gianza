@@ -1234,6 +1234,27 @@ function render(lista){
   }).join('');
 }
 
+// orden de prioridad de modelos pedido por el cliente, por marca.
+// dentro de una marca, primero van (en este orden exacto) los modelos de esta lista;
+// para NIKE, despues sigue el grupo "deportivas"; al final va todo el resto.
+const PRIORIDAD_MODELO = {
+  'ADIDAS': ['FORUM', 'SAMBA', 'CAMPUS'],
+  'NIKE': ['DUNK', 'AIR FORCE 1'],
+  'JORDAN': ['JORDAN RETRO 4'],
+  'VANS': ['KNU', 'HYLANE'],
+  'NEW BALANCE': ['530', '9060']
+};
+const MODELOS_DEPORTIVOS_NIKE = ['PEGASUS', 'ZOOMX', 'SHOX', 'TN', 'V5 RNR', 'V2K', 'P6000', 'DN', 'DN8'];
+
+function rangoModelo(p){
+  const prioridad = PRIORIDAD_MODELO[p.marca] || [];
+  const modelo = (p.modelo || '').trim();
+  const idx = prioridad.indexOf(modelo);
+  if(idx !== -1) return idx;
+  if(p.marca === 'NIKE' && MODELOS_DEPORTIVOS_NIKE.includes(modelo)) return prioridad.length;
+  return prioridad.length + 1; // el resto
+}
+
 function aplicarFiltros(){
   const q = document.getElementById('buscador').value.trim().toLowerCase();
 
@@ -1255,6 +1276,22 @@ function aplicarFiltros(){
       const dispA = a.talles.filter(t => t.stock > 0).length;
       const dispB = b.talles.filter(t => t.stock > 0).length;
       return dispB - dispA;
+    });
+  }else if(filtroMarca){
+    // al entrar por una marca, agrupa todos los productos del mismo modelo juntos
+    // (ej: todas las FORUM una al lado de la otra, despues todas las SAMBA, etc.),
+    // respetando el orden de prioridad pedido (ver PRIORIDAD_MODELO)
+    filtrado = [...filtrado].sort((a, b) => {
+      const ra = rangoModelo(a);
+      const rb = rangoModelo(b);
+      if(ra !== rb) return ra - rb;
+      const ma = (a.modelo || '').trim();
+      const mb = (b.modelo || '').trim();
+      // los que todavia no tienen modelo cargado quedan al final, ordenados por nombre
+      if(!ma && mb) return 1;
+      if(ma && !mb) return -1;
+      if(ma !== mb) return ma.localeCompare(mb, 'es');
+      return a.nombre.localeCompare(b.nombre, 'es');
     });
   }
 
