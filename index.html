@@ -1937,7 +1937,7 @@ btnEnviarPedido.addEventListener('click', () => {
   mensaje += resumen;
 
   const url = `https://wa.me/${WHATSAPP_NUMERO}?text=${encodeURIComponent(mensaje)}`;
-  window.open(url, '_blank');
+  window.open(url, '_blank', 'noopener,noreferrer');
 
   // guarda una copia del pedido en el panel admin (sección Ventas), sin bloquear el envío por WhatsApp
   let datosEntrega = {};
