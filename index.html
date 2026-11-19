@@ -1247,12 +1247,19 @@ const PRIORIDAD_MODELO = {
 const MODELOS_DEPORTIVOS_NIKE = ['PEGASUS', 'ZOOMX', 'SHOX', 'TN', 'V5 RNR', 'V2K', 'P6000', 'DN', 'DN8'];
 
 function rangoModelo(p){
+  // si el modelo tiene un orden manual asignado desde el panel de admin
+  // (pestaña Reordenar > Modelos), ese orden manda siempre, por encima
+  // de la prioridad fija de más abajo.
+  if(typeof p.orden_modelo === 'number') return p.orden_modelo;
+
   const prioridad = PRIORIDAD_MODELO[p.marca] || [];
   const modelo = (p.modelo || '').trim();
   const idx = prioridad.indexOf(modelo);
-  if(idx !== -1) return idx;
-  if(p.marca === 'NIKE' && MODELOS_DEPORTIVOS_NIKE.includes(modelo)) return prioridad.length;
-  return prioridad.length + 1; // el resto
+  // los rangos manuales (orden_modelo) usan numeros bajos (1, 2, 3...), asi que
+  // la prioridad fija y el resto se corren bien arriba para no pisarse con ellos
+  if(idx !== -1) return 100000 + idx;
+  if(p.marca === 'NIKE' && MODELOS_DEPORTIVOS_NIKE.includes(modelo)) return 100000 + prioridad.length;
+  return 100000 + prioridad.length + 1; // el resto
 }
 
 function aplicarFiltros(){

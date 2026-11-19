@@ -184,6 +184,7 @@
   .card-reordenar .nombre{ font-size:13px; margin:0; line-height:1.25; font-weight:700; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
   .card-reordenar .precio{ font-family:'JetBrains Mono', monospace; font-weight:700; font-size:14.5px; }
   .card-reordenar .precio.sin{ font-family:'Inter', sans-serif; font-size:11px; color:#9a9ea8; font-weight:600; }
+  .card-reordenar .cantidad{ font-family:'Inter', sans-serif; font-size:11px; color:#9a9ea8; font-weight:600; }
 
   .reordenar-acciones{ display:flex; gap:10px; margin-top:16px; }
 
@@ -365,19 +366,42 @@
     </div>
 
     <div id="vista-reordenar" style="display:none;">
-      <div class="filtros-row" style="margin-bottom:14px;">
-        <select id="reordenar-marca"><option value="">Elegí una marca…</option></select>
-        <select id="reordenar-modelo" disabled><option value="">Elegí un modelo…</option></select>
+      <div class="tabs-admin" style="margin-bottom:14px;">
+        <button class="tab-admin activo" id="modo-reordenar-productos" type="button">Productos</button>
+        <button class="tab-admin" id="modo-reordenar-modelos" type="button">Modelos</button>
       </div>
 
-      <div class="reordenar-aviso">
-        Elegí una marca y un modelo, y arrastrá las tarjetas para cambiar el orden en que se ven en el catálogo público.
+      <div id="reordenar-modo-productos">
+        <div class="filtros-row" style="margin-bottom:14px;">
+          <select id="reordenar-marca"><option value="">Elegí una marca…</option></select>
+          <select id="reordenar-modelo" disabled><option value="">Elegí un modelo…</option></select>
+        </div>
+
+        <div class="reordenar-aviso">
+          Elegí una marca y un modelo, y arrastrá las tarjetas para cambiar el orden en que se ven en el catálogo público.
+        </div>
+
+        <div id="lista-reordenar"></div>
+
+        <div class="reordenar-acciones" id="reordenar-acciones" style="display:none;">
+          <button class="btn-guardar-modal" id="btn-guardar-orden">Guardar orden</button>
+        </div>
       </div>
 
-      <div id="lista-reordenar"></div>
+      <div id="reordenar-modo-modelos" style="display:none;">
+        <div class="filtros-row" style="margin-bottom:14px;">
+          <select id="reordenar-modelos-marca"><option value="">Elegí una marca…</option></select>
+        </div>
 
-      <div class="reordenar-acciones" id="reordenar-acciones" style="display:none;">
-        <button class="btn-guardar-modal" id="btn-guardar-orden">Guardar orden</button>
+        <div class="reordenar-aviso">
+          Elegí una marca y arrastrá los <b>modelos</b> (no los productos sueltos) para cambiar qué modelo aparece primero, segundo, etc. dentro de esa marca.
+        </div>
+
+        <div id="lista-reordenar-modelos"></div>
+
+        <div class="reordenar-acciones" id="reordenar-modelos-acciones" style="display:none;">
+          <button class="btn-guardar-modal" id="btn-guardar-orden-modelos">Guardar orden</button>
+        </div>
       </div>
     </div>
 
@@ -809,6 +833,170 @@ document.getElementById('btn-guardar-orden').addEventListener('click', async () 
 
   await cargarProductos();
   poblarMarcasReordenar();
+});
+
+// ---------- pestaña Reordenar > modo "Modelos": mover modelos enteros dentro de una marca ----------
+document.getElementById('modo-reordenar-productos').addEventListener('click', () => {
+  document.getElementById('modo-reordenar-productos').classList.add('activo');
+  document.getElementById('modo-reordenar-modelos').classList.remove('activo');
+  document.getElementById('reordenar-modo-productos').style.display = 'block';
+  document.getElementById('reordenar-modo-modelos').style.display = 'none';
+});
+document.getElementById('modo-reordenar-modelos').addEventListener('click', () => {
+  document.getElementById('modo-reordenar-modelos').classList.add('activo');
+  document.getElementById('modo-reordenar-productos').classList.remove('activo');
+  document.getElementById('reordenar-modo-modelos').style.display = 'block';
+  document.getElementById('reordenar-modo-productos').style.display = 'none';
+  poblarMarcasReordenarModelos();
+});
+
+function poblarMarcasReordenarModelos(){
+  const marcas = [...new Set(productos.map(p => p.marca).filter(Boolean))].sort();
+  const sel = document.getElementById('reordenar-modelos-marca');
+  const valorPrevio = sel.value;
+  sel.innerHTML = '<option value="">Elegí una marca…</option>' +
+    marcas.map(m => `<option value="${escapeHtml(m)}">${escapeHtml(m)}</option>`).join('');
+  sel.value = marcas.includes(valorPrevio) ? valorPrevio : '';
+}
+
+// agrupa los productos de una marca por modelo, y los ordena con el mismo
+// criterio que usa el catálogo público (rangoModelo), para que la grilla
+// arranque mostrando el orden actual real, no uno arbitrario
+function gruposModeloDeMarca(marca){
+  const porModelo = new Map(); // modelo (o "__sin__") -> lista de productos
+  productos.filter(p => p.marca === marca).forEach(p => {
+    const clave = p.modelo ? p.modelo.trim() : '__sin__';
+    if(!porModelo.has(clave)) porModelo.set(clave, []);
+    porModelo.get(clave).push(p);
+  });
+  const grupos = [...porModelo.entries()].map(([modelo, lista]) => ({ modelo, productos: lista }));
+  grupos.sort((a, b) => {
+    const ra = rangoModeloAdmin(a.productos[0]);
+    const rb = rangoModeloAdmin(b.productos[0]);
+    if(ra !== rb) return ra - rb;
+    if(a.modelo === '__sin__' && b.modelo !== '__sin__') return 1;
+    if(a.modelo !== '__sin__' && b.modelo === '__sin__') return -1;
+    return collatorEsReorden.compare(a.modelo, b.modelo);
+  });
+  return grupos;
+}
+
+// copia liviana de la logica de rangoModelo() de index.html, para que la grilla
+// de "Modelos" arranque mostrando el mismo orden que ya ve el cliente
+const PRIORIDAD_MODELO_ADMIN = {
+  'ADIDAS': ['FORUM', 'SAMBA', 'CAMPUS'],
+  'NIKE': ['DUNK', 'AIR FORCE 1'],
+  'JORDAN': ['JORDAN RETRO 4'],
+  'VANS': ['KNU', 'HYLANE'],
+  'NEW BALANCE': ['530', '9060']
+};
+const MODELOS_DEPORTIVOS_NIKE_ADMIN = ['PEGASUS', 'ZOOMX', 'SHOX', 'TN', 'V5 RNR', 'V2K', 'P6000', 'DN', 'DN8'];
+function rangoModeloAdmin(p){
+  if(typeof p.orden_modelo === 'number') return p.orden_modelo;
+  const prioridad = PRIORIDAD_MODELO_ADMIN[p.marca] || [];
+  const modelo = (p.modelo || '').trim();
+  const idx = prioridad.indexOf(modelo);
+  if(idx !== -1) return 100000 + idx;
+  if(p.marca === 'NIKE' && MODELOS_DEPORTIVOS_NIKE_ADMIN.includes(modelo)) return 100000 + prioridad.length;
+  return 100000 + prioridad.length + 1;
+}
+
+document.getElementById('reordenar-modelos-marca').addEventListener('change', () => {
+  const marca = document.getElementById('reordenar-modelos-marca').value;
+  const cont = document.getElementById('lista-reordenar-modelos');
+  if(!marca){
+    cont.innerHTML = '';
+    document.getElementById('reordenar-modelos-acciones').style.display = 'none';
+    return;
+  }
+  const grupos = gruposModeloDeMarca(marca);
+  if(grupos.length < 2){
+    cont.innerHTML = '';
+    document.getElementById('reordenar-modelos-acciones').style.display = 'none';
+    mostrarStatus('error', 'Esa marca tiene un solo modelo (o ninguno), no hay nada para reordenar.');
+    return;
+  }
+  renderGridReordenarModelos(grupos);
+  document.getElementById('reordenar-modelos-acciones').style.display = 'flex';
+});
+
+function renderGridReordenarModelos(grupos){
+  const cont = document.getElementById('lista-reordenar-modelos');
+  cont.className = 'reordenar-grid';
+  cont.innerHTML = grupos.map((g, i) => {
+    const muestra = g.productos.find(p => p.foto) || g.productos[0];
+    const fotoHtml = muestra.foto
+      ? `<img src="${escapeHtml(muestra.foto)}" alt="${escapeHtml(g.modelo)}">`
+      : `<span style="color:#9a9ea8; font-size:12px;">Sin foto</span>`;
+    const nombreModelo = g.modelo === '__sin__' ? 'Sin modelo asignado' : g.modelo;
+    const cantidad = g.productos.length === 1 ? '1 producto' : `${g.productos.length} productos`;
+    return `
+      <div class="card-reordenar" draggable="true" data-modelo="${escapeHtml(g.modelo)}">
+        <div class="photo-wrap">
+          <span class="pos-badge">${i + 1}</span>
+          ${fotoHtml}
+        </div>
+        <div class="body">
+          <span class="marca">${nombreModelo === 'Sin modelo asignado' ? '' : escapeHtml(muestra.marca) || ''}</span>
+          <div class="nombre">${escapeHtml(nombreModelo)}</div>
+          <div class="cantidad">${cantidad}</div>
+        </div>
+      </div>
+    `;
+  }).join('');
+}
+
+function renumerarPosicionesReordenarModelos(){
+  document.querySelectorAll('#lista-reordenar-modelos .card-reordenar').forEach((card, i) => {
+    card.querySelector('.pos-badge').textContent = i + 1;
+  });
+}
+
+let cardModeloArrastrada = null;
+document.getElementById('lista-reordenar-modelos').addEventListener('dragstart', (e) => {
+  cardModeloArrastrada = e.target.closest('.card-reordenar');
+  if(cardModeloArrastrada) cardModeloArrastrada.classList.add('arrastrando');
+});
+document.getElementById('lista-reordenar-modelos').addEventListener('dragend', () => {
+  if(cardModeloArrastrada) cardModeloArrastrada.classList.remove('arrastrando');
+  cardModeloArrastrada = null;
+  renumerarPosicionesReordenarModelos();
+});
+document.getElementById('lista-reordenar-modelos').addEventListener('dragover', (e) => {
+  e.preventDefault();
+  const cont = document.getElementById('lista-reordenar-modelos');
+  const sobre = e.target.closest('.card-reordenar');
+  if(!cardModeloArrastrada || !sobre || sobre === cardModeloArrastrada) return;
+  const rect = sobre.getBoundingClientRect();
+  const despuesDeMedio = (e.clientX - rect.left) > rect.width / 2;
+  cont.insertBefore(cardModeloArrastrada, despuesDeMedio ? sobre.nextSibling : sobre);
+});
+
+document.getElementById('btn-guardar-orden-modelos').addEventListener('click', async () => {
+  const marca = document.getElementById('reordenar-modelos-marca').value;
+  const cards = [...document.querySelectorAll('#lista-reordenar-modelos .card-reordenar')];
+  const btn = document.getElementById('btn-guardar-orden-modelos');
+  btn.disabled = true;
+  btn.textContent = 'Guardando…';
+
+  try{
+    for(let i = 0; i < cards.length; i++){
+      const modelo = cards[i].dataset.modelo;
+      const filtroUpdate = sb.from('productos').update({ orden_modelo: i + 1 }).eq('marca', marca);
+      const { error } = modelo === '__sin__'
+        ? await filtroUpdate.is('modelo', null)
+        : await filtroUpdate.eq('modelo', modelo);
+      if(error) throw error;
+    }
+    mostrarStatus('ok', 'Orden de modelos guardado. Ya se va a ver así en el catálogo.');
+  }catch(err){
+    mostrarStatus('error', 'Error guardando el orden: ' + err.message);
+  }finally{
+    btn.disabled = false;
+    btn.textContent = 'Guardar orden';
+  }
+
+  await cargarProductos();
 });
 
 // ---------- modal: abrir / cerrar ----------
