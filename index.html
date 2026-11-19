@@ -302,6 +302,27 @@
   .listado-titulo{ font-family:'Archivo Black', sans-serif; font-size: 21px; flex:1; min-width:120px; color: var(--text); }
   .listado-count{ color: var(--text-dim); font-size: 14px; width:100%; }
 
+  /* pastillas chiquitas de modelo (ej: dentro de ADIDAS -> FORUM / SAMBA / CAMPUS) */
+  .modelo-pills-row{ display:none; flex-wrap:wrap; gap:7px; width:100%; margin-top:2px; }
+  .modelo-pill{
+    background: rgba(255,255,255,0.05);
+    border: 1px solid rgba(255,255,255,0.12);
+    color: var(--text-dim);
+    border-radius: 999px;
+    padding: 6px 13px;
+    font-size: 12.5px;
+    font-weight: 700;
+    letter-spacing: 0.01em;
+    cursor: pointer;
+    white-space: nowrap;
+    transition: background .15s ease, border-color .15s ease, color .15s ease;
+  }
+  .modelo-pill:hover{ border-color: var(--accent); color: var(--text); }
+  .modelo-pill.selected{
+    background: var(--grad-accent); border-color: var(--accent); color:var(--on-accent);
+    box-shadow: var(--shadow-accent);
+  }
+
   .grid{
     display:grid;
     grid-template-columns: repeat(2, 1fr);
@@ -661,6 +682,46 @@
     display:none; background: rgba(230,72,79,0.12); border: 1px solid rgba(230,72,79,0.3);
     color: var(--off); font-size: 12.5px; font-weight:600; padding: 10px 12px; border-radius: 9px; margin-top: 10px;
   }
+
+  /* ================= MOBILE: achica todo el bloque de arriba (header, info-strip, promo, buscador, filtros) ================= */
+  @media (max-width: 480px){
+    .header-top{ padding: calc(10px + env(safe-area-inset-top,0px)) 12px 0; }
+    .brand-row{ margin-bottom:10px; }
+    .brand-row h1{ font-size: clamp(16px, 5.5vw, 20px); }
+    .brand-row small{ font-size: 10.5px; }
+
+    .banner-ver-todos{ padding: 11px 13px; margin-bottom: 16px; }
+    .banner-ver-todos .titulo{ font-size: 12.5px; }
+    .banner-ver-todos .sub{ font-size: 10px; }
+    .banner-ver-todos .arrow{ font-size: 15px; }
+
+    .info-strip{ margin-bottom: 10px; }
+    .info-strip span{ padding: 5px 4px; font-size: 8.5px; }
+
+    .banner-promo{ margin-bottom: 14px; }
+    .promo-top{ padding: 10px 11px; }
+    .promo-top .promo-tag{ font-size: 11px; margin-bottom: 7px; }
+    .promo-grid{ gap: 5px; }
+    .promo-item{ padding: 6px 2px; }
+    .promo-item .promo-eyebrow{ font-size: 7px; }
+    .promo-item .promo-figure{ font-size: 18px; }
+    .promo-item .promo-caption{ font-size: 8px; }
+    .promo-item .promo-price{ font-size: 9px; margin-top: 5px; }
+    .promo-nota{ font-size: 10px; margin-top: 10px; }
+
+    .header-sticky{ padding: 9px 12px 10px; }
+    .search-row input{ padding: 10px 14px; min-height: 40px; font-size: 16px; }
+
+    .pill-filters-row{ gap:7px; margin-top:8px; }
+    .btn-pill-filtro{ padding: 9px 10px; min-height: 36px; font-size: 12px; }
+    .btn-pill-filtro .chev{ font-size: 9px; }
+
+    .panel-pildoras{ padding: 10px; margin-top: 8px; }
+    .pildoras-grupo{ gap: 7px; }
+    .pildora{ padding: 8px 13px; min-height: 34px; font-size: 12.5px; }
+
+    .modelo-pill{ padding: 5px 11px; font-size: 11.5px; }
+  }
 </style>
 </head>
 <body>
@@ -750,6 +811,7 @@
       <button class="btn-volver" id="btn-volver">← Volver</button>
       <div class="listado-titulo" id="listado-titulo">Todos los modelos</div>
       <div class="listado-count" id="listado-count"></div>
+      <div class="modelo-pills-row" id="modelo-pills-row"></div>
     </div>
     <div class="grid" id="grid"></div>
     <div class="empty-state" id="empty-state" style="display:none;">No encontramos zapatillas con esa búsqueda.</div>
@@ -921,6 +983,7 @@ let vista = "home"; // "home" | "listado"
 let filtroMarca = "";
 let filtroCategoria = "";
 let filtroTalle = "";
+let filtroModelo = "";
 let tituloListado = "Todos los modelos";
 let modoVerTodos = false; // true solo cuando entras por el banner "VER TODOS LOS MODELOS"
 
@@ -1036,6 +1099,7 @@ function mostrarHome(){
   filtroMarca = "";
   filtroCategoria = "";
   filtroTalle = "";
+  filtroModelo = "";
   modoVerTodos = false;
   document.getElementById('buscador').value = "";
   cerrarPaneles();
@@ -1052,12 +1116,13 @@ function mostrarListado(titulo){
   document.getElementById('vista-listado').style.display = "block";
   document.getElementById('listado-titulo').textContent = titulo;
   window.scrollTo({ top: 0, behavior: "instant" in window ? "instant" : "auto" });
+  renderModeloPills();
   aplicarFiltros();
 }
 
 document.getElementById('btn-volver').addEventListener('click', mostrarHome);
 document.getElementById('btn-ver-todos').addEventListener('click', () => {
-  filtroMarca = ""; filtroCategoria = "";
+  filtroMarca = ""; filtroCategoria = ""; filtroModelo = "";
   modoVerTodos = true;
   mostrarListado("Todos los modelos");
 });
@@ -1103,6 +1168,7 @@ document.getElementById('tiles-grid').addEventListener('click', (e) => {
   const label = tile.dataset.label;
   filtroMarca = tipo === "marca" ? valor : "";
   filtroCategoria = tipo === "categoria" ? valor : "";
+  filtroModelo = "";
   modoVerTodos = false;
   mostrarListado(label);
 });
@@ -1173,6 +1239,7 @@ document.getElementById('pildoras-marca').addEventListener('click', (e) => {
   if(!btn) return;
   filtroMarca = btn.dataset.valor;
   filtroCategoria = ""; // una marca puntual reemplaza un filtro de categoria previo
+  filtroModelo = "";
   modoVerTodos = false;
   cerrarPaneles();
   actualizarPildorasSeleccionadas();
@@ -1279,6 +1346,8 @@ function aplicarFiltros(){
     if(filtroCategoria && p.categoria !== filtroCategoria) return false;
     // el talle filtrado tiene que tener stock real, no alcanza con que exista el talle
     if(filtroTalle && !p.talles.some(t => t.talle === filtroTalle && t.stock > 0)) return false;
+    // pastilla de modelo (solo tiene sentido dentro de una marca puntual)
+    if(filtroModelo && (p.modelo || '').trim() !== filtroModelo) return false;
     // ojotas solo se ven entrando por su categoria o si se busca algo puntual, no en listados generales
     if(p.categoria === "Ojotas" && filtroCategoria !== "Ojotas" && !q) return false;
     return true;
@@ -1318,6 +1387,48 @@ function aplicarFiltros(){
 
   render(filtrado);
 }
+
+// ---------- pastillas de modelo (ej: dentro de ADIDAS -> FORUM / SAMBA / CAMPUS) ----------
+function renderModeloPills(){
+  const cont = document.getElementById('modelo-pills-row');
+  // solo se muestran al entrar por una marca puntual (no en "Todos los modelos",
+  // ni en categorias como Ojotas/Infantiles/Nike Mind, ni mientras se busca algo)
+  if(!filtroMarca || modoVerTodos){
+    cont.style.display = 'none';
+    cont.innerHTML = '';
+    return;
+  }
+  const deLaMarca = productos.filter(p => p.marca === filtroMarca && p.categoria === "Adulto");
+  const modelos = [...new Set(deLaMarca.map(p => (p.modelo || '').trim()).filter(Boolean))];
+  if(modelos.length === 0){
+    cont.style.display = 'none';
+    cont.innerHTML = '';
+    return;
+  }
+  // mismo orden de prioridad que ya se usa para ordenar las tarjetas dentro de la marca
+  const prioridad = PRIORIDAD_MODELO[filtroMarca] || [];
+  modelos.sort((a, b) => {
+    const ia = prioridad.indexOf(a), ib = prioridad.indexOf(b);
+    const ra = ia !== -1 ? ia : prioridad.length + 1;
+    const rb = ib !== -1 ? ib : prioridad.length + 1;
+    if(ra !== rb) return ra - rb;
+    return a.localeCompare(b, 'es');
+  });
+  cont.style.display = 'flex';
+  cont.innerHTML = ['Todos', ...modelos].map(m => {
+    const valor = m === 'Todos' ? '' : m;
+    const activo = valor === filtroModelo;
+    return `<button type="button" class="modelo-pill${activo ? ' selected' : ''}" data-valor="${escapeHtml(valor)}">${escapeHtml(m)}</button>`;
+  }).join('');
+}
+
+document.getElementById('modelo-pills-row').addEventListener('click', (e) => {
+  const btn = e.target.closest('.modelo-pill');
+  if(!btn) return;
+  filtroModelo = btn.dataset.valor;
+  renderModeloPills();
+  aplicarFiltros();
+});
 
 document.getElementById('buscador').addEventListener('input', () => {
   const q = document.getElementById('buscador').value.trim();
