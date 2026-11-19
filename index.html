@@ -1698,27 +1698,30 @@ btnEnviarPedido.addEventListener('click', () => {
 
   let subtotalSinDescuento = 0;
   const lineas = grupos.map(g => {
-    const tallesTxt = g.talles.map(t => `talle ${t.talle} x${t.cantidad}`).join(', ');
+    const tallesTxt = g.talles.map(t => `TALLE ${t.talle} x${t.cantidad}`).join('\n   ');
     const totalParesGrupo = g.talles.reduce((a,t) => a + t.cantidad, 0);
     if(!g.precio){
-      return `• ${g.nombre} (${g.marca}) — Cód. ${g.id}\n   ${tallesTxt} — a consultar`;
+      return `*${g.nombre}* — Cód. ${g.id}\n   ${tallesTxt} — a consultar`;
     }
-    const aplicaDescuento = cuentaParaDescuentoAdulto(g.categoria) && descuentoPorPar > 0;
-    const precioUnit = aplicaDescuento ? Math.max(g.precio - descuentoPorPar, 0) : g.precio;
     subtotalSinDescuento += g.precio * totalParesGrupo;
-    return `• ${g.nombre} (${g.marca}) — Cód. ${g.id}\n   ${tallesTxt}\n   ${money(precioUnit)} c/par${aplicaDescuento ? ' (con descuento)' : ''} — subtotal ${money(precioUnit * totalParesGrupo)}`;
+    return `*${g.nombre}* — Cód. ${g.id}\n   ${tallesTxt}`;
   });
 
+  const paresOjotas = cart.reduce((acc, i) => acc + (i.categoria === 'Ojotas' ? i.cantidad : 0), 0);
+  const paresInfantil = cart.reduce((acc, i) => acc + (i.categoria === 'Infantil' ? i.cantidad : 0), 0);
+  const paresNikeMind = cart.reduce((acc, i) => acc + (i.categoria === 'Nike Mind' ? i.cantidad : 0), 0);
   const ahorroTotal = subtotalSinDescuento - totalNumerico;
+
   let resumen = '';
+  resumen += `Subtotal: ${money(subtotalSinDescuento)}\n`;
   if(descuentoPorPar > 0 && ahorroTotal > 0){
-    resumen += `Subtotal: ${money(subtotalSinDescuento)}\n`;
-    resumen += `Descuento por cantidad (${totalParesAdulto} pares adulto, -${money(descuentoPorPar)}/par): -${money(ahorroTotal)}\n`;
-    resumen += `*Total a pagar: ${money(totalNumerico)}*${hayConsultar ? ' (+ productos a consultar)' : ''}\n`;
-    resumen += `¡Estás ahorrando ${money(ahorroTotal)} en este pedido!`;
-  }else{
-    resumen += `*Total a pagar: ${money(totalNumerico)}*${hayConsultar ? ' (+ productos a consultar)' : ''}`;
+    resumen += `Descuento por cantidad: -${money(ahorroTotal)}\n`;
   }
+  if(totalParesAdulto > 0) resumen += `ZAPATILLAS ADULTO: *${totalParesAdulto}*\n`;
+  if(paresOjotas > 0) resumen += `OJOTAS: *${paresOjotas}*\n`;
+  if(paresNikeMind > 0) resumen += `NIKE MIND: *${paresNikeMind}*\n`;
+  if(paresInfantil > 0) resumen += `INFANTILES: *${paresInfantil}*\n`;
+  resumen += `*Total a pagar: ${money(totalNumerico)}*${hayConsultar ? ' (+ productos a consultar)' : ''}`;
 
   let mensaje = `Hola! Quiero hacer este pedido:\n\n`;
   mensaje += `*DATOS DEL CLIENTE*\n`;
