@@ -303,7 +303,12 @@
   .listado-count{ color: var(--text-dim); font-size: 14px; width:100%; }
 
   /* pastillas chiquitas de modelo (ej: dentro de ADIDAS -> FORUM / SAMBA / CAMPUS) */
-  .modelo-pills-row{ display:none; flex-wrap:wrap; gap:7px; width:100%; margin-top:2px; }
+  .modelo-pills-row{
+    display:none; flex-wrap:nowrap; gap:7px; width:100%; margin-top:2px;
+    overflow-x:auto; -webkit-overflow-scrolling:touch; scrollbar-width:none;
+    padding-bottom:2px;
+  }
+  .modelo-pills-row::-webkit-scrollbar{ display:none; }
   .modelo-pill{
     background: rgba(255,255,255,0.05);
     border: 1px solid rgba(255,255,255,0.12);
@@ -315,6 +320,7 @@
     letter-spacing: 0.01em;
     cursor: pointer;
     white-space: nowrap;
+    flex-shrink: 0;
     transition: background .15s ease, border-color .15s ease, color .15s ease;
   }
   .modelo-pill:hover{ border-color: var(--accent); color: var(--text); }
@@ -720,7 +726,8 @@
     .pildoras-grupo{ gap: 7px; }
     .pildora{ padding: 8px 13px; min-height: 34px; font-size: 12.5px; }
 
-    .modelo-pill{ padding: 5px 11px; font-size: 11.5px; }
+    .modelo-pill{ padding: 5px 10px; font-size: 11px; }
+    .modelo-pills-row{ gap:6px; }
   }
 </style>
 </head>
@@ -1200,8 +1207,16 @@ document.getElementById('btn-toggle-talle').addEventListener('click', () => {
   }
 });
 
+// orden pedido para "Filtrar por marca": primero estas, en este orden exacto;
+// el resto de las marcas van despues, ordenadas alfabeticamente.
+const ORDEN_MARCAS_FILTRO = ['ADIDAS', 'NIKE', 'NEW BALANCE', 'VANS', 'JORDAN', 'PUMA'];
 function poblarPildorasMarca(){
-  const marcas = [...new Set(productos.map(p => p.marca).filter(Boolean))].sort();
+  const todas = [...new Set(productos.map(p => p.marca).filter(Boolean))];
+  const prioridad = todas
+    .filter(m => ORDEN_MARCAS_FILTRO.includes(m))
+    .sort((a, b) => ORDEN_MARCAS_FILTRO.indexOf(a) - ORDEN_MARCAS_FILTRO.indexOf(b));
+  const resto = todas.filter(m => !ORDEN_MARCAS_FILTRO.includes(m)).sort();
+  const marcas = [...prioridad, ...resto];
   const cont = document.getElementById('pildoras-marca');
   cont.innerHTML = ['Todas', ...marcas].map(m => {
     const valor = m === 'Todas' ? '' : m;
@@ -1347,7 +1362,7 @@ function aplicarFiltros(){
     // el talle filtrado tiene que tener stock real, no alcanza con que exista el talle
     if(filtroTalle && !p.talles.some(t => t.talle === filtroTalle && t.stock > 0)) return false;
     // pastilla de modelo (solo tiene sentido dentro de una marca puntual)
-    if(filtroModelo && (p.modelo || '').trim() !== filtroModelo) return false;
+    if(filtroModelo && grupoModelo(p.modelo, p.marca) !== filtroModelo) return false;
     // ojotas solo se ven entrando por su categoria o si se busca algo puntual, no en listados generales
     if(p.categoria === "Ojotas" && filtroCategoria !== "Ojotas" && !q) return false;
     return true;
@@ -1389,6 +1404,47 @@ function aplicarFiltros(){
 }
 
 // ---------- pastillas de modelo (ej: dentro de ADIDAS -> FORUM / SAMBA / CAMPUS) ----------
+// agrupa automaticamente, marca por marca, los "modelo" que son el principio de otro
+// (ej: NIKE "DN" y "DN8" -> una sola pastilla "DN"; ADIDAS "ADIZERO" y "ADIZERO BOSTON",
+// "ADIZERO PRO", etc. -> una sola pastilla "ADIZERO"). No modifica el dato real del
+// producto: el campo "modelo" sigue intacto en la base y en el admin, esto solo decide
+// que pastilla le corresponde a cada uno.
+let MODELO_GRUPOS = {}; // { MARCA: { modeloCrudo: etiquetaDePastilla } }
+
+function construirGruposModelo(){
+  MODELO_GRUPOS = {};
+  const porMarca = {};
+  productos.forEach(p => {
+    if(p.categoria !== "Adulto") return; // mismo criterio que usa el resto del filtro de marca
+    const m = (p.modelo || '').trim();
+    if(!m) return;
+    if(!porMarca[p.marca]) porMarca[p.marca] = new Set();
+    porMarca[p.marca].add(m);
+  });
+  Object.keys(porMarca).forEach(marca => {
+    // se procesan del mas corto al mas largo: asi el mas corto (ej "DN") se
+    // establece primero como etiqueta, y el mas largo que empiece igual (ej "DN8")
+    // queda agrupado bajo esa misma etiqueta.
+    const modelos = [...porMarca[marca]].sort((a, b) => a.length - b.length);
+    const etiquetas = [];
+    const mapa = {};
+    modelos.forEach(m => {
+      const existente = etiquetas.find(e => m.startsWith(e));
+      mapa[m] = existente || m;
+      if(!existente) etiquetas.push(m);
+    });
+    MODELO_GRUPOS[marca] = mapa;
+  });
+}
+
+function grupoModelo(modeloCrudo, marca){
+  const m = (modeloCrudo || '').trim();
+  if(!m) return '';
+  const mapa = MODELO_GRUPOS[marca];
+  if(mapa && mapa[m]) return mapa[m];
+  return m;
+}
+
 function renderModeloPills(){
   const cont = document.getElementById('modelo-pills-row');
   // solo se muestran al entrar por una marca puntual (no en "Todos los modelos",
@@ -1399,7 +1455,7 @@ function renderModeloPills(){
     return;
   }
   const deLaMarca = productos.filter(p => p.marca === filtroMarca && p.categoria === "Adulto");
-  const modelos = [...new Set(deLaMarca.map(p => (p.modelo || '').trim()).filter(Boolean))];
+  const modelos = [...new Set(deLaMarca.map(p => grupoModelo(p.modelo, filtroMarca)).filter(Boolean))];
   if(modelos.length === 0){
     cont.style.display = 'none';
     cont.innerHTML = '';
@@ -2137,6 +2193,7 @@ async function init(){
   document.getElementById('total-info').textContent = `${productos.length} modelos`;
   document.getElementById('banner-sub').textContent = `${productos.length} modelos con stock, de todas las marcas`;
 
+  construirGruposModelo();
   renderTiles();
   poblarPildorasMarca();
   poblarPildorasTalle();
