@@ -323,7 +323,7 @@
   }
   .card:hover{ transform: translateY(-2px); border-color: var(--soft-border-hover); }
   .card .photo-wrap{
-    aspect-ratio: 1/1;
+    aspect-ratio: 4/5;
     background: var(--img-bg);
     display:flex; align-items:center; justify-content:center;
     overflow:hidden;
@@ -560,29 +560,37 @@
   }
 
   .cart-item{
-    display:flex; gap:14px; padding: 16px 0; border-bottom: 1px solid var(--card-border);
+    display:flex; align-items:center; gap:10px;
+    padding: 9px; margin-bottom: 8px;
+    background: var(--bg-soft); border-radius: 9px;
   }
-  .cart-item img{ width:72px; height:72px; object-fit:cover; border-radius:9px; background:var(--img-bg); flex-shrink:0; }
+  .cart-item img{ width:44px; height:44px; object-fit:cover; border-radius:7px; background:var(--img-bg); flex-shrink:0; }
   .cart-item-info{ flex:1; min-width:0; }
-  .cart-item-info .nombre{ font-size: 15.5px; font-weight:600; line-height:1.3; }
-  .cart-item-info .detalle{ font-size: 13px; color: var(--text-dim); margin-top:3px; }
-  .cart-item-info .precio-linea{ font-size: 15px; margin-top: 8px; font-weight:700; }
-  .cart-item-info .precio-linea .precio-tachado{ color: var(--text-dim); text-decoration: line-through; font-weight:500; margin-right:6px; font-size:13px; }
+  .cart-item-info .nombre{
+    font-size: 12.5px; font-weight:700; line-height:1.25;
+    white-space:nowrap; overflow:hidden; text-overflow:ellipsis;
+  }
+  .cart-item-info .detalle{ font-size: 11px; color: var(--text-dim); margin-top:2px; }
+  .cart-item-info .detalle .precio-linea{ display:inline; }
+  .cart-item-info .precio-linea{ font-size: 11.5px; font-weight:700; font-family:'JetBrains Mono', monospace; }
+  .cart-item-info .precio-linea .precio-tachado{ color: var(--text-dim); text-decoration: line-through; font-weight:500; margin-right:5px; }
   .cart-item-info .precio-linea .precio-con-desc{ color: var(--ok); }
+  .stock-limite{ font-size: 10px; color: var(--off); margin-top: 2px; }
 
-  .qty-control{ display:flex; align-items:center; gap:12px; margin-top:10px; }
+  .qty-control{ display:flex; align-items:center; gap:6px; flex-shrink:0; }
   .qty-control button{
-    width:38px; height:38px; border-radius:8px; border:1px solid rgba(255,255,255,0.12);
-    background: rgba(255,255,255,0.05); box-shadow: inset 0 1px 0 rgba(255,255,255,0.06);
-    color: var(--text); cursor:pointer; font-size:17px;
+    width:24px; height:24px; border-radius:6px; border:1px solid var(--card-border);
+    background: transparent;
+    color: var(--text); cursor:pointer; font-size:14px;
+    display:flex; align-items:center; justify-content:center;
   }
-  .qty-control span{ font-size: 15.5px; min-width: 22px; text-align:center; font-weight:600; }
+  .qty-control span{ font-size: 12.5px; min-width: 14px; text-align:center; font-weight:600; }
   .qty-control button:disabled{ opacity:0.35; cursor:not-allowed; }
-  .stock-limite{ font-size: 11px; color: var(--off); margin-top: 4px; }
   .btn-quitar{
-    background:none; border:none; color: var(--off); font-size:13.5px; cursor:pointer;
-    text-decoration: underline; margin-top: 9px; padding: 4px 0;
+    background:none; border:none; color: var(--off); font-size:11.5px; font-weight:700; cursor:pointer;
+    line-height:1; padding: 4px; flex-shrink:0; align-self: flex-start;
   }
+  .btn-quitar:hover{ text-decoration: underline; }
 
   .drawer-footer{
     border-top: 1px solid var(--card-border);
@@ -1530,16 +1538,15 @@ function renderDrawer(){
           ${fotoHtml}
           <div class="cart-item-info">
             <div class="nombre">${escapeHtml(item.nombre)}</div>
-            <div class="detalle">${escapeHtml(item.marca)} · Talle ${escapeHtml(item.talle)}</div>
-            <div class="qty-control">
-              <button data-idx="${idx}" data-delta="-1">−</button>
-              <span>${item.cantidad}</span>
-              <button data-idx="${idx}" data-delta="1" ${enElTope ? 'disabled' : ''}>+</button>
-            </div>
+            <div class="detalle">Talle: ${escapeHtml(item.talle)} — <span class="precio-linea">${lineaPrecio}</span></div>
             ${enElTope ? `<div class="stock-limite">Quedan ${item.stock} en stock</div>` : ''}
-            <div class="precio-linea">${lineaPrecio}</div>
-            <button class="btn-quitar" data-idx="${idx}">Quitar</button>
           </div>
+          <div class="qty-control">
+            <button data-idx="${idx}" data-delta="-1">−</button>
+            <span>${item.cantidad}</span>
+            <button data-idx="${idx}" data-delta="1" ${enElTope ? 'disabled' : ''}>+</button>
+          </div>
+          <button class="btn-quitar" data-idx="${idx}">Eliminar</button>
         </div>
       `;
     }).join('');
