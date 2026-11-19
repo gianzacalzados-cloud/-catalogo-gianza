@@ -153,6 +153,51 @@
   }
   .reordenar-aviso b{ color:var(--accent); }
 
+  /* ---------- BoxHero ---------- */
+  .boxhero-upload{
+    display:flex; align-items:center; gap:12px; flex-wrap:wrap;
+    background:var(--accent-soft); border:1px solid var(--card-border); border-radius:10px;
+    padding:14px; margin-bottom:16px;
+  }
+  .boxhero-upload input[type="file"]{ font-size:12.5px; color:var(--text-dim); }
+  .btn-boxhero-procesar{
+    background:var(--accent); color:#fff; border:none; border-radius:8px; padding:9px 16px;
+    font-size:13px; font-weight:700; cursor:pointer; transition:background .15s ease;
+  }
+  .btn-boxhero-procesar:hover{ background:var(--accent-dim); }
+  .btn-boxhero-procesar:disabled{ opacity:0.5; cursor:not-allowed; }
+  .boxhero-resumen{
+    display:grid; grid-template-columns: repeat(3, 1fr); gap:12px; margin-bottom:18px;
+  }
+  .boxhero-stat{
+    background:var(--card); border:1px solid var(--card-border); border-radius:10px; padding:14px;
+    text-align:center;
+  }
+  .boxhero-stat .num{ font-family:'JetBrains Mono', monospace; font-size:22px; font-weight:700; color:var(--accent); }
+  .boxhero-stat .label{ font-size:11.5px; color:var(--text-dim); margin-top:4px; }
+  .boxhero-stat.ok .num{ color:var(--ok); }
+  .boxhero-stat.alerta .num{ color:#e2a73e; }
+  .boxhero-seccion-titulo{ font-size:14px; font-weight:700; margin:20px 0 10px; }
+  .boxhero-fila{
+    display:flex; align-items:center; gap:12px; background:var(--card); border:1px solid var(--card-border);
+    border-radius:10px; padding:10px 12px; margin-bottom:8px; flex-wrap:wrap;
+  }
+  .boxhero-fila img{ width:38px; height:38px; object-fit:cover; border-radius:7px; background:var(--img-bg); flex-shrink:0; }
+  .boxhero-fila .info{ min-width:170px; }
+  .boxhero-fila .info .nombre{ font-size:12.5px; font-weight:700; }
+  .boxhero-fila .info .detalle{ font-size:11px; color:var(--text-dim); margin-top:2px; }
+  .boxhero-fila select{
+    background:var(--bg-soft); color:var(--text); border:1px solid var(--card-border); border-radius:7px;
+    padding:6px 9px; font-size:12px; font-family:inherit;
+  }
+  .boxhero-fila .flecha{ color:var(--text-dim); font-size:13px; }
+  .btn-boxhero-guardar{
+    background:var(--ok); color:var(--on-accent-2); border:none; border-radius:8px; padding:11px 20px;
+    font-size:13.5px; font-weight:700; cursor:pointer; margin-top:10px;
+  }
+  .btn-boxhero-guardar:hover{ opacity:0.9; }
+  .btn-boxhero-guardar:disabled{ opacity:0.4; cursor:not-allowed; }
+
   /* grilla de tarjetas igual a como se ven en el catalogo publico, para que
      arrastres y veas directamente el mismo resultado que va a ver el cliente */
   .reordenar-grid{
@@ -334,6 +379,7 @@
       <button class="tab-admin activo" id="tab-catalogo" type="button">Catálogo</button>
       <button class="tab-admin" id="tab-ventas" type="button">Ventas <span class="tab-badge" id="ventas-badge" style="display:none;">0</span></button>
       <button class="tab-admin" id="tab-reordenar" type="button">Reordenar</button>
+      <button class="tab-admin" id="tab-boxhero" type="button">BoxHero</button>
     </div>
 
     <div id="vista-catalogo">
@@ -402,6 +448,43 @@
         <div class="reordenar-acciones" id="reordenar-modelos-acciones" style="display:none;">
           <button class="btn-guardar-modal" id="btn-guardar-orden-modelos">Guardar orden</button>
         </div>
+      </div>
+    </div>
+
+    <div id="vista-boxhero" style="display:none;">
+      <div class="reordenar-aviso">
+        Subí el archivo <b>boxhero_items.json</b> que exportaste con el script local. Esto vincula cada talle de tu catálogo
+        con su artículo correspondiente en BoxHero, para que el stock se mantenga sincronizado automáticamente.
+        Esto se hace <b>una sola vez</b> (y de nuevo si cargás modelos nuevos).
+      </div>
+
+      <div class="boxhero-upload">
+        <input type="file" id="boxhero-file" accept="application/json,.json" />
+        <button class="btn-boxhero-procesar" id="btn-boxhero-procesar" disabled>Procesar y matchear</button>
+      </div>
+
+      <div id="boxhero-resultado" style="display:none;">
+        <div class="boxhero-resumen">
+          <div class="boxhero-stat ok">
+            <div class="num" id="boxhero-stat-auto">0</div>
+            <div class="label">Vinculados automáticamente</div>
+          </div>
+          <div class="boxhero-stat alerta">
+            <div class="num" id="boxhero-stat-manual">0</div>
+            <div class="label">Necesitan revisión manual</div>
+          </div>
+          <div class="boxhero-stat">
+            <div class="num" id="boxhero-stat-sinbox">0</div>
+            <div class="label">Talles de tu catálogo sin equivalente en BoxHero</div>
+          </div>
+        </div>
+
+        <div id="boxhero-manual-wrap">
+          <div class="boxhero-seccion-titulo">Revisión manual</div>
+          <div id="boxhero-manual-lista"></div>
+        </div>
+
+        <button class="btn-boxhero-guardar" id="btn-boxhero-guardar">Guardar vinculación</button>
       </div>
     </div>
 
@@ -1157,12 +1240,13 @@ document.getElementById('btn-borrar-modal').addEventListener('click', async () =
 
 // ---------- tabs ----------
 function activarTab(idActivo){
-  ['tab-catalogo', 'tab-ventas', 'tab-reordenar'].forEach(id => {
+  ['tab-catalogo', 'tab-ventas', 'tab-reordenar', 'tab-boxhero'].forEach(id => {
     document.getElementById(id).classList.toggle('activo', id === idActivo);
   });
   document.getElementById('vista-catalogo').style.display = idActivo === 'tab-catalogo' ? 'block' : 'none';
   document.getElementById('vista-ventas').style.display = idActivo === 'tab-ventas' ? 'block' : 'none';
   document.getElementById('vista-reordenar').style.display = idActivo === 'tab-reordenar' ? 'block' : 'none';
+  document.getElementById('vista-boxhero').style.display = idActivo === 'tab-boxhero' ? 'block' : 'none';
 }
 document.getElementById('tab-catalogo').addEventListener('click', () => activarTab('tab-catalogo'));
 document.getElementById('tab-ventas').addEventListener('click', () => {
@@ -1173,6 +1257,7 @@ document.getElementById('tab-reordenar').addEventListener('click', () => {
   activarTab('tab-reordenar');
   poblarMarcasReordenar();
 });
+document.getElementById('tab-boxhero').addEventListener('click', () => activarTab('tab-boxhero'));
 document.getElementById('filtro-estado-pedido').addEventListener('change', cargarPedidos);
 document.getElementById('filtro-estado-pedido').addEventListener('change', cargarPedidos);
 
@@ -1239,11 +1324,11 @@ function renderPedidos(){
     let acciones = '';
     if(estadoSeg === 'pendiente'){
       acciones = `
-        <button class="btn-salida-stock" data-accion="salida" data-id="${p.id}">✓ Salida de stock</button>
+        <button class="btn-salida-stock" data-accion="salida" data-id="${p.id}">✓ Marcar confirmado</button>
         <button class="btn-anular-pedido" data-accion="anular" data-id="${p.id}">Anular pedido</button>
       `;
     }else if(estadoSeg === 'confirmado'){
-      acciones = `<button class="btn-reingresar-stock" data-accion="reingresar" data-id="${p.id}">↺ Reingresar stock</button>`;
+      acciones = `<button class="btn-reingresar-stock" data-accion="reingresar" data-id="${p.id}">↺ Volver a pendiente</button>`;
     }
 
     return `
@@ -1283,10 +1368,14 @@ document.getElementById('lista-pedidos').addEventListener('click', async (e) => 
   const pedido = pedidos.find(p => p.id === id);
   if(!pedido) return;
 
+  // Nota: este panel de pedidos ya NO toca el stock. El stock real lo maneja
+  // BoxHero (ver pestaña "BoxHero") — acá solo se registra el estado del
+  // pedido para tu propio seguimiento. Cuando cargues la venta en BoxHero y
+  // le des salida ahí, el stock de la web se actualiza solo.
   const mensajesConfirm = {
-    salida: '¿Confirmar la venta y descontar el stock de este pedido?',
-    anular: '¿Anular este pedido? No se va a tocar el stock.',
-    reingresar: '¿Reingresar el stock de este pedido? Se va a sumar de nuevo a tus productos.'
+    salida: '¿Marcar este pedido como confirmado? (Recordá darle salida de existencias en BoxHero para que se descuente el stock)',
+    anular: '¿Anular este pedido?',
+    reingresar: '¿Volver a marcar este pedido como pendiente?'
   };
   if(!confirm(mensajesConfirm[btn.dataset.accion])) return;
 
@@ -1297,35 +1386,217 @@ document.getElementById('lista-pedidos').addEventListener('click', async (e) => 
   card.querySelectorAll('button').forEach(b => b.disabled = true);
 
   if(btn.dataset.accion === 'salida'){
-    await aplicarMovimientoStock(pedido, -1);
     await sb.from('pedidos').update({ estado: 'confirmado' }).eq('id', id);
-    mostrarStatus('ok', 'Stock descontado. Pedido confirmado.');
+    mostrarStatus('ok', 'Pedido confirmado. No te olvides de darle salida en BoxHero para descontar el stock.');
     await cargarPedidos();
   }else if(btn.dataset.accion === 'anular'){
     await sb.from('pedidos').update({ estado: 'anulado' }).eq('id', id);
     mostrarStatus('ok', 'Pedido anulado.');
     await cargarPedidos();
   }else if(btn.dataset.accion === 'reingresar'){
-    await aplicarMovimientoStock(pedido, +1);
-    await sb.from('pedidos').update({ estado: 'anulado' }).eq('id', id);
-    mostrarStatus('ok', 'Stock reingresado.');
+    await sb.from('pedidos').update({ estado: 'pendiente' }).eq('id', id);
+    mostrarStatus('ok', 'Pedido vuelto a pendiente.');
     await cargarPedidos();
   }
 });
 
-// signo: -1 para restar stock (salida/venta confirmada), +1 para reingresar (si no pagó)
-async function aplicarMovimientoStock(pedido, signo){
-  for(const item of (pedido.detalle || [])){
-    const { data: prod, error: errLeer } = await sb.from('productos').select('talles').eq('id', item.producto_id).single();
-    if(errLeer || !prod){ continue; } // producto borrado del catálogo: no hay nada que ajustar
-    const talles = prod.talles || [];
-    const idx = talles.findIndex(t => t.talle === item.talle);
-    if(idx === -1){ continue; } // ese talle ya no existe: no hay nada que ajustar
-    const stockActual = talles[idx].stock || 0;
-    talles[idx] = { ...talles[idx], stock: Math.max(stockActual + signo * item.cantidad, 0) };
-    await sb.from('productos').update({ talles }).eq('id', item.producto_id);
-  }
+// ---------- BoxHero: vinculación de stock ----------
+let boxheroAutoMatches = [];
+let boxheroManual = [];
+
+document.getElementById('boxhero-file').addEventListener('change', (e) => {
+  document.getElementById('btn-boxhero-procesar').disabled = !e.target.files.length;
+});
+
+function normTextoBox(s){
+  return (s || '').toString().normalize('NFD').replace(/[̀-ͯ]/g, '').toUpperCase().trim().replace(/\s+/g, ' ');
 }
+function normTalleBox(s){
+  return (s || '').toString().trim().replace(/\s+/g, '');
+}
+
+document.getElementById('btn-boxhero-procesar').addEventListener('click', async () => {
+  const file = document.getElementById('boxhero-file').files[0];
+  if(!file) return;
+  const btn = document.getElementById('btn-boxhero-procesar');
+  btn.disabled = true; btn.textContent = 'Procesando…';
+  try {
+    const texto = await file.text();
+    const items = JSON.parse(texto);
+    procesarMatchingBoxhero(items);
+  } catch(err) {
+    mostrarStatus('error', 'No se pudo leer el archivo: ' + err.message);
+  } finally {
+    btn.disabled = false; btn.textContent = 'Procesar y matchear';
+  }
+});
+
+function procesarMatchingBoxhero(items){
+  // indice de talles del catalogo: "marca|nombre|talle" -> {producto, idx}
+  const indice = new Map();
+  const indiceSinMarca = new Map(); // "nombre|talle" -> [ {producto, idx} ]
+  productos.forEach(p => {
+    (p.talles || []).forEach((t, idx) => {
+      const clave = normTextoBox(p.marca) + '|' + normTextoBox(p.nombre) + '|' + normTalleBox(t.talle);
+      indice.set(clave, { producto: p, idx });
+      const clave2 = normTextoBox(p.nombre) + '|' + normTalleBox(t.talle);
+      if(!indiceSinMarca.has(clave2)) indiceSinMarca.set(clave2, []);
+      indiceSinMarca.get(clave2).push({ producto: p, idx });
+    });
+  });
+
+  const auto = [];
+  const manual = [];
+
+  items.forEach(item => {
+    const attrs = item.attrs || [];
+    if(attrs.length === 0) return; // filas contables (ENVIO, DESCUENTO, etc.): no son productos
+    const talleAttr = attrs.find(a => a.name === 'Talle');
+    const marcaAttr = attrs.find(a => a.name === 'Marca');
+    if(!talleAttr || !talleAttr.value){
+      manual.push({ item, talle: '', marca: marcaAttr ? marcaAttr.value : '' });
+      return;
+    }
+    const talle = normTalleBox(talleAttr.value);
+    const marca = marcaAttr ? normTextoBox(marcaAttr.value) : '';
+    const nombre = normTextoBox(item.name);
+
+    let match = null;
+    if(marca){
+      const clave = marca + '|' + nombre + '|' + talle;
+      if(indice.has(clave)) match = indice.get(clave);
+    }
+    if(!match){
+      const clave2 = nombre + '|' + talle;
+      const candidatos = indiceSinMarca.get(clave2);
+      if(candidatos && candidatos.length === 1) match = candidatos[0];
+    }
+
+    if(match){
+      auto.push({ producto: match.producto, idx: match.idx, boxItem: item });
+    } else {
+      manual.push({ item, talle: talleAttr.value, marca: marcaAttr ? marcaAttr.value : '' });
+    }
+  });
+
+  const matchedKeys = new Set(auto.map(m => m.producto.id + '|' + m.idx));
+  let sinEquivalente = 0;
+  productos.forEach(p => (p.talles || []).forEach((t, idx) => {
+    if(!matchedKeys.has(p.id + '|' + idx)) sinEquivalente++;
+  }));
+
+  boxheroAutoMatches = auto;
+  boxheroManual = manual;
+
+  document.getElementById('boxhero-stat-auto').textContent = auto.length;
+  document.getElementById('boxhero-stat-manual').textContent = manual.length;
+  document.getElementById('boxhero-stat-sinbox').textContent = sinEquivalente;
+  document.getElementById('boxhero-resultado').style.display = 'block';
+
+  renderBoxheroManual();
+}
+
+function opcionesProductosHtmlBox(){
+  const ordenados = [...productos].sort((a,b) => collatorEs.compare((a.marca||'')+a.nombre, (b.marca||'')+b.nombre));
+  return '<option value="">— elegir producto —</option>' + ordenados.map(p =>
+    `<option value="${p.id}">${escapeHtml(p.marca||'')} — ${escapeHtml(p.nombre)}</option>`
+  ).join('');
+}
+
+function opcionesTallesHtmlBox(producto, talleSugerido){
+  if(!producto) return '<option value="">—</option>';
+  const talles = producto.talles || [];
+  let html = talles.map((t, idx) =>
+    `<option value="${idx}" ${normTalleBox(t.talle)===normTalleBox(talleSugerido)?'selected':''}>Talle ${escapeHtml(t.talle)} (stock actual: ${t.stock||0})</option>`
+  ).join('');
+  html += `<option value="__nuevo__">+ Agregar talle nuevo (${escapeHtml(talleSugerido || '?')})</option>`;
+  return html;
+}
+
+function renderBoxheroManual(){
+  const cont = document.getElementById('boxhero-manual-lista');
+  if(boxheroManual.length === 0){
+    cont.innerHTML = '<div class="reordenar-aviso">No quedó nada pendiente de revisión manual.</div>';
+    return;
+  }
+  cont.innerHTML = boxheroManual.map((m, i) => `
+    <div class="boxhero-fila" data-i="${i}">
+      <img src="${m.item.photo_url || ''}" onerror="this.style.visibility='hidden'" />
+      <div class="info">
+        <div class="nombre">${escapeHtml(m.item.name)}</div>
+        <div class="detalle">${m.marca ? escapeHtml(m.marca)+' · ' : ''}Talle ${escapeHtml(m.talle || '(sin talle)')}</div>
+      </div>
+      <span class="flecha">→</span>
+      <select class="sel-producto" data-i="${i}">${opcionesProductosHtmlBox()}</select>
+      <select class="sel-talle" data-i="${i}" disabled><option value="">—</option></select>
+    </div>
+  `).join('');
+
+  cont.querySelectorAll('.sel-producto').forEach(sel => {
+    sel.addEventListener('change', () => {
+      const i = Number(sel.dataset.i);
+      const producto = productos.find(p => String(p.id) === sel.value);
+      const selTalle = cont.querySelector(`.sel-talle[data-i="${i}"]`);
+      if(producto){
+        selTalle.innerHTML = opcionesTallesHtmlBox(producto, boxheroManual[i].talle);
+        selTalle.disabled = false;
+      } else {
+        selTalle.innerHTML = '<option value="">—</option>';
+        selTalle.disabled = true;
+      }
+    });
+  });
+}
+
+document.getElementById('btn-boxhero-guardar').addEventListener('click', async () => {
+  const btn = document.getElementById('btn-boxhero-guardar');
+  btn.disabled = true; btn.textContent = 'Guardando…';
+
+  const cambiosPorProducto = new Map(); // id -> talles clonado
+  function talleClonadoDe(producto){
+    if(!cambiosPorProducto.has(producto.id)){
+      cambiosPorProducto.set(producto.id, (producto.talles || []).map(t => ({ ...t })));
+    }
+    return cambiosPorProducto.get(producto.id);
+  }
+
+  boxheroAutoMatches.forEach(({ producto, idx, boxItem }) => {
+    const talles = talleClonadoDe(producto);
+    talles[idx] = { ...talles[idx], boxhero_id: boxItem.id };
+  });
+
+  const cont = document.getElementById('boxhero-manual-lista');
+  cont.querySelectorAll('.boxhero-fila').forEach(fila => {
+    const i = Number(fila.dataset.i);
+    const m = boxheroManual[i];
+    const selProd = fila.querySelector('.sel-producto');
+    const selTalle = fila.querySelector('.sel-talle');
+    if(!selProd.value || !selTalle.value) return;
+    const producto = productos.find(p => String(p.id) === selProd.value);
+    if(!producto) return;
+    const talles = talleClonadoDe(producto);
+    if(selTalle.value === '__nuevo__'){
+      talles.push({ talle: m.talle || '', stock: 0, boxhero_id: m.item.id });
+    } else {
+      const idx = Number(selTalle.value);
+      talles[idx] = { ...talles[idx], boxhero_id: m.item.id };
+    }
+  });
+
+  let errores = 0;
+  for(const [id, talles] of cambiosPorProducto.entries()){
+    const { error } = await sb.from('productos').update({ talles }).eq('id', id);
+    if(error) errores++;
+  }
+
+  btn.disabled = false; btn.textContent = 'Guardar vinculación';
+  if(errores === 0){
+    mostrarStatus('ok', `Vinculación guardada en ${cambiosPorProducto.size} producto(s).`);
+    await cargarProductos();
+  } else {
+    mostrarStatus('error', `Se guardó con ${errores} error(es).`);
+  }
+});
 
 checkSession();
 </script>
