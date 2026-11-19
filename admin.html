@@ -152,19 +152,39 @@
     border-radius:10px; padding:11px 14px; margin-bottom:14px; line-height:1.5;
   }
   .reordenar-aviso b{ color:var(--accent); }
-  .fila-reordenar{
-    display:flex; align-items:center; gap:12px; padding:12px 10px; background:var(--card);
-    border:1px solid var(--card-border); border-radius:10px; margin-bottom:8px; cursor:grab;
-    user-select:none;
+
+  /* grilla de tarjetas igual a como se ven en el catalogo publico, para que
+     arrastres y veas directamente el mismo resultado que va a ver el cliente */
+  .reordenar-grid{
+    display:grid; grid-template-columns: repeat(2, 1fr); gap:14px;
   }
-  .fila-reordenar.arrastrando{ opacity:0.4; }
-  .fila-reordenar .handle{ color:var(--text-faint); font-size:16px; letter-spacing:-2px; flex-shrink:0; }
-  .fila-reordenar img{ width:42px; height:42px; object-fit:cover; border-radius:8px; background:#0d0f14; flex-shrink:0; border:1px solid var(--card-border); }
-  .fila-reordenar .nombre{ font-size:13.5px; font-weight:700; flex:1; min-width:0; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
-  .fila-reordenar .pos{
-    font-family:'JetBrains Mono', monospace; font-size:11px; font-weight:700; color:var(--text-faint);
-    background:var(--bg-soft); border-radius:6px; padding:3px 8px; flex-shrink:0;
+  @media (min-width: 560px){ .reordenar-grid{ grid-template-columns: repeat(3, 1fr); } }
+  @media (min-width: 820px){ .reordenar-grid{ grid-template-columns: repeat(4, 1fr); } }
+  @media (min-width: 1100px){ .reordenar-grid{ grid-template-columns: repeat(5, 1fr); } }
+
+  .card-reordenar{
+    background:#1c1e23; border:1px solid #343842; border-radius:8px; overflow:hidden;
+    display:flex; flex-direction:column; cursor:grab; user-select:none;
+    transition: transform .15s ease, border-color .15s ease, opacity .15s ease;
   }
+  .card-reordenar:active{ cursor:grabbing; }
+  .card-reordenar.arrastrando{ opacity:0.35; }
+  .card-reordenar .pos-badge{
+    position:absolute; top:7px; left:7px; z-index:1;
+    background:var(--accent); color:#fff; font-family:'JetBrains Mono', monospace;
+    font-size:11px; font-weight:800; border-radius:6px; padding:3px 8px; line-height:1;
+  }
+  .card-reordenar .photo-wrap{
+    aspect-ratio: 1/1; background:#212329; position:relative; overflow:hidden;
+    display:flex; align-items:center; justify-content:center;
+  }
+  .card-reordenar .photo-wrap img{ width:100%; height:100%; object-fit:cover; pointer-events:none; }
+  .card-reordenar .body{ background:#1c1e23; color:#f5f3ee; padding:10px 11px 11px; display:flex; flex-direction:column; gap:5px; }
+  .card-reordenar .marca{ font-size:10px; color:var(--accent); font-weight:800; }
+  .card-reordenar .nombre{ font-size:13px; margin:0; line-height:1.25; font-weight:700; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+  .card-reordenar .precio{ font-family:'JetBrains Mono', monospace; font-weight:700; font-size:14.5px; }
+  .card-reordenar .precio.sin{ font-family:'Inter', sans-serif; font-size:11px; color:#9a9ea8; font-weight:600; }
+
   .reordenar-acciones{ display:flex; gap:10px; margin-top:16px; }
 
   .contador{ color:var(--text-faint); font-size:12.5px; font-weight:600; letter-spacing:0.01em; margin-bottom:12px; text-transform:uppercase; }
@@ -312,6 +332,7 @@
     <div class="tabs-admin">
       <button class="tab-admin activo" id="tab-catalogo" type="button">Catálogo</button>
       <button class="tab-admin" id="tab-ventas" type="button">Ventas <span class="tab-badge" id="ventas-badge" style="display:none;">0</span></button>
+      <button class="tab-admin" id="tab-reordenar" type="button">Reordenar</button>
     </div>
 
     <div id="vista-catalogo">
@@ -336,23 +357,27 @@
             <option value="nombre-desc">Nombre Z-A</option>
           </select>
           <button class="btn-limpiar-filtros" id="btn-limpiar-filtros">Limpiar filtros</button>
-          <button class="btn-reordenar" id="btn-reordenar">↕ Reordenar</button>
         </div>
       </div>
 
       <div class="contador" id="contador"></div>
       <div id="lista-productos" class="loading">Cargando productos…</div>
+    </div>
 
-      <div id="panel-reordenar" style="display:none;">
-        <div class="reordenar-aviso">
-          Arrastrá las tarjetas para cambiar el orden dentro de <b id="reordenar-titulo"></b>.
-          Así se van a ver en el catálogo público, de arriba hacia abajo.
-        </div>
-        <div id="lista-reordenar"></div>
-        <div class="reordenar-acciones">
-          <button class="btn-guardar-modal" id="btn-guardar-orden">Guardar orden</button>
-          <button class="btn-cerrar-modal" id="btn-cancelar-orden">Cancelar</button>
-        </div>
+    <div id="vista-reordenar" style="display:none;">
+      <div class="filtros-row" style="margin-bottom:14px;">
+        <select id="reordenar-marca"><option value="">Elegí una marca…</option></select>
+        <select id="reordenar-modelo" disabled><option value="">Elegí un modelo…</option></select>
+      </div>
+
+      <div class="reordenar-aviso">
+        Elegí una marca y un modelo, y arrastrá las tarjetas para cambiar el orden en que se ven en el catálogo público.
+      </div>
+
+      <div id="lista-reordenar"></div>
+
+      <div class="reordenar-acciones" id="reordenar-acciones" style="display:none;">
+        <button class="btn-guardar-modal" id="btn-guardar-orden">Guardar orden</button>
       </div>
     </div>
 
@@ -518,14 +543,21 @@ function poblarFiltros(){
     talles.map(t => `<option value="${escapeHtml(t)}">${escapeHtml(t)}</option>`).join('');
   selTalle.value = valorPrevioTalle;
 
-  const modelos = [...new Set(productos.map(p => p.modelo).filter(Boolean))].sort((a,b) => collatorEs.compare(a,b));
+  // el desplegable de modelo solo muestra los modelos de la marca elegida (si hay una elegida)
+  const marcaActual = selMarca.value;
+  const productosParaModelo = marcaActual ? productos.filter(p => p.marca === marcaActual) : productos;
+  const modelos = [...new Set(productosParaModelo.map(p => p.modelo).filter(Boolean))].sort((a,b) => collatorEs.compare(a,b));
   const selModelo = document.getElementById('filtro-modelo');
   const valorPrevioModelo = selModelo.value;
   selModelo.innerHTML = '<option value="">Todos los modelos</option><option value="__sin__">Sin modelo asignado</option>' +
     modelos.map(m => `<option value="${escapeHtml(m)}">${escapeHtml(m)}</option>`).join('');
-  selModelo.value = valorPrevioModelo;
+  // si el modelo que tenia elegido no existe en la marca actual, lo reseteamos
+  selModelo.value = modelos.includes(valorPrevioModelo) || valorPrevioModelo === '__sin__' ? valorPrevioModelo : '';
 
-  document.getElementById('lista-modelos').innerHTML = modelos.map(m => `<option value="${escapeHtml(m)}">`).join('');
+  // el autocompletado del campo "Modelo" en la ficha de producto sigue mostrando
+  // TODOS los modelos ya usados (de cualquier marca), para reusar la misma redaccion
+  const todosLosModelos = [...new Set(productos.map(p => p.modelo).filter(Boolean))].sort((a,b) => collatorEs.compare(a,b));
+  document.getElementById('lista-modelos').innerHTML = todosLosModelos.map(m => `<option value="${escapeHtml(m)}">`).join('');
 }
 
 // ---------- filtros ----------
@@ -566,6 +598,10 @@ function productosOrdenados(lista){
   document.getElementById(id).addEventListener('input', renderLista);
   document.getElementById(id).addEventListener('change', renderLista);
 });
+// al cambiar de marca, el desplegable de modelo se actualiza para mostrar solo
+// los modelos de esa marca (poblarFiltros ya se encarga de resetear la seleccion
+// de modelo si ya no corresponde)
+document.getElementById('filtro-marca').addEventListener('change', poblarFiltros);
 document.getElementById('btn-limpiar-filtros').addEventListener('click', () => {
   document.getElementById('buscador-admin').value = '';
   document.getElementById('filtro-marca').value = '';
@@ -626,8 +662,9 @@ document.getElementById('lista-productos').addEventListener('click', (e) => {
   abrirModal(parseInt(fila.dataset.id, 10));
 });
 
-// ---------- reordenar (arrastrar y soltar) dentro de una marca + modelo ----------
+// ---------- pestaña Reordenar: arrastrar y soltar tarjetas, igual que el catálogo publico ----------
 const collatorEsReorden = collatorEs; // mismo collator que ya usamos para ordenar
+
 function productosDelGrupoReordenar(marca, modelo){
   return productos
     .filter(p => p.marca === marca && (modelo === '__sin__' ? !p.modelo : p.modelo === modelo))
@@ -641,85 +678,124 @@ function productosDelGrupoReordenar(marca, modelo){
     });
 }
 
-document.getElementById('btn-reordenar').addEventListener('click', () => {
-  const marca = document.getElementById('filtro-marca').value;
-  const modelo = document.getElementById('filtro-modelo').value;
-  if(!marca || !modelo){
-    mostrarStatus('error', 'Para reordenar, primero elegí una marca Y un modelo puntual en los filtros de arriba.');
+function poblarMarcasReordenar(){
+  const marcas = [...new Set(productos.map(p => p.marca).filter(Boolean))].sort();
+  const sel = document.getElementById('reordenar-marca');
+  const valorPrevio = sel.value;
+  sel.innerHTML = '<option value="">Elegí una marca…</option>' +
+    marcas.map(m => `<option value="${escapeHtml(m)}">${escapeHtml(m)}</option>`).join('');
+  sel.value = marcas.includes(valorPrevio) ? valorPrevio : '';
+}
+
+function poblarModelosReordenar(){
+  const marca = document.getElementById('reordenar-marca').value;
+  const selModelo = document.getElementById('reordenar-modelo');
+  if(!marca){
+    selModelo.innerHTML = '<option value="">Elegí un modelo…</option>';
+    selModelo.disabled = true;
+    selModelo.value = '';
+    return;
+  }
+  const modelos = [...new Set(
+    productos.filter(p => p.marca === marca).map(p => p.modelo).filter(Boolean)
+  )].sort((a,b) => collatorEsReorden.compare(a,b));
+  const haySinModelo = productos.some(p => p.marca === marca && !p.modelo);
+  selModelo.innerHTML = '<option value="">Elegí un modelo…</option>' +
+    modelos.map(m => `<option value="${escapeHtml(m)}">${escapeHtml(m)}</option>`).join('') +
+    (haySinModelo ? '<option value="__sin__">Sin modelo asignado</option>' : '');
+  selModelo.disabled = false;
+  selModelo.value = '';
+}
+
+document.getElementById('reordenar-marca').addEventListener('change', () => {
+  poblarModelosReordenar();
+  document.getElementById('lista-reordenar').innerHTML = '';
+  document.getElementById('reordenar-acciones').style.display = 'none';
+});
+
+document.getElementById('reordenar-modelo').addEventListener('change', () => {
+  const marca = document.getElementById('reordenar-marca').value;
+  const modelo = document.getElementById('reordenar-modelo').value;
+  const cont = document.getElementById('lista-reordenar');
+  if(!modelo){
+    cont.innerHTML = '';
+    document.getElementById('reordenar-acciones').style.display = 'none';
     return;
   }
   const grupo = productosDelGrupoReordenar(marca, modelo);
   if(grupo.length < 2){
+    cont.innerHTML = '';
+    document.getElementById('reordenar-acciones').style.display = 'none';
     mostrarStatus('error', 'Ese grupo tiene un solo producto (o ninguno), no hay nada para reordenar.');
     return;
   }
-
-  document.getElementById('reordenar-titulo').textContent =
-    `${marca} · ${modelo === '__sin__' ? 'Sin modelo asignado' : modelo}`;
-  renderListaReordenar(grupo);
-  document.getElementById('lista-productos').style.display = 'none';
-  document.getElementById('contador').style.display = 'none';
-  document.getElementById('panel-reordenar').style.display = 'block';
+  renderGridReordenar(grupo);
+  document.getElementById('reordenar-acciones').style.display = 'flex';
 });
 
-function renderListaReordenar(grupo){
+function renderGridReordenar(grupo){
   const cont = document.getElementById('lista-reordenar');
+  cont.className = 'reordenar-grid';
   cont.innerHTML = grupo.map((p, i) => {
     const fotoHtml = p.foto
-      ? `<img src="${escapeHtml(p.foto)}" alt="" onerror="this.style.visibility='hidden'">`
-      : `<div style="width:42px;height:42px;border-radius:8px;background:#0d0f14;flex-shrink:0;"></div>`;
+      ? `<img src="${escapeHtml(p.foto)}" alt="${escapeHtml(p.nombre)}">`
+      : `<span style="color:#9a9ea8; font-size:12px;">Sin foto</span>`;
+    const precioHtml = p.precio
+      ? `<div class="precio">$${Number(p.precio).toLocaleString('es-AR')}</div>`
+      : `<div class="precio sin">Consultar precio</div>`;
     return `
-      <div class="fila-reordenar" draggable="true" data-id="${p.id}">
-        <span class="handle">⠿⠿</span>
-        ${fotoHtml}
-        <div class="nombre">${escapeHtml(p.nombre)}</div>
-        <span class="pos">${i + 1}</span>
+      <div class="card-reordenar" draggable="true" data-id="${p.id}">
+        <div class="photo-wrap">
+          <span class="pos-badge">${i + 1}</span>
+          ${fotoHtml}
+        </div>
+        <div class="body">
+          <span class="marca">${escapeHtml(p.marca) || '—'}</span>
+          <div class="nombre">${escapeHtml(p.nombre)}</div>
+          ${precioHtml}
+        </div>
       </div>
     `;
   }).join('');
 }
 
-function renumerarPosiciones(){
-  document.querySelectorAll('#lista-reordenar .fila-reordenar').forEach((fila, i) => {
-    fila.querySelector('.pos').textContent = i + 1;
+function renumerarPosicionesReordenar(){
+  document.querySelectorAll('#lista-reordenar .card-reordenar').forEach((card, i) => {
+    card.querySelector('.pos-badge').textContent = i + 1;
   });
 }
 
-let filaArrastrada = null;
+let cardArrastrada = null;
 document.getElementById('lista-reordenar').addEventListener('dragstart', (e) => {
-  filaArrastrada = e.target.closest('.fila-reordenar');
-  if(filaArrastrada) filaArrastrada.classList.add('arrastrando');
+  cardArrastrada = e.target.closest('.card-reordenar');
+  if(cardArrastrada) cardArrastrada.classList.add('arrastrando');
 });
 document.getElementById('lista-reordenar').addEventListener('dragend', () => {
-  if(filaArrastrada) filaArrastrada.classList.remove('arrastrando');
-  filaArrastrada = null;
-  renumerarPosiciones();
+  if(cardArrastrada) cardArrastrada.classList.remove('arrastrando');
+  cardArrastrada = null;
+  renumerarPosicionesReordenar();
 });
 document.getElementById('lista-reordenar').addEventListener('dragover', (e) => {
   e.preventDefault();
   const cont = document.getElementById('lista-reordenar');
-  const sobre = e.target.closest('.fila-reordenar');
-  if(!filaArrastrada || !sobre || sobre === filaArrastrada) return;
+  const sobre = e.target.closest('.card-reordenar');
+  if(!cardArrastrada || !sobre || sobre === cardArrastrada) return;
+  // en una grilla, decidimos "antes" o "despues" segun si el mouse esta en la
+  // mitad izquierda o derecha de la tarjeta sobre la que pasamos
   const rect = sobre.getBoundingClientRect();
-  const despuesDeMedio = (e.clientY - rect.top) > rect.height / 2;
-  cont.insertBefore(filaArrastrada, despuesDeMedio ? sobre.nextSibling : sobre);
-});
-
-document.getElementById('btn-cancelar-orden').addEventListener('click', () => {
-  document.getElementById('panel-reordenar').style.display = 'none';
-  document.getElementById('lista-productos').style.display = '';
-  document.getElementById('contador').style.display = '';
+  const despuesDeMedio = (e.clientX - rect.left) > rect.width / 2;
+  cont.insertBefore(cardArrastrada, despuesDeMedio ? sobre.nextSibling : sobre);
 });
 
 document.getElementById('btn-guardar-orden').addEventListener('click', async () => {
-  const filas = [...document.querySelectorAll('#lista-reordenar .fila-reordenar')];
+  const cards = [...document.querySelectorAll('#lista-reordenar .card-reordenar')];
   const btn = document.getElementById('btn-guardar-orden');
   btn.disabled = true;
   btn.textContent = 'Guardando…';
 
   try{
-    for(let i = 0; i < filas.length; i++){
-      const id = parseInt(filas[i].dataset.id, 10);
+    for(let i = 0; i < cards.length; i++){
+      const id = parseInt(cards[i].dataset.id, 10);
       const { error } = await sb.from('productos').update({ orden: i + 1 }).eq('id', id);
       if(error) throw error;
     }
@@ -731,10 +807,8 @@ document.getElementById('btn-guardar-orden').addEventListener('click', async () 
     btn.textContent = 'Guardar orden';
   }
 
-  document.getElementById('panel-reordenar').style.display = 'none';
-  document.getElementById('lista-productos').style.display = '';
-  document.getElementById('contador').style.display = '';
   await cargarProductos();
+  poblarMarcasReordenar();
 });
 
 // ---------- modal: abrir / cerrar ----------
@@ -894,19 +968,24 @@ document.getElementById('btn-borrar-modal').addEventListener('click', async () =
 });
 
 // ---------- tabs ----------
-document.getElementById('tab-catalogo').addEventListener('click', () => {
-  document.getElementById('tab-catalogo').classList.add('activo');
-  document.getElementById('tab-ventas').classList.remove('activo');
-  document.getElementById('vista-catalogo').style.display = 'block';
-  document.getElementById('vista-ventas').style.display = 'none';
-});
+function activarTab(idActivo){
+  ['tab-catalogo', 'tab-ventas', 'tab-reordenar'].forEach(id => {
+    document.getElementById(id).classList.toggle('activo', id === idActivo);
+  });
+  document.getElementById('vista-catalogo').style.display = idActivo === 'tab-catalogo' ? 'block' : 'none';
+  document.getElementById('vista-ventas').style.display = idActivo === 'tab-ventas' ? 'block' : 'none';
+  document.getElementById('vista-reordenar').style.display = idActivo === 'tab-reordenar' ? 'block' : 'none';
+}
+document.getElementById('tab-catalogo').addEventListener('click', () => activarTab('tab-catalogo'));
 document.getElementById('tab-ventas').addEventListener('click', () => {
-  document.getElementById('tab-ventas').classList.add('activo');
-  document.getElementById('tab-catalogo').classList.remove('activo');
-  document.getElementById('vista-catalogo').style.display = 'none';
-  document.getElementById('vista-ventas').style.display = 'block';
+  activarTab('tab-ventas');
   cargarPedidos();
 });
+document.getElementById('tab-reordenar').addEventListener('click', () => {
+  activarTab('tab-reordenar');
+  poblarMarcasReordenar();
+});
+document.getElementById('filtro-estado-pedido').addEventListener('change', cargarPedidos);
 document.getElementById('filtro-estado-pedido').addEventListener('change', cargarPedidos);
 
 async function actualizarBadgeVentas(){
