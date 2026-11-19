@@ -1717,11 +1717,13 @@ btnEnviarPedido.addEventListener('click', () => {
   if(descuentoPorPar > 0 && ahorroTotal > 0){
     resumen += `Descuento por cantidad: -${money(ahorroTotal)}\n`;
   }
+  resumen += `\n`;
   if(totalParesAdulto > 0) resumen += `ZAPATILLAS ADULTO: *${totalParesAdulto}*\n`;
   if(paresOjotas > 0) resumen += `OJOTAS: *${paresOjotas}*\n`;
   if(paresNikeMind > 0) resumen += `NIKE MIND: *${paresNikeMind}*\n`;
   if(paresInfantil > 0) resumen += `INFANTILES: *${paresInfantil}*\n`;
-  resumen += `*Total a pagar: ${money(totalNumerico)}*${hayConsultar ? ' (+ productos a consultar)' : ''}`;
+  resumen += `\n`;
+  resumen += `TOTAL A PAGAR: *${money(totalNumerico)}*`;
 
   let mensaje = `Hola! Quiero hacer este pedido:\n\n`;
   mensaje += `*DATOS DEL CLIENTE*\n`;
