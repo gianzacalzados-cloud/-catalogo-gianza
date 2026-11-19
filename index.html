@@ -580,6 +580,8 @@
     color: var(--text); cursor:pointer; font-size:17px;
   }
   .qty-control span{ font-size: 15.5px; min-width: 22px; text-align:center; font-weight:600; }
+  .qty-control button:disabled{ opacity:0.35; cursor:not-allowed; }
+  .stock-limite{ font-size: 11px; color: var(--off); margin-top: 4px; }
   .btn-quitar{
     background:none; border:none; color: var(--off); font-size:13.5px; cursor:pointer;
     text-decoration: underline; margin-top: 9px; padding: 4px 0;
@@ -1190,13 +1192,16 @@ function agregarAlCarrito(pid, talle, cantidad){
   cantidad = cantidad || 1;
   const p = productos.find(x => x.id === pid);
   if(!p) return;
+  const talleObj = (p.talles || []).find(t => t.talle === talle);
+  const stockTalle = talleObj ? talleObj.stock : 0;
   const existente = cart.find(i => i.id === pid && i.talle === talle);
   if(existente){
-    existente.cantidad += cantidad;
+    existente.cantidad = Math.min(existente.cantidad + cantidad, stockTalle);
+    existente.stock = stockTalle;
   }else{
     cart.push({
       id: p.id, nombre: p.nombre, marca: p.marca, precio: p.precio,
-      foto: p.foto, talle: talle, cantidad: cantidad, categoria: p.categoria || null
+      foto: p.foto, talle: talle, cantidad: Math.min(cantidad, stockTalle), stock: stockTalle, categoria: p.categoria || null
     });
   }
   guardarCarrito();
@@ -1309,8 +1314,10 @@ function quitarDelCarrito(idx){
 }
 
 function cambiarCantidad(idx, delta){
-  cart[idx].cantidad += delta;
-  if(cart[idx].cantidad <= 0){
+  const item = cart[idx];
+  const stockMax = typeof item.stock === 'number' ? item.stock : Infinity;
+  item.cantidad = Math.min(item.cantidad + delta, stockMax);
+  if(item.cantidad <= 0){
     quitarDelCarrito(idx);
     return;
   }
@@ -1365,6 +1372,7 @@ function renderDrawer(){
         lineaPrecio = money(item.precio * item.cantidad);
       }
       const fotoHtml = item.foto ? `<img src="${item.foto}" alt="${item.nombre}">` : '';
+      const enElTope = typeof item.stock === 'number' && item.cantidad >= item.stock;
       return `
         <div class="cart-item">
           ${fotoHtml}
@@ -1374,8 +1382,9 @@ function renderDrawer(){
             <div class="qty-control">
               <button data-idx="${idx}" data-delta="-1">−</button>
               <span>${item.cantidad}</span>
-              <button data-idx="${idx}" data-delta="1">+</button>
+              <button data-idx="${idx}" data-delta="1" ${enElTope ? 'disabled' : ''}>+</button>
             </div>
+            ${enElTope ? `<div class="stock-limite">Quedan ${item.stock} en stock</div>` : ''}
             <div class="precio-linea">${lineaPrecio}</div>
             <button class="btn-quitar" data-idx="${idx}">Quitar</button>
           </div>
