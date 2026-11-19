@@ -548,10 +548,18 @@
     </div>
 
     <div id="vista-boxhero" style="display:none;">
+      <div class="boxhero-seccion-titulo">Talles sin vincular a BoxHero (<span id="sinvincular-count">0</span>)</div>
+      <div class="reordenar-aviso">
+        Estos talles de tu catálogo todavía no están conectados a ningún artículo de BoxHero, así que su stock
+        <b>no se actualiza solo</b> — se quedan con el número que tengan cargado hasta que los vincules (más abajo).
+      </div>
+      <div id="sinvincular-lista" class="loading">Cargando…</div>
+
+      <div class="boxhero-seccion-titulo" style="margin-top:26px;">Vincular / actualizar desde BoxHero</div>
       <div class="reordenar-aviso">
         Subí el archivo <b>boxhero_items.json</b> que exportaste con el script local. Esto vincula cada talle de tu catálogo
         con su artículo correspondiente en BoxHero, para que el stock se mantenga sincronizado automáticamente.
-        Esto se hace <b>una sola vez</b> (y de nuevo si cargás modelos nuevos).
+        Esto se hace <b>una sola vez por talle</b> (y de nuevo si cargás modelos nuevos, o si alguno quedó en la lista de arriba).
       </div>
 
       <div class="boxhero-upload">
@@ -1396,7 +1404,10 @@ document.getElementById('tab-reordenar').addEventListener('click', () => {
   activarTab('tab-reordenar');
   poblarMarcasReordenar();
 });
-document.getElementById('tab-boxhero').addEventListener('click', () => activarTab('tab-boxhero'));
+document.getElementById('tab-boxhero').addEventListener('click', () => {
+  activarTab('tab-boxhero');
+  renderSinVincular();
+});
 document.getElementById('tab-movimientos').addEventListener('click', () => {
   activarTab('tab-movimientos');
   cargarMovimientos();
@@ -1490,6 +1501,52 @@ function renderPedidos(){
       </div>
     `;
   }).join('');
+}
+
+// ---------- talles sin vincular a BoxHero ----------
+// se calcula directo de los productos ya cargados (sin necesidad de subir
+// ningún archivo): cualquier talle que no tenga "boxhero_id" todavía no está
+// conectado, así que su stock no se actualiza solo.
+function renderSinVincular(){
+  const cont = document.getElementById('sinvincular-lista');
+  const contador = document.getElementById('sinvincular-count');
+  if(!cont || !productos.length){
+    if(cont){ cont.className = 'loading'; cont.textContent = 'Cargando…'; }
+    return;
+  }
+
+  const filas = [];
+  productos.forEach(p => {
+    (p.talles || []).forEach(t => {
+      if(!t.boxhero_id){
+        filas.push({ producto: p, talle: t });
+      }
+    });
+  });
+
+  // los más relevantes primero: los que sí tienen stock cargado (más probable
+  // que generen diferencia real con BoxHero) antes que los que ya están en 0
+  filas.sort((a, b) => (b.talle.stock || 0) - (a.talle.stock || 0));
+
+  contador.textContent = filas.length;
+
+  if(filas.length === 0){
+    cont.className = 'empty';
+    cont.textContent = 'Todos los talles de tu catálogo están vinculados a BoxHero. 🎉';
+    return;
+  }
+
+  cont.className = '';
+  cont.innerHTML = filas.map(({ producto, talle }) => `
+    <div class="boxhero-fila">
+      ${producto.foto ? `<img src="${escapeHtml(producto.foto)}" alt="" />` : ''}
+      <div class="info">
+        <div class="nombre">${escapeHtml(producto.marca)} ${escapeHtml(producto.nombre)}</div>
+        <div class="detalle">Talle ${escapeHtml(talle.talle)} · Stock actual: ${talle.stock || 0}</div>
+      </div>
+      <button class="btn-subir-foto" type="button" onclick="abrirModal(${producto.id})">Editar</button>
+    </div>
+  `).join('');
 }
 
 // ---------- movimientos (historial de sync con BoxHero) ----------
@@ -1894,6 +1951,7 @@ document.getElementById('btn-boxhero-guardar').addEventListener('click', async (
   if(errores === 0){
     mostrarStatus('ok', `Listo: ${cambiosPorProducto.size} producto(s) actualizado(s)${creados ? ' y ' + creados + ' modelo(s) nuevo(s) creado(s)' : ''}.`);
     await cargarProductos();
+    renderSinVincular();
     document.getElementById('boxhero-resultado').style.display = 'none';
     document.getElementById('boxhero-file').value = '';
     document.getElementById('btn-boxhero-procesar').disabled = true;
