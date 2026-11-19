@@ -1551,16 +1551,11 @@ function renderDrawer(){
       `;
     }).join('');
 
-    // ---- cartel de descuento (compacto) ----
-    let pillHtml;
+    // ---- cartel de descuento (compacto): solo se muestra cuando el descuento ya se aplicó ----
+    let pillHtml = '';
     if(descuentoPorPar > 0){
       const tier = totalParesAdulto >= 12 ? '12+' : '6+';
       pillHtml = `<div class="descuento-pill activo">✓ Descuento aplicado: -${money(descuentoPorPar)} x par (${tier} pares)</div>`;
-    }else if(totalParesAdulto > 0){
-      const faltanPara6 = 6 - totalParesAdulto;
-      pillHtml = `<div class="descuento-pill">Llevando ${faltanPara6} par${faltanPara6===1?'':'es'} adulto más, cada par te queda -${money(2000)}</div>`;
-    }else{
-      pillHtml = `<div class="descuento-pill">Comprando 6 pares adulto accedés a descuento por cantidad</div>`;
     }
 
     let filasHtml = `<div class="resumen-row"><span>Total pares</span><span>${totalPares}</span></div>`;
