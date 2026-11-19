@@ -616,6 +616,22 @@
   .form-input:focus, .form-select:focus{ border-color: var(--accent); }
   .form-select{ cursor:pointer; }
   .form-select option{ background: var(--bg-soft); color: var(--text); }
+  .aviso-envio{
+    font-size: 12px; line-height:1.5; color: var(--text-dim);
+    background: rgba(255,106,26,0.08); border: 1px solid rgba(255,106,26,0.25);
+    border-radius: 9px; padding: 10px 12px; margin: 2px 0 14px;
+  }
+  .aviso-envio b{ color: var(--accent); }
+
+  .pago-opciones{ display:flex; flex-direction:column; gap:8px; }
+  .pago-opcion{
+    display:flex; align-items:center; gap:10px; background: var(--bg-soft);
+    border: 1px solid var(--card-border); border-radius: 9px; padding: 11px 13px;
+    cursor:pointer; font-size: 13.5px; color: var(--text); transition: border-color .15s ease;
+  }
+  .pago-opcion input{ accent-color: var(--accent); width:16px; height:16px; flex-shrink:0; }
+  .pago-opcion.activa{ border-color: var(--accent); background: rgba(255,106,26,0.08); }
+
   .form-error-alert{
     display:none; background: rgba(230,72,79,0.12); border: 1px solid rgba(230,72,79,0.3);
     color: var(--off); font-size: 12.5px; font-weight:600; padding: 10px 12px; border-radius: 9px; margin-top: 10px;
@@ -744,35 +760,36 @@
     </div>
   </div>
 
-  <div id="vista-form-datos" style="display:none;">
+  <div id="vista-form-paso1" style="display:none;">
     <div class="drawer-body">
-      <form id="form-datos" novalidate autocomplete="off">
+      <form id="form-datos-paso1" novalidate autocomplete="off">
         <div class="form-section-title">Tus datos</div>
-
         <div class="form-group">
           <label class="form-label">Nombre y apellido<span class="req-star">*</span></label>
-          <input type="text" class="form-input text-only-input" id="input-nombre" placeholder="Nombre y apellido" autocomplete="off">
-        </div>
-        <div class="form-group">
-          <label class="form-label">DNI<span class="req-star">*</span></label>
-          <input type="text" class="form-input digits-only-input" id="input-dni" placeholder="Solo números" autocomplete="off">
+          <input type="text" class="form-input" id="input-nombre" placeholder="Nombre y apellido" autocomplete="off">
         </div>
         <div class="form-group">
           <label class="form-label">WhatsApp<span class="req-star">*</span></label>
           <input type="text" class="form-input digits-only-input" id="input-whatsapp" placeholder="Solo números" autocomplete="off">
         </div>
-        <div class="form-group">
-          <label class="form-label">Email <span class="opt-tag" id="email-opt-tag">(opcional)</span></label>
-          <input type="email" class="form-input" id="input-email" placeholder="Email de contacto" autocomplete="off">
-        </div>
+      </form>
+    </div>
+    <div class="drawer-footer">
+      <button class="btn-pedido" id="btn-paso1-continuar" disabled>Continuar</button>
+      <button class="btn-vaciar" id="btn-volver-carrito">← Volver al carrito</button>
+    </div>
+  </div>
 
+  <div id="vista-form-paso2" style="display:none;">
+    <div class="drawer-body">
+      <form id="form-datos-paso2" novalidate autocomplete="off">
         <div class="form-section-title">Método de entrega</div>
 
         <div class="form-group">
           <label class="form-label">Forma de entrega<span class="req-star">*</span></label>
           <select class="form-select" id="select-entrega">
             <option value="" disabled selected>Seleccioná una opción</option>
-            <option value="Mensajería Express">Mensajería Express (CABA/GBA)</option>
+            <option value="Mensajería Express">Mensajería (CABA/GBA)</option>
             <option value="Vía Cargo">Vía Cargo a sucursal</option>
             <option value="Correo Argentino">Correo Argentino a sucursal</option>
           </select>
@@ -785,7 +802,7 @@
     </div>
     <div class="drawer-footer">
       <button class="btn-pedido" id="btn-enviar-pedido" disabled>Enviar pedido por WhatsApp</button>
-      <button class="btn-vaciar" id="btn-volver-carrito">← Volver al carrito</button>
+      <button class="btn-vaciar" id="btn-volver-paso1">← Volver</button>
     </div>
   </div>
 </div>
@@ -1432,26 +1449,36 @@ document.getElementById('btn-vaciar').addEventListener('click', () => {
   }
 });
 
-// ---------- vista de datos + entrega (antes de enviar por WhatsApp) ----------
+// ---------- vista de datos + entrega (antes de enviar por WhatsApp), en 2 pasos ----------
 const vistaCarrito = document.getElementById('vista-carrito');
-const vistaFormDatos = document.getElementById('vista-form-datos');
+const vistaFormPaso1 = document.getElementById('vista-form-paso1');
+const vistaFormPaso2 = document.getElementById('vista-form-paso2');
 const drawerTitulo = document.getElementById('drawer-titulo');
-const formDatos = document.getElementById('form-datos');
+const formPaso1 = document.getElementById('form-datos-paso1');
+const formPaso2 = document.getElementById('form-datos-paso2');
 const selectEntrega = document.getElementById('select-entrega');
 const camposEntregaDinamicos = document.getElementById('campos-entrega-dinamicos');
-const emailOptTag = document.getElementById('email-opt-tag');
 const formErrorAlert = document.getElementById('form-error-alert');
+const btnPaso1Continuar = document.getElementById('btn-paso1-continuar');
 const btnEnviarPedido = document.getElementById('btn-enviar-pedido');
 
 function mostrarVistaCarrito(){
   vistaCarrito.style.display = 'contents';
-  vistaFormDatos.style.display = 'none';
+  vistaFormPaso1.style.display = 'none';
+  vistaFormPaso2.style.display = 'none';
   drawerTitulo.textContent = 'Tu pedido';
 }
-function mostrarVistaFormDatos(){
+function mostrarVistaPaso1(){
   vistaCarrito.style.display = 'none';
-  vistaFormDatos.style.display = 'contents';
-  drawerTitulo.textContent = 'Datos para el envío';
+  vistaFormPaso1.style.display = 'contents';
+  vistaFormPaso2.style.display = 'none';
+  drawerTitulo.textContent = 'Tus datos';
+}
+function mostrarVistaPaso2(){
+  vistaCarrito.style.display = 'none';
+  vistaFormPaso1.style.display = 'none';
+  vistaFormPaso2.style.display = 'contents';
+  drawerTitulo.textContent = 'Método de entrega';
 }
 
 document.getElementById('btn-pedido').addEventListener('click', () => {
@@ -1464,51 +1491,102 @@ document.getElementById('btn-pedido').addEventListener('click', () => {
     alert(`El pedido mínimo es de ${PEDIDO_MINIMO_PARES} pares. Te faltan ${PEDIDO_MINIMO_PARES - totalPares} par(es) más.`);
     return;
   }
-  mostrarVistaFormDatos();
-  validarFormDatos();
+  mostrarVistaPaso1();
 });
 
 document.getElementById('btn-volver-carrito').addEventListener('click', mostrarVistaCarrito);
+document.getElementById('btn-volver-paso1').addEventListener('click', mostrarVistaPaso1);
 
+// ---- paso 1: nombre y whatsapp ----
+function validarPaso1(){
+  const nombre = document.getElementById('input-nombre').value.trim();
+  const whatsapp = document.getElementById('input-whatsapp').value.trim();
+  btnPaso1Continuar.disabled = !(nombre && whatsapp);
+}
+formPaso1.querySelectorAll('input').forEach(el => {
+  el.addEventListener('input', (e) => {
+    if(e.target.classList.contains('digits-only-input')){
+      e.target.value = e.target.value.replace(/[^0-9]/g, '');
+    }
+    validarPaso1();
+  });
+});
+
+btnPaso1Continuar.addEventListener('click', () => {
+  mostrarVistaPaso2();
+  validarFormDatos();
+});
+
+// ---- paso 2: entrega (campos según tipo + pago solo en mensajería) ----
 selectEntrega.addEventListener('change', (e) => {
   const val = e.target.value;
   camposEntregaDinamicos.innerHTML = '';
   formErrorAlert.style.display = 'none';
 
   if(val === 'Mensajería Express'){
-    emailOptTag.textContent = '(opcional)';
     camposEntregaDinamicos.innerHTML = `
       <div class="form-group">
-        <label class="form-label">Dirección de entrega<span class="req-star">*</span></label>
-        <input type="text" class="form-input" id="input-direccion" placeholder="Calle y altura" autocomplete="off">
-      </div>
-      <div class="form-group">
-        <label class="form-label">N° / piso / depto<span class="req-star">*</span></label>
-        <input type="text" class="form-input" id="input-nro" placeholder="Piso / depto / casa" autocomplete="off">
+        <label class="form-label">Dirección<span class="req-star">*</span> <span class="opt-tag">(si es depto, aclará el número)</span></label>
+        <input type="text" class="form-input" id="input-direccion" placeholder="Calle, altura y depto/piso si corresponde" autocomplete="off">
       </div>
       <div class="form-group">
         <label class="form-label">Entre calles<span class="req-star">*</span></label>
         <input type="text" class="form-input" id="input-entre-calles" placeholder="Ej: 123 y 125, o calles cercanas" autocomplete="off">
       </div>
       <div class="form-group">
-        <label class="form-label">Código postal<span class="req-star">*</span></label>
-        <input type="text" class="form-input digits-only-input" id="input-cp" placeholder="CP (números)" autocomplete="off">
-      </div>
-      <div class="form-group">
         <label class="form-label">Localidad<span class="req-star">*</span></label>
         <input type="text" class="form-input" id="input-localidad" placeholder="Localidad / barrio" autocomplete="off">
       </div>
+      <div class="form-group">
+        <label class="form-label">Código postal<span class="req-star">*</span></label>
+        <input type="text" class="form-input digits-only-input" id="input-cp" placeholder="CP (números)" autocomplete="off">
+      </div>
+      <div class="aviso-envio"><b>El costo del envío no está incluido en el total.</b> Te lo confirmamos por WhatsApp junto con la respuesta a tu pedido.</div>
+      <div class="form-group">
+        <label class="form-label">Forma de pago<span class="req-star">*</span></label>
+        <div class="pago-opciones">
+          <label class="pago-opcion"><input type="radio" name="forma-pago" value="Transferencia">Abono por transferencia</label>
+          <label class="pago-opcion"><input type="radio" name="forma-pago" value="Efectivo">Abono en efectivo</label>
+          <label class="pago-opcion"><input type="radio" name="forma-pago" value="Mitad y mitad">Mitad transferencia / mitad efectivo</label>
+        </div>
+      </div>
+      <div class="form-group" id="grupo-monto-efectivo" style="display:none;">
+        <label class="form-label">¿Cuánto abonás en efectivo?<span class="req-star">*</span></label>
+        <input type="text" class="form-input digits-only-input" id="input-monto-efectivo" placeholder="Monto en efectivo" autocomplete="off">
+      </div>
     `;
-  }else if(val === 'Vía Cargo' || val === 'Correo Argentino'){
-    emailOptTag.textContent = '(obligatorio)';
+  }else if(val === 'Vía Cargo'){
     camposEntregaDinamicos.innerHTML = `
+      <div class="form-group">
+        <label class="form-label">DNI<span class="req-star">*</span></label>
+        <input type="text" class="form-input digits-only-input" id="input-dni" placeholder="Solo números" autocomplete="off">
+      </div>
+      <div class="form-group">
+        <label class="form-label">Email<span class="req-star">*</span></label>
+        <input type="email" class="form-input" id="input-email" placeholder="Email de contacto" autocomplete="off">
+      </div>
       <div class="form-group">
         <label class="form-label">Localidad<span class="req-star">*</span></label>
         <input type="text" class="form-input" id="input-localidad" placeholder="Localidad de destino" autocomplete="off">
       </div>
       <div class="form-group">
-        <label class="form-label">Sucursal a retirar<span class="req-star">*</span></label>
+        <label class="form-label">Sucursal de Vía Cargo a retirar<span class="req-star">*</span></label>
         <input type="text" class="form-input" id="input-sucursal" placeholder="Ej: Ramírez 116 o sucursal 4" autocomplete="off">
+      </div>
+    `;
+  }else if(val === 'Correo Argentino'){
+    camposEntregaDinamicos.innerHTML = `
+      <div class="form-group">
+        <label class="form-label">Email<span class="req-star">*</span></label>
+        <input type="email" class="form-input" id="input-email" placeholder="Email de contacto" autocomplete="off">
+      </div>
+      <div class="form-group">
+        <label class="form-label">Localidad<span class="req-star">*</span></label>
+        <input type="text" class="form-input" id="input-localidad" placeholder="Localidad de destino" autocomplete="off">
+      </div>
+      <div class="form-group">
+        <label class="form-label">Sucursal de Correo Argentino a retirar<span class="req-star">*</span></label>
+        <input type="text" class="form-input" id="input-sucursal" placeholder="Ej: sucursal centro" autocomplete="off">
       </div>
     `;
   }
@@ -1518,13 +1596,26 @@ selectEntrega.addEventListener('change', (e) => {
 });
 
 function adjuntarListenersForm(){
-  formDatos.querySelectorAll('input, select').forEach(el => {
+  formPaso2.querySelectorAll('input, select').forEach(el => {
     el.removeEventListener('input', restringirInput);
     el.addEventListener('input', restringirInput);
     el.removeEventListener('input', validarFormDatos);
     el.addEventListener('input', validarFormDatos);
     el.removeEventListener('change', validarFormDatos);
     el.addEventListener('change', validarFormDatos);
+  });
+
+  const radiosPago = formPaso2.querySelectorAll('input[name="forma-pago"]');
+  const grupoMonto = document.getElementById('grupo-monto-efectivo');
+  radiosPago.forEach(radio => {
+    radio.addEventListener('change', () => {
+      formPaso2.querySelectorAll('.pago-opcion').forEach(op => op.classList.remove('activa'));
+      radio.closest('.pago-opcion').classList.add('activa');
+      if(grupoMonto){
+        grupoMonto.style.display = (radio.value === 'Efectivo' || radio.value === 'Mitad y mitad') ? 'block' : 'none';
+      }
+      validarFormDatos();
+    });
   });
 }
 
@@ -1541,38 +1632,44 @@ function emailValido(valor){
 }
 
 function validarFormDatos(){
-  const nombre = document.getElementById('input-nombre')?.value.trim() || '';
-  const dni = document.getElementById('input-dni')?.value.trim() || '';
-  const whatsapp = document.getElementById('input-whatsapp')?.value.trim() || '';
-  const email = document.getElementById('input-email')?.value.trim() || '';
   const entrega = selectEntrega.value;
-
-  let valido = true;
+  let valido = !!entrega;
   formErrorAlert.style.display = 'none';
-
-  if(!nombre || !dni || !whatsapp || !entrega) valido = false;
-
-  if(email && !emailValido(email)){
-    valido = false;
-    formErrorAlert.textContent = 'Ingresá un email válido (con @ y dominio), o dejalo vacío.';
-    formErrorAlert.style.display = 'block';
-  }
 
   if(entrega === 'Mensajería Express'){
     const direccion = document.getElementById('input-direccion')?.value.trim() || '';
-    const nro = document.getElementById('input-nro')?.value.trim() || '';
     const entreCalles = document.getElementById('input-entre-calles')?.value.trim() || '';
-    const cp = document.getElementById('input-cp')?.value.trim() || '';
     const localidad = document.getElementById('input-localidad')?.value.trim() || '';
-    if(!direccion || !nro || !entreCalles || !cp || !localidad) valido = false;
-  }else if(entrega === 'Vía Cargo' || entrega === 'Correo Argentino'){
+    const cp = document.getElementById('input-cp')?.value.trim() || '';
+    const pagoRadio = formPaso2.querySelector('input[name="forma-pago"]:checked');
+    const pago = pagoRadio ? pagoRadio.value : '';
+    if(!direccion || !entreCalles || !localidad || !cp || !pago) valido = false;
+    if(pago === 'Efectivo' || pago === 'Mitad y mitad'){
+      const montoEfectivo = document.getElementById('input-monto-efectivo')?.value.trim() || '';
+      if(!montoEfectivo) valido = false;
+    }
+  }else if(entrega === 'Vía Cargo'){
+    const dni = document.getElementById('input-dni')?.value.trim() || '';
+    const email = document.getElementById('input-email')?.value.trim() || '';
+    const localidad = document.getElementById('input-localidad')?.value.trim() || '';
+    const sucursal = document.getElementById('input-sucursal')?.value.trim() || '';
+    if(!dni || !localidad || !sucursal) valido = false;
+    if(!emailValido(email)){
+      valido = false;
+      if(dni && localidad && sucursal){
+        formErrorAlert.textContent = 'Ingresá un email válido (con @ y dominio).';
+        formErrorAlert.style.display = 'block';
+      }
+    }
+  }else if(entrega === 'Correo Argentino'){
+    const email = document.getElementById('input-email')?.value.trim() || '';
     const localidad = document.getElementById('input-localidad')?.value.trim() || '';
     const sucursal = document.getElementById('input-sucursal')?.value.trim() || '';
     if(!localidad || !sucursal) valido = false;
-    if(!email){
+    if(!emailValido(email)){
       valido = false;
-      if(nombre && dni && whatsapp && localidad && sucursal){
-        formErrorAlert.textContent = 'El email es obligatorio para envíos por Vía Cargo o Correo Argentino.';
+      if(localidad && sucursal){
+        formErrorAlert.textContent = 'Ingresá un email válido (con @ y dominio).';
         formErrorAlert.style.display = 'block';
       }
     }
@@ -1581,15 +1678,11 @@ function validarFormDatos(){
   btnEnviarPedido.disabled = !valido;
 }
 
-adjuntarListenersForm();
-
 btnEnviarPedido.addEventListener('click', () => {
   const { totalPares, totalParesAdulto, descuentoPorPar, totalNumerico, hayConsultar } = calcularTotalesCarrito();
 
   const nombre = document.getElementById('input-nombre').value.trim();
-  const dni = document.getElementById('input-dni').value.trim();
   const whatsapp = document.getElementById('input-whatsapp').value.trim();
-  const email = document.getElementById('input-email').value.trim();
   const entrega = selectEntrega.value;
 
   let lineas = cart.map(i => {
@@ -1608,18 +1701,29 @@ btnEnviarPedido.addEventListener('click', () => {
   let mensaje = `Hola! Quiero hacer este pedido:\n\n`;
   mensaje += `*DATOS DEL CLIENTE*\n`;
   mensaje += `- Nombre: ${nombre}\n`;
-  mensaje += `- DNI: ${dni}\n`;
   mensaje += `- WhatsApp: ${whatsapp}\n`;
-  if(email) mensaje += `- Email: ${email}\n`;
 
   mensaje += `\n*MÉTODO DE ENTREGA*\n`;
   mensaje += `- Forma: ${entrega}\n`;
+
   if(entrega === 'Mensajería Express'){
-    mensaje += `- Dirección: ${document.getElementById('input-direccion').value.trim()} N° ${document.getElementById('input-nro').value.trim()}\n`;
+    mensaje += `- Dirección: ${document.getElementById('input-direccion').value.trim()}\n`;
     mensaje += `- Entre calles: ${document.getElementById('input-entre-calles').value.trim()}\n`;
-    mensaje += `- Código postal: ${document.getElementById('input-cp').value.trim()}\n`;
     mensaje += `- Localidad: ${document.getElementById('input-localidad').value.trim()}\n`;
-  }else{
+    mensaje += `- Código postal: ${document.getElementById('input-cp').value.trim()}\n`;
+    const pagoRadio = formPaso2.querySelector('input[name="forma-pago"]:checked');
+    const pago = pagoRadio ? pagoRadio.value : '';
+    mensaje += `- Forma de pago: ${pago}\n`;
+    if(pago === 'Efectivo' || pago === 'Mitad y mitad'){
+      mensaje += `- Monto en efectivo: $${document.getElementById('input-monto-efectivo').value.trim()}\n`;
+    }
+  }else if(entrega === 'Vía Cargo'){
+    mensaje += `- DNI: ${document.getElementById('input-dni').value.trim()}\n`;
+    mensaje += `- Email: ${document.getElementById('input-email').value.trim()}\n`;
+    mensaje += `- Localidad: ${document.getElementById('input-localidad').value.trim()}\n`;
+    mensaje += `- Sucursal a retirar: ${document.getElementById('input-sucursal').value.trim()}\n`;
+  }else if(entrega === 'Correo Argentino'){
+    mensaje += `- Email: ${document.getElementById('input-email').value.trim()}\n`;
     mensaje += `- Localidad: ${document.getElementById('input-localidad').value.trim()}\n`;
     mensaje += `- Sucursal a retirar: ${document.getElementById('input-sucursal').value.trim()}\n`;
   }
