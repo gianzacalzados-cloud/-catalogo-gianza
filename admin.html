@@ -61,6 +61,60 @@
 
   main{ max-width:1040px; margin:0 auto; padding:24px 20px 60px; }
 
+  /* ---- tabs ---- */
+  .tabs-admin{ display:flex; gap:8px; margin-bottom:18px; border-bottom:1px solid var(--card-border); }
+  .tab-admin{
+    background:none; border:none; color:var(--text-dim); font-size:13.5px; font-weight:700;
+    padding:10px 4px 12px; cursor:pointer; position:relative; margin-right:14px;
+    display:flex; align-items:center; gap:7px; transition:color .15s ease;
+  }
+  .tab-admin:hover{ color:var(--text); }
+  .tab-admin.activo{ color:var(--text); }
+  .tab-admin.activo::after{
+    content:''; position:absolute; left:0; right:0; bottom:-1px; height:2px; background:var(--accent); border-radius:2px;
+  }
+  .tab-badge{
+    background:var(--accent); color:#1a0e06; font-size:10.5px; font-weight:800;
+    border-radius:999px; padding:1px 7px; min-width:16px; text-align:center;
+  }
+
+  /* ---- pedidos (Ventas) ---- */
+  .pedido-card{
+    border:1px solid var(--card-border); border-radius:var(--radius); background:var(--card);
+    padding:16px; margin-bottom:12px; box-shadow:var(--shadow);
+  }
+  .pedido-head{ display:flex; justify-content:space-between; align-items:flex-start; gap:10px; margin-bottom:10px; }
+  .pedido-cliente{ font-size:14.5px; font-weight:800; }
+  .pedido-fecha{ font-size:11.5px; color:var(--text-faint); margin-top:3px; }
+  .pedido-estado{
+    font-size:10.5px; font-weight:800; letter-spacing:0.03em; text-transform:uppercase;
+    padding:3px 9px; border-radius:999px; white-space:nowrap;
+  }
+  .pedido-estado.pendiente{ color:var(--accent); background:var(--accent-soft); }
+  .pedido-estado.confirmado{ color:var(--ok); background:var(--ok-soft); }
+  .pedido-estado.anulado{ color:var(--off); background:var(--off-soft); }
+  .pedido-detalle{ font-size:12.5px; color:var(--text-dim); line-height:1.6; margin-bottom:10px; }
+  .pedido-detalle b{ color:var(--text); }
+  .pedido-entrega{ font-size:12px; color:var(--text-dim); margin-bottom:12px; padding-top:10px; border-top:1px solid var(--card-border); }
+  .pedido-entrega div{ margin-bottom:2px; }
+  .pedido-total{ font-size:15px; font-weight:800; margin-bottom:12px; }
+  .pedido-acciones{ display:flex; gap:8px; flex-wrap:wrap; }
+  .btn-salida-stock{
+    background:var(--ok); color:#06210f; border:none; border-radius:9px;
+    padding:10px 16px; font-weight:700; font-size:13px; cursor:pointer; transition:filter .15s ease;
+  }
+  .btn-salida-stock:hover{ filter:brightness(1.08); }
+  .btn-anular-pedido{
+    background:none; border:1px solid var(--card-border); color:var(--off); border-radius:9px;
+    padding:10px 16px; font-weight:600; font-size:13px; cursor:pointer; transition:border-color .15s ease;
+  }
+  .btn-anular-pedido:hover{ border-color:var(--off); background:var(--off-soft); }
+  .btn-reingresar-stock{
+    background:none; border:1px solid var(--card-border); color:var(--text-dim); border-radius:9px;
+    padding:10px 16px; font-weight:600; font-size:13px; cursor:pointer; transition:border-color .15s ease;
+  }
+  .btn-reingresar-stock:hover{ border-color:var(--accent); color:var(--accent); }
+
   /* ---- toolbar: buscador + filtros ---- */
   .toolbar{ display:flex; flex-direction:column; gap:10px; margin-bottom:18px; }
   .toolbar input[type="text"]{
@@ -227,28 +281,47 @@
   <main>
     <div class="status-msg" id="status-msg"></div>
 
-    <div class="toolbar">
-      <input type="text" id="buscador-admin" placeholder="Buscar por nombre, marca o código…" />
-      <div class="filtros-row">
-        <select id="filtro-marca"><option value="">Todas las marcas</option></select>
-        <select id="filtro-categoria">
-          <option value="">Todas las categorías</option>
-          <option value="Adulto">Adulto</option>
-          <option value="Infantil">Infantil</option>
-          <option value="Ojotas">Ojotas</option>
-          <option value="Nike Mind">Nike Mind</option>
-        </select>
-        <select id="filtro-talle"><option value="">Todos los talles</option></select>
-        <select id="orden-admin">
-          <option value="nombre-asc">Nombre A-Z</option>
-          <option value="nombre-desc">Nombre Z-A</option>
-        </select>
-        <button class="btn-limpiar-filtros" id="btn-limpiar-filtros">Limpiar filtros</button>
-      </div>
+    <div class="tabs-admin">
+      <button class="tab-admin activo" id="tab-catalogo" type="button">Catálogo</button>
+      <button class="tab-admin" id="tab-ventas" type="button">Ventas <span class="tab-badge" id="ventas-badge" style="display:none;">0</span></button>
     </div>
 
-    <div class="contador" id="contador"></div>
-    <div id="lista-productos" class="loading">Cargando productos…</div>
+    <div id="vista-catalogo">
+      <div class="toolbar">
+        <input type="text" id="buscador-admin" placeholder="Buscar por nombre, marca o código…" />
+        <div class="filtros-row">
+          <select id="filtro-marca"><option value="">Todas las marcas</option></select>
+          <select id="filtro-categoria">
+            <option value="">Todas las categorías</option>
+            <option value="Adulto">Adulto</option>
+            <option value="Infantil">Infantil</option>
+            <option value="Ojotas">Ojotas</option>
+            <option value="Nike Mind">Nike Mind</option>
+          </select>
+          <select id="filtro-talle"><option value="">Todos los talles</option></select>
+          <select id="orden-admin">
+            <option value="nombre-asc">Nombre A-Z</option>
+            <option value="nombre-desc">Nombre Z-A</option>
+          </select>
+          <button class="btn-limpiar-filtros" id="btn-limpiar-filtros">Limpiar filtros</button>
+        </div>
+      </div>
+
+      <div class="contador" id="contador"></div>
+      <div id="lista-productos" class="loading">Cargando productos…</div>
+    </div>
+
+    <div id="vista-ventas" style="display:none;">
+      <div class="filtros-row" style="margin-bottom:14px;">
+        <select id="filtro-estado-pedido">
+          <option value="pendiente">Pendientes</option>
+          <option value="confirmado">Confirmados (salida de stock)</option>
+          <option value="anulado">Anulados</option>
+          <option value="">Todos</option>
+        </select>
+      </div>
+      <div id="lista-pedidos" class="loading">Cargando pedidos…</div>
+    </div>
   </main>
 </div>
 
@@ -327,6 +400,7 @@ function mostrarPanel(){
   document.getElementById('login-screen').style.display = 'none';
   document.getElementById('panel').style.display = 'block';
   cargarProductos();
+  actualizarBadgeVentas();
 }
 document.getElementById('btn-login').addEventListener('click', async () => {
   const email = document.getElementById('login-email').value.trim();
@@ -455,17 +529,17 @@ function renderLista(){
     const precioHtml = p.precio
       ? `<div class="precio">$${Number(p.precio).toLocaleString('es-AR')}</div>`
       : `<div class="precio sin">Consultar precio</div>`;
-    const catChip = p.categoria ? `<span class="cat-chip">${p.categoria}</span>` : '';
+    const catChip = p.categoria ? `<span class="cat-chip">${escapeHtml(p.categoria)}</span>` : '';
     const fotoHtml = p.foto
-      ? `<img src="${p.foto}" alt="" onerror="this.style.visibility='hidden'">`
+      ? `<img src="${escapeHtml(p.foto)}" alt="" onerror="this.style.visibility='hidden'">`
       : `<div style="width:48px;height:48px;border-radius:8px;background:#0d0f14;flex-shrink:0;"></div>`;
 
     return `
       <div class="fila" data-id="${p.id}">
         ${fotoHtml}
         <div class="fila-info">
-          <div class="nombre">${p.nombre}${catChip}</div>
-          <div class="sub">${p.marca || '—'} · Cód. ${p.id}</div>
+          <div class="nombre">${escapeHtml(p.nombre)}${catChip}</div>
+          <div class="sub">${escapeHtml(p.marca) || '—'} · Cód. ${p.id}</div>
         </div>
         <div class="fila-right">
           ${precioHtml}
@@ -526,7 +600,7 @@ document.getElementById('modal-overlay').addEventListener('click', (e) => {
 
 function actualizarPreviewFoto(url){
   const prev = document.getElementById('foto-preview');
-  prev.innerHTML = url ? `<img src="${url}" onerror="this.parentElement.textContent='Sin foto'">` : 'Sin foto';
+  prev.innerHTML = url ? `<img src="${escapeHtml(url)}" onerror="this.parentElement.textContent='Sin foto'">` : 'Sin foto';
 }
 document.getElementById('campo-foto').addEventListener('input', (e) => actualizarPreviewFoto(e.target.value));
 
@@ -535,8 +609,8 @@ function renderTalles(talles){
   const rows = document.getElementById('talles-rows');
   rows.innerHTML = talles.map(t => `
     <div class="talle-row">
-      <input class="talle-nombre" value="${t.talle}" placeholder="Talle" />
-      <input class="talle-stock" type="number" min="0" value="${t.stock}" placeholder="Stock" />
+      <input class="talle-nombre" value="${escapeHtml(t.talle)}" placeholder="Talle" />
+      <input class="talle-stock" type="number" min="0" value="${escapeHtml(t.stock)}" placeholder="Stock" />
       <button type="button" class="btn-quitar-talle">&times;</button>
     </div>
   `).join('');
@@ -635,6 +709,173 @@ document.getElementById('btn-borrar-modal').addEventListener('click', async () =
   await cargarProductos();
   cerrarModal();
 });
+
+// ---------- tabs ----------
+document.getElementById('tab-catalogo').addEventListener('click', () => {
+  document.getElementById('tab-catalogo').classList.add('activo');
+  document.getElementById('tab-ventas').classList.remove('activo');
+  document.getElementById('vista-catalogo').style.display = 'block';
+  document.getElementById('vista-ventas').style.display = 'none';
+});
+document.getElementById('tab-ventas').addEventListener('click', () => {
+  document.getElementById('tab-ventas').classList.add('activo');
+  document.getElementById('tab-catalogo').classList.remove('activo');
+  document.getElementById('vista-catalogo').style.display = 'none';
+  document.getElementById('vista-ventas').style.display = 'block';
+  cargarPedidos();
+});
+document.getElementById('filtro-estado-pedido').addEventListener('change', cargarPedidos);
+
+async function actualizarBadgeVentas(){
+  const { count, error } = await sb.from('pedidos').select('id', { count: 'exact', head: true }).eq('estado', 'pendiente');
+  const badge = document.getElementById('ventas-badge');
+  if(error || !count){ badge.style.display = 'none'; return; }
+  badge.textContent = count;
+  badge.style.display = 'inline-block';
+}
+
+// ---------- Ventas: carga y render de pedidos ----------
+let pedidos = [];
+async function cargarPedidos(){
+  const cont = document.getElementById('lista-pedidos');
+  cont.className = 'loading';
+  cont.textContent = 'Cargando pedidos…';
+
+  const estadoFiltro = document.getElementById('filtro-estado-pedido').value;
+  let query = sb.from('pedidos').select('*').order('created_at', { ascending: false });
+  if(estadoFiltro) query = query.eq('estado', estadoFiltro);
+
+  const { data, error } = await query;
+  if(error){ mostrarStatus('error', 'Error cargando pedidos: ' + error.message); cont.textContent = ''; return; }
+  pedidos = data || [];
+  renderPedidos();
+  actualizarBadgeVentas();
+}
+
+function formatoFechaPedido(iso){
+  const d = new Date(iso);
+  return d.toLocaleString('es-AR', { day:'2-digit', month:'2-digit', year:'numeric', hour:'2-digit', minute:'2-digit' });
+}
+
+function renderPedidos(){
+  const cont = document.getElementById('lista-pedidos');
+  if(pedidos.length === 0){
+    cont.className = 'empty';
+    cont.textContent = 'No hay pedidos para mostrar.';
+    return;
+  }
+  cont.className = '';
+  cont.innerHTML = pedidos.map(p => {
+    const detalleTxt = (p.detalle || []).map(i =>
+      `${escapeHtml(i.cantidad)}x <b>${escapeHtml(i.nombre)}</b> (Cód. ${escapeHtml(i.producto_id)}) — Talle ${escapeHtml(i.talle)}${i.precio ? '' : ' — a consultar'}`
+    ).join('<br>');
+
+    const d = p.datos_entrega || {};
+    const entregaSeg = ['Mensajería Express', 'Vía Cargo', 'Correo Argentino'].includes(p.entrega) ? p.entrega : 'Otro';
+    let entregaTxt = `<div><b>Entrega:</b> ${escapeHtml(entregaSeg)}</div>`;
+    if(p.entrega === 'Mensajería Express'){
+      entregaTxt += `<div>${escapeHtml(d.direccion)}, entre ${escapeHtml(d.entreCalles)} — ${escapeHtml(d.localidad)} (CP ${escapeHtml(d.cp)})</div>`;
+      entregaTxt += `<div>Pago: ${escapeHtml(d.formaPago)}${d.montoEfectivo ? ` (efectivo: $${escapeHtml(d.montoEfectivo)})` : ''}</div>`;
+    }else if(p.entrega === 'Vía Cargo'){
+      entregaTxt += `<div>DNI ${escapeHtml(d.dni)} — ${escapeHtml(d.email)} — ${escapeHtml(d.localidad)}, suc. ${escapeHtml(d.sucursal)}</div>`;
+    }else if(p.entrega === 'Correo Argentino'){
+      entregaTxt += `<div>${escapeHtml(d.email)} — ${escapeHtml(d.localidad)}, suc. ${escapeHtml(d.sucursal)}</div>`;
+    }
+
+    // el estado solo puede ser uno de estos 3 valores conocidos; cualquier otra cosa se trata como "pendiente"
+    // (nunca se interpola un estado arbitrario directo en el HTML/clase)
+    const estadoSeg = ['pendiente', 'confirmado', 'anulado'].includes(p.estado) ? p.estado : 'pendiente';
+
+    let acciones = '';
+    if(estadoSeg === 'pendiente'){
+      acciones = `
+        <button class="btn-salida-stock" data-accion="salida" data-id="${p.id}">✓ Salida de stock</button>
+        <button class="btn-anular-pedido" data-accion="anular" data-id="${p.id}">Anular pedido</button>
+      `;
+    }else if(estadoSeg === 'confirmado'){
+      acciones = `<button class="btn-reingresar-stock" data-accion="reingresar" data-id="${p.id}">↺ Reingresar stock</button>`;
+    }
+
+    return `
+      <div class="pedido-card">
+        <div class="pedido-head">
+          <div>
+            <div class="pedido-cliente">${escapeHtml(p.nombre_cliente)}</div>
+            <div class="pedido-fecha">${formatoFechaPedido(p.created_at)} · WhatsApp ${escapeHtml(p.whatsapp_cliente)}</div>
+          </div>
+          <span class="pedido-estado ${estadoSeg}">${estadoSeg}</span>
+        </div>
+        <div class="pedido-detalle">${detalleTxt}</div>
+        <div class="pedido-entrega">${entregaTxt}</div>
+        <div class="pedido-total">Total: $${Number(p.total || 0).toLocaleString('es-AR')}</div>
+        <div class="pedido-acciones">${acciones}</div>
+      </div>
+    `;
+  }).join('');
+}
+
+// evita que texto escrito por un cliente (nombre, dirección, etc.) se interprete como HTML/código
+// al mostrarlo en el panel -- todo lo que viene de la tabla "pedidos" pasa por acá antes de mostrarse
+function escapeHtml(valor){
+  if(valor === null || valor === undefined) return '';
+  return String(valor)
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#039;');
+}
+
+document.getElementById('lista-pedidos').addEventListener('click', async (e) => {
+  const btn = e.target.closest('button[data-accion]');
+  if(!btn) return;
+  const id = parseInt(btn.dataset.id, 10);
+  const pedido = pedidos.find(p => p.id === id);
+  if(!pedido) return;
+
+  const mensajesConfirm = {
+    salida: '¿Confirmar la venta y descontar el stock de este pedido?',
+    anular: '¿Anular este pedido? No se va a tocar el stock.',
+    reingresar: '¿Reingresar el stock de este pedido? Se va a sumar de nuevo a tus productos.'
+  };
+  if(!confirm(mensajesConfirm[btn.dataset.accion])) return;
+
+  // evita que un doble clic dispare la misma acción dos veces antes de que se actualice la lista
+  const card = btn.closest('.pedido-card');
+  if(card.dataset.procesando === '1') return;
+  card.dataset.procesando = '1';
+  card.querySelectorAll('button').forEach(b => b.disabled = true);
+
+  if(btn.dataset.accion === 'salida'){
+    await aplicarMovimientoStock(pedido, -1);
+    await sb.from('pedidos').update({ estado: 'confirmado' }).eq('id', id);
+    mostrarStatus('ok', 'Stock descontado. Pedido confirmado.');
+    await cargarPedidos();
+  }else if(btn.dataset.accion === 'anular'){
+    await sb.from('pedidos').update({ estado: 'anulado' }).eq('id', id);
+    mostrarStatus('ok', 'Pedido anulado.');
+    await cargarPedidos();
+  }else if(btn.dataset.accion === 'reingresar'){
+    await aplicarMovimientoStock(pedido, +1);
+    await sb.from('pedidos').update({ estado: 'anulado' }).eq('id', id);
+    mostrarStatus('ok', 'Stock reingresado.');
+    await cargarPedidos();
+  }
+});
+
+// signo: -1 para restar stock (salida/venta confirmada), +1 para reingresar (si no pagó)
+async function aplicarMovimientoStock(pedido, signo){
+  for(const item of (pedido.detalle || [])){
+    const { data: prod, error: errLeer } = await sb.from('productos').select('talles').eq('id', item.producto_id).single();
+    if(errLeer || !prod){ continue; } // producto borrado del catálogo: no hay nada que ajustar
+    const talles = prod.talles || [];
+    const idx = talles.findIndex(t => t.talle === item.talle);
+    if(idx === -1){ continue; } // ese talle ya no existe: no hay nada que ajustar
+    const stockActual = talles[idx].stock || 0;
+    talles[idx] = { ...talles[idx], stock: Math.max(stockActual + signo * item.cantidad, 0) };
+    await sb.from('productos').update({ talles }).eq('id', item.producto_id);
+  }
+}
 
 checkSession();
 </script>

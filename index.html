@@ -924,6 +924,18 @@ function formatoPrecio(p){
 }
 function money(n){ return `$${n.toLocaleString('es-AR')}`; }
 
+// defensa extra: si algún dato de un producto (nombre, marca, foto) tuviera caracteres raros
+// (por carga manual o por una cuenta de admin comprometida), que no rompan ni ejecuten nada acá
+function escapeHtml(valor){
+  if(valor === null || valor === undefined) return '';
+  return String(valor)
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#039;');
+}
+
 function cargarCarrito(){
   try{
     const raw = localStorage.getItem('gianza_cart');
@@ -1062,7 +1074,7 @@ function renderTiles(){
     }
 
     const fotoHtml = fotoPortada
-      ? `<img src="${fotoPortada}" alt="${tile.label}" loading="lazy" />`
+      ? `<img src="${escapeHtml(fotoPortada)}" alt="${escapeHtml(tile.label)}" loading="lazy" />`
       : `<span class="sin">Sin foto</span>`;
     return `
       <div class="tile" data-tipo="${tile.tipo}" data-valor="${tile.valor}" data-label="${tile.label}">
@@ -1120,7 +1132,7 @@ function poblarPildorasMarca(){
   const cont = document.getElementById('pildoras-marca');
   cont.innerHTML = ['Todas', ...marcas].map(m => {
     const valor = m === 'Todas' ? '' : m;
-    return `<button type="button" class="pildora" data-valor="${valor}">${m}</button>`;
+    return `<button type="button" class="pildora" data-valor="${escapeHtml(valor)}">${escapeHtml(m)}</button>`;
   }).join('');
 }
 function poblarPildorasTalle(){
@@ -1193,11 +1205,11 @@ function render(lista){
 
     const tallesHtml = p.talles
       .filter(t => t.stock > 0)
-      .map(t => `<span class="talle-chip">${t.talle}</span>`)
+      .map(t => `<span class="talle-chip">${escapeHtml(t.talle)}</span>`)
       .join('');
 
     const fotoHtml = p.foto
-      ? `<img src="${p.foto}" alt="${p.nombre}" loading="lazy" />`
+      ? `<img src="${escapeHtml(p.foto)}" alt="${escapeHtml(p.nombre)}" loading="lazy" />`
       : `<span class="noimg">Sin foto</span>`;
 
     return `
@@ -1207,8 +1219,8 @@ function render(lista){
           ${fotoHtml}
         </div>
         <div class="body">
-          <span class="marca">${p.marca || '—'}</span>
-          <h3>${p.nombre}</h3>
+          <span class="marca">${escapeHtml(p.marca) || '—'}</span>
+          <h3>${escapeHtml(p.nombre)}</h3>
           ${formatoPrecio(p.precio)}
           ${agotadoTotal ? '' : `
           <div class="talles-label">Talles</div>
@@ -1313,7 +1325,7 @@ function cerrarDetalle(){
 function renderModalDetalle(p){
   const body = document.getElementById('modal-detalle-body');
   const fotoHtml = p.foto
-    ? `<img src="${p.foto}" alt="${p.nombre}">`
+    ? `<img src="${escapeHtml(p.foto)}" alt="${escapeHtml(p.nombre)}">`
     : `<span class="noimg">Sin foto</span>`;
   const precioHtml = p.precio
     ? `<div class="modal-detalle-precio">$${p.precio.toLocaleString('es-AR')}</div>`
@@ -1330,13 +1342,13 @@ function renderModalDetalle(p){
     else if(sinDisponible) dispTxt = 'Ya tenés todo el stock en tu carrito';
     else dispTxt = `${disponibleParaAgregar} disponibles${enCarrito > 0 ? ` (ya tenés ${enCarrito} en el carrito)` : ''}`;
     return `
-      <div class="fila-talle ${sinStock || sinDisponible ? 'agotado' : ''}" data-talle="${t.talle}" data-stock="${disponibleParaAgregar}">
-        <div class="talle-info"><b>TALLE ${t.talle}</b><span class="talle-disp">${dispTxt}</span></div>
+      <div class="fila-talle ${sinStock || sinDisponible ? 'agotado' : ''}" data-talle="${escapeHtml(t.talle)}" data-stock="${disponibleParaAgregar}">
+        <div class="talle-info"><b>TALLE ${escapeHtml(t.talle)}</b><span class="talle-disp">${dispTxt}</span></div>
         ${(sinStock || sinDisponible) ? '' : `
         <div class="stepper">
-          <button class="btn-rest" data-talle="${t.talle}" ${cant <= 0 ? 'disabled' : ''}>−</button>
+          <button class="btn-rest" data-talle="${escapeHtml(t.talle)}" ${cant <= 0 ? 'disabled' : ''}>−</button>
           <span class="cant">${cant}</span>
-          <button class="btn-sum" data-talle="${t.talle}" ${cant >= disponibleParaAgregar ? 'disabled' : ''}>+</button>
+          <button class="btn-sum" data-talle="${escapeHtml(t.talle)}" ${cant >= disponibleParaAgregar ? 'disabled' : ''}>+</button>
         </div>`}
       </div>
     `;
@@ -1344,7 +1356,7 @@ function renderModalDetalle(p){
 
   body.innerHTML = `
     <div class="modal-detalle-foto">${fotoHtml}</div>
-    <div class="modal-detalle-nombre">${p.nombre}</div>
+    <div class="modal-detalle-nombre">${escapeHtml(p.nombre)}</div>
     ${precioHtml}
     <div class="modal-detalle-label">Seleccioná la cantidad por talle:</div>
     ${filasHtml}
@@ -1463,14 +1475,14 @@ function renderDrawer(){
       }else{
         lineaPrecio = money(item.precio * item.cantidad);
       }
-      const fotoHtml = item.foto ? `<img src="${item.foto}" alt="${item.nombre}">` : '';
+      const fotoHtml = item.foto ? `<img src="${escapeHtml(item.foto)}" alt="${escapeHtml(item.nombre)}">` : '';
       const enElTope = typeof item.stock === 'number' && item.cantidad >= item.stock;
       return `
         <div class="cart-item">
           ${fotoHtml}
           <div class="cart-item-info">
-            <div class="nombre">${item.nombre}</div>
-            <div class="detalle">${item.marca} · Talle ${item.talle}</div>
+            <div class="nombre">${escapeHtml(item.nombre)}</div>
+            <div class="detalle">${escapeHtml(item.marca)} · Talle ${escapeHtml(item.talle)}</div>
             <div class="qty-control">
               <button data-idx="${idx}" data-delta="-1">−</button>
               <span>${item.cantidad}</span>
@@ -1889,6 +1901,51 @@ btnEnviarPedido.addEventListener('click', () => {
 
   const url = `https://wa.me/${WHATSAPP_NUMERO}?text=${encodeURIComponent(mensaje)}`;
   window.open(url, '_blank');
+
+  // guarda una copia del pedido en el panel admin (sección Ventas), sin bloquear el envío por WhatsApp
+  let datosEntrega = {};
+  if(entrega === 'Mensajería Express'){
+    const pagoRadio = formPaso2.querySelector('input[name="forma-pago"]:checked');
+    const pago = pagoRadio ? pagoRadio.value : '';
+    datosEntrega = {
+      direccion: document.getElementById('input-direccion').value.trim(),
+      entreCalles: document.getElementById('input-entre-calles').value.trim(),
+      localidad: document.getElementById('input-localidad').value.trim(),
+      cp: document.getElementById('input-cp').value.trim(),
+      formaPago: pago,
+      montoEfectivo: (pago === 'Efectivo' || pago === 'Mitad y mitad')
+        ? document.getElementById('input-monto-efectivo').value.trim() : null
+    };
+  }else if(entrega === 'Vía Cargo'){
+    datosEntrega = {
+      dni: document.getElementById('input-dni').value.trim(),
+      email: document.getElementById('input-email').value.trim(),
+      localidad: document.getElementById('input-localidad').value.trim(),
+      sucursal: document.getElementById('input-sucursal').value.trim()
+    };
+  }else if(entrega === 'Correo Argentino'){
+    datosEntrega = {
+      email: document.getElementById('input-email').value.trim(),
+      localidad: document.getElementById('input-localidad').value.trim(),
+      sucursal: document.getElementById('input-sucursal').value.trim()
+    };
+  }
+
+  const detallePedido = cart.map(i => ({
+    producto_id: i.id, nombre: i.nombre, marca: i.marca, talle: i.talle,
+    cantidad: i.cantidad, precio: i.precio, categoria: i.categoria || null
+  }));
+
+  sb.from('pedidos').insert({
+    nombre_cliente: nombre,
+    whatsapp_cliente: whatsapp,
+    entrega: entrega,
+    datos_entrega: datosEntrega,
+    detalle: detallePedido,
+    total: totalNumerico
+  }).then(({ error }) => {
+    if(error) console.error('No se pudo guardar la copia del pedido en Ventas:', error);
+  });
 });
 
 // ---------- init ----------
