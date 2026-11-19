@@ -57,6 +57,71 @@ module.exports = async (req, res) => {
     return;
   }
 
+  // "item/delete": BoxHero borró un artículo (en la práctica, un talle
+  // puntual, ya que cada talle es su propia "variante de artículo" en
+  // BoxHero). La web tiene que reflejarlo: se saca ese talle del producto,
+  // y si era el último talle que le quedaba, se borra el producto entero.
+  if (body.topic === 'item/delete') {
+    const boxheroId = body.payload && body.payload.id;
+    if (boxheroId === undefined) {
+      res.status(200).json({ ok: true, skipped: 'evento de borrado sin id' });
+      return;
+    }
+
+    const filtro = encodeURIComponent(JSON.stringify([{ boxhero_id: boxheroId }]));
+    const busq = await supabaseFetch(`productos?select=id,marca,nombre,talles&talles=cs.${filtro}`);
+    if (!busq.ok) {
+      res.status(200).json({ ok: false, motivo: 'error buscando producto: ' + (await busq.text()) });
+      return;
+    }
+    const candidatos = await busq.json();
+    const resultados = [];
+
+    for (const producto of candidatos) {
+      const talleBorrado = (producto.talles || []).find(t => t.boxhero_id === boxheroId);
+      const tallesRestantes = (producto.talles || []).filter(t => t.boxhero_id !== boxheroId);
+
+      // deja registrado el movimiento ANTES de borrar/actualizar el producto,
+      // mientras todavía existe (si el producto se termina borrando, esta fila
+      // igual queda guardada: el vínculo a producto_id se pone en null solo).
+      await supabaseFetch('movimientos_boxhero', {
+        method: 'POST',
+        headers: { Prefer: 'return=minimal' },
+        body: JSON.stringify({
+          producto_id: producto.id,
+          marca: producto.marca || '',
+          nombre: producto.nombre || '',
+          talle: talleBorrado ? talleBorrado.talle : null,
+          boxhero_id: boxheroId,
+          stock_anterior: talleBorrado ? (talleBorrado.stock || 0) : null,
+          stock_nuevo: 0,
+          delta: talleBorrado ? -(talleBorrado.stock || 0) : null,
+          cliente: null,
+          tipo: 'eliminado',
+        }),
+      }).catch(() => {});
+
+      if (tallesRestantes.length === 0) {
+        // era el único talle que le quedaba a este producto: se borra entero
+        const del = await supabaseFetch(`productos?id=eq.${producto.id}`, {
+          method: 'DELETE',
+          headers: { Prefer: 'return=minimal' },
+        });
+        resultados.push({ boxheroId, productoId: producto.id, ok: del.ok, accion: 'producto_borrado' });
+      } else {
+        const upd = await supabaseFetch(`productos?id=eq.${producto.id}`, {
+          method: 'PATCH',
+          headers: { Prefer: 'return=minimal' },
+          body: JSON.stringify({ talles: tallesRestantes }),
+        });
+        resultados.push({ boxheroId, productoId: producto.id, ok: upd.ok, accion: 'talle_borrado' });
+      }
+    }
+
+    res.status(200).json({ ok: true, resultados });
+    return;
+  }
+
   const items = body.payload && Array.isArray(body.payload.items) ? body.payload.items : [];
   if (items.length === 0) {
     res.status(200).json({ ok: true, skipped: 'sin items en el payload' });
