@@ -1,12 +1,16 @@
 // api/boxhero-webhook.js
 //
-// Recibe los webhooks de BoxHero (Crear / Editar / Eliminar transacción, y
-// Editar artículo) y actualiza Supabase. Para el stock, siempre toma el
-// nivel que BoxHero reporta como "nivel nuevo" después del movimiento
-// (nunca suma ni resta por su cuenta), para que BoxHero sea siempre la
-// fuente de verdad y la web solo refleje. Para el precio, toma el precio
-// nuevo del evento "item/edit" (edición manual de un artículo en BoxHero,
-// no carga masiva ni Excel) y lo aplica a todo el producto en la web.
+// Recibe los webhooks de BoxHero (Crear / Editar / Eliminar transacción,
+// Editar artículo, y Crear artículo) y actualiza Supabase. Para el stock,
+// siempre toma el nivel que BoxHero reporta como "nivel nuevo" después del
+// movimiento (nunca suma ni resta por su cuenta), para que BoxHero sea
+// siempre la fuente de verdad y la web solo refleje. Para el precio, toma
+// el precio nuevo del evento "item/edit" (edición manual de un artículo en
+// BoxHero, no carga masiva ni Excel) y lo aplica a todo el producto en la
+// web. Para artículos nuevos ("item/new"), crea o completa el producto en
+// la web automáticamente -- si es un modelo nuevo entero, lo crea OCULTO
+// (visible:false) hasta que alguien le ponga categoría y lo publique a
+// mano desde el panel.
 //
 // No usa ninguna librería externa (fetch ya viene incluido en el runtime de
 // Vercel), así que no hace falta instalar nada.
@@ -202,6 +206,157 @@ module.exports = async (req, res) => {
     }
 
     res.status(200).json({ ok: true, resultados });
+    return;
+  }
+
+  // "item/new": se dio de alta un artículo nuevo en BoxHero (puede ser un
+  // modelo completamente nuevo, o un talle/variante nueva de un modelo que
+  // ya existía en la web). Lo creamos o lo sumamos automáticamente, pero
+  // SIEMPRE OCULTO (visible:false) si es un modelo nuevo entero -- así nunca
+  // aparece un producto a medio cargar (sin categoría, sin revisar) en el
+  // catálogo público. Hay que entrar al panel, ponerle categoría, y
+  // mostrarlo a mano cuando esté listo para publicarse.
+  if (body.topic === 'item/new') {
+    const boxheroId = body.payload && body.payload.id;
+    if (boxheroId === undefined) {
+      res.status(200).json({ ok: true, skipped: 'evento de alta sin id' });
+      return;
+    }
+
+    const attrs = (body.payload && body.payload.attrs) || [];
+    if (attrs.length === 0) {
+      // filas contables (ENVIO, DESCUENTO, SEÑA, etc.): no son productos de catálogo
+      res.status(200).json({ ok: true, skipped: 'articulo sin atributos (no es un producto de catalogo)' });
+      return;
+    }
+
+    const norm = (s) => (s || '')
+      .toString()
+      .normalize('NFD').replace(/[̀-ͯ]/g, '')
+      .toUpperCase()
+      .trim()
+      .replace(/\s+/g, ' ');
+
+    const talleAttr = attrs.find(a => (a.name || '').toLowerCase() === 'talle');
+    const marcaAttr = attrs.find(a => (a.name || '').toLowerCase() === 'marca');
+    const talle = talleAttr ? String(talleAttr.value) : '';
+    const nombreBox = body.payload.name || '';
+    const marcaBox = marcaAttr ? String(marcaAttr.value) : '';
+    const precioRaw = parseFloat(body.payload.price);
+    const foto = body.payload.photo_url || null;
+    const stockInicial = typeof body.payload.quantity === 'number' ? body.payload.quantity : 0;
+
+    // si este boxhero_id ya está vinculado a algo (evento repetido o
+    // procesado dos veces), no duplicamos nada.
+    const filtroYaExiste = encodeURIComponent(JSON.stringify([{ boxhero_id: boxheroId }]));
+    const yaVinculado = await supabaseFetch(`productos?select=id&talles=cs.${filtroYaExiste}`);
+    if (yaVinculado.ok) {
+      const existentes = await yaVinculado.json();
+      if (existentes && existentes.length > 0) {
+        res.status(200).json({ ok: true, skipped: 'este articulo ya estaba vinculado' });
+        return;
+      }
+    }
+
+    // ¿ya existe el modelo (mismo nombre + marca) en la web, solo que con
+    // otros talles? si es así, le sumamos el talle nuevo en vez de crear un
+    // producto duplicado.
+    const busqTodos = await supabaseFetch(`productos?select=id,marca,nombre,talles`);
+    let productoExistente = null;
+    if (busqTodos.ok) {
+      const todos = await busqTodos.json();
+      productoExistente = (todos || []).find(p =>
+        norm(p.marca) === norm(marcaBox) && norm(p.nombre) === norm(nombreBox)
+      );
+    }
+
+    if (productoExistente) {
+      const talles = (productoExistente.talles || []).slice();
+      const idxMismoTalle = talles.findIndex(t => norm(t.talle) === norm(talle));
+      if (idxMismoTalle >= 0) {
+        talles[idxMismoTalle] = { ...talles[idxMismoTalle], boxhero_id: boxheroId, stock: stockInicial };
+      } else {
+        talles.push({ talle, stock: stockInicial, boxhero_id: boxheroId });
+      }
+      const upd = await supabaseFetch(`productos?id=eq.${productoExistente.id}`, {
+        method: 'PATCH',
+        headers: { Prefer: 'return=minimal' },
+        body: JSON.stringify({ talles }),
+      });
+      if (upd.ok) {
+        await supabaseFetch('movimientos_boxhero', {
+          method: 'POST',
+          headers: { Prefer: 'return=minimal' },
+          body: JSON.stringify({
+            producto_id: productoExistente.id,
+            marca: marcaBox,
+            nombre: nombreBox,
+            foto,
+            talle,
+            boxhero_id: boxheroId,
+            stock_anterior: null,
+            stock_nuevo: stockInicial,
+            delta: null,
+            cliente: null,
+            tipo: 'talle_nuevo',
+          }),
+        }).catch(() => {});
+      }
+      res.status(200).json({
+        ok: upd.ok,
+        accion: 'talle_agregado_a_modelo_existente',
+        productoId: productoExistente.id,
+        motivo: upd.ok ? undefined : await upd.text(),
+      });
+      return;
+    }
+
+    // modelo completamente nuevo: se crea OCULTO, para que alguien le ponga
+    // categoría y lo revise antes de publicarlo.
+    const nuevoProducto = {
+      nombre: nombreBox,
+      marca: marcaBox,
+      modelo: null,
+      categoria: null,
+      precio: isNaN(precioRaw) ? null : precioRaw,
+      foto: foto || '',
+      visible: false,
+      talles: [{ talle, stock: stockInicial, boxhero_id: boxheroId }],
+    };
+    const creado = await supabaseFetch('productos', {
+      method: 'POST',
+      headers: { Prefer: 'return=representation' },
+      body: JSON.stringify(nuevoProducto),
+    });
+    const filasCreadas = creado.ok ? await creado.json() : null;
+    const productoId = filasCreadas && filasCreadas[0] ? filasCreadas[0].id : null;
+
+    if (creado.ok) {
+      await supabaseFetch('movimientos_boxhero', {
+        method: 'POST',
+        headers: { Prefer: 'return=minimal' },
+        body: JSON.stringify({
+          producto_id: productoId,
+          marca: marcaBox,
+          nombre: nombreBox,
+          foto,
+          talle,
+          boxhero_id: boxheroId,
+          stock_anterior: null,
+          stock_nuevo: stockInicial,
+          delta: null,
+          cliente: null,
+          tipo: 'modelo_nuevo',
+        }),
+      }).catch(() => {});
+    }
+
+    res.status(200).json({
+      ok: creado.ok,
+      accion: 'modelo_nuevo_creado_oculto',
+      productoId,
+      motivo: creado.ok ? undefined : await creado.text(),
+    });
     return;
   }
 
