@@ -1900,6 +1900,7 @@ selectEntrega.addEventListener('change', (e) => {
       <div class="form-group">
         <label class="form-label">Forma de pago<span class="req-star">*</span></label>
         <div class="pago-opciones">
+          <label class="pago-opcion activa"><input type="radio" name="forma-pago" value="A acordar con el vendedor" checked>A acordar con el vendedor</label>
           <label class="pago-opcion"><input type="radio" name="forma-pago" value="Transferencia">Abono por transferencia</label>
           <label class="pago-opcion"><input type="radio" name="forma-pago" value="Efectivo">Abono en efectivo</label>
           <label class="pago-opcion"><input type="radio" name="forma-pago" value="Mitad y mitad">Mitad transferencia / mitad efectivo</label>
@@ -2122,7 +2123,7 @@ btnEnviarPedido.addEventListener('click', () => {
     mensaje += `- Sucursal a retirar: ${document.getElementById('input-sucursal').value.trim()}\n`;
   }
 
-  mensaje += `\n*DETALLE DEL PEDIDO*\n${lineas.join('\n\n')}\n\n`;
+  mensaje += `\n*DETALLE DEL PEDIDO*\n\n${lineas.join('\n\n')}\n\n`;
   mensaje += resumen;
 
   const url = `https://wa.me/${WHATSAPP_NUMERO}?text=${encodeURIComponent(mensaje)}`;
