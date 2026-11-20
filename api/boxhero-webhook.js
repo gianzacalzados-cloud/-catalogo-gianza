@@ -71,7 +71,7 @@ module.exports = async (req, res) => {
     }
 
     const filtro = encodeURIComponent(JSON.stringify([{ boxhero_id: boxheroId }]));
-    const busq = await supabaseFetch(`productos?select=id,marca,nombre,talles&talles=cs.${filtro}`);
+    const busq = await supabaseFetch(`productos?select=id,marca,nombre,talles,foto&talles=cs.${filtro}`);
     if (!busq.ok) {
       res.status(200).json({ ok: false, motivo: 'error buscando producto: ' + (await busq.text()) });
       return;
@@ -93,6 +93,7 @@ module.exports = async (req, res) => {
           producto_id: producto.id,
           marca: producto.marca || '',
           nombre: producto.nombre || '',
+          foto: producto.foto || null,
           talle: talleBorrado ? talleBorrado.talle : null,
           boxhero_id: boxheroId,
           stock_anterior: talleBorrado ? (talleBorrado.stock || 0) : null,
@@ -144,8 +145,14 @@ module.exports = async (req, res) => {
       return;
     }
 
+    // el talle de la variante editada, solo para mostrarlo en el historial
+    // (el precio se aplica a TODO el producto, no solo a este talle)
+    const attrs = (body.payload && body.payload.attrs) || [];
+    const talleAttr = attrs.find(a => (a.name || '').toLowerCase() === 'talle');
+    const talleEditado = talleAttr ? talleAttr.value : null;
+
     const filtro = encodeURIComponent(JSON.stringify([{ boxhero_id: boxheroId }]));
-    const busq = await supabaseFetch(`productos?select=id,marca,nombre,precio&talles=cs.${filtro}`);
+    const busq = await supabaseFetch(`productos?select=id,marca,nombre,precio,foto&talles=cs.${filtro}`);
     if (!busq.ok) {
       res.status(200).json({ ok: false, motivo: 'error buscando producto: ' + (await busq.text()) });
       return;
@@ -159,6 +166,7 @@ module.exports = async (req, res) => {
 
     const resultados = [];
     for (const producto of candidatos) {
+      const precioAnterior = producto.precio;
       const upd = await supabaseFetch(`productos?id=eq.${producto.id}`, {
         method: 'PATCH',
         headers: { Prefer: 'return=minimal' },
@@ -168,10 +176,29 @@ module.exports = async (req, res) => {
         boxheroId,
         productoId: producto.id,
         ok: upd.ok,
-        precioAnterior: producto.precio,
+        precioAnterior,
         precioNuevo,
         motivo: upd.ok ? undefined : await upd.text(),
       });
+
+      if (upd.ok && precioAnterior !== precioNuevo) {
+        await supabaseFetch('movimientos_boxhero', {
+          method: 'POST',
+          headers: { Prefer: 'return=minimal' },
+          body: JSON.stringify({
+            producto_id: producto.id,
+            marca: producto.marca || '',
+            nombre: producto.nombre || '',
+            foto: producto.foto || null,
+            talle: talleEditado,
+            boxhero_id: boxheroId,
+            precio_anterior: precioAnterior,
+            precio_nuevo: precioNuevo,
+            cliente: null,
+            tipo: 'precio_editado',
+          }),
+        }).catch(() => {});
+      }
     }
 
     res.status(200).json({ ok: true, resultados });
@@ -208,7 +235,7 @@ module.exports = async (req, res) => {
 
     // busca el/los productos cuyo array "talles" (jsonb) contiene un elemento con este boxhero_id
     const filtro = encodeURIComponent(JSON.stringify([{ boxhero_id: boxheroId }]));
-    const busq = await supabaseFetch(`productos?select=id,marca,nombre,talles&talles=cs.${filtro}`);
+    const busq = await supabaseFetch(`productos?select=id,marca,nombre,talles,foto&talles=cs.${filtro}`);
     if (!busq.ok) {
       resultados.push({ boxheroId, ok: false, motivo: 'error buscando producto: ' + (await busq.text()) });
       continue;
@@ -250,6 +277,7 @@ module.exports = async (req, res) => {
           producto_id: producto.id,
           marca: producto.marca || '',
           nombre: producto.nombre || '',
+          foto: producto.foto || null,
           talle: talleAfectado ? talleAfectado.talle : null,
           boxhero_id: boxheroId,
           stock_anterior: stockAnterior,
@@ -262,10 +290,10 @@ module.exports = async (req, res) => {
     }
   }
 
-  // limpieza: borra movimientos de más de 30 días para que la tabla no
+  // limpieza: borra movimientos de más de 20 días para que la tabla no
   // crezca sin límite. No es crítico, así que no bloquea la respuesta
   // del webhook si falla.
-  const limite = new Date(Date.now() - 30 * 24 * 60 * 60 * 1000).toISOString();
+  const limite = new Date(Date.now() - 20 * 24 * 60 * 60 * 1000).toISOString();
   supabaseFetch(`movimientos_boxhero?created_at=lt.${encodeURIComponent(limite)}`, {
     method: 'DELETE',
     headers: { Prefer: 'return=minimal' },
