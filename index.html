@@ -173,48 +173,46 @@
 
   /* ---- franja de envíos, separada arriba ---- */
   .info-strip{
-    display:flex;
-    background: rgba(63,191,111,0.08);
-    border: 1px solid rgba(63,191,111,0.28);
-    border-radius: 8px;
-    overflow: hidden;
-    margin-bottom: 14px;
+    display:flex; justify-content:center; flex-wrap:wrap;
+    gap: 8px 22px;
+    margin-bottom: 22px;
   }
   .info-strip span{
-    flex:1; min-width:0;
-    padding: 6px 5px;
-    text-align:center;
-    font-size: 9.5px;
+    min-width:0;
+    font-size: 10.5px;
     font-weight: 700;
-    color: var(--ok);
-    line-height:1.25;
-    border-right: 1px solid rgba(63,191,111,0.2);
+    letter-spacing: 0.01em;
+    color: var(--text-dim);
+    line-height:1.3;
+    display:flex; align-items:center; gap:6px;
   }
-  .info-strip span:last-child{ border-right:none; }
+  .info-strip span::before{
+    content:"✓"; color: var(--ok); font-weight:800; font-size:11px; flex-shrink:0;
+  }
 
   /* ---- ticket de descuentos ---- */
   .banner-promo{
-    background: var(--bg);
-    border: 1.5px solid var(--accent);
-    border-radius: 10px;
-    margin-bottom: 18px;
-    overflow: hidden;
+    background: transparent;
+    border: none;
+    border-radius: 0;
+    margin-bottom: 28px;
     position: relative;
-    box-shadow: var(--shadow-soft);
   }
-  .promo-top{ padding: 13px 14px; }
+  .promo-top{ padding: 0; }
   .promo-top .promo-tag{
     font-family:'Archivo Black', sans-serif;
-    font-size: 13px; letter-spacing:0.01em; text-transform: uppercase;
-    color: var(--accent); margin-bottom: 10px;
+    font-size: 12px; letter-spacing:0.04em; text-transform: uppercase;
+    color: var(--text-dim); margin-bottom: 12px;
   }
-  .promo-grid{ display:grid; grid-template-columns: 0.6fr 1.2fr 1.2fr; gap:7px; position:relative; align-items:stretch; }
+  .promo-grid{ display:grid; grid-template-columns: 0.6fr 1.2fr 1.2fr; gap:0; position:relative; align-items:stretch; }
   .promo-item{
-    text-align:center; padding: 7px 2px; border-radius: 8px; min-width:0;
+    text-align:center; padding: 4px 8px; min-width:0;
     display:flex; flex-direction:column; align-items:center; justify-content:center;
-    background: var(--card);
-    border: 1px solid var(--soft-border);
+    background: transparent;
+    border: none;
+    border-right: 1px solid var(--card-border);
   }
+  .promo-item:last-child{ border-right:none; }
   .promo-item .promo-eyebrow{
     font-size: 7.5px; font-weight:700; letter-spacing:0.06em;
     text-transform: uppercase; color: var(--text-dim);
@@ -240,20 +238,15 @@
 
   .promo-item.destacado,
   .promo-item.destacado-max{
-    border: 1px solid var(--accent-dim);
-    background: rgba(78,147,204,0.08);
-    padding: 11px 6px;
-  }
-  .promo-item.destacado-max{
-    border-color: var(--accent);
-    background: rgba(78,147,204,0.14);
+    padding: 4px 8px;
   }
   .promo-item.destacado .promo-eyebrow,
   .promo-item.destacado-max .promo-eyebrow{ font-size: 8.5px; }
   .promo-item.destacado .promo-figure,
   .promo-item.destacado-max .promo-figure{
-    color: var(--text); font-size: 20px; margin-top: 3px;
+    color: var(--text); font-size: 21px; margin-top: 3px;
   }
+  .promo-item.destacado-max .promo-figure{ color: var(--accent); }
   .promo-item.destacado .promo-caption,
   .promo-item.destacado-max .promo-caption{ color: var(--text-dim); font-size: 8.5px; }
   .promo-item.destacado .promo-price,
@@ -266,7 +259,7 @@
 
   .seccion-label{
     font-size: 12px; letter-spacing: 0.08em; color: var(--text-dim); font-weight:700;
-    margin: 0 0 12px 2px;
+    margin: 0 0 14px 2px;
   }
 
   .tiles-grid{
@@ -279,25 +272,28 @@
   @media (min-width: 820px){ .tiles-grid{ grid-template-columns: repeat(5, 1fr); } }
   @media (min-width: 1040px){ .tiles-grid{ grid-template-columns: repeat(6, 1fr); } }
 
-  .info-ayuda{ margin-top: 26px; }
+  .info-ayuda{ margin-top: 44px; }
+  .info-ayuda .seccion-label{ margin-top: 34px; }
+  .info-ayuda .seccion-label:first-child{ margin-top: 0; }
 
   .pasos-comprar{
-    background: rgba(255,255,255,0.03); border: 1px solid var(--card-border);
-    border-radius: 10px; padding: 14px;
-    display:flex; flex-direction:column; gap: 12px;
+    background: transparent; border: none;
+    padding: 0;
+    display:flex; flex-direction:column; gap: 18px;
   }
-  .paso-comprar{ display:flex; align-items:flex-start; gap: 10px; }
+  .paso-comprar{ display:flex; align-items:flex-start; gap: 12px; }
   .paso-num{
-    flex-shrink:0; width: 22px; height: 22px; border-radius: 50%;
-    background: var(--grad-accent); color: var(--on-accent);
-    font-weight: 800; font-size: 12px; line-height:22px; text-align:center;
+    flex-shrink:0; width: 20px; height: 20px; border-radius: 50%;
+    border: 1px solid var(--accent-dim); color: var(--accent);
+    background: transparent;
+    font-weight: 800; font-size: 11px; line-height:18px; text-align:center;
   }
   .paso-txt{ font-size: 13.5px; line-height:1.5; color: var(--text); padding-top: 1px; }
 
   .aviso-despacho{
-    font-size: 13px; line-height:1.55; color: var(--text);
-    background: rgba(78,147,204,0.1); border: 1px solid var(--accent);
-    border-radius: 9px; padding: 12px 13px;
+    font-size: 13px; line-height:1.6; color: var(--text-dim);
+    background: transparent; border: none; border-left: 2px solid var(--accent-dim);
+    border-radius: 0; padding: 1px 0 1px 14px;
   }
 
   .tile{
@@ -747,29 +743,28 @@
     .banner-ver-todos .sub{ font-size: 10px; }
     .banner-ver-todos .arrow{ font-size: 15px; }
 
-    .info-strip{ margin-bottom: 10px; flex-direction: column; }
-    .info-strip span{
-      padding: 7px 8px; font-size: 10px; border-right: none;
-      border-bottom: 1px solid rgba(63,191,111,0.2);
-    }
-    .info-strip span:last-child{ border-bottom: none; }
+    .info-strip{ margin-bottom: 18px; flex-direction: column; gap:7px; }
+    .info-strip span{ font-size: 10.5px; }
 
-    .banner-promo{ margin-bottom: 14px; }
-    .promo-top{ padding: 10px 11px; }
-    .promo-top .promo-tag{ font-size: 11px; margin-bottom: 7px; }
-    .promo-grid{ gap: 5px; }
-    .promo-item{ padding: 6px 2px; }
+    .banner-promo{ margin-bottom: 22px; }
+    .promo-top .promo-tag{ font-size: 11px; margin-bottom: 9px; }
+    .promo-grid{ gap: 0; }
+    .promo-item{ padding: 4px 4px; }
     .promo-item .promo-eyebrow{ font-size: 7px; }
     .promo-item .promo-figure{ font-size: 14px; }
     .promo-item .promo-caption{ font-size: 7px; }
     .promo-item .promo-price{ font-size: 9px; margin-top: 5px; }
     .promo-item.destacado,
-    .promo-item.destacado-max{ padding: 9px 4px; }
+    .promo-item.destacado-max{ padding: 4px 4px; }
     .promo-item.destacado .promo-figure,
     .promo-item.destacado-max .promo-figure{ font-size: 17px; }
     .promo-item.destacado .promo-price,
     .promo-item.destacado-max .promo-price{ font-size: 11px; margin-top: 6px; }
     .promo-nota{ font-size: 10px; margin-top: 10px; }
+
+    .info-ayuda{ margin-top: 34px; }
+    .info-ayuda .seccion-label{ margin-top: 28px; }
+    .pasos-comprar{ gap: 15px; }
 
     .header-sticky{ padding: 9px 12px 10px; }
     .search-row input{ padding: 10px 14px; min-height: 40px; font-size: 16px; }
@@ -887,17 +882,17 @@
         </div>
       </div>
 
-      <div class="seccion-label" style="margin-top:18px;">DÍAS DE DESPACHO</div>
+      <div class="seccion-label">DÍAS DE DESPACHO</div>
       <div class="aviso-despacho">
         Tomamos pedidos todos los días. Despachamos los lunes, miércoles y viernes.
       </div>
 
-      <div class="seccion-label" style="margin-top:18px;">ENVÍOS EN EL DÍA</div>
+      <div class="seccion-label">ENVÍOS EN EL DÍA</div>
       <div class="aviso-despacho">
-        Si sos de CABA/GBA, tu pedido puede llegarte el mismo día de despacho. Enviá tu pedido antes de las 12:00&nbsp;hs, sin excepción — pasado ese horario, queda para el siguiente día de despacho.
+        Si sos de CABA/GBA te llega en el mismo día realizando tu pedido antes de las 12:00&nbsp;hs. Pasado ese horario, sale en el próximo despacho.
       </div>
 
-      <div class="seccion-label" style="margin-top:18px;">ENVÍOS A TODO EL PAÍS</div>
+      <div class="seccion-label">ENVÍOS A TODO EL PAÍS</div>
       <div class="aviso-despacho">
         Para el resto del país, enviamos por Vía Cargo o Correo Argentino a la sucursal que elijas.
       </div>
