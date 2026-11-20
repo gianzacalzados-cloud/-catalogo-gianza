@@ -82,8 +82,18 @@
   .movimiento-fila{
     display:flex; justify-content:space-between; align-items:center; gap:12px;
     border:1px solid var(--card-border); border-radius:var(--radius); background:var(--card);
-    padding:12px 16px; margin-bottom:8px;
+    padding:10px 16px 10px 10px; margin-bottom:8px;
   }
+  .movimiento-foto{
+    width:42px; height:42px; border-radius:8px; object-fit:cover; flex-shrink:0;
+    background:var(--bg-soft); border:1px solid var(--card-border);
+  }
+  .movimiento-foto-vacia{
+    width:42px; height:42px; border-radius:8px; flex-shrink:0;
+    background:var(--bg-soft); border:1px solid var(--card-border);
+  }
+  .movimiento-info{ display:flex; align-items:center; gap:11px; min-width:0; }
+  .movimiento-textos{ min-width:0; }
   .movimiento-nombre{ font-size:13.5px; font-weight:700; }
   .movimiento-sub{ font-size:11.5px; color:var(--text-faint); margin-top:3px; }
   .movimiento-stock{ display:flex; align-items:center; gap:10px; white-space:nowrap; }
@@ -91,6 +101,19 @@
   .movimiento-delta.mov-negativo{ color:var(--off); }
   .movimiento-delta.mov-positivo{ color:var(--ok); }
   .movimiento-actual{ font-size:11.5px; color:var(--text-dim); }
+  .movimiento-precio{ font-size:14px; font-weight:800; color:var(--accent); white-space:nowrap; }
+  .movimiento-precio .precio-antes{ font-size:11.5px; font-weight:600; color:var(--text-faint); text-decoration:line-through; margin-right:5px; }
+
+  .movimientos-paginado{
+    display:flex; align-items:center; justify-content:center; gap:14px;
+    margin-top:14px;
+  }
+  .movimientos-paginado button{
+    background:var(--card); border:1px solid var(--card-border); color:var(--text);
+    border-radius:var(--radius); padding:8px 14px; font-size:13px; font-weight:700; cursor:pointer;
+  }
+  .movimientos-paginado button:disabled{ opacity:0.4; cursor:default; }
+  .movimientos-paginado-info{ font-size:12.5px; color:var(--text-dim); }
 
   /* ---- pedidos (Ventas) ---- */
   .pedido-card{
@@ -620,10 +643,15 @@
 
     <div id="vista-movimientos" style="display:none;">
       <div class="reordenar-aviso">
-        Lo último que BoxHero sincronizó con la web: marca, modelo, talle y cuánto se descontó o ingresó.
-        Se guardan los últimos 30 días.
+        Lo último que BoxHero sincronizó con la web: marca, modelo, talle, stock y precio.
+        Se guardan los últimos 20 días.
       </div>
       <div id="movimientos-lista" class="loading">Cargando movimientos…</div>
+      <div class="movimientos-paginado" id="movimientos-paginado" style="display:none;">
+        <button id="movimientos-prev" type="button">← Anterior</button>
+        <span class="movimientos-paginado-info" id="movimientos-paginado-info"></span>
+        <button id="movimientos-next" type="button">Siguiente →</button>
+      </div>
     </div>
 
     <div id="vista-ventas" style="display:none;">
@@ -1439,6 +1467,7 @@ document.getElementById('tab-boxhero').addEventListener('click', () => {
 });
 document.getElementById('tab-movimientos').addEventListener('click', () => {
   activarTab('tab-movimientos');
+  movimientosPagina = 0;
   cargarMovimientos();
 });
 document.getElementById('filtro-estado-pedido').addEventListener('change', cargarPedidos);
@@ -1661,16 +1690,23 @@ async function borrarSinVincularEnCero(){
 document.getElementById('btn-borrar-sinvincular-ceros').addEventListener('click', borrarSinVincularEnCero);
 
 // ---------- movimientos (historial de sync con BoxHero) ----------
+const MOVIMIENTOS_POR_PAGINA = 30;
+let movimientosPagina = 0; // 0 = primera página
+
 async function cargarMovimientos(){
   const cont = document.getElementById('movimientos-lista');
   cont.className = 'loading';
   cont.textContent = 'Cargando movimientos…';
+  document.getElementById('movimientos-paginado').style.display = 'none';
 
-  const { data, error } = await sb
+  const desde = movimientosPagina * MOVIMIENTOS_POR_PAGINA;
+  const hasta = desde + MOVIMIENTOS_POR_PAGINA - 1;
+
+  const { data, error, count } = await sb
     .from('movimientos_boxhero')
-    .select('*')
+    .select('*', { count: 'exact' })
     .order('created_at', { ascending: false })
-    .limit(200);
+    .range(desde, hasta);
 
   if(error){
     cont.className = 'empty';
@@ -1678,7 +1714,32 @@ async function cargarMovimientos(){
     return;
   }
   renderMovimientos(data || []);
+  renderMovimientosPaginado(count || 0);
 }
+
+function renderMovimientosPaginado(total){
+  const cont = document.getElementById('movimientos-paginado');
+  const totalPaginas = Math.max(1, Math.ceil(total / MOVIMIENTOS_POR_PAGINA));
+  if(total <= MOVIMIENTOS_POR_PAGINA){
+    cont.style.display = 'none';
+    return;
+  }
+  cont.style.display = 'flex';
+  document.getElementById('movimientos-paginado-info').textContent =
+    `Página ${movimientosPagina + 1} de ${totalPaginas}`;
+  document.getElementById('movimientos-prev').disabled = movimientosPagina <= 0;
+  document.getElementById('movimientos-next').disabled = movimientosPagina >= totalPaginas - 1;
+}
+
+document.getElementById('movimientos-prev').addEventListener('click', () => {
+  if(movimientosPagina <= 0) return;
+  movimientosPagina--;
+  cargarMovimientos();
+});
+document.getElementById('movimientos-next').addEventListener('click', () => {
+  movimientosPagina++;
+  cargarMovimientos();
+});
 
 function renderMovimientos(movimientos){
   const cont = document.getElementById('movimientos-lista');
@@ -1689,21 +1750,37 @@ function renderMovimientos(movimientos){
   }
   cont.className = '';
   cont.innerHTML = movimientos.map(m => {
-    const delta = m.delta;
-    const deltaTxt = delta === null || delta === undefined
-      ? '—'
-      : (delta > 0 ? `+${delta}` : `${delta}`);
-    const deltaClase = delta > 0 ? 'mov-positivo' : (delta < 0 ? 'mov-negativo' : '');
     const clienteTxt = m.cliente ? ` · Cliente: ${escapeHtml(m.cliente)}` : '';
+    const talleTxt = m.talle ? ` — Talle ${escapeHtml(m.talle)}` : '';
+    const fotoHtml = m.foto
+      ? `<img class="movimiento-foto" src="${escapeHtml(m.foto)}" alt="" loading="lazy">`
+      : `<div class="movimiento-foto-vacia"></div>`;
+
+    const ladoDerecho = m.tipo === 'precio_editado'
+      ? `<span class="movimiento-precio"><span class="precio-antes">${m.precio_anterior != null ? '$' + Number(m.precio_anterior).toLocaleString('es-AR') : 'sin precio'}</span>$${Number(m.precio_nuevo).toLocaleString('es-AR')}</span>`
+      : (() => {
+          const delta = m.delta;
+          const deltaTxt = delta === null || delta === undefined
+            ? '—'
+            : (delta > 0 ? `+${delta}` : `${delta}`);
+          const deltaClase = delta > 0 ? 'mov-positivo' : (delta < 0 ? 'mov-negativo' : '');
+          return `
+            <span class="movimiento-delta ${deltaClase}">${deltaTxt}</span>
+            <span class="movimiento-actual">quedan ${m.stock_nuevo ?? '—'}</span>
+          `;
+        })();
+
     return `
       <div class="movimiento-fila">
         <div class="movimiento-info">
-          <div class="movimiento-nombre">${escapeHtml(m.marca)} ${escapeHtml(m.nombre)} — Talle ${escapeHtml(m.talle)}</div>
-          <div class="movimiento-sub">${formatoFechaPedido(m.created_at)}${clienteTxt}</div>
+          ${fotoHtml}
+          <div class="movimiento-textos">
+            <div class="movimiento-nombre">${escapeHtml(m.marca)} ${escapeHtml(m.nombre)}${talleTxt}</div>
+            <div class="movimiento-sub">${formatoFechaPedido(m.created_at)}${clienteTxt}</div>
+          </div>
         </div>
         <div class="movimiento-stock">
-          <span class="movimiento-delta ${deltaClase}">${deltaTxt}</span>
-          <span class="movimiento-actual">quedan ${m.stock_nuevo ?? '—'}</span>
+          ${ladoDerecho}
         </div>
       </div>
     `;
