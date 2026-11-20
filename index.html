@@ -279,6 +279,27 @@
   @media (min-width: 820px){ .tiles-grid{ grid-template-columns: repeat(5, 1fr); } }
   @media (min-width: 1040px){ .tiles-grid{ grid-template-columns: repeat(6, 1fr); } }
 
+  .info-ayuda{ margin-top: 26px; }
+
+  .pasos-comprar{
+    background: rgba(255,255,255,0.03); border: 1px solid var(--card-border);
+    border-radius: 10px; padding: 14px;
+    display:flex; flex-direction:column; gap: 12px;
+  }
+  .paso-comprar{ display:flex; align-items:flex-start; gap: 10px; }
+  .paso-num{
+    flex-shrink:0; width: 22px; height: 22px; border-radius: 50%;
+    background: var(--grad-accent); color: var(--on-accent);
+    font-weight: 800; font-size: 12px; line-height:22px; text-align:center;
+  }
+  .paso-txt{ font-size: 13.5px; line-height:1.5; color: var(--text); padding-top: 1px; }
+
+  .aviso-despacho{
+    font-size: 13px; line-height:1.55; color: var(--text);
+    background: rgba(78,147,204,0.1); border: 1px solid var(--accent);
+    border-radius: 9px; padding: 12px 13px;
+  }
+
   .tile{
     background: var(--label);
     border: 1px solid var(--soft-border);
@@ -844,6 +865,37 @@
 
     <div class="seccion-label">CATEGORIAS</div>
     <div class="tiles-grid" id="tiles-grid"></div>
+
+    <div class="info-ayuda">
+      <div class="seccion-label">¿CÓMO COMPRAR?</div>
+      <div class="pasos-comprar">
+        <div class="paso-comprar">
+          <div class="paso-num">1</div>
+          <div class="paso-txt">Elegí la marca o categoría y mirá los modelos.</div>
+        </div>
+        <div class="paso-comprar">
+          <div class="paso-num">2</div>
+          <div class="paso-txt">Tocá un modelo, elegí el talle y la cantidad: se suma solo a tu pedido.</div>
+        </div>
+        <div class="paso-comprar">
+          <div class="paso-num">3</div>
+          <div class="paso-txt">Tocá "Ver pedido" para revisar todo antes de enviar.</div>
+        </div>
+        <div class="paso-comprar">
+          <div class="paso-num">4</div>
+          <div class="paso-txt">Completá tus datos: nombre, WhatsApp y cómo lo querés recibir.</div>
+        </div>
+        <div class="paso-comprar">
+          <div class="paso-num">5</div>
+          <div class="paso-txt">Tocá "Enviar pedido por WhatsApp": se abre con todo ya escrito, listo para mandar.</div>
+        </div>
+      </div>
+
+      <div class="seccion-label" style="margin-top:18px;">DÍAS DE DESPACHO</div>
+      <div class="aviso-despacho">
+        Lunes, miércoles y viernes. Si sos de CABA/GBA y querés que te llegue el mismo día, enviá tu pedido antes de las 12:00&nbsp;hs, sin excepción. Pasado ese horario, queda para el siguiente día de despacho.
+      </div>
+    </div>
   </div>
 
   <!-- ============ VISTA LISTADO ============ -->
