@@ -294,11 +294,15 @@
   #vista-listado{ display:none; }
   .listado-header{ display:flex; align-items:center; gap:10px; margin-bottom:16px; flex-wrap:wrap; }
   .btn-volver{
-    background: rgba(255,255,255,0.05); backdrop-filter: blur(6px);
-    border:1px solid rgba(255,255,255,0.1); box-shadow: inset 0 1px 0 rgba(255,255,255,0.06);
-    color: var(--text);
+    background: var(--grad-accent);
+    border: none; box-shadow: var(--shadow-accent);
+    color: var(--on-accent); font-weight: 700;
     border-radius: 999px; padding: 12px 16px; min-height: 44px; font-size: 14.5px; cursor:pointer; flex-shrink:0;
+    transition: filter .15s ease, transform .1s ease;
   }
+  .btn-volver:hover{ filter: brightness(1.08); }
+  .btn-volver:active{ transform: scale(0.98); }
+  .btn-volver-abajo{ display:flex; justify-content:center; margin: 22px 0 6px; }
   .listado-titulo{ font-family:'Archivo Black', sans-serif; font-size: 21px; flex:1; min-width:120px; color: var(--text); }
   .listado-count{ color: var(--text-dim); font-size: 14px; width:100%; }
 
@@ -778,7 +782,7 @@
   <div class="header-sticky">
     <div class="header-inner">
       <div class="search-row">
-        <input id="buscador" type="text" placeholder="Buscar modelo (ej: dunk, 530, air force)…" autocomplete="off" />
+        <input id="buscador" type="text" placeholder="Buscar modelo (ej: dunk, 530, air force)…" autocomplete="off" enterkeyhint="search" inputmode="search" />
       </div>
 
       <div class="pill-filters-row">
@@ -822,6 +826,9 @@
     </div>
     <div class="grid" id="grid"></div>
     <div class="empty-state" id="empty-state" style="display:none;">No encontramos zapatillas con esa búsqueda.</div>
+    <div class="btn-volver-abajo" id="btn-volver-abajo-cont" style="display:none;">
+      <button class="btn-volver" id="btn-volver-abajo">← Volver</button>
+    </div>
   </div>
 
 </main>
@@ -829,7 +836,7 @@
 <footer>GIANZA Mayorista · Catálogo actualizado desde inventario</footer>
 
 <button class="cart-fab" id="cart-fab">
-  Carrito <span class="badge" id="cart-badge">0</span>
+  Ver pedido <span class="badge" id="cart-badge">0</span>
 </button>
 
 <div class="overlay" id="overlay"></div>
@@ -1128,6 +1135,7 @@ function mostrarListado(titulo){
 }
 
 document.getElementById('btn-volver').addEventListener('click', mostrarHome);
+document.getElementById('btn-volver-abajo').addEventListener('click', mostrarHome);
 document.getElementById('btn-ver-todos').addEventListener('click', () => {
   filtroMarca = ""; filtroCategoria = ""; filtroModelo = "";
   modoVerTodos = true;
@@ -1280,14 +1288,17 @@ function render(lista){
   const empty = document.getElementById('empty-state');
   const countRow = document.getElementById('listado-count');
 
+  const contBtnAbajo = document.getElementById('btn-volver-abajo-cont');
   if(lista.length === 0){
     grid.innerHTML = '';
     empty.style.display = 'block';
     countRow.textContent = '';
+    contBtnAbajo.style.display = 'none';
     return;
   }
   empty.style.display = 'none';
   countRow.textContent = `${lista.length} modelo${lista.length===1?'':'s'} encontrado${lista.length===1?'':'s'}`;
+  contBtnAbajo.style.display = 'flex';
 
   grid.innerHTML = lista.map(p => {
     const agotadoTotal = p.stockTotal === 0;
@@ -1495,6 +1506,10 @@ document.getElementById('buscador').addEventListener('input', () => {
   }
   if(vista === "listado") aplicarFiltros();
 });
+// al tocar "Buscar"/"Listo" en el teclado del celular, se cierra solo
+document.getElementById('buscador').addEventListener('keydown', (e) => {
+  if(e.key === 'Enter') e.target.blur();
+});
 
 // click en cualquier parte de la tarjeta abre el detalle con selector de talle + cantidad
 document.getElementById('grid').addEventListener('click', (e) => {
@@ -1556,20 +1571,20 @@ function renderModalDetalle(p){
     ? `<div class="modal-detalle-precio">$${p.precio.toLocaleString('es-AR')}</div>`
     : `<div class="modal-detalle-precio sin-precio">Consultar precio</div>`;
 
-  const filasHtml = p.talles.map(t => {
-    const sinStock = t.stock === 0;
+  // solo mostramos los talles que todavia tienen stock: los agotados no suman
+  // nada util en esta pantalla y solo ocupan lugar.
+  const filasHtml = p.talles.filter(t => t.stock > 0).map(t => {
     const enCarrito = cart.filter(i => i.id === p.id && i.talle === t.talle).reduce((a,i) => a + i.cantidad, 0);
     const disponibleParaAgregar = Math.max(t.stock - enCarrito, 0);
-    const sinDisponible = !sinStock && disponibleParaAgregar === 0;
+    const sinDisponible = disponibleParaAgregar === 0;
     const cant = detalleCantidades[t.talle] || 0;
-    let dispTxt;
-    if(sinStock) dispTxt = 'AGOTADO';
-    else if(sinDisponible) dispTxt = 'Ya tenés todo el stock en tu carrito';
-    else dispTxt = `${disponibleParaAgregar} disponibles${enCarrito > 0 ? ` (ya tenés ${enCarrito} en el carrito)` : ''}`;
+    const dispTxt = sinDisponible
+      ? 'Ya tenés todo el stock en tu carrito'
+      : `${disponibleParaAgregar} disponibles${enCarrito > 0 ? ` (ya tenés ${enCarrito} en el carrito)` : ''}`;
     return `
-      <div class="fila-talle ${sinStock || sinDisponible ? 'agotado' : ''}" data-talle="${escapeHtml(t.talle)}" data-stock="${disponibleParaAgregar}">
+      <div class="fila-talle ${sinDisponible ? 'agotado' : ''}" data-talle="${escapeHtml(t.talle)}" data-stock="${disponibleParaAgregar}">
         <div class="talle-info"><b>TALLE ${escapeHtml(t.talle)}</b><span class="talle-disp">${dispTxt}</span></div>
-        ${(sinStock || sinDisponible) ? '' : `
+        ${sinDisponible ? '' : `
         <div class="stepper">
           <button class="btn-rest" data-talle="${escapeHtml(t.talle)}" ${cant <= 0 ? 'disabled' : ''}>−</button>
           <span class="cant">${cant}</span>
@@ -1577,7 +1592,7 @@ function renderModalDetalle(p){
         </div>`}
       </div>
     `;
-  }).join('');
+  }).join('') || `<div class="talle-disp" style="padding:10px 0;">Sin talles disponibles por el momento.</div>`;
 
   body.innerHTML = `
     <div class="modal-detalle-foto">${fotoHtml}</div>
