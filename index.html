@@ -693,6 +693,15 @@
   .resumen-pedido-chip .label{ font-size: 12.5px; color: var(--text-dim); }
   .resumen-pedido-chip .valor{ font-size: 13px; font-weight:700; color: var(--text); }
 
+  .pago-opciones{ display:flex; flex-direction:column; gap:8px; }
+  .pago-opcion{
+    display:flex; align-items:center; gap:10px; background: var(--bg-soft);
+    border: 1px solid var(--card-border); border-radius: 9px; padding: 11px 13px;
+    cursor:pointer; font-size: 13.5px; color: var(--text); transition: border-color .15s ease;
+  }
+  .pago-opcion input{ accent-color: var(--accent); width:16px; height:16px; flex-shrink:0; }
+  .pago-opcion.activa{ border-color: var(--accent); background: rgba(255,106,26,0.08); }
+
   .form-error-alert{
     display:none; background: rgba(230,72,79,0.12); border: 1px solid rgba(230,72,79,0.3);
     color: var(--off); font-size: 12.5px; font-weight:600; padding: 10px 12px; border-radius: 9px; margin-top: 10px;
@@ -1888,6 +1897,19 @@ selectEntrega.addEventListener('change', (e) => {
         <span class="aviso-envio-check">&#10003;</span>
         <div><b>El costo del envío no está incluido en el total.</b> Te lo confirmamos por WhatsApp junto con la respuesta a tu pedido.</div>
       </div>
+      <div class="form-group">
+        <label class="form-label">Forma de pago<span class="req-star">*</span></label>
+        <div class="pago-opciones">
+          <label class="pago-opcion activa"><input type="radio" name="forma-pago" value="A acordar con el vendedor" checked>A acordar con el vendedor</label>
+          <label class="pago-opcion"><input type="radio" name="forma-pago" value="Transferencia">Abono por transferencia</label>
+          <label class="pago-opcion"><input type="radio" name="forma-pago" value="Efectivo">Abono en efectivo</label>
+          <label class="pago-opcion"><input type="radio" name="forma-pago" value="Mitad y mitad">Mitad transferencia / mitad efectivo</label>
+        </div>
+      </div>
+      <div class="form-group" id="grupo-monto-efectivo" style="display:none;">
+        <label class="form-label">¿Cuánto abonás en efectivo?<span class="req-star">*</span></label>
+        <input type="text" class="form-input digits-only-input" id="input-monto-efectivo" placeholder="Monto en efectivo" autocomplete="off">
+      </div>
     `;
   }else if(val === 'Vía Cargo'){
     camposEntregaDinamicos.innerHTML = `
@@ -1938,6 +1960,19 @@ function adjuntarListenersForm(){
     el.removeEventListener('change', validarFormDatos);
     el.addEventListener('change', validarFormDatos);
   });
+
+  const radiosPago = formDatos.querySelectorAll('input[name="forma-pago"]');
+  const grupoMonto = document.getElementById('grupo-monto-efectivo');
+  radiosPago.forEach(radio => {
+    radio.addEventListener('change', () => {
+      formDatos.querySelectorAll('.pago-opcion').forEach(op => op.classList.remove('activa'));
+      radio.closest('.pago-opcion').classList.add('activa');
+      if(grupoMonto){
+        grupoMonto.style.display = (radio.value === 'Efectivo' || radio.value === 'Mitad y mitad') ? 'block' : 'none';
+      }
+      validarFormDatos();
+    });
+  });
 }
 
 function restringirInput(e){
@@ -1974,7 +2009,13 @@ function validarFormDatos(){
     const entreCalles = document.getElementById('input-entre-calles')?.value.trim() || '';
     const localidad = document.getElementById('input-localidad')?.value.trim() || '';
     const cp = document.getElementById('input-cp')?.value.trim() || '';
-    if(!direccion || !entreCalles || !localidad || !cp) valido = false;
+    const pagoRadio = formDatos.querySelector('input[name="forma-pago"]:checked');
+    const pago = pagoRadio ? pagoRadio.value : '';
+    if(!direccion || !entreCalles || !localidad || !cp || !pago) valido = false;
+    if(pago === 'Efectivo' || pago === 'Mitad y mitad'){
+      const montoEfectivo = document.getElementById('input-monto-efectivo')?.value.trim() || '';
+      if(!montoEfectivo) valido = false;
+    }
   }else if(entrega === 'Vía Cargo'){
     const dni = document.getElementById('input-dni')?.value.trim() || '';
     const email = document.getElementById('input-email')?.value.trim() || '';
@@ -2065,7 +2106,12 @@ btnEnviarPedido.addEventListener('click', () => {
     mensaje += `- Entre calles: ${document.getElementById('input-entre-calles').value.trim()}\n`;
     mensaje += `- Localidad: ${document.getElementById('input-localidad').value.trim()}\n`;
     mensaje += `- Código postal: ${document.getElementById('input-cp').value.trim()}\n`;
-    mensaje += `- Forma de pago: A acordar con el vendedor\n`;
+    const pagoRadio = formDatos.querySelector('input[name="forma-pago"]:checked');
+    const pago = pagoRadio ? pagoRadio.value : '';
+    mensaje += `- Forma de pago: ${pago}\n`;
+    if(pago === 'Efectivo' || pago === 'Mitad y mitad'){
+      mensaje += `- Monto en efectivo: $${document.getElementById('input-monto-efectivo').value.trim()}\n`;
+    }
   }else if(entrega === 'Vía Cargo'){
     mensaje += `- DNI: ${document.getElementById('input-dni').value.trim()}\n`;
     mensaje += `- Email: ${document.getElementById('input-email').value.trim()}\n`;
@@ -2086,12 +2132,16 @@ btnEnviarPedido.addEventListener('click', () => {
   // guarda una copia del pedido en el panel admin (sección Ventas), sin bloquear el envío por WhatsApp
   let datosEntrega = {};
   if(entrega === 'Mensajería Express'){
+    const pagoRadio = formDatos.querySelector('input[name="forma-pago"]:checked');
+    const pago = pagoRadio ? pagoRadio.value : '';
     datosEntrega = {
       direccion: document.getElementById('input-direccion').value.trim(),
       entreCalles: document.getElementById('input-entre-calles').value.trim(),
       localidad: document.getElementById('input-localidad').value.trim(),
       cp: document.getElementById('input-cp').value.trim(),
-      formaPago: 'A acordar con el vendedor'
+      formaPago: pago,
+      montoEfectivo: (pago === 'Efectivo' || pago === 'Mitad y mitad')
+        ? document.getElementById('input-monto-efectivo').value.trim() : null
     };
   }else if(entrega === 'Vía Cargo'){
     datosEntrega = {
