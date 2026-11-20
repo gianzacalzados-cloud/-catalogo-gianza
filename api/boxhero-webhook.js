@@ -1,10 +1,12 @@
 // api/boxhero-webhook.js
 //
-// Recibe los webhooks de BoxHero (Crear / Editar / Eliminar transacción) y
-// actualiza el stock en Supabase. Siempre toma el stock que BoxHero reporta
-// como "nivel nuevo" después del movimiento (nunca suma ni resta por su
-// cuenta), para que BoxHero sea siempre la fuente de verdad y la web solo
-// refleje.
+// Recibe los webhooks de BoxHero (Crear / Editar / Eliminar transacción, y
+// Editar artículo) y actualiza Supabase. Para el stock, siempre toma el
+// nivel que BoxHero reporta como "nivel nuevo" después del movimiento
+// (nunca suma ni resta por su cuenta), para que BoxHero sea siempre la
+// fuente de verdad y la web solo refleje. Para el precio, toma el precio
+// nuevo del evento "item/edit" (edición manual de un artículo en BoxHero,
+// no carga masiva ni Excel) y lo aplica a todo el producto en la web.
 //
 // No usa ninguna librería externa (fetch ya viene incluido en el runtime de
 // Vercel), así que no hace falta instalar nada.
@@ -116,6 +118,60 @@ module.exports = async (req, res) => {
         });
         resultados.push({ boxheroId, productoId: producto.id, ok: upd.ok, accion: 'talle_borrado' });
       }
+    }
+
+    res.status(200).json({ ok: true, resultados });
+    return;
+  }
+
+  // "item/edit": se editó un artículo directamente en BoxHero (no por carga
+  // masiva ni importación de Excel, esos no disparan este evento). Si trae
+  // un precio nuevo, lo reflejamos en el producto de la web. El precio es
+  // por PRODUCTO (todos los talles de un mismo modelo comparten precio), así
+  // que alcanza con editar el precio de cualquiera de sus talles/variantes
+  // en BoxHero para que se actualice toda la tarjeta en la web.
+  if (body.topic === 'item/edit') {
+    const boxheroId = body.payload && body.payload.id;
+    const precioRaw = body.payload && body.payload.price;
+
+    if (boxheroId === undefined) {
+      res.status(200).json({ ok: true, skipped: 'evento de edición sin id' });
+      return;
+    }
+    const precioNuevo = parseFloat(precioRaw);
+    if (precioRaw === undefined || precioRaw === null || precioRaw === '' || isNaN(precioNuevo)) {
+      res.status(200).json({ ok: true, skipped: 'evento de edición sin precio valido' });
+      return;
+    }
+
+    const filtro = encodeURIComponent(JSON.stringify([{ boxhero_id: boxheroId }]));
+    const busq = await supabaseFetch(`productos?select=id,marca,nombre,precio&talles=cs.${filtro}`);
+    if (!busq.ok) {
+      res.status(200).json({ ok: false, motivo: 'error buscando producto: ' + (await busq.text()) });
+      return;
+    }
+    const candidatos = await busq.json();
+
+    if (!candidatos || candidatos.length === 0) {
+      res.status(200).json({ ok: true, skipped: 'ningun producto de la web tiene este articulo vinculado todavia' });
+      return;
+    }
+
+    const resultados = [];
+    for (const producto of candidatos) {
+      const upd = await supabaseFetch(`productos?id=eq.${producto.id}`, {
+        method: 'PATCH',
+        headers: { Prefer: 'return=minimal' },
+        body: JSON.stringify({ precio: precioNuevo }),
+      });
+      resultados.push({
+        boxheroId,
+        productoId: producto.id,
+        ok: upd.ok,
+        precioAnterior: producto.precio,
+        precioNuevo,
+        motivo: upd.ok ? undefined : await upd.text(),
+      });
     }
 
     res.status(200).json({ ok: true, resultados });
