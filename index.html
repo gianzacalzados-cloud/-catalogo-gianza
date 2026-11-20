@@ -208,24 +208,24 @@
     font-size: 13px; letter-spacing:0.01em; text-transform: uppercase;
     color: var(--accent); margin-bottom: 10px;
   }
-  .promo-grid{ display:grid; grid-template-columns: 0.78fr 1.11fr 1.11fr; gap:6px; position:relative; }
+  .promo-grid{ display:grid; grid-template-columns: 0.6fr 1.2fr 1.2fr; gap:7px; position:relative; align-items:stretch; }
   .promo-item{
-    text-align:center; padding: 8px 3px; border-radius: 8px; min-width:0;
+    text-align:center; padding: 7px 2px; border-radius: 8px; min-width:0;
     display:flex; flex-direction:column; align-items:center; justify-content:center;
     background: var(--card);
     border: 1px solid var(--soft-border);
   }
   .promo-item .promo-eyebrow{
-    font-size: 8px; font-weight:700; letter-spacing:0.06em;
+    font-size: 7.5px; font-weight:700; letter-spacing:0.06em;
     text-transform: uppercase; color: var(--text-dim);
   }
   .promo-item .promo-figure{
-    font-family:'Archivo Black', sans-serif; font-size: 22px; line-height:1.1;
+    font-family:'Archivo Black', sans-serif; font-size: 16px; line-height:1.1;
     color: var(--text); margin-top: 2px;
   }
   .promo-item .promo-caption{
     font-family:'Archivo Black', sans-serif;
-    font-size: 9.5px; letter-spacing:0.02em; color: var(--text); margin-top: 2px;
+    font-size: 7.5px; letter-spacing:0.02em; color: var(--text-dim); margin-top: 2px;
     text-transform: uppercase;
   }
   .promo-item .promo-price{
@@ -239,9 +239,25 @@
   .promo-item .promo-price .unidad{ color: var(--text-dim); }
 
   .promo-item.destacado,
-  .promo-item.destacado-max{ border: 1px solid var(--accent); }
+  .promo-item.destacado-max{
+    border: 1px solid var(--accent-dim);
+    background: rgba(78,147,204,0.08);
+    padding: 11px 6px;
+  }
+  .promo-item.destacado-max{
+    border-color: var(--accent);
+    background: rgba(78,147,204,0.14);
+  }
+  .promo-item.destacado .promo-eyebrow,
+  .promo-item.destacado-max .promo-eyebrow{ font-size: 8.5px; }
   .promo-item.destacado .promo-figure,
-  .promo-item.destacado-max .promo-figure{ color: var(--accent); }
+  .promo-item.destacado-max .promo-figure{
+    color: var(--text); font-size: 20px; margin-top: 3px;
+  }
+  .promo-item.destacado .promo-caption,
+  .promo-item.destacado-max .promo-caption{ color: var(--text-dim); font-size: 8.5px; }
+  .promo-item.destacado .promo-price,
+  .promo-item.destacado-max .promo-price{ font-size: 13px; margin-top: 8px; }
   .promo-item.destacado-max .promo-price .monto{ color: var(--accent); }
 
   .promo-nota{
@@ -719,9 +735,15 @@
     .promo-grid{ gap: 5px; }
     .promo-item{ padding: 6px 2px; }
     .promo-item .promo-eyebrow{ font-size: 7px; }
-    .promo-item .promo-figure{ font-size: 18px; }
-    .promo-item .promo-caption{ font-size: 8px; }
+    .promo-item .promo-figure{ font-size: 14px; }
+    .promo-item .promo-caption{ font-size: 7px; }
     .promo-item .promo-price{ font-size: 9px; margin-top: 5px; }
+    .promo-item.destacado,
+    .promo-item.destacado-max{ padding: 9px 4px; }
+    .promo-item.destacado .promo-figure,
+    .promo-item.destacado-max .promo-figure{ font-size: 17px; }
+    .promo-item.destacado .promo-price,
+    .promo-item.destacado-max .promo-price{ font-size: 11px; margin-top: 6px; }
     .promo-nota{ font-size: 10px; margin-top: 10px; }
 
     .header-sticky{ padding: 9px 12px 10px; }
@@ -751,9 +773,8 @@
       </div>
 
       <div class="info-strip">
-        <span>DESPACHOS LUN / MIÉ / VIE</span>
-        <span>ENVÍO CABA Y GBA EN EL DÍA</span>
-        <span>ENVÍOS A TODO EL PAÍS</span>
+        <span>MENSAJERÍA EXPRESS EN EL DÍA A CABA/GBA</span>
+        <span>VÍA CARGO/CORREO ARG A TODO EL PAÍS</span>
       </div>
 
       <div class="banner-promo">
