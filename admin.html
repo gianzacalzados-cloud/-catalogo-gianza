@@ -160,7 +160,7 @@
   }
   .toolbar input[type="text"]::placeholder{ color:var(--text-faint); }
   .toolbar input[type="text"]:focus{ outline:none; border-color:var(--accent); }
-  .filtros-row{ display:flex; gap:8px; flex-wrap:wrap; }
+  .filtros-row{ display:flex; gap:8px; flex-wrap:wrap; align-items:flex-end; }
   .filtros-row select{
     flex:1 1 150px; background:var(--bg-soft); border:1px solid var(--card-border); color:var(--text);
     border-radius:9px; padding:10px 12px; font-size:12.5px; font-weight:600; letter-spacing:0.01em;
@@ -170,6 +170,12 @@
     background-repeat:no-repeat; background-position:right 12px center; padding-right:28px;
   }
   .filtros-row select:hover, .filtros-row select:focus{ outline:none; border-color:var(--accent); }
+  .filtro-campo{ display:flex; flex-direction:column; gap:4px; flex:1 1 150px; }
+  .filtro-campo label{
+    font-size:10.5px; font-weight:700; letter-spacing:0.04em; text-transform:uppercase; color:var(--text-faint);
+    padding-left:1px;
+  }
+  .filtro-campo select{ width:100%; flex:unset; }
   .btn-limpiar-filtros{
     background:none; border:1px solid var(--card-border); color:var(--text-dim);
     border-radius:9px; padding:9px 15px; font-size:12.5px; font-weight:600; cursor:pointer; flex-shrink:0;
@@ -478,6 +484,8 @@
     .toolbar{ margin-bottom:14px; }
     .toolbar input[type="text"]{ padding:11px 14px; font-size:13.5px; }
     .filtros-row select{ flex:1 1 calc(50% - 4px); font-size:12px; padding:9px 10px; padding-right:24px; }
+    .filtro-campo{ flex:1 1 calc(50% - 4px); }
+    .filtro-campo select{ flex:unset; font-size:12px; padding:9px 10px; padding-right:24px; }
     .btn-limpiar-filtros, .btn-reordenar{ flex:1 1 100%; text-align:center; }
 
     /* filas de producto: un poco más compactas, el toggle y el chevron
@@ -555,30 +563,48 @@
       <div class="toolbar">
         <input type="text" id="buscador-admin" placeholder="Buscar por nombre, marca o código…" />
         <div class="filtros-row">
-          <select id="filtro-marca"><option value="">Todas las marcas</option></select>
-          <select id="filtro-categoria">
-            <option value="">Todas las categorías</option>
-            <option value="Adulto">Adulto</option>
-            <option value="Infantil">Infantil</option>
-            <option value="Ojotas">Ojotas</option>
-            <option value="Nike Mind">Nike Mind</option>
-          </select>
-          <select id="filtro-talle"><option value="">Todos los talles</option></select>
-          <select id="filtro-modelo">
-            <option value="">Todos los modelos</option>
-            <option value="__sin__">Sin modelo asignado</option>
-          </select>
-          <select id="filtro-precio">
-            <option value="">Todos los precios</option>
-            <option value="__sin__">Sin precio cargado</option>
-            <option value="__con__">Con precio cargado</option>
-          </select>
-          <select id="orden-admin">
-            <option value="nombre-asc">Nombre A-Z</option>
-            <option value="nombre-desc">Nombre Z-A</option>
-            <option value="precio-asc">Precio: menor a mayor</option>
-            <option value="precio-desc">Precio: mayor a menor</option>
-          </select>
+          <div class="filtro-campo">
+            <label for="filtro-marca">Marca</label>
+            <select id="filtro-marca"><option value="">Todas las marcas</option></select>
+          </div>
+          <div class="filtro-campo">
+            <label for="filtro-categoria">Categoría</label>
+            <select id="filtro-categoria">
+              <option value="">Todas las categorías</option>
+              <option value="Adulto">Adulto</option>
+              <option value="Infantil">Infantil</option>
+              <option value="Ojotas">Ojotas</option>
+              <option value="Nike Mind">Nike Mind</option>
+            </select>
+          </div>
+          <div class="filtro-campo">
+            <label for="filtro-talle">Talle</label>
+            <select id="filtro-talle"><option value="">Todos los talles</option></select>
+          </div>
+          <div class="filtro-campo">
+            <label for="filtro-modelo">Modelo</label>
+            <select id="filtro-modelo">
+              <option value="">Todos los modelos</option>
+              <option value="__sin__">Sin modelo asignado</option>
+            </select>
+          </div>
+          <div class="filtro-campo">
+            <label for="filtro-precio">Precio cargado</label>
+            <select id="filtro-precio">
+              <option value="">Todos los precios</option>
+              <option value="__sin__">Sin precio cargado</option>
+              <option value="__con__">Con precio cargado</option>
+            </select>
+          </div>
+          <div class="filtro-campo">
+            <label for="orden-admin">Ordenar por</label>
+            <select id="orden-admin">
+              <option value="nombre-asc">Nombre A-Z</option>
+              <option value="nombre-desc">Nombre Z-A</option>
+              <option value="precio-asc">Precio: menor a mayor</option>
+              <option value="precio-desc">Precio: mayor a menor</option>
+            </select>
+          </div>
           <button class="btn-limpiar-filtros" id="btn-limpiar-filtros">Limpiar filtros</button>
         </div>
       </div>
