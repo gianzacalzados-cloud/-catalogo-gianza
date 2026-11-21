@@ -10,34 +10,34 @@
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
 <style>
   :root{
-    --bg: #12151a;
-    --bg-soft: #181c22;
-    --card: #1b1f24;
-    --card-border: #323942;
-    --soft-border: rgba(255,255,255,0.08);
-    --soft-border-hover: rgba(255,255,255,0.16);
-    --label: #1b1f24;
-    --label-text: #e8edf1;
-    --label-chip: #262c34;
-    --label-dim: #7c8995;
-    --label-border: #3a414c;
-    --accent: #4e93cc;
-    --accent-dim: #366e9e;
+    --bg: #F3F5F7;
+    --bg-soft: #EAEDF0;
+    --card: #FFFFFF;
+    --card-border: #DCE1E6;
+    --soft-border: rgba(20,24,28,0.08);
+    --soft-border-hover: rgba(20,24,28,0.16);
+    --label: #FFFFFF;
+    --label-text: #1E242B;
+    --label-chip: #EDF0F3;
+    --label-dim: #67727C;
+    --label-border: #DCE1E6;
+    --accent: #2A6FB0;
+    --accent-dim: #1E5586;
     --accent-2: #8fd1a8;
-    --on-accent: #0f1d29;
+    --on-accent: #FFFFFF;
     --on-accent-2: #0a2419;
-    --text: #e8edf1;
-    --text-dim: #7c8995;
-    --ok: #3fbf6f;
-    --off: #ef4a5c;
-    --img-bg: #242a31;
+    --text: #1E242B;
+    --text-dim: #67727C;
+    --ok: #17824a;
+    --off: #c92f3c;
+    --img-bg: #E7EBEE;
     --radius: 14px;
     --grad-accent: linear-gradient(160deg, var(--accent) 0%, var(--accent-dim) 100%);
     --grad-lime: linear-gradient(135deg, #b9e3c7, var(--accent-2) 60%, #67a883);
-    --grad-ok: linear-gradient(160deg, var(--ok) 0%, #2e9c58 100%);
-    --shadow-accent: 0 3px 10px rgba(0,0,0,0.35);
-    --shadow-ok: 0 3px 10px rgba(0,0,0,0.35);
-    --shadow-soft: 0 4px 20px rgba(0,0,0,0.4);
+    --grad-ok: linear-gradient(160deg, var(--ok) 0%, #0f6b3c 100%);
+    --shadow-accent: 0 3px 10px rgba(20,24,28,0.18);
+    --shadow-ok: 0 3px 10px rgba(20,24,28,0.18);
+    --shadow-soft: 0 4px 20px rgba(20,24,28,0.12);
     --glass: rgba(27,31,36,0.55);
   }
   *{ box-sizing:border-box; }
@@ -99,10 +99,10 @@
   .pill-filters-row{ display:flex; gap:9px; margin-top:10px; }
   .btn-pill-filtro{
     flex:1;
-    background: rgba(255,255,255,0.05);
+    background: rgba(20,24,28,0.04);
     backdrop-filter: blur(6px);
-    border: 1px solid rgba(255,255,255,0.1);
-    box-shadow: inset 0 1px 0 rgba(255,255,255,0.06), 0 2px 6px rgba(0,0,0,0.18);
+    border: 1px solid rgba(20,24,28,0.1);
+    box-shadow: inset 0 1px 0 rgba(255,255,255,0.5), 0 2px 6px rgba(20,24,28,0.08);
     color: var(--text);
     border-radius: 999px;
     padding: 13px 14px;
@@ -124,9 +124,9 @@
 
   .panel-pildoras{
     display:none;
-    background: rgba(255,255,255,0.04);
+    background: rgba(20,24,28,0.035);
     backdrop-filter: blur(8px);
-    border: 1px solid rgba(255,255,255,0.1);
+    border: 1px solid rgba(20,24,28,0.1);
     border-radius: 14px;
     padding: 14px;
     margin-top: 10px;
@@ -134,9 +134,9 @@
   .panel-pildoras.open{ display:block; }
   .pildoras-grupo{ display:flex; flex-wrap:wrap; gap:9px; }
   .pildora{
-    background: rgba(255,255,255,0.04);
-    border: 1px solid rgba(255,255,255,0.12);
-    box-shadow: inset 0 1px 0 rgba(255,255,255,0.06);
+    background: rgba(20,24,28,0.035);
+    border: 1px solid rgba(20,24,28,0.1);
+    box-shadow: inset 0 1px 0 rgba(255,255,255,0.5);
     color: var(--text);
     border-radius: 999px;
     padding: 9px 14px;
@@ -194,7 +194,7 @@
 
   /* ---- ticket de descuentos ---- */
   .banner-promo{
-    background: rgba(255,255,255,0.03);
+    background: rgba(20,24,28,0.025);
     border: 1px solid var(--card-border);
     border-radius: 10px;
     margin-bottom: 28px;
@@ -351,8 +351,8 @@
   }
   .modelo-pills-row::-webkit-scrollbar{ display:none; }
   .modelo-pill{
-    background: rgba(255,255,255,0.05);
-    border: 1px solid rgba(255,255,255,0.12);
+    background: rgba(20,24,28,0.04);
+    border: 1px solid rgba(20,24,28,0.1);
     color: var(--text-dim);
     border-radius: 999px;
     padding: 6px 13px;
@@ -682,7 +682,7 @@
   .total-nota{ font-size: 11px; color: var(--text-dim); margin-bottom: 9px; line-height:1.4; }
 
   .btn-pedido{
-    width:100%; background: var(--grad-ok); color:#06210f; border:none; border-radius:9px;
+    width:100%; background: var(--grad-ok); color:#fff; border:none; border-radius:9px;
     box-shadow: var(--shadow-ok);
     padding: 12px; min-height:44px; font-weight:700; font-size: 14px; cursor:pointer;
     display:flex; align-items:center; justify-content:center; gap:8px;
@@ -692,7 +692,7 @@
   .btn-pedido:disabled{ background: var(--card-border); box-shadow:none; color: var(--text-dim); cursor:not-allowed; }
 
   .btn-vaciar{
-    width:100%; background: rgba(255,255,255,0.04); border:1px solid rgba(255,255,255,0.1); color: var(--text-dim);
+    width:100%; background: rgba(20,24,28,0.035); border:1px solid rgba(20,24,28,0.1); color: var(--text-dim);
     border-radius:9px; padding: 10px; min-height:38px; font-size: 12px; cursor:pointer; margin-top:7px;
   }
 
@@ -767,7 +767,7 @@
 
   .resumen-pedido-chip{
     display:flex; justify-content:space-between; align-items:center;
-    background: rgba(255,255,255,0.04); border: 1px solid var(--card-border);
+    background: rgba(20,24,28,0.035); border: 1px solid var(--card-border);
     border-radius: 10px; padding: 9px 12px; margin-bottom: 16px;
   }
   .resumen-pedido-chip .label{ font-size: 12.5px; color: var(--text-dim); }
