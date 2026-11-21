@@ -627,6 +627,10 @@
     font-size: 14px; color: var(--text); font-weight:700;
   }
   .resumen-row.resumen-total strong{ font-family:'JetBrains Mono', monospace; font-size: 19px; }
+  .resumen-nota-envio{
+    font-size: 11px; color: var(--off); font-style: italic;
+    text-align: right; margin-top: 4px; line-height:1.4;
+  }
 
   .minimo-aviso{
     font-size: 13.5px; color: var(--off); background: rgba(230,72,79,0.12);
@@ -1918,6 +1922,7 @@ function renderDrawer(){
       `;
     }
     filasHtml += `<div class="resumen-row resumen-total"><span>Total a pagar</span><strong class="verde">${money(totalNumerico)}</strong></div>`;
+    filasHtml += `<div class="resumen-nota-envio">*No incluye envío, se cotiza aparte por WhatsApp*</div>`;
 
     body.innerHTML = itemsHtml + `<div class="resumen-carrito">${pillHtml}${filasHtml}</div>`;
   }
