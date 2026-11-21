@@ -353,18 +353,62 @@
   .modal-box h2{ font-family:'Archivo Black',sans-serif; font-size:19px; margin:0 0 20px; letter-spacing:-0.2px; }
   .campo{ margin-bottom:15px; }
   .campo label{ display:block; font-size:11px; font-weight:700; color:var(--text-dim); margin-bottom:6px; text-transform:uppercase; letter-spacing:0.04em; }
-  .check-liquidacion{
-    display:flex !important; align-items:center; gap:9px;
-    background:rgba(239,74,92,0.08); border:1px solid rgba(239,74,92,0.3);
-    border-radius:9px; padding:10px 12px; cursor:pointer;
-    text-transform:none !important; font-size:13px !important; font-weight:600 !important; color:var(--text) !important;
-  }
-  .check-liquidacion input{ width:16px; height:16px; accent-color:var(--off); flex-shrink:0; }
-  .campo input, .campo select{
+  .campo input, .campo select, .campo textarea{
     width:100%; background:var(--bg-soft); border:1px solid var(--card-border); color:var(--text);
     border-radius:9px; padding:10px 13px; font-size:14px; transition:border-color .15s ease;
+    font-family:inherit; resize:vertical;
   }
-  .campo input:focus, .campo select:focus{ outline:none; border-color:var(--accent); }
+  .campo input:focus, .campo select:focus, .campo textarea:focus{ outline:none; border-color:var(--accent); }
+
+  /* ---- pestaña Liquidación ---- */
+  .liq-switch-card{
+    display:flex; align-items:center; justify-content:space-between; gap:16px;
+    background:rgba(239,74,92,0.08); border:1px solid rgba(239,74,92,0.3);
+    border-radius:var(--radius); padding:14px 16px;
+  }
+  .liq-switch-title{ font-size:14px; font-weight:700; color:var(--text); margin-bottom:4px; }
+  .liq-switch-sub{ font-size:12px; color:var(--text-dim); line-height:1.5; max-width:480px; }
+  .liq-lote-card{
+    background:var(--card); border:1px solid var(--card-border); border-radius:var(--radius);
+    padding:14px 16px; margin-top:16px;
+  }
+  .liq-lote-card label{ display:block; font-size:11px; font-weight:700; color:var(--text-dim); margin-bottom:8px; text-transform:uppercase; letter-spacing:0.04em; }
+  .liq-lote-fila{ display:flex; gap:8px; flex-wrap:wrap; }
+  .liq-lote-fila input{
+    width:90px; background:var(--bg-soft); border:1px solid var(--card-border); color:var(--text);
+    border-radius:9px; padding:10px 13px; font-size:14px;
+  }
+  #liq-buscador{
+    width:100%; background:var(--card); border:1px solid var(--card-border); color:var(--text);
+    border-radius:9px; padding:12px 14px; font-size:14px; outline:none;
+  }
+  #liq-buscador:focus{ border-color:var(--accent); }
+  .liq-fila{
+    display:flex; align-items:center; gap:12px; flex-wrap:wrap;
+    background:var(--card); border:1px solid var(--card-border); border-radius:var(--radius);
+    padding:10px 14px; margin-bottom:8px;
+  }
+  .liq-fila img, .liq-fila .sin-foto{
+    width:44px; height:44px; border-radius:8px; object-fit:cover; flex-shrink:0; background:#0d0f14;
+  }
+  .liq-fila .liq-chk{ width:17px; height:17px; flex-shrink:0; accent-color:var(--off); }
+  .liq-info{ min-width:160px; flex:1 1 160px; }
+  .liq-nombre{ font-size:13.5px; font-weight:700; color:var(--text); }
+  .liq-sub{ font-size:11.5px; color:var(--text-dim); margin-top:2px; }
+  .liq-precios{ display:flex; align-items:center; gap:8px; flex-wrap:wrap; }
+  .liq-precio-original{ font-size:12px; color:var(--text-dim); text-decoration:line-through; white-space:nowrap; }
+  .liq-input-precio{
+    width:120px; background:var(--bg-soft); border:1px solid var(--card-border); color:var(--text);
+    border-radius:8px; padding:8px 10px; font-size:13px;
+  }
+  .liq-ahorro{ font-size:11.5px; font-weight:800; color:var(--off); white-space:nowrap; }
+  .liq-btn-guardar, .liq-btn-quitar{
+    font-size:11.5px; font-weight:700; border-radius:8px; padding:7px 11px; cursor:pointer; border:1px solid var(--card-border);
+    background:var(--bg-soft); color:var(--text); flex-shrink:0;
+  }
+  .liq-btn-guardar:hover{ border-color:var(--accent); color:var(--accent); }
+  .liq-btn-quitar{ color:var(--off); border-color:rgba(239,74,92,0.35); }
+  .liq-btn-quitar:hover{ background:rgba(239,74,92,0.1); }
   .fila-2{ display:grid; grid-template-columns:1fr 1fr; gap:10px; }
   .fila-3{ display:grid; grid-template-columns:1.4fr 1fr 1fr; gap:10px; }
 
@@ -515,6 +559,7 @@
       <button class="tab-admin" id="tab-reordenar" type="button">Reordenar</button>
       <button class="tab-admin" id="tab-boxhero" type="button">BoxHero</button>
       <button class="tab-admin" id="tab-movimientos" type="button">Movimientos</button>
+      <button class="tab-admin" id="tab-liquidacion" type="button">Liquidación</button>
     </div>
 
     <div id="vista-catalogo">
@@ -665,6 +710,38 @@
       </div>
     </div>
 
+    <div id="vista-liquidacion" style="display:none;">
+      <div class="liq-switch-card">
+        <div>
+          <div class="liq-switch-title">Sección Liquidación en la web</div>
+          <div class="liq-switch-sub">Si la apagás, la tile y todos los productos se ocultan del catálogo público. Los precios que cargues acá quedan guardados, listos para reactivar con un clic.</div>
+        </div>
+        <label class="toggle-visible" title="Activar/desactivar la sección Liquidación">
+          <input type="checkbox" id="toggle-liq-activa" />
+          <span class="toggle-slider"></span>
+        </label>
+      </div>
+
+      <div class="campo" style="margin-top:18px;">
+        <label>Texto del cartel (se muestra arriba del listado de Liquidación en la web)</label>
+        <textarea id="liq-texto-cartel" rows="2"></textarea>
+        <button class="btn-subir-foto" id="btn-guardar-texto-liq" style="margin-top:8px;">Guardar texto</button>
+      </div>
+
+      <div class="liq-lote-card">
+        <label>Aplicar % de descuento a varios modelos seleccionados</label>
+        <div class="liq-lote-fila">
+          <input type="number" min="1" max="95" id="liq-pct-lote" placeholder="% ej. 20" />
+          <button class="btn-subir-foto" id="btn-aplicar-lote">Aplicar a seleccionados (<span id="liq-seleccionados-count">0</span>)</button>
+          <button class="btn-borrar-modal" id="btn-quitar-lote">Quitar liquidación a seleccionados</button>
+        </div>
+      </div>
+
+      <input type="text" id="liq-buscador" placeholder="Buscar producto por nombre o marca para agregarlo o editarlo…" style="margin:18px 0 10px;" />
+
+      <div id="liq-lista" class="loading">Cargando productos…</div>
+    </div>
+
     <div id="vista-ventas" style="display:none;">
       <div class="filtros-row" style="margin-bottom:14px;">
         <select id="filtro-estado-pedido">
@@ -725,13 +802,6 @@
         <label>Precio</label>
         <input type="number" min="0" id="campo-precio" />
       </div>
-    </div>
-
-    <div class="campo campo-liquidacion">
-      <label class="check-liquidacion">
-        <input type="checkbox" id="campo-liquidacion" />
-        <span>En liquidación (rebajado por renovación de stock)</span>
-      </label>
     </div>
 
     <div class="campo talles-editor">
@@ -941,7 +1011,8 @@ function renderLista(){
       : `<span class="cat-chip sin-modelo">Sin modelo</span>`;
     const visible = p.visible !== false;
     const ocultoChip = visible ? '' : `<span class="chip-oculto">Oculto</span>`;
-    const liquidacionChip = p.liquidacion ? `<span class="chip-liquidacion-admin">Liquidación</span>` : '';
+    const liquidacionChip = (p.precio_liquidacion && p.precio_liquidacion > 0 && p.precio_liquidacion < p.precio)
+      ? `<span class="chip-liquidacion-admin">Liquidación</span>` : '';
     const fotoHtml = p.foto
       ? `<img src="${escapeHtml(p.foto)}" alt="" onerror="this.style.visibility='hidden'">`
       : `<div style="width:48px;height:48px;border-radius:8px;background:#0d0f14;flex-shrink:0;"></div>`;
@@ -1314,7 +1385,6 @@ function abrirModal(id){
   document.getElementById('campo-modelo').value = p.modelo || '';
   document.getElementById('campo-categoria').value = p.categoria || '';
   document.getElementById('campo-precio').value = p.precio || 0;
-  document.getElementById('campo-liquidacion').checked = !!p.liquidacion;
   document.getElementById('campo-foto').value = p.foto || '';
   actualizarPreviewFoto(p.foto || '');
   renderTalles(p.talles || []);
@@ -1330,7 +1400,6 @@ function abrirModalNuevo(){
   document.getElementById('campo-modelo').value = '';
   document.getElementById('campo-categoria').value = '';
   document.getElementById('campo-precio').value = 0;
-  document.getElementById('campo-liquidacion').checked = false;
   document.getElementById('campo-foto').value = '';
   actualizarPreviewFoto('');
   renderTalles([{ talle:'', stock:0 }]);
@@ -1418,14 +1487,13 @@ function leerFormularioModal(){
   const modelo = document.getElementById('campo-modelo').value.trim();
   const categoria = document.getElementById('campo-categoria').value;
   const precio = parseFloat(document.getElementById('campo-precio').value) || 0;
-  const liquidacion = document.getElementById('campo-liquidacion').checked;
   const foto = document.getElementById('campo-foto').value.trim();
   const talles = [...document.querySelectorAll('#talles-rows .talle-row')].map(row => ({
     talle: row.querySelector('.talle-nombre').value.trim(),
     stock: parseInt(row.querySelector('.talle-stock').value, 10) || 0
   })).filter(t => t.talle !== '');
 
-  return { nombre, marca, modelo: modelo || null, categoria: categoria || null, precio, liquidacion, foto, talles };
+  return { nombre, marca, modelo: modelo || null, categoria: categoria || null, precio, foto, talles };
 }
 
 // ---------- guardar / borrar ----------
@@ -1465,7 +1533,7 @@ document.getElementById('btn-borrar-modal').addEventListener('click', async () =
 
 // ---------- tabs ----------
 function activarTab(idActivo){
-  ['tab-catalogo', 'tab-ventas', 'tab-reordenar', 'tab-boxhero', 'tab-movimientos'].forEach(id => {
+  ['tab-catalogo', 'tab-ventas', 'tab-reordenar', 'tab-boxhero', 'tab-movimientos', 'tab-liquidacion'].forEach(id => {
     document.getElementById(id).classList.toggle('activo', id === idActivo);
   });
   document.getElementById('vista-catalogo').style.display = idActivo === 'tab-catalogo' ? 'block' : 'none';
@@ -1473,6 +1541,7 @@ function activarTab(idActivo){
   document.getElementById('vista-reordenar').style.display = idActivo === 'tab-reordenar' ? 'block' : 'none';
   document.getElementById('vista-boxhero').style.display = idActivo === 'tab-boxhero' ? 'block' : 'none';
   document.getElementById('vista-movimientos').style.display = idActivo === 'tab-movimientos' ? 'block' : 'none';
+  document.getElementById('vista-liquidacion').style.display = idActivo === 'tab-liquidacion' ? 'block' : 'none';
 }
 document.getElementById('tab-catalogo').addEventListener('click', () => activarTab('tab-catalogo'));
 document.getElementById('tab-ventas').addEventListener('click', () => {
@@ -1492,6 +1561,186 @@ document.getElementById('tab-movimientos').addEventListener('click', () => {
   movimientosPagina = 0;
   cargarMovimientos();
 });
+document.getElementById('tab-liquidacion').addEventListener('click', () => {
+  activarTab('tab-liquidacion');
+  cargarAjustesLiquidacion();
+  renderListaLiquidacion();
+});
+
+// ---------- pestaña Liquidación ----------
+let ajustesLiquidacionVersion = null; // para no pisar cambios si alguien mas la edita a la vez
+let liqSeleccionados = new Set();
+let liqBuscadorTexto = '';
+
+async function cargarAjustesLiquidacion(){
+  const { data, error } = await sb.from('ajustes_liquidacion').select('*').eq('id', true).maybeSingle();
+  if(error){ mostrarStatus('error', 'No se pudo cargar la configuración de Liquidación: ' + error.message); return; }
+  if(!data) return; // la fila no existe todavía: correr liquidacion_v2_schema.sql
+  document.getElementById('toggle-liq-activa').checked = !!data.activa;
+  document.getElementById('liq-texto-cartel').value = data.texto_cartel || '';
+}
+
+document.getElementById('toggle-liq-activa').addEventListener('change', async (e) => {
+  const activa = e.target.checked;
+  const { error } = await sb.from('ajustes_liquidacion').update({ activa }).eq('id', true);
+  if(error){
+    mostrarStatus('error', 'No se pudo guardar: ' + error.message);
+    e.target.checked = !activa; // revierte el switch visualmente
+    return;
+  }
+  mostrarStatus('ok', activa ? 'Sección Liquidación activada en la web.' : 'Sección Liquidación desactivada de la web.');
+});
+
+document.getElementById('btn-guardar-texto-liq').addEventListener('click', async () => {
+  const texto = document.getElementById('liq-texto-cartel').value.trim();
+  if(!texto){ mostrarStatus('error', 'El texto no puede quedar vacío.'); return; }
+  const { error } = await sb.from('ajustes_liquidacion').update({ texto_cartel: texto }).eq('id', true);
+  if(error){ mostrarStatus('error', 'No se pudo guardar: ' + error.message); return; }
+  mostrarStatus('ok', 'Texto del cartel guardado.');
+});
+
+function enLiquidacionAdmin(p){
+  return !!(p.precio_liquidacion && p.precio_liquidacion > 0 && p.precio && p.precio_liquidacion < p.precio);
+}
+
+function renderListaLiquidacion(){
+  const cont = document.getElementById('liq-lista');
+  if(!productos.length){ cont.className = 'loading'; cont.textContent = 'Cargando productos…'; return; }
+
+  const q = liqBuscadorTexto.trim().toLowerCase();
+  const filtrados = productos.filter(p => {
+    if(!q) return true;
+    return (p.nombre||'').toLowerCase().includes(q) || (p.marca||'').toLowerCase().includes(q);
+  }).sort((a,b) => {
+    // los que ya están en liquidación primero, para revisarlos rápido; el resto alfabético
+    const aLiq = enLiquidacionAdmin(a) ? 0 : 1;
+    const bLiq = enLiquidacionAdmin(b) ? 0 : 1;
+    if(aLiq !== bLiq) return aLiq - bLiq;
+    return collatorEs.compare((a.marca||'')+a.nombre, (b.marca||'')+b.nombre);
+  });
+
+  if(filtrados.length === 0){
+    cont.className = 'empty';
+    cont.textContent = 'No se encontraron productos con esa búsqueda.';
+    return;
+  }
+
+  cont.className = '';
+  cont.innerHTML = filtrados.map(p => {
+    const enLiq = enLiquidacionAdmin(p);
+    const ahorro = enLiq ? p.precio - p.precio_liquidacion : 0;
+    const fotoHtml = p.foto
+      ? `<img src="${escapeHtml(p.foto)}" alt="">`
+      : `<div class="sin-foto"></div>`;
+    return `
+      <div class="liq-fila" data-id="${p.id}">
+        <input type="checkbox" class="liq-chk" data-id="${p.id}" ${liqSeleccionados.has(p.id) ? 'checked' : ''} />
+        ${fotoHtml}
+        <div class="liq-info">
+          <div class="liq-nombre">${escapeHtml(p.marca)} ${escapeHtml(p.nombre)}</div>
+          <div class="liq-sub">Cód. ${p.id} · Precio normal: $${Number(p.precio||0).toLocaleString('es-AR')} · Stock: ${p.stockTotal} u.</div>
+        </div>
+        <div class="liq-precios">
+          <input type="number" min="0" class="liq-input-precio" data-id="${p.id}" placeholder="Precio liquidación" value="${p.precio_liquidacion || ''}" />
+          ${enLiq ? `<span class="liq-ahorro">-$${ahorro.toLocaleString('es-AR')}</span>` : ''}
+        </div>
+        <button type="button" class="liq-btn-guardar" data-id="${p.id}">Guardar</button>
+        ${enLiq ? `<button type="button" class="liq-btn-quitar" data-id="${p.id}">Quitar</button>` : ''}
+      </div>
+    `;
+  }).join('');
+}
+
+document.getElementById('liq-buscador').addEventListener('input', (e) => {
+  liqBuscadorTexto = e.target.value;
+  renderListaLiquidacion();
+});
+
+document.getElementById('liq-lista').addEventListener('change', (e) => {
+  const chk = e.target.closest('.liq-chk');
+  if(!chk) return;
+  const id = Number(chk.dataset.id);
+  if(chk.checked) liqSeleccionados.add(id); else liqSeleccionados.delete(id);
+  document.getElementById('liq-seleccionados-count').textContent = liqSeleccionados.size;
+});
+
+async function guardarPrecioLiquidacion(id, precioLiquidacion){
+  const producto = productos.find(p => p.id === id);
+  if(!producto) return;
+  if(precioLiquidacion && producto.precio && precioLiquidacion >= producto.precio){
+    mostrarStatus('error', 'El precio de liquidación tiene que ser menor al precio normal.');
+    return;
+  }
+  const valor = precioLiquidacion || null;
+  const { error } = await sb.from('productos').update({ precio_liquidacion: valor }).eq('id', id);
+  if(error){ mostrarStatus('error', 'No se pudo guardar: ' + error.message); return; }
+  producto.precio_liquidacion = valor;
+  mostrarStatus('ok', valor ? 'Precio de liquidación guardado.' : 'Se quitó de liquidación.');
+  renderListaLiquidacion();
+}
+
+document.getElementById('liq-lista').addEventListener('click', async (e) => {
+  const btnGuardar = e.target.closest('.liq-btn-guardar');
+  const btnQuitar = e.target.closest('.liq-btn-quitar');
+  if(btnGuardar){
+    const id = Number(btnGuardar.dataset.id);
+    const input = document.querySelector(`.liq-input-precio[data-id="${id}"]`);
+    const precioLiquidacion = parseFloat(input.value) || 0;
+    await guardarPrecioLiquidacion(id, precioLiquidacion || null);
+  }else if(btnQuitar){
+    const id = Number(btnQuitar.dataset.id);
+    await guardarPrecioLiquidacion(id, null);
+  }
+});
+
+document.getElementById('btn-aplicar-lote').addEventListener('click', async () => {
+  const pct = parseFloat(document.getElementById('liq-pct-lote').value);
+  if(!pct || pct <= 0 || pct >= 100){ mostrarStatus('error', 'Ingresá un porcentaje entre 1 y 99.'); return; }
+  if(liqSeleccionados.size === 0){ mostrarStatus('error', 'No seleccionaste ningún producto.'); return; }
+
+  const btn = document.getElementById('btn-aplicar-lote');
+  btn.disabled = true; btn.textContent = 'Aplicando…';
+
+  let errores = 0;
+  for(const id of liqSeleccionados){
+    const producto = productos.find(p => p.id === id);
+    if(!producto || !producto.precio) { errores++; continue; }
+    const precioLiquidacion = Math.round(producto.precio * (1 - pct/100));
+    const { error } = await sb.from('productos').update({ precio_liquidacion: precioLiquidacion }).eq('id', id);
+    if(error){ errores++; continue; }
+    producto.precio_liquidacion = precioLiquidacion;
+  }
+
+  liqSeleccionados.clear();
+  document.getElementById('liq-seleccionados-count').textContent = '0';
+  document.getElementById('liq-pct-lote').value = '';
+  btn.disabled = false; btn.textContent = `Aplicar a seleccionados (0)`;
+
+  mostrarStatus(errores ? 'error' : 'ok', errores ? `Se aplicó con ${errores} error(es).` : 'Descuento aplicado a los productos seleccionados.');
+  renderListaLiquidacion();
+});
+
+document.getElementById('btn-quitar-lote').addEventListener('click', async () => {
+  if(liqSeleccionados.size === 0){ mostrarStatus('error', 'No seleccionaste ningún producto.'); return; }
+  const btn = document.getElementById('btn-quitar-lote');
+  btn.disabled = true;
+
+  let errores = 0;
+  for(const id of liqSeleccionados){
+    const producto = productos.find(p => p.id === id);
+    const { error } = await sb.from('productos').update({ precio_liquidacion: null }).eq('id', id);
+    if(error){ errores++; continue; }
+    if(producto) producto.precio_liquidacion = null;
+  }
+
+  liqSeleccionados.clear();
+  document.getElementById('liq-seleccionados-count').textContent = '0';
+  btn.disabled = false;
+
+  mostrarStatus(errores ? 'error' : 'ok', errores ? `Se quitó con ${errores} error(es).` : 'Se quitó la liquidación de los productos seleccionados.');
+  renderListaLiquidacion();
+});
+
 document.getElementById('filtro-estado-pedido').addEventListener('change', cargarPedidos);
 document.getElementById('filtro-estado-pedido').addEventListener('change', cargarPedidos);
 
