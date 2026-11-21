@@ -722,6 +722,41 @@
     font-size:12px; font-weight:900; line-height:17px; text-align:center;
   }
 
+  .aviso-liquidacion{
+    display:none; align-items:flex-start; gap: 9px;
+    font-size: 12px; line-height:1.5; color: var(--text);
+    background: rgba(239,74,92,0.1); border: 1px solid var(--off);
+    border-radius: 9px; padding: 10px 12px; margin: 0 0 14px;
+  }
+  .aviso-liquidacion b{ color: var(--text); }
+  .aviso-liquidacion-check{
+    flex-shrink:0; width:17px; height:17px; border-radius:4px; margin-top:1px;
+    background: var(--off); color:#fff;
+    font-size:12px; font-weight:900; line-height:17px; text-align:center;
+  }
+
+  .tile.tile-liquidacion{ border-color: var(--off); background: rgba(239,74,92,0.08); }
+  .tile.tile-liquidacion .tile-info{ border-top-color: rgba(239,74,92,0.35); }
+  .tile.tile-liquidacion .tile-nombre{ color: var(--off); }
+  .tile.tile-liquidacion .tile-count{ color: var(--off); opacity:0.8; }
+
+  .chip-liquidacion{
+    position:absolute; top:8px; right:8px; z-index:2;
+    background: var(--off); color:#fff;
+    font-size:9.5px; font-weight:800; letter-spacing:0.02em;
+    padding:3px 7px; border-radius:5px; text-transform:uppercase;
+  }
+  .chip-liquidacion-inline{
+    display:inline-block; background: var(--off); color:#fff;
+    font-size:8.5px; font-weight:800; letter-spacing:0.02em;
+    padding:2px 5px; border-radius:4px; text-transform:uppercase; vertical-align:1px;
+  }
+  .modal-detalle-chip-liquidacion{
+    display:inline-block; background: var(--off); color:#fff;
+    font-size:11px; font-weight:800; letter-spacing:0.02em;
+    padding:3px 8px; border-radius:5px; text-transform:uppercase; margin-bottom:8px;
+  }
+
   .resumen-pedido-chip{
     display:flex; justify-content:space-between; align-items:center;
     background: rgba(255,255,255,0.04); border: 1px solid var(--card-border);
@@ -911,6 +946,10 @@
       <div class="listado-count" id="listado-count"></div>
       <div class="modelo-pills-row" id="modelo-pills-row"></div>
     </div>
+    <div class="aviso-liquidacion" id="aviso-liquidacion">
+      <span class="aviso-liquidacion-check">&#10003;</span>
+      <div><b>Estos pares están en perfecto estado.</b> Los liquidamos por renovación de stock. Este precio no es acumulable con el descuento por cantidad (6 o 12 pares).</div>
+    </div>
     <div class="grid" id="grid"></div>
     <div class="empty-state" id="empty-state" style="display:none;">No encontramos zapatillas con esa búsqueda.</div>
     <div class="btn-volver-abajo" id="btn-volver-abajo-cont" style="display:none;">
@@ -1015,8 +1054,11 @@ function descuentoPorCantidadAdulto(totalParesAdulto){
 // Cuenta para el descuento todo lo que NO sea explícitamente Ojotas/Infantil/Nike Mind.
 // Así, un producto sin categoria asignada en el admin (el caso más común) sigue contando
 // como par "adulto" en vez de quedar afuera del descuento por error.
+// Los pares en liquidación tampoco cuentan: ese precio ya está rebajado y no se
+// acumula con el descuento por cantidad (6 o 12 pares).
 const CATEGORIAS_SIN_DESCUENTO = ["Ojotas", "Infantil", "Nike Mind"];
-function cuentaParaDescuentoAdulto(categoria){
+function cuentaParaDescuentoAdulto(categoria, liquidacion){
+  if(liquidacion) return false;
   return !CATEGORIAS_SIN_DESCUENTO.includes(categoria);
 }
 
@@ -1027,6 +1069,7 @@ const sb = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 // Tarjetas de la pantalla de inicio: marcas propias + categorías especiales.
 // tipo "marca" filtra por el campo marca; tipo "categoria" filtra por el campo categoria.
 const TILES = [
+  { label: "LIQUIDACIÓN", tipo: "liquidacion", valor: true },
   { label: "ADIDAS",      tipo: "marca",     valor: "ADIDAS" },
   { label: "NIKE",        tipo: "marca",     valor: "NIKE" },
   { label: "JORDAN",      tipo: "marca",     valor: "JORDAN" },
@@ -1066,6 +1109,9 @@ function coincideConTile(p, tile){
   if(tile.tipo === "marca"){
     return p.marca === tile.valor && p.categoria === "Adulto";
   }
+  if(tile.tipo === "liquidacion"){
+    return !!p.liquidacion;
+  }
   return p.categoria === tile.valor;
 }
 
@@ -1073,6 +1119,7 @@ function coincideConTile(p, tile){
 let vista = "home"; // "home" | "listado"
 let filtroMarca = "";
 let filtroCategoria = "";
+let filtroLiquidacion = false;
 let filtroTalle = "";
 let filtroModelo = "";
 let tituloListado = "Todos los modelos";
@@ -1168,7 +1215,7 @@ function sincronizarCarritoConCatalogo(){
     }
     nuevoCart.push({
       id: p.id, nombre: p.nombre, marca: p.marca, precio: p.precio, foto: p.foto,
-      talle: item.talle, cantidad, stock: stockActual, categoria: p.categoria || null
+      talle: item.talle, cantidad, stock: stockActual, categoria: p.categoria || null, liquidacion: !!p.liquidacion
     });
   });
 
@@ -1189,6 +1236,7 @@ function mostrarHome(){
   vista = "home";
   filtroMarca = "";
   filtroCategoria = "";
+  filtroLiquidacion = false;
   filtroTalle = "";
   filtroModelo = "";
   modoVerTodos = false;
@@ -1206,6 +1254,7 @@ function mostrarListado(titulo){
   document.getElementById('vista-home').style.display = "none";
   document.getElementById('vista-listado').style.display = "block";
   document.getElementById('listado-titulo').textContent = titulo;
+  document.getElementById('aviso-liquidacion').style.display = filtroLiquidacion ? "flex" : "none";
   window.scrollTo({ top: 0, behavior: "instant" in window ? "instant" : "auto" });
   renderModeloPills();
   aplicarFiltros();
@@ -1214,7 +1263,7 @@ function mostrarListado(titulo){
 document.getElementById('btn-volver').addEventListener('click', mostrarHome);
 document.getElementById('btn-volver-abajo').addEventListener('click', mostrarHome);
 document.getElementById('btn-ver-todos').addEventListener('click', () => {
-  filtroMarca = ""; filtroCategoria = ""; filtroModelo = "";
+  filtroMarca = ""; filtroCategoria = ""; filtroLiquidacion = false; filtroModelo = "";
   modoVerTodos = true;
   mostrarListado("Todos los modelos");
 });
@@ -1240,8 +1289,9 @@ function renderTiles(){
     const fotoHtml = fotoPortada
       ? `<img src="${escapeHtml(fotoPortada)}" alt="${escapeHtml(tile.label)}" loading="lazy" />`
       : `<span class="sin">Sin foto</span>`;
+    const claseExtra = tile.tipo === "liquidacion" ? " tile-liquidacion" : "";
     return `
-      <div class="tile" data-tipo="${tile.tipo}" data-valor="${tile.valor}" data-label="${tile.label}">
+      <div class="tile${claseExtra}" data-tipo="${tile.tipo}" data-valor="${tile.valor}" data-label="${tile.label}">
         <div class="tile-photo">${fotoHtml}</div>
         <div class="tile-info">
           <div class="tile-nombre">${tile.label}</div>
@@ -1260,6 +1310,7 @@ document.getElementById('tiles-grid').addEventListener('click', (e) => {
   const label = tile.dataset.label;
   filtroMarca = tipo === "marca" ? valor : "";
   filtroCategoria = tipo === "categoria" ? valor : "";
+  filtroLiquidacion = tipo === "liquidacion";
   filtroModelo = "";
   modoVerTodos = false;
   mostrarListado(label);
@@ -1339,6 +1390,7 @@ document.getElementById('pildoras-marca').addEventListener('click', (e) => {
   if(!btn) return;
   filtroMarca = btn.dataset.valor;
   filtroCategoria = ""; // una marca puntual reemplaza un filtro de categoria previo
+  filtroLiquidacion = false;
   filtroModelo = "";
   modoVerTodos = false;
   cerrarPaneles();
@@ -1393,6 +1445,7 @@ function render(lista){
       <div class="card" data-card-id="${p.id}">
         <div class="photo-wrap">
           ${agotadoTotal ? '<span class="badge-agotado-total">AGOTADO</span>' : ''}
+          ${p.liquidacion ? '<span class="chip-liquidacion">Liquidación</span>' : ''}
           ${fotoHtml}
         </div>
         <div class="body">
@@ -1447,6 +1500,7 @@ function aplicarFiltros(){
     // navegar por marca excluye ojotas/infantiles/nike mind: esas solo aparecen en su propia categoria
     if(filtroMarca && (p.marca !== filtroMarca || p.categoria !== "Adulto")) return false;
     if(filtroCategoria && p.categoria !== filtroCategoria) return false;
+    if(filtroLiquidacion && !p.liquidacion) return false;
     // el talle filtrado tiene que tener stock real, no alcanza con que exista el talle
     if(filtroTalle && !p.talles.some(t => t.talle === filtroTalle && t.stock > 0)) return false;
     // pastilla de modelo (solo tiene sentido dentro de una marca puntual)
@@ -1610,7 +1664,7 @@ function agregarAlCarrito(pid, talle, cantidad){
   }else{
     cart.push({
       id: p.id, nombre: p.nombre, marca: p.marca, precio: p.precio,
-      foto: p.foto, talle: talle, cantidad: Math.min(cantidad, stockTalle), stock: stockTalle, categoria: p.categoria || null
+      foto: p.foto, talle: talle, cantidad: Math.min(cantidad, stockTalle), stock: stockTalle, categoria: p.categoria || null, liquidacion: !!p.liquidacion
     });
   }
   guardarCarrito();
@@ -1673,8 +1727,10 @@ function renderModalDetalle(p){
 
   body.innerHTML = `
     <div class="modal-detalle-foto">${fotoHtml}</div>
+    ${p.liquidacion ? '<div class="modal-detalle-chip-liquidacion">Liquidación</div>' : ''}
     <div class="modal-detalle-nombre">${escapeHtml(p.nombre)}</div>
     ${precioHtml}
+    ${p.liquidacion ? '<div style="font-size:11.5px; color:var(--text-dim); margin:-2px 0 8px;">En perfecto estado, se liquida por renovación de stock. No acumula con el descuento por cantidad.</div>' : ''}
     <div class="modal-detalle-label">Seleccioná la cantidad por talle:</div>
     ${filasHtml}
   `;
@@ -1755,7 +1811,7 @@ function actualizarBadge(){
 // calcula todo lo necesario del carrito: pares totales, pares adulto, descuento vigente y totales en $
 function calcularTotalesCarrito(){
   const totalPares = cart.reduce((acc, i) => acc + i.cantidad, 0);
-  const totalParesAdulto = cart.reduce((acc, i) => acc + (cuentaParaDescuentoAdulto(i.categoria) ? i.cantidad : 0), 0);
+  const totalParesAdulto = cart.reduce((acc, i) => acc + (cuentaParaDescuentoAdulto(i.categoria, i.liquidacion) ? i.cantidad : 0), 0);
   const descuentoPorPar = descuentoPorCantidadAdulto(totalParesAdulto);
 
   let totalNumerico = 0;
@@ -1763,7 +1819,7 @@ function calcularTotalesCarrito(){
   let hayConsultar = false;
   cart.forEach(i => {
     if(!i.precio){ hayConsultar = true; return; }
-    const aplicaDescuento = cuentaParaDescuentoAdulto(i.categoria) && descuentoPorPar > 0;
+    const aplicaDescuento = cuentaParaDescuentoAdulto(i.categoria, i.liquidacion) && descuentoPorPar > 0;
     const precioUnit = aplicaDescuento ? Math.max(i.precio - descuentoPorPar, 0) : i.precio;
     totalNumerico += precioUnit * i.cantidad;
     subtotalSinDescuento += i.precio * i.cantidad;
@@ -1782,7 +1838,7 @@ function renderDrawer(){
     body.innerHTML = '<div class="drawer-empty">Todavía no agregaste nada.<br>Elegí talle y sumá zapatillas al pedido.</div>';
   }else{
     const itemsHtml = cart.map((item, idx) => {
-      const aplicaDescuento = cuentaParaDescuentoAdulto(item.categoria) && descuentoPorPar > 0 && item.precio;
+      const aplicaDescuento = cuentaParaDescuentoAdulto(item.categoria, item.liquidacion) && descuentoPorPar > 0 && item.precio;
       let lineaPrecio;
       if(!item.precio){
         lineaPrecio = 'A consultar';
@@ -1798,7 +1854,7 @@ function renderDrawer(){
         <div class="cart-item">
           ${fotoHtml}
           <div class="cart-item-info">
-            <div class="nombre">${escapeHtml(item.nombre)}</div>
+            <div class="nombre">${escapeHtml(item.nombre)}${item.liquidacion ? ' <span class="chip-liquidacion-inline">Liquidación</span>' : ''}</div>
             <div class="detalle">Talle: ${escapeHtml(item.talle)} — <span class="precio-linea">${lineaPrecio}</span></div>
             ${enElTope ? `<div class="stock-limite">Quedan ${item.stock} en stock</div>` : ''}
           </div>
@@ -2196,7 +2252,7 @@ btnEnviarPedido.addEventListener('click', () => {
 
   const detallePedido = cart.map(i => ({
     producto_id: i.id, nombre: i.nombre, marca: i.marca, talle: i.talle,
-    cantidad: i.cantidad, precio: i.precio, categoria: i.categoria || null
+    cantidad: i.cantidad, precio: i.precio, categoria: i.categoria || null, liquidacion: !!i.liquidacion
   }));
 
   sb.from('pedidos').insert({
