@@ -481,16 +481,26 @@
   }
   .modal-detalle.open{ display:flex; }
   .modal-detalle-header{
-    padding: 16px 16px 10px;
-    display:flex; align-items:flex-start; justify-content:space-between; gap:10px;
+    padding: 12px 12px 10px 16px;
+    display:flex; align-items:center; justify-content:space-between; gap:10px;
     border-bottom: 1px solid var(--card-border);
   }
   .modal-detalle-header .titulo{
-    color: var(--accent); font-weight:800; font-size: 13px; letter-spacing:0.03em;
+    color: var(--accent); font-weight:800; font-size: 12px; letter-spacing:0.03em;
   }
   .modal-detalle-close{
-    background:none; border:none; color: var(--text); font-size: 22px; cursor:pointer; line-height:1;
+    background: var(--bg-soft);
+    border: 1px solid var(--card-border);
+    color: var(--text-dim);
+    width: 26px; height: 26px;
+    border-radius: 50%;
+    display:flex; align-items:center; justify-content:center;
+    font-size: 15px; line-height:1;
+    cursor:pointer;
+    flex-shrink:0;
+    transition: background 0.15s, color 0.15s;
   }
+  .modal-detalle-close:hover{ background: var(--label-chip); color: var(--text); }
   .modal-detalle-body{ padding: 18px; overflow-y:auto; flex:1; }
   .modal-detalle-foto{
     width:100%; aspect-ratio: 1/1; max-height: 320px;
